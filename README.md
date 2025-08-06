@@ -1,6 +1,8 @@
 # Budget Planner
 
-A personal monthly budget planning application that stores data locally on the browser.
+A personal monthly budget planning application that stores data locally in the browser.
+
+**Live App:** [https://budget-planner-gamma-flax.vercel.app/](https://budget-planner-gamma-flax.vercel.app/)
 
 ## Getting Started
 
