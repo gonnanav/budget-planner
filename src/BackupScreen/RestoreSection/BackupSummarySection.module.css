@@ -1,0 +1,60 @@
+.root {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  /* Box model */
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  padding: 12px;
+
+  /* Visual */
+  background-color: #f8fafc;
+  font-size: 0.875rem;
+}
+
+.title {
+  /* Visual */
+  font-weight: 600;
+}
+
+.meta {
+  /* Layout */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+
+  /* Visual */
+  color: #64748b;
+}
+
+.details {
+  /* Layout */
+  display: flex;
+  gap: 16px;
+
+  /* Visual */
+  color: #64748b;
+}
+
+.group {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 4px;
+}
+
+.groupTitle {
+  /* Visual */
+  font-weight: 600;
+}
+
+.divider {
+  /* Box model */
+  width: 1px;
+
+  /* Visual */
+  background-color: #e2e8f0;
+}

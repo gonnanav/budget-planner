@@ -1,0 +1,33 @@
+.root {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+
+  /* Box model */
+  height: 100dvh;
+  min-height: 0;
+}
+
+.header {
+  /* Box model */
+  height: 64px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.6);
+}
+
+.headerInner {
+  /* Box model */
+  width: 100%;
+  padding: 16px;
+}
+
+.main {
+  /* Layout */
+  flex: 1 1 auto;
+
+  /* Box model */
+  width: 100%;
+  min-height: 0;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 16px;
+}

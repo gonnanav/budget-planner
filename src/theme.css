@@ -1,0 +1,18 @@
+:root {
+  --font-size-h1: 1.25rem;
+  --font-size-h2: 1.125rem;
+
+  --color-primary: #228be6;
+  --color-primary-hover: #1c7ed6;
+  --color-primary-active: #1971c2;
+
+  --color-danger: #fa5252;
+  --color-danger-hover: #e03131;
+  --color-danger-active: #c92a2a;
+  --color-danger-light: #fff5f5;
+  --color-danger-light-hover: #ffe3e3;
+
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+}

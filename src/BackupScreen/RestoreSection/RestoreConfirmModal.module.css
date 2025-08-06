@@ -1,0 +1,61 @@
+.root {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.banner {
+  /* Layout */
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  /* Box model */
+  border-radius: 8px;
+  border: 2px solid #fecaca;
+  padding: 12px;
+
+  /* Visual */
+  background-color: #fef2f2;
+}
+
+.icon {
+  /* Box model */
+  margin-top: 2px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+
+  /* Visual */
+  color: #dc2626;
+}
+
+.bannerContent {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+
+  /* Visual */
+  font-size: 0.875rem;
+}
+
+.bannerTitle {
+  /* Visual */
+  font-weight: 600;
+  color: #b91c1c;
+}
+
+.bannerText {
+  /* Visual */
+  color: #991b1b;
+}
+
+.footer {
+  /* Layout */
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

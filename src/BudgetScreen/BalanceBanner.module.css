@@ -1,0 +1,70 @@
+.root {
+  /* Box model */
+  border-radius: 8px;
+  border: 2px solid transparent;
+}
+
+.balanced {
+  /* Visual */
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+  --text-color: #1e3a8a;
+  --icon-color: #2563eb;
+}
+
+.surplus {
+  /* Visual */
+  background-color: #ecfdf5;
+  border-color: #a7f3d0;
+  --text-color: #065f46;
+  --icon-color: #059669;
+}
+
+.deficit {
+  /* Visual */
+  background-color: #fff1f2;
+  border-color: #fecdd3;
+  --text-color: #9f1239;
+  --icon-color: #e11d48;
+}
+
+.body {
+  /* Box model */
+  padding: 12px 16px;
+}
+
+.row {
+  /* Layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left {
+  /* Layout */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  /* Box model */
+  width: 20px;
+  height: 20px;
+
+  /* Visual */
+  color: var(--icon-color);
+}
+
+.label {
+  /* Visual */
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.amount {
+  /* Visual */
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-color);
+}

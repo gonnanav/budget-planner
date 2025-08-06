@@ -1,0 +1,76 @@
+.root {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+
+  /* Box model */
+  border-radius: 6px;
+  padding: 8px 12px;
+
+  /* Visual */
+  background-color: #f8fafc;
+
+  /* Interaction */
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    background-color: #f1f5f9;
+  }
+}
+
+.primaryLine {
+  /* Layout */
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+
+  /* Box model */
+  width: 100%;
+}
+
+.name {
+  /* Visual */
+  font-size: 0.875rem;
+  color: #64748b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.amount {
+  /* Visual */
+  font-size: 0.875rem;
+  color: #111827;
+}
+
+.secondaryLine {
+  /* Layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  /* Box model */
+  width: 100%;
+  margin-top: 4px;
+}
+
+.frequency {
+  /* Visual */
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.normalized {
+  /* Visual */
+  font-size: 0.75rem;
+  color: #6b7280;
+}
