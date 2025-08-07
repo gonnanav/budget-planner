@@ -28,3 +28,15 @@ A personal monthly budget planning application that stores data locally in the b
 4. **Open your browser**
 
    Navigate to [http://localhost:3000](http://localhost:3000)
+
+## Storybook
+
+This project includes Storybook for component development and documentation.
+
+### Running Storybook Development Server
+
+```bash
+npm run storybook
+```
+
+This will start the Storybook development server on [http://localhost:6006](http://localhost:6006)
