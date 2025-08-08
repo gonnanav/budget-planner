@@ -1,6 +1,9 @@
 import { IncomeList } from "./IncomeList";
 import type { IncomeItemProps } from "./IncomeItem";
 import React from "react";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 export interface IncomeSectionProps {
   items: IncomeItemProps[];
@@ -23,36 +26,42 @@ export function IncomeSection({ items }: IncomeSectionProps) {
 
   return (
     <section className="space-y-3">
-      <h2 className="px-3 text-xl font-semibold">Income</h2>
-      {list.length === 0 ? (
-        <p className="px-3 text-sm text-muted-foreground">
-          No income added yet.
-        </p>
-      ) : (
-        <div className="overflow-hidden rounded-md border">
-          <IncomeList
-            items={list}
-            onDelete={(index) =>
-              setList((prev) => prev.filter((_, i) => i !== index))
-            }
-            onUpdate={(index, next) =>
-              setList((prev) => prev.map((it, i) => (i === index ? next : it)))
-            }
-            autoFocusIndex={autoFocusIndex}
-            autoFocusField={autoFocusField}
-          />
-          <div className="flex items-center justify-between border-t px-3 py-2">
-            <span className="font-semibold">Total</span>
-            <span className="tabular-nums font-semibold">
-              {formatInteger.format(totalAmount)}
-            </span>
-          </div>
-        </div>
-      )}
+      <Card className="rounded-lg border">
+        <CardHeader className="py-3 sm:py-4">
+          <CardTitle className="text-lg sm:text-xl">Income</CardTitle>
+        </CardHeader>
+        {list.length === 0 ? (
+          <CardContent className="py-2 sm:py-3">
+            <p className="text-sm text-muted-foreground">No income added yet.</p>
+          </CardContent>
+        ) : (
+          <>
+            <CardContent className="p-0">
+              <IncomeList
+                items={list}
+                onDelete={(index) =>
+                  setList((prev) => prev.filter((_, i) => i !== index))
+                }
+                onUpdate={(index, next) =>
+                  setList((prev) => prev.map((it, i) => (i === index ? next : it)))
+                }
+                autoFocusIndex={autoFocusIndex}
+                autoFocusField={autoFocusField}
+              />
+            </CardContent>
+            <CardFooter className="flex items-center justify-between border-t px-3 py-2 sm:px-4 sm:py-3">
+              <span className="font-semibold">Total</span>
+              <span className="tabular-nums font-semibold">
+                {formatInteger.format(totalAmount)}
+              </span>
+            </CardFooter>
+          </>
+        )}
+      </Card>
       <div className="px-3">
-        <button
-          type="button"
-          className="mt-1 text-sm text-primary hover:underline"
+        <Button
+          variant="link"
+          className="mt-1 p-0 text-sm"
           onClick={() => {
             // Append a placeholder item and focus source
             setList((prev) => {
@@ -69,8 +78,8 @@ export function IncomeSection({ items }: IncomeSectionProps) {
             }, 0);
           }}
         >
-          + Add income
-        </button>
+          <Plus className="mr-1 h-4 w-4" /> Add income
+        </Button>
       </div>
     </section>
   );

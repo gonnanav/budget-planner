@@ -1,4 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useId } from "react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Trash } from "lucide-react";
 
 export interface IncomeItemProps {
   source: string;
@@ -26,6 +31,9 @@ export function IncomeItem({
 
   const sourceInputRef = useRef<HTMLInputElement | null>(null);
   const amountInputRef = useRef<HTMLInputElement | null>(null);
+  const uid = useId();
+  const sourceId = `${uid}-source`;
+  const amountId = `${uid}-amount`;
 
   // Enter edit mode automatically on mount when requested
   useEffect(() => {
@@ -56,7 +64,7 @@ export function IncomeItem({
 
   return (
     <div
-      className="group flex flex-wrap items-center gap-x-3 gap-y-1 px-3 py-2"
+      className="group flex flex-wrap items-center gap-x-3 gap-y-2 px-3 py-2"
       tabIndex={0}
       onClick={() => {
         if (!onUpdate) return;
@@ -79,45 +87,61 @@ export function IncomeItem({
     >
       {isEditing ? (
         <>
-          <input
-            ref={sourceInputRef}
-            aria-label="Income source"
-            value={draftSource}
-            onChange={(e) => setDraftSource(e.target.value)}
-            className="min-w-0 flex-1 rounded border px-2 py-1 text-sm"
-            placeholder="Source"
-          />
-          <input
-            ref={amountInputRef}
-            aria-label="Amount"
-            value={draftAmount}
-            onChange={(e) => setDraftAmount(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") (e.target as HTMLInputElement).blur();
-            }}
-            inputMode="numeric"
-            pattern="[0-9]*"
-            className="w-28 rounded border px-2 py-1 text-right text-sm tabular-nums"
-            placeholder="0"
-          />
+          <div className="min-w-0 flex-1">
+            <Label htmlFor={sourceId} className="sr-only">
+              Income source
+            </Label>
+            <Input
+              id={sourceId}
+              ref={sourceInputRef}
+              value={draftSource}
+              onChange={(e) => setDraftSource(e.target.value)}
+              placeholder="Source"
+              className="h-9 text-sm"
+            />
+          </div>
+          <div className="w-28">
+            <Label htmlFor={amountId} className="sr-only">
+              Amount
+            </Label>
+            <Input
+              id={amountId}
+              ref={amountInputRef}
+              value={draftAmount}
+              onChange={(e) => setDraftAmount(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+              }}
+              inputMode="numeric"
+              pattern="[0-9]*"
+              placeholder="0"
+              className="h-9 text-right text-sm tabular-nums"
+            />
+          </div>
           {onDelete && (
-            <button
-              type="button"
-              aria-label="Delete income item"
-              title="Delete"
-              onClick={onDelete}
-              className="hidden rounded p-1 text-red-600 hover:bg-red-50 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-500/50 group-focus-within:block"
-            >
-              ×
-            </button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    aria-label="Delete income item"
+                    onClick={onDelete}
+                    className="ml-auto hidden shrink-0 group-focus-within:inline-flex"
+                  >
+                    <Trash className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Delete</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
         </>
       ) : (
         <>
-          <span className="min-w-0 flex-1 break-words font-medium">
-            {source}
-          </span>
-          <span className="tabular-nums shrink-0">{formattedAmount}</span>
+          <span className="min-w-0 flex-1 break-words font-medium">{source}</span>
+          <span className="shrink-0 tabular-nums">{formattedAmount}</span>
         </>
       )}
     </div>
