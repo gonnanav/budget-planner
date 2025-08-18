@@ -1,0 +1,11 @@
+---
+description: Coding conventions
+alwaysApply: true
+---
+
+- Use named exports only, no default exports
+- Prefer TypeScript interfaces over types, unless a type definition is clearly needed
+- Do no generate props that aren't actually used, including `className`, unless it's a highly reusable UI component
+- Prefer direct imports, for example: `import { useState } from 'react'` over `import * as React from 'react'`.
+- Don't add any comments explaining your code, unless it's truly warranted
+- Don't export anything unless it's actually used elsewhere by at least one consumer.

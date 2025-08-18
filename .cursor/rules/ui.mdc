@@ -1,0 +1,8 @@
+---
+description: UI and styling
+alwaysApply: false
+---
+
+- Use shadcn/ui components and Tailwind
+- Mobile-first design
+- UI should be minimal and clean looking

@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/nextjs-vite";
 import "../src/app/globals.css";
+import { INITIAL_VIEWPORTS } from "storybook/viewport";
 
 const preview: Preview = {
   parameters: {
@@ -16,6 +17,12 @@ const preview: Preview = {
       // 'off' - skip a11y checks entirely
       test: "todo",
     },
+    viewport: {
+      options: INITIAL_VIEWPORTS,
+    },
+  },
+  initialGlobals: {
+    viewport: { value: "galaxys9", isRotated: false },
   },
 };
 
