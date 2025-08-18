@@ -7,7 +7,7 @@ export interface BudgetEvaluation {
 
 export function evaluateBudget(
   incomes: number,
-  expenses: number
+  expenses: number,
 ): BudgetEvaluation {
   const balance = incomes - expenses;
 
