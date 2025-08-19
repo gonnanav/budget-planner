@@ -6,12 +6,5 @@ interface ExpensesProps {
 }
 
 export function Expenses({ expenses, onChange }: ExpensesProps) {
-  return (
-    <AmountInput
-      id="expenses"
-      label="Expenses"
-      amount={expenses}
-      onChange={onChange}
-    />
-  );
+  return <AmountInput label="Expenses" amount={expenses} onChange={onChange} />;
 }
