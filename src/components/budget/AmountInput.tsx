@@ -1,5 +1,4 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from "@heroui/input";
 
 interface AmountInputProps {
   id: string;
@@ -15,19 +14,16 @@ export function AmountInput({ id, label, amount, onChange }: AmountInputProps) {
   };
 
   return (
-    <div className="grid w-full items-center gap-2">
-      <Label htmlFor={id}>{label}</Label>
-      <Input
-        id={id}
-        name={id}
-        type="number"
-        inputMode="numeric"
-        min={0}
-        step={100}
-        value={value}
-        onChange={handleChange}
-      />
-    </div>
+    <Input
+      id={id}
+      name={id}
+      label={label}
+      type="number"
+      inputMode="numeric"
+      min={0}
+      value={value}
+      onChange={handleChange}
+    />
   );
 }
 

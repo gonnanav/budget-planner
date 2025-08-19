@@ -1,6 +1,8 @@
+import React from "react";
 import type { Preview } from "@storybook/nextjs-vite";
-import "../src/app/globals.css";
 import { INITIAL_VIEWPORTS } from "storybook/viewport";
+import { HeroUIProvider } from "@heroui/react";
+import "../src/app/globals.css";
 
 const preview: Preview = {
   parameters: {
@@ -24,6 +26,13 @@ const preview: Preview = {
   initialGlobals: {
     viewport: { value: "galaxys9", isRotated: false },
   },
+  decorators: [
+    (Story) => (
+      <HeroUIProvider>
+        <Story />
+      </HeroUIProvider>
+    ),
+  ],
 };
 
 export default preview;
