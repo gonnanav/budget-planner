@@ -18,9 +18,9 @@ export const PositiveBalance: Story = {
     initialExpenses: 2000,
   },
   play: async ({ canvas }) => {
-    await expect(getIncomesInput(canvas)).toHaveValue(5000);
-    await expect(getExpensesInput(canvas)).toHaveValue(2000);
-    await expect(getBalanceOutput(canvas)).toHaveTextContent(/3,000/);
+    await expect(getIncomesInput(canvas)).toHaveValue("5,000");
+    await expect(getExpensesInput(canvas)).toHaveValue("2,000");
+    await expect(getBalanceOutput(canvas)).toHaveTextContent("3,000");
   },
 };
 
@@ -40,29 +40,32 @@ export const ZeroBalance: Story = {
 
 export const Empty: Story = {
   play: async ({ canvas }) => {
-    await expect(getIncomesInput(canvas)).toHaveValue(0);
-    await expect(getExpensesInput(canvas)).toHaveValue(0);
-    await expect(getBalanceOutput(canvas)).toHaveTextContent(/0/);
+    await expect(getIncomesInput(canvas)).toHaveValue("0");
+    await expect(getExpensesInput(canvas)).toHaveValue("0");
+    await expect(getBalanceOutput(canvas)).toHaveTextContent("0");
   },
 };
 
 export const CalculatingBalance: Story = {
   play: async ({ canvas, userEvent }) => {
     await userEvent.type(getIncomesInput(canvas), "3000");
-    await userEvent.type(getExpensesInput(canvas), "1000");
+    await userEvent.tab();
 
-    await expect(getBalanceOutput(canvas)).toHaveTextContent(/2,000/);
+    await userEvent.type(getExpensesInput(canvas), "1000");
+    await userEvent.tab();
+
+    await expect(getBalanceOutput(canvas)).toHaveTextContent("2,000");
   },
 };
 
 function getIncomesInput(canvas: Canvas) {
-  return canvas.getByLabelText(/incomes/i);
+  return canvas.getByLabelText("Incomes");
 }
 
 function getExpensesInput(canvas: Canvas) {
-  return canvas.getByLabelText(/expenses/i);
+  return canvas.getByLabelText("Expenses");
 }
 
 function getBalanceOutput(canvas: Canvas) {
-  return canvas.getByRole("status", { name: /balance/i });
+  return canvas.getByRole("status", { name: "Balance" });
 }
