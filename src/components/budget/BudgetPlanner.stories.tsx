@@ -116,7 +116,7 @@ function getAddExpenseButton(canvas: Canvas) {
 }
 
 function getRemoveExpenseButton(canvas: Canvas, index: number) {
-  return canvas.getAllByRole("button", { name: "Remove" })[index];
+  return canvas.getAllByRole("button", { name: "Remove expense" })[index];
 }
 
 function getBalanceOutput(canvas: Canvas) {

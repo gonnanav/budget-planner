@@ -1,4 +1,5 @@
 import { Button } from "@heroui/button";
+import { Trash2 } from "lucide-react";
 import { AmountInput } from "./AmountInput";
 
 interface ExpenseProps {
@@ -25,8 +26,14 @@ export function Expense({
         onChange={onChange}
       />
       {canRemove && (
-        <Button size="sm" color="danger" onPress={onRemove}>
-          Remove
+        <Button
+          size="sm"
+          color="danger"
+          onPress={onRemove}
+          isIconOnly
+          aria-label="Remove expense"
+        >
+          <Trash2 size={16} />
         </Button>
       )}
     </div>
