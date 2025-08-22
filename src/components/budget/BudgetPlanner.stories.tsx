@@ -112,7 +112,7 @@ function getExpenseInput(canvas: Canvas, index: number) {
 }
 
 function getAddExpenseButton(canvas: Canvas) {
-  return canvas.getByText("Add Expense");
+  return canvas.getByRole("button", { name: "Add expense" });
 }
 
 function getRemoveExpenseButton(canvas: Canvas, index: number) {

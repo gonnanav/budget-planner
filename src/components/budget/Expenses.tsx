@@ -1,4 +1,5 @@
 import { Button } from "@heroui/button";
+import { Plus } from "lucide-react";
 import {
   addExpense,
   updateExpense,
@@ -32,8 +33,14 @@ export function Expenses({ expenses, onChange }: ExpensesProps) {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">Expenses</h3>
-        <Button size="sm" onPress={handleAddExpense}>
-          Add Expense
+        <Button
+          size="sm"
+          color="primary"
+          onPress={handleAddExpense}
+          isIconOnly
+          aria-label="Add expense"
+        >
+          <Plus size={16} />
         </Button>
       </div>
 
