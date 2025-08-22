@@ -1,10 +1,54 @@
-import { AmountInput } from "./AmountInput";
+import { Button } from "@heroui/button";
+import {
+  addExpense,
+  updateExpense,
+  removeExpense,
+  canRemoveExpense,
+  expenseLabel,
+} from "./expenses";
+import { Expense } from "./Expense";
 
 interface ExpensesProps {
-  expenses: number;
-  onChange: (value: number) => void;
+  expenses: number[];
+  onChange: (expenses: number[]) => void;
 }
 
 export function Expenses({ expenses, onChange }: ExpensesProps) {
-  return <AmountInput label="Expenses" amount={expenses} onChange={onChange} />;
+  const canRemove = canRemoveExpense(expenses);
+
+  const handleAddExpense = () => {
+    onChange(addExpense(expenses));
+  };
+
+  const handleRemoveExpense = (index: number) => {
+    onChange(removeExpense(expenses, index));
+  };
+
+  const handleUpdateExpense = (index: number, value: number) => {
+    onChange(updateExpense(expenses, index, value));
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold">Expenses</h3>
+        <Button size="sm" onPress={handleAddExpense}>
+          Add Expense
+        </Button>
+      </div>
+
+      <div className="space-y-3">
+        {expenses.map((expense, index) => (
+          <Expense
+            key={index}
+            label={expenseLabel(index)}
+            amount={expense}
+            canRemove={canRemove}
+            onChange={(value) => handleUpdateExpense(index, value)}
+            onRemove={() => handleRemoveExpense(index)}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }

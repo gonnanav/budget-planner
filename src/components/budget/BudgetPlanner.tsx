@@ -1,21 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import { createExpenses } from "./expenses";
 import { Incomes } from "./Incomes";
 import { Expenses } from "./Expenses";
 import { Balance } from "./Balance";
 
 interface BudgetPlannerProps {
   initialIncomes?: number;
-  initialExpenses?: number;
+  initialExpenses?: number[];
 }
 
 export function BudgetPlanner({
   initialIncomes = 0,
-  initialExpenses = 0,
+  initialExpenses,
 }: BudgetPlannerProps) {
   const [incomes, setIncomes] = useState(initialIncomes);
-  const [expenses, setExpenses] = useState(initialExpenses);
+  const [expenses, setExpenses] = useState(createExpenses(initialExpenses));
 
   return (
     <section className="flex flex-col gap-4">

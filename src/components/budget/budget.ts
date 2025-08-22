@@ -7,9 +7,10 @@ export interface BudgetEvaluation {
 
 export function evaluateBudget(
   incomes: number,
-  expenses: number,
+  expenses: number[],
 ): BudgetEvaluation {
-  const balance = incomes - expenses;
+  const totalExpenses = expenses.reduce((sum, expense) => sum + expense, 0);
+  const balance = incomes - totalExpenses;
 
   let status: BudgetStatus = "balanced";
   if (balance > 0) {

@@ -3,7 +3,7 @@ import { BudgetEvaluation, evaluateBudget } from "./budget";
 
 export interface BalanceProps {
   incomes: number;
-  expenses: number;
+  expenses: number[];
 }
 
 export function Balance({ incomes, expenses }: BalanceProps) {
