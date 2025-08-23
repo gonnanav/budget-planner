@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { BudgetEvaluation, evaluateBudget } from "./budget";
+import { BudgetEvaluation, budgetBalance } from "./budget-balance";
 
 export interface BalanceProps {
   incomes: number[];
@@ -7,7 +7,7 @@ export interface BalanceProps {
 }
 
 export function Balance({ incomes, expenses }: BalanceProps) {
-  const evaluation = evaluateBudget(incomes, expenses);
+  const evaluation = budgetBalance(incomes, expenses);
   const { isGood, formattedBalance } = fromEvaluation(evaluation);
 
   return (

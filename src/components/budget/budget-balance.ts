@@ -5,7 +5,7 @@ export interface BudgetEvaluation {
   status: BudgetStatus;
 }
 
-export function evaluateBudget(
+export function budgetBalance(
   incomes: number[],
   expenses: number[],
 ): BudgetEvaluation {
@@ -27,5 +27,8 @@ export function evaluateBudget(
 }
 
 function sum(numbers: number[]) {
-  return numbers.reduce((sum, number) => sum + number, 0);
+  return numbers.reduce(
+    (sum, number) => sum + (Number.isNaN(number) ? 0 : number),
+    0,
+  );
 }
