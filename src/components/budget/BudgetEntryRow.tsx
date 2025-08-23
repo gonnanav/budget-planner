@@ -2,7 +2,7 @@ import { Button } from "@heroui/button";
 import { Trash2 } from "lucide-react";
 import { AmountInput } from "./AmountInput";
 
-interface BudgetItemProps {
+interface BudgetEntryRowProps {
   label: string;
   amount: number;
   removeButtonLabel: string;
@@ -11,14 +11,14 @@ interface BudgetItemProps {
   onRemove: () => void;
 }
 
-export function BudgetItem({
+export function BudgetEntryRow({
   label,
   amount,
   removeButtonLabel,
   canRemove,
   onChange,
   onRemove,
-}: BudgetItemProps) {
+}: BudgetEntryRowProps) {
   return (
     <div className="flex items-center gap-3">
       <AmountInput

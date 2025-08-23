@@ -7,7 +7,7 @@ import {
   canRemoveBudgetEntry,
   makeLabel,
 } from "./budget-entries";
-import { BudgetItem } from "./BudgetItem";
+import { BudgetEntryRow } from "./BudgetEntryRow";
 
 interface BudgetSection {
   items: number[];
@@ -59,7 +59,7 @@ export function BudgetSection({
 
       <div className="space-y-3">
         {items.map((expense, index) => (
-          <BudgetItem
+          <BudgetEntryRow
             key={index}
             label={itemLabelOf(index)}
             amount={expense}
