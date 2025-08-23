@@ -1,9 +1,10 @@
 import { cn } from "@/lib/utils";
-import { BudgetEvaluation, budgetBalance } from "./budget-balance";
+import { budgetBalance } from "./budget-balance";
+import { BudgetEntry, BudgetEvaluation } from "./types";
 
 export interface BalanceProps {
-  incomes: number[];
-  expenses: number[];
+  incomes: BudgetEntry[];
+  expenses: BudgetEntry[];
 }
 
 export function Balance({ incomes, expenses }: BalanceProps) {

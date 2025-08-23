@@ -5,10 +5,11 @@ import { createBudgetEntries } from "./budget-entries";
 import { IncomeSection } from "./IncomeSection";
 import { ExpenseSection } from "./ExpenseSection";
 import { Balance } from "./Balance";
+import { BudgetEntry } from "./types";
 
 interface BudgetPlannerProps {
-  initialIncomes?: number[];
-  initialExpenses?: number[];
+  initialIncomes?: BudgetEntry[];
+  initialExpenses?: BudgetEntry[];
 }
 
 export function BudgetPlanner({

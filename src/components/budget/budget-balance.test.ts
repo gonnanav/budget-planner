@@ -22,26 +22,37 @@ test("balance is negative when expenses are greater than incomes", () => {
   expect(status).toBe("negative");
 });
 
-test("empty expenses are counted as zero", () => {
+test("no income is counted as zero", () => {
+  const { balance } = budgetBalance([], [1000]);
+
+  expect(balance).toBe(-1000);
+});
+
+test("empty income is counted as zero", () => {
+  const { balance } = budgetBalance([null], [1000]);
+  expect(balance).toBe(-1000);
+});
+
+test("multiple incomes are summed up", () => {
+  const { balance } = budgetBalance([400, 600], [500]);
+
+  expect(balance).toBe(500);
+});
+
+test("no expense is counted as zero", () => {
   const { balance } = budgetBalance([1000], []);
+
+  expect(balance).toBe(1000);
+});
+
+test("empty expense is counted as zero", () => {
+  const { balance } = budgetBalance([1000], [null]);
 
   expect(balance).toBe(1000);
 });
 
 test("multiple expenses are summed up", () => {
   const { balance } = budgetBalance([1000], [300, 200]);
-
-  expect(balance).toBe(500);
-});
-
-test("empty incomes are counted as zero", () => {
-  const { balance } = budgetBalance([], [1000]);
-
-  expect(balance).toBe(-1000);
-});
-
-test("multiple incomes are summed up", () => {
-  const { balance } = budgetBalance([400, 600], [500]);
 
   expect(balance).toBe(500);
 });

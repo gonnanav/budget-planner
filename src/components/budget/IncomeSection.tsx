@@ -1,8 +1,9 @@
 import { BudgetSection } from "./BudgetSection";
+import { BudgetEntry } from "./types";
 
 interface IncomeSectionProps {
-  incomes: number[];
-  onChange: (incomes: number[]) => void;
+  incomes: BudgetEntry[];
+  onChange: (incomes: BudgetEntry[]) => void;
 }
 
 export function IncomeSection({ incomes, onChange }: IncomeSectionProps) {

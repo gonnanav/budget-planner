@@ -2,9 +2,9 @@ import { NumberInput } from "@heroui/number-input";
 
 interface AmountInputProps {
   label: string;
-  amount: number;
+  amount: number | null;
   className?: string;
-  onChange: (amount: number) => void;
+  onChange: (amount: number | null) => void;
 }
 
 export function AmountInput({
@@ -14,8 +14,7 @@ export function AmountInput({
   onChange,
 }: AmountInputProps) {
   const handleChange = (value: number) => {
-    const normalizedValue = Number.isNaN(value) ? 0 : value;
-    onChange(normalizedValue);
+    onChange(fromValue(value));
   };
 
   return (
@@ -23,9 +22,17 @@ export function AmountInput({
       label={label}
       minValue={0}
       defaultValue={0}
-      value={amount}
+      value={toValue(amount)}
       className={className}
       onValueChange={handleChange}
     />
   );
+}
+
+function toValue(amount: number | null): number {
+  return amount ?? NaN;
+}
+
+function fromValue(value: number): number | null {
+  return Number.isNaN(value) ? null : value;
 }

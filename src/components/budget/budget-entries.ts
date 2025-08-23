@@ -1,31 +1,36 @@
-export function createBudgetEntries(entries?: number[]): number[] {
+import type { BudgetEntry } from "./types";
+
+export function createBudgetEntries(entries?: BudgetEntry[]): BudgetEntry[] {
   return entries ?? [0];
 }
 
-export function addBudgetEntry(entries: number[]): number[] {
+export function addBudgetEntry(entries: BudgetEntry[]): BudgetEntry[] {
   return [...entries, 0];
 }
 
 export function updateBudgetEntry(
-  entries: number[],
+  entries: BudgetEntry[],
   index: number,
-  amount: number,
-): number[] {
+  entry: BudgetEntry,
+): BudgetEntry[] {
   validateIndex(index, entries);
 
   const updatedEntries = [...entries];
-  updatedEntries[index] = amount;
+  updatedEntries[index] = entry;
   return updatedEntries;
 }
 
-export function removeBudgetEntry(entries: number[], index: number): number[] {
+export function removeBudgetEntry(
+  entries: BudgetEntry[],
+  index: number,
+): BudgetEntry[] {
   validateIndex(index, entries);
   if (!canRemoveBudgetEntry(entries)) return entries;
 
   return entries.filter((_, i) => i !== index);
 }
 
-export function canRemoveBudgetEntry(entries: number[]): boolean {
+export function canRemoveBudgetEntry(entries: BudgetEntry[]): boolean {
   return entries.length > 1;
 }
 
@@ -33,6 +38,6 @@ export function makeLabel(baseLabel: string) {
   return (index: number) => `${baseLabel} ${index + 1}`;
 }
 
-function validateIndex(index: number, entries: number[]) {
+function validateIndex(index: number, entries: BudgetEntry[]) {
   if (index < 0 || index >= entries.length) throw new Error("Invalid index");
 }

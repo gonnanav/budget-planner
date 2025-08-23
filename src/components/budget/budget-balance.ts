@@ -1,16 +1,11 @@
-export type BudgetStatus = "balanced" | "positive" | "negative";
-
-export interface BudgetEvaluation {
-  balance: number;
-  status: BudgetStatus;
-}
+import type { BudgetEntry, BudgetEvaluation, BudgetStatus } from "./types";
 
 export function budgetBalance(
-  incomes: number[],
-  expenses: number[],
+  incomes: BudgetEntry[],
+  expenses: BudgetEntry[],
 ): BudgetEvaluation {
-  const totalExpenses = sum(expenses);
-  const totalIncomes = sum(incomes);
+  const totalExpenses = budgetEntriesSum(expenses);
+  const totalIncomes = budgetEntriesSum(incomes);
   const balance = totalIncomes - totalExpenses;
 
   let status: BudgetStatus = "balanced";
@@ -26,9 +21,6 @@ export function budgetBalance(
   };
 }
 
-function sum(numbers: number[]) {
-  return numbers.reduce(
-    (sum, number) => sum + (Number.isNaN(number) ? 0 : number),
-    0,
-  );
+function budgetEntriesSum(entries: BudgetEntry[]): number {
+  return entries.reduce((sum: number, entry) => sum + (entry ?? 0), 0);
 }

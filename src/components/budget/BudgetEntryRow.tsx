@@ -1,19 +1,20 @@
 import { Button } from "@heroui/button";
 import { Trash2 } from "lucide-react";
+import { BudgetEntry } from "./types";
 import { AmountInput } from "./AmountInput";
 
 interface BudgetEntryRowProps {
   label: string;
-  amount: number;
+  entry: BudgetEntry;
   removeButtonLabel: string;
   canRemove: boolean;
-  onChange: (value: number) => void;
+  onChange: (entry: BudgetEntry) => void;
   onRemove: () => void;
 }
 
 export function BudgetEntryRow({
   label,
-  amount,
+  entry,
   removeButtonLabel,
   canRemove,
   onChange,
@@ -23,7 +24,7 @@ export function BudgetEntryRow({
     <div className="flex items-center gap-3">
       <AmountInput
         label={label}
-        amount={amount}
+        amount={entry}
         className="flex-1"
         onChange={onChange}
       />
