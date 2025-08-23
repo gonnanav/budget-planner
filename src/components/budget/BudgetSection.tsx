@@ -1,12 +1,12 @@
 import { Button } from "@heroui/button";
 import { Plus } from "lucide-react";
 import {
-  addBudgetItem,
-  updateBudgetItem,
-  removeBudgetItem,
-  canRemoveBudgetItem,
+  addBudgetEntry,
+  updateBudgetEntry,
+  removeBudgetEntry,
+  canRemoveBudgetEntry,
   makeLabel,
-} from "./budget-items";
+} from "./budget-entries";
 import { BudgetItem } from "./BudgetItem";
 
 interface BudgetSection {
@@ -26,18 +26,18 @@ export function BudgetSection({
   removeItemButtonLabel,
   onChange,
 }: BudgetSection) {
-  const canRemove = canRemoveBudgetItem(items);
+  const canRemove = canRemoveBudgetEntry(items);
 
   const handleAddItem = () => {
-    onChange(addBudgetItem(items));
+    onChange(addBudgetEntry(items));
   };
 
   const handleRemoveItem = (index: number) => {
-    onChange(removeBudgetItem(items, index));
+    onChange(removeBudgetEntry(items, index));
   };
 
   const handleUpdateItem = (index: number, value: number) => {
-    onChange(updateBudgetItem(items, index, value));
+    onChange(updateBudgetEntry(items, index, value));
   };
 
   const itemLabelOf = makeLabel(itemLabel);
