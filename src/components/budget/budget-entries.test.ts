@@ -8,10 +8,10 @@ import {
   makeLabel,
 } from "./budget-entries";
 
-test("creates a single zero budget entry by default", () => {
+test("creates a single empty budget entry by default", () => {
   const budgetEntries = createBudgetEntries();
 
-  expect(budgetEntries).toEqual([0]);
+  expect(budgetEntries).toEqual([null]);
 });
 
 test("creates budget entries based on the given values provided", () => {
@@ -20,11 +20,11 @@ test("creates budget entries based on the given values provided", () => {
   expect(budgetEntries).toEqual([100, 50, 75]);
 });
 
-test("adds a new budget entry initialized to 0", () => {
+test("adds a new empty budget entry", () => {
   const budgetEntries = [100, 50];
   const updatedBudgetEntries = addBudgetEntry(budgetEntries);
 
-  expect(updatedBudgetEntries).toEqual([100, 50, 0]);
+  expect(updatedBudgetEntries).toEqual([100, 50, null]);
 });
 
 test("updates the budget entry amount at the given index", () => {

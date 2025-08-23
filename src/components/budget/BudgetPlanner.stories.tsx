@@ -40,8 +40,8 @@ export const ZeroBalance: Story = {
 
 export const Pristine: Story = {
   play: async ({ canvas }) => {
-    await expect(getDefaultIncomeInput(canvas)).toHaveValue("0");
-    await expect(getDefaultExpenseInput(canvas)).toHaveValue("0");
+    await expect(getDefaultIncomeInput(canvas)).toHaveValue("");
+    await expect(getDefaultExpenseInput(canvas)).toHaveValue("");
     await expect(getBalanceOutput(canvas)).toHaveTextContent("0");
   },
 };

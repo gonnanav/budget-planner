@@ -1,11 +1,11 @@
 import type { BudgetEntry } from "./types";
 
 export function createBudgetEntries(entries?: BudgetEntry[]): BudgetEntry[] {
-  return entries ?? [0];
+  return entries ?? [null];
 }
 
 export function addBudgetEntry(entries: BudgetEntry[]): BudgetEntry[] {
-  return [...entries, 0];
+  return [...entries, null];
 }
 
 export function updateBudgetEntry(
