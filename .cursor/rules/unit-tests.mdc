@@ -1,0 +1,21 @@
+---
+description: Unit Tests
+alwaysApply: false
+---
+
+- Focus on observed behavior, don't test implementation details
+- Tests should be isolated and well-scoped, avoid bloat
+- Keep high return on investment. Focus on what matters the most, don't overtest
+- Test names/descriptions should follow the factual style from a user's point of view, where we state facts or behaviors of the program, not wishes or technical details
+- Use descriptive test names that explain the scenario being tested
+- Avoid using describe blocks unless they absolutely make sense for organizing related tests
+- Use Vitest as the unit testing library
+
+Examples:
+Good: "budget is negative when expenses are higher than incomes" (factual)
+Bad: "should return a positive budget" (wishful)
+
+Good: "creates a single zero expense by default" (user's perspective)
+Bad: "createExpenses returns an array with a single value of 0" (technical)
+
+View other existing unit tests if available to get inspiration.
