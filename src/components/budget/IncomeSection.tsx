@@ -1,11 +1,11 @@
 import { BudgetSection } from "./BudgetSection";
 
-interface IncomesProps {
+interface IncomeSectionProps {
   incomes: number[];
   onChange: (incomes: number[]) => void;
 }
 
-export function Incomes({ incomes, onChange }: IncomesProps) {
+export function IncomeSection({ incomes, onChange }: IncomeSectionProps) {
   return (
     <BudgetSection
       items={incomes}
