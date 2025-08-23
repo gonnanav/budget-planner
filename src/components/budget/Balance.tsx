@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { BudgetEvaluation, evaluateBudget } from "./budget";
 
 export interface BalanceProps {
-  incomes: number;
+  incomes: number[];
   expenses: number[];
 }
 

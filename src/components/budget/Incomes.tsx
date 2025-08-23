@@ -1,10 +1,19 @@
-import { AmountInput } from "./AmountInput";
+import { BudgetSection } from "./BudgetSection";
 
 interface IncomesProps {
-  incomes: number;
-  onChange: (value: number) => void;
+  incomes: number[];
+  onChange: (incomes: number[]) => void;
 }
 
 export function Incomes({ incomes, onChange }: IncomesProps) {
-  return <AmountInput label="Incomes" amount={incomes} onChange={onChange} />;
+  return (
+    <BudgetSection
+      items={incomes}
+      title="Incomes"
+      itemLabel="Income"
+      addItemButtonLabel="Add income"
+      removeItemButtonLabel="Remove income"
+      onChange={onChange}
+    />
+  );
 }

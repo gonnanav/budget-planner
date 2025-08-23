@@ -7,15 +7,15 @@ import { Expenses } from "./Expenses";
 import { Balance } from "./Balance";
 
 interface BudgetPlannerProps {
-  initialIncomes?: number;
+  initialIncomes?: number[];
   initialExpenses?: number[];
 }
 
 export function BudgetPlanner({
-  initialIncomes = 0,
+  initialIncomes,
   initialExpenses,
 }: BudgetPlannerProps) {
-  const [incomes, setIncomes] = useState(initialIncomes);
+  const [incomes, setIncomes] = useState(createBudgetItems(initialIncomes));
   const [expenses, setExpenses] = useState(createBudgetItems(initialExpenses));
 
   return (
