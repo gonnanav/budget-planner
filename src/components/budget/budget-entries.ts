@@ -4,8 +4,11 @@ export function createBudgetEntries(entries?: BudgetEntry[]): BudgetEntry[] {
   return entries ?? [null];
 }
 
-export function addBudgetEntry(entries: BudgetEntry[]): BudgetEntry[] {
-  return [...entries, null];
+export function addBudgetEntry(
+  entries: BudgetEntry[],
+  amount?: number,
+): BudgetEntry[] {
+  return [...entries, amount ?? null];
 }
 
 export function updateBudgetEntry(

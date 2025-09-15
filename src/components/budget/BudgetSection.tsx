@@ -1,4 +1,5 @@
 import { Button } from "@heroui/button";
+import { useDisclosure } from "@heroui/react";
 import { Plus } from "lucide-react";
 import { BudgetEntry } from "./types";
 import {
@@ -9,6 +10,7 @@ import {
   makeLabel,
 } from "./budget-entries";
 import { BudgetEntryRow } from "./BudgetEntryRow";
+import { AddBudgetEntryModal } from "./AddBudgetEntryModal";
 
 interface BudgetSection {
   items: BudgetEntry[];
@@ -27,10 +29,15 @@ export function BudgetSection({
   removeItemButtonLabel,
   onChange,
 }: BudgetSection) {
+  const {
+    isOpen: isAddModalOpen,
+    onOpen: onAddModalOpen,
+    onClose: onAddModalClose,
+  } = useDisclosure();
   const canRemove = canRemoveBudgetEntry(items);
 
-  const handleAddItem = () => {
-    onChange(addBudgetEntry(items));
+  const handleAddItem = (amount: number) => {
+    onChange(addBudgetEntry(items, amount));
   };
 
   const handleRemoveItem = (index: number) => {
@@ -50,7 +57,7 @@ export function BudgetSection({
         <Button
           size="sm"
           color="primary"
-          onPress={handleAddItem}
+          onPress={onAddModalOpen}
           isIconOnly
           aria-label={addItemButtonLabel}
         >
@@ -71,6 +78,13 @@ export function BudgetSection({
           />
         ))}
       </div>
+
+      <AddBudgetEntryModal
+        title={`Add ${itemLabel}`}
+        isOpen={isAddModalOpen}
+        onSave={handleAddItem}
+        onClose={onAddModalClose}
+      />
     </div>
   );
 }

@@ -27,6 +27,13 @@ test("adds a new empty budget entry", () => {
   expect(updatedBudgetEntries).toEqual([100, 50, null]);
 });
 
+test("adds a new budget entry with the given amount", () => {
+  const budgetEntries = [100, 50];
+  const updatedBudgetEntries = addBudgetEntry(budgetEntries, 200);
+
+  expect(updatedBudgetEntries).toEqual([100, 50, 200]);
+});
+
 test("updates the budget entry amount at the given index", () => {
   const budgetEntries = [100, 50, 75];
   const updatedBudgetEntries = updateBudgetEntry(budgetEntries, 1, 200);

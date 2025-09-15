@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { expect } from "storybook/test";
+import { expect, screen } from "storybook/test";
 import { Canvas } from "storybook/internal/types";
 import { BudgetPlanner } from "./BudgetPlanner";
 
@@ -78,6 +78,7 @@ export const AddingIncomes: Story = {
     await expect(getAllIncomesInputs(canvas)).toHaveLength(1);
 
     await userEvent.click(getAddIncomeButton(canvas));
+    await userEvent.click(getSaveButton());
     await expect(getAllIncomesInputs(canvas)).toHaveLength(2);
   },
 };
@@ -103,6 +104,7 @@ export const AddingExpenses: Story = {
     await expect(getAllExpensesInputs(canvas)).toHaveLength(1);
 
     await userEvent.click(getAddExpenseButton(canvas));
+    await userEvent.click(getSaveButton());
     await expect(getAllExpensesInputs(canvas)).toHaveLength(2);
   },
 };
@@ -178,4 +180,8 @@ function getRemoveIncomeButton(canvas: Canvas, index: number) {
 
 function getBalanceOutput(canvas: Canvas) {
   return canvas.getByRole("status", { name: "Balance" });
+}
+
+function getSaveButton() {
+  return screen.getByRole("button", { name: "Save" });
 }
