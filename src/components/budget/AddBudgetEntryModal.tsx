@@ -33,10 +33,14 @@ export const AddBudgetEntryModal = ({
     setAmount(null);
   };
 
-  const handleSave = () => {
-    onSave(amount ?? 0);
+  const handleClose = () => {
     onClose();
     reset();
+  };
+
+  const handleSave = () => {
+    onSave(amount ?? 0);
+    handleClose();
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -45,7 +49,7 @@ export const AddBudgetEntryModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={handleClose} hideCloseButton>
       <Form onSubmit={handleSubmit}>
         <ModalContent>
           {(onClose) => (

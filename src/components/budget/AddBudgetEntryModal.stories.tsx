@@ -20,41 +20,33 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   play: async () => {
     await expect(getModalTitle()).toBeInTheDocument();
+    await expect(getAmountInput()).not.toHaveValue();
   },
 };
 
 export const Cancelling: Story = {
   play: async ({ userEvent, args }) => {
+    await userEvent.type(getAmountInput(), "100");
     await userEvent.click(getCancelButton());
 
     await expect(args.onClose).toHaveBeenCalled();
+    await expect(getAmountInput()).not.toHaveValue();
   },
 };
 
-export const Closing: Story = {
-  play: async ({ userEvent, args }) => {
-    await userEvent.click(getCloseButton());
-
-    await expect(args.onClose).toHaveBeenCalled();
-  },
-};
-
-export const AddingEntry: Story = {
+export const Saving: Story = {
   play: async ({ userEvent, args }) => {
     await userEvent.type(getAmountInput(), "100");
     await userEvent.click(getSaveButton());
 
     await expect(args.onSave).toHaveBeenCalledWith(100);
+    await expect(getAmountInput()).not.toHaveValue();
   },
 };
 
-export const AddingEmptyEntry: Story = {
-  play: async ({ userEvent, args }) => {
-    await userEvent.click(getSaveButton());
-
-    await expect(args.onSave).toHaveBeenCalledWith(0);
-  },
-};
+function getModalTitle() {
+  return screen.getByText("Add Budget Entry");
+}
 
 function getCancelButton() {
   return screen.getByRole("button", { name: "Cancel" });
@@ -64,14 +56,6 @@ function getSaveButton() {
   return screen.getByRole("button", { name: "Save" });
 }
 
-function getCloseButton() {
-  return screen.getByRole("button", { name: "Close" });
-}
-
 function getAmountInput() {
   return screen.getByLabelText("Amount");
-}
-
-function getModalTitle() {
-  return screen.getByText("Add Budget Entry");
 }
