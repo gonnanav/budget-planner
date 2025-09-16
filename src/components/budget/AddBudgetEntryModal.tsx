@@ -6,6 +6,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@heroui/modal";
+import { Form } from "@heroui/form";
 import { Button } from "@heroui/button";
 import { AmountInput } from "./AmountInput";
 
@@ -22,41 +23,53 @@ export const AddBudgetEntryModal = ({
   onSave,
   onClose,
 }: AddBudgetEntryModalProps) => {
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number | null>(null);
 
   const handleAmountChange = (amount: number | null) => {
     setAmount(amount ?? 0);
   };
 
+  const reset = () => {
+    setAmount(null);
+  };
+
   const handleSave = () => {
-    onSave(amount);
+    onSave(amount ?? 0);
     onClose();
+    reset();
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSave();
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader>{title}</ModalHeader>
-            <ModalBody>
-              <AmountInput
-                label="Amount"
-                amount={amount}
-                onChange={handleAmountChange}
-              />
-            </ModalBody>
-            <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
-                Cancel
-              </Button>
-              <Button color="primary" onPress={handleSave}>
-                Save
-              </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
+      <Form onSubmit={handleSubmit}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader>{title}</ModalHeader>
+              <ModalBody>
+                <AmountInput
+                  label="Amount"
+                  amount={amount}
+                  onChange={handleAmountChange}
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Cancel
+                </Button>
+                <Button color="primary" type="submit">
+                  Save
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Form>
     </Modal>
   );
 };
