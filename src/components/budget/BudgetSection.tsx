@@ -6,7 +6,6 @@ import {
   addBudgetEntry,
   updateBudgetEntry,
   removeBudgetEntry,
-  canRemoveBudgetEntry,
   makeLabel,
 } from "./budget-entries";
 import { BudgetEntryRow } from "./BudgetEntryRow";
@@ -34,8 +33,6 @@ export function BudgetSection({
     onOpen: onAddModalOpen,
     onClose: onAddModalClose,
   } = useDisclosure();
-  const canRemove = canRemoveBudgetEntry(items);
-
   const handleAddItem = (amount: number) => {
     onChange(addBudgetEntry(items, amount));
   };
@@ -66,17 +63,20 @@ export function BudgetSection({
       </div>
 
       <div className="space-y-3">
-        {items.map((expense, index) => (
-          <BudgetEntryRow
-            key={index}
-            label={itemLabelOf(index)}
-            entry={expense}
-            removeButtonLabel={removeItemButtonLabel}
-            canRemove={canRemove}
-            onChange={(entry) => handleUpdateItem(index, entry)}
-            onRemove={() => handleRemoveItem(index)}
-          />
-        ))}
+        {items.length === 0 ? (
+          <p className="text-sm text-gray-500">No entries yet.</p>
+        ) : (
+          items.map((expense, index) => (
+            <BudgetEntryRow
+              key={index}
+              label={itemLabelOf(index)}
+              entry={expense}
+              removeButtonLabel={removeItemButtonLabel}
+              onChange={(entry) => handleUpdateItem(index, entry)}
+              onRemove={() => handleRemoveItem(index)}
+            />
+          ))
+        )}
       </div>
 
       <AddBudgetEntryModal

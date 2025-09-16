@@ -1,14 +1,14 @@
 import type { BudgetEntry } from "./types";
 
 export function createBudgetEntries(entries?: BudgetEntry[]): BudgetEntry[] {
-  return entries ?? [null];
+  return entries ?? [];
 }
 
 export function addBudgetEntry(
   entries: BudgetEntry[],
-  amount?: number,
+  amount: number,
 ): BudgetEntry[] {
-  return [...entries, amount ?? null];
+  return [...entries, amount];
 }
 
 export function updateBudgetEntry(
@@ -28,13 +28,8 @@ export function removeBudgetEntry(
   index: number,
 ): BudgetEntry[] {
   validateIndex(index, entries);
-  if (!canRemoveBudgetEntry(entries)) return entries;
 
   return entries.filter((_, i) => i !== index);
-}
-
-export function canRemoveBudgetEntry(entries: BudgetEntry[]): boolean {
-  return entries.length > 1;
 }
 
 export function makeLabel(baseLabel: string) {

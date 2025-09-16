@@ -7,7 +7,6 @@ interface BudgetEntryRowProps {
   label: string;
   entry: BudgetEntry;
   removeButtonLabel: string;
-  canRemove: boolean;
   onChange: (entry: BudgetEntry) => void;
   onRemove: () => void;
 }
@@ -16,7 +15,6 @@ export function BudgetEntryRow({
   label,
   entry,
   removeButtonLabel,
-  canRemove,
   onChange,
   onRemove,
 }: BudgetEntryRowProps) {
@@ -28,17 +26,15 @@ export function BudgetEntryRow({
         className="flex-1"
         onChange={onChange}
       />
-      {canRemove && (
-        <Button
-          size="sm"
-          color="danger"
-          onPress={onRemove}
-          isIconOnly
-          aria-label={removeButtonLabel}
-        >
-          <Trash2 size={16} />
-        </Button>
-      )}
+      <Button
+        size="sm"
+        color="danger"
+        onPress={onRemove}
+        isIconOnly
+        aria-label={removeButtonLabel}
+      >
+        <Trash2 size={16} />
+      </Button>
     </div>
   );
 }
