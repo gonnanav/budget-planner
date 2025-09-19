@@ -1,28 +1,22 @@
 import { BudgetSection } from "./BudgetSection";
 import { BudgetEntry } from "./types";
 
-interface ExpenseSectionProps {
+interface ExpenseSectionProps
+  extends Omit<
+    React.ComponentProps<typeof BudgetSection>,
+    "items" | "title" | "itemLabel" | "addItemButtonLabel"
+  > {
   expenses: BudgetEntry[];
-  onAddEntry: (entry: BudgetEntry) => void;
-  onUpdateEntry: (index: number, nextEntry: BudgetEntry) => void;
-  onDeleteEntry: (index: number) => void;
 }
 
-export function ExpenseSection({
-  expenses,
-  onAddEntry,
-  onUpdateEntry,
-  onDeleteEntry,
-}: ExpenseSectionProps) {
+export function ExpenseSection({ expenses, ...props }: ExpenseSectionProps) {
   return (
     <BudgetSection
       items={expenses}
       title="Expenses"
       itemLabel="Expense"
       addItemButtonLabel="Add expense"
-      onAddEntry={onAddEntry}
-      onUpdateEntry={onUpdateEntry}
-      onDeleteEntry={onDeleteEntry}
+      {...props}
     />
   );
 }
