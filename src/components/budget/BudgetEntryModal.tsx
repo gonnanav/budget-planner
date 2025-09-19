@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -13,6 +13,7 @@ import { AmountInput } from "./AmountInput";
 interface BudgetEntryModalProps {
   title: string;
   isOpen: boolean;
+  amount?: number | null;
   onSave: (amount: number) => void;
   onClose: () => void;
 }
@@ -20,10 +21,17 @@ interface BudgetEntryModalProps {
 export const BudgetEntryModal = ({
   title,
   isOpen,
+  amount: entryAmount,
   onSave,
   onClose,
 }: BudgetEntryModalProps) => {
   const [amount, setAmount] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!entryAmount) return;
+
+    setAmount(entryAmount);
+  }, [entryAmount]);
 
   const handleAmountChange = (amount: number | null) => {
     setAmount(amount ?? 0);
