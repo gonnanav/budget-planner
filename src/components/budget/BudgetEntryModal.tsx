@@ -8,6 +8,7 @@ import {
 } from "@heroui/modal";
 import { Form } from "@heroui/form";
 import { Button } from "@heroui/button";
+import { Trash2 } from "lucide-react";
 import { AmountInput } from "./AmountInput";
 
 interface BudgetEntryModalProps {
@@ -16,6 +17,7 @@ interface BudgetEntryModalProps {
   amount?: number | null;
   onSave: (amount: number) => void;
   onClose: () => void;
+  onDelete?: () => void;
 }
 
 export const BudgetEntryModal = ({
@@ -24,8 +26,10 @@ export const BudgetEntryModal = ({
   amount: entryAmount,
   onSave,
   onClose,
+  onDelete,
 }: BudgetEntryModalProps) => {
   const [amount, setAmount] = useState<number | null>(null);
+  const isEditMode = entryAmount !== null;
 
   useEffect(() => {
     if (!entryAmount) return;
@@ -51,13 +55,18 @@ export const BudgetEntryModal = ({
     handleClose();
   };
 
+  const handleDelete = () => {
+    onDelete?.();
+    handleClose();
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleSave();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} placement="center">
+    <Modal isOpen={isOpen} onClose={handleClose} placement="top-center">
       <Form onSubmit={handleSubmit}>
         <ModalContent>
           {(onClose) => (
@@ -74,6 +83,16 @@ export const BudgetEntryModal = ({
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
                 </Button>
+                {isEditMode && (
+                  <Button
+                    color="danger"
+                    onPress={handleDelete}
+                    isIconOnly
+                    aria-label="Delete"
+                  >
+                    <Trash2 size={16} />
+                  </Button>
+                )}
                 <Button color="primary" type="submit">
                   Save
                 </Button>

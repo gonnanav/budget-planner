@@ -46,8 +46,10 @@ export function BudgetSection({
     }
   };
 
-  const handleRemoveItem = (index: number) => {
+  const handleRemoveItem = (index: number | null) => {
+    if (index === null) return;
     onChange(removeBudgetEntry(items, index));
+    setEditedEntryIndex(null);
   };
 
   const handleClickItem = (index: number) => {
@@ -79,9 +81,7 @@ export function BudgetSection({
               <BudgetEntryRow
                 key={index}
                 entry={expense}
-                removeButtonLabel={removeItemButtonLabel}
                 onClick={() => handleClickItem(index)}
-                onRemove={() => handleRemoveItem(index)}
               />
             ))}
           </div>
@@ -94,6 +94,7 @@ export function BudgetSection({
         amount={editedAmount}
         onSave={handleModalSave}
         onClose={onModalClose}
+        onDelete={() => handleRemoveItem(editedEntryIndex)}
       />
     </div>
   );
