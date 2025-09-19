@@ -1,25 +1,25 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { AddBudgetEntryModal } from "./AddBudgetEntryModal";
+import { BudgetEntryModal } from "./BudgetEntryModal";
 import { expect, fn, screen } from "storybook/test";
 
 const meta = {
-  title: "Components/AddBudgetEntryModal",
-  component: AddBudgetEntryModal,
+  title: "Components/BudgetEntryModal",
+  component: BudgetEntryModal,
   args: {
     title: "Add Budget Entry",
     isOpen: true,
     onSave: fn(),
     onClose: fn(),
   },
-} satisfies Meta<typeof AddBudgetEntryModal>;
+} satisfies Meta<typeof BudgetEntryModal>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const AddEntry: Story = {
   play: async () => {
-    await expect(getModalTitle()).toBeInTheDocument();
+    await expect(getAddEntryTitle()).toBeInTheDocument();
     await expect(getAmountInput()).not.toHaveValue();
   },
 };
@@ -44,7 +44,7 @@ export const Saving: Story = {
   },
 };
 
-function getModalTitle() {
+function getAddEntryTitle() {
   return screen.getByText("Add Budget Entry");
 }
 

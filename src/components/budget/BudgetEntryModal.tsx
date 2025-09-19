@@ -10,19 +10,19 @@ import { Form } from "@heroui/form";
 import { Button } from "@heroui/button";
 import { AmountInput } from "./AmountInput";
 
-interface AddBudgetEntryModalProps {
+interface BudgetEntryModalProps {
   title: string;
   isOpen: boolean;
   onSave: (amount: number) => void;
   onClose: () => void;
 }
 
-export const AddBudgetEntryModal = ({
+export const BudgetEntryModal = ({
   title,
   isOpen,
   onSave,
   onClose,
-}: AddBudgetEntryModalProps) => {
+}: BudgetEntryModalProps) => {
   const [amount, setAmount] = useState<number | null>(null);
 
   const handleAmountChange = (amount: number | null) => {

@@ -9,7 +9,7 @@ import {
   makeLabel,
 } from "./budget-entries";
 import { BudgetEntryRow } from "./BudgetEntryRow";
-import { AddBudgetEntryModal } from "./AddBudgetEntryModal";
+import { BudgetEntryModal } from "./BudgetEntryModal";
 
 interface BudgetSection {
   items: BudgetEntry[];
@@ -79,7 +79,7 @@ export function BudgetSection({
         )}
       </div>
 
-      <AddBudgetEntryModal
+      <BudgetEntryModal
         title={`Add ${itemLabel}`}
         isOpen={isAddModalOpen}
         onSave={handleAddItem}
