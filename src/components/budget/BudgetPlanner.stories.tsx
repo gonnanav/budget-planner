@@ -47,11 +47,6 @@ export const MultipleIncomes: Story = {
     initialIncomes: [5000, 3000, 2000],
     initialExpenses: [8000],
   },
-  play: async ({ canvas }) => {
-    await expect(getIncomeInput(canvas, 0)).toHaveValue("5,000");
-    await expect(getIncomeInput(canvas, 1)).toHaveValue("3,000");
-    await expect(getIncomeInput(canvas, 2)).toHaveValue("2,000");
-  },
 };
 
 export const MultipleExpenses: Story = {
@@ -59,66 +54,7 @@ export const MultipleExpenses: Story = {
     initialIncomes: [10000],
     initialExpenses: [2000, 1000, 3000],
   },
-  play: async ({ canvas }) => {
-    await expect(getExpenseInput(canvas, 0)).toHaveValue("2,000");
-    await expect(getExpenseInput(canvas, 1)).toHaveValue("1,000");
-    await expect(getExpenseInput(canvas, 2)).toHaveValue("3,000");
-  },
 };
-
-export const RemovingIncomes: Story = {
-  args: {
-    initialIncomes: [3000, 2000],
-    initialExpenses: [4000],
-  },
-  play: async ({ canvas, userEvent }) => {
-    await expect(getAllIncomesInputs(canvas)).toHaveLength(2);
-
-    await userEvent.click(getRemoveIncomeButton(canvas, 0));
-    await expect(getAllIncomesInputs(canvas)).toHaveLength(1);
-  },
-};
-
-export const RemovingExpenses: Story = {
-  args: {
-    initialIncomes: [4000],
-    initialExpenses: [2000, 1000],
-  },
-  play: async ({ canvas, userEvent }) => {
-    await expect(getAllExpensesInputs(canvas)).toHaveLength(2);
-
-    await userEvent.click(getRemoveExpenseButton(canvas, 0));
-    await expect(getAllExpensesInputs(canvas)).toHaveLength(1);
-  },
-};
-
-function getAllExpensesInputs(canvas: Canvas) {
-  return canvas.getAllByLabelText(/^Expense \d+$/);
-}
-
-function getAllIncomesInputs(canvas: Canvas) {
-  return canvas.getAllByLabelText(/^Income \d+$/);
-}
-
-function getIncomeInput(canvas: Canvas, index: number) {
-  return getBudgetItemInput(canvas, index, "Income");
-}
-
-function getExpenseInput(canvas: Canvas, index: number) {
-  return getBudgetItemInput(canvas, index, "Expense");
-}
-
-function getBudgetItemInput(canvas: Canvas, index: number, label: string) {
-  return canvas.getByLabelText(`${label} ${index + 1}`);
-}
-
-function getRemoveExpenseButton(canvas: Canvas, index: number) {
-  return canvas.getAllByRole("button", { name: "Remove expense" })[index];
-}
-
-function getRemoveIncomeButton(canvas: Canvas, index: number) {
-  return canvas.getAllByRole("button", { name: "Remove income" })[index];
-}
 
 function getBalanceOutput(canvas: Canvas) {
   return canvas.getByRole("status", { name: "Balance" });

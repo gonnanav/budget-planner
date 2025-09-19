@@ -27,6 +27,6 @@ export const Default: Story = {
 
 export const Empty: Story = {
   play: async ({ canvas }) => {
-    await expect(canvas.getByText("No entries yet.")).toBeInTheDocument();
+    await expect(canvas.getByText("No entries yet")).toBeInTheDocument();
   },
 };

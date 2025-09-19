@@ -1,34 +1,30 @@
 import { Button } from "@heroui/button";
 import { Trash2 } from "lucide-react";
 import { BudgetEntry } from "./types";
-import { AmountInput } from "./AmountInput";
 
 interface BudgetEntryRowProps {
-  label: string;
   entry: BudgetEntry;
   removeButtonLabel: string;
-  onChange: (entry: BudgetEntry) => void;
   onRemove: () => void;
+  onClick: () => void;
 }
 
 export function BudgetEntryRow({
-  label,
   entry,
   removeButtonLabel,
-  onChange,
   onRemove,
+  onClick,
 }: BudgetEntryRowProps) {
   return (
-    <div className="flex items-center gap-3">
-      <AmountInput
-        label={label}
-        amount={entry}
-        className="flex-1"
-        onChange={onChange}
-      />
+    <div
+      className="flex justify-between px-2 py-2 transition-colors hover:bg-gray-50 active:bg-gray-100 cursor-pointer"
+      onClick={onClick}
+    >
+      <div className="text-gray-900 truncate">₪{entry?.toLocaleString()}</div>
       <Button
         size="sm"
         color="danger"
+        variant="light"
         onPress={onRemove}
         isIconOnly
         aria-label={removeButtonLabel}

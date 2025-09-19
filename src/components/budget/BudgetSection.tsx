@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@heroui/button";
 import { useDisclosure } from "@heroui/react";
 import { Plus } from "lucide-react";
@@ -6,7 +7,6 @@ import {
   addBudgetEntry,
   updateBudgetEntry,
   removeBudgetEntry,
-  makeLabel,
 } from "./budget-entries";
 import { BudgetEntryRow } from "./BudgetEntryRow";
 import { BudgetEntryModal } from "./BudgetEntryModal";
@@ -29,23 +29,31 @@ export function BudgetSection({
   onChange,
 }: BudgetSection) {
   const {
-    isOpen: isAddModalOpen,
-    onOpen: onAddModalOpen,
-    onClose: onAddModalClose,
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
   } = useDisclosure();
-  const handleAddItem = (amount: number) => {
-    onChange(addBudgetEntry(items, amount));
+  const [editedEntryIndex, setEditedEntryIndex] = useState<number | null>(null);
+  const editedAmount =
+    editedEntryIndex === null ? null : items[editedEntryIndex];
+
+  const handleModalSave = (amount: number) => {
+    if (editedEntryIndex !== null) {
+      onChange(updateBudgetEntry(items, editedEntryIndex, amount));
+      setEditedEntryIndex(null);
+    } else {
+      onChange(addBudgetEntry(items, amount));
+    }
   };
 
   const handleRemoveItem = (index: number) => {
     onChange(removeBudgetEntry(items, index));
   };
 
-  const handleUpdateItem = (index: number, entry: BudgetEntry) => {
-    onChange(updateBudgetEntry(items, index, entry));
+  const handleClickItem = (index: number) => {
+    setEditedEntryIndex(index);
+    onModalOpen();
   };
-
-  const itemLabelOf = makeLabel(itemLabel);
 
   return (
     <div className="space-y-4">
@@ -54,7 +62,7 @@ export function BudgetSection({
         <Button
           size="sm"
           color="primary"
-          onPress={onAddModalOpen}
+          onPress={onModalOpen}
           isIconOnly
           aria-label={addItemButtonLabel}
         >
@@ -64,26 +72,28 @@ export function BudgetSection({
 
       <div className="space-y-3">
         {items.length === 0 ? (
-          <p className="text-sm text-gray-500">No entries yet.</p>
+          <p className="text-sm text-center text-gray-400">No entries yet</p>
         ) : (
-          items.map((expense, index) => (
-            <BudgetEntryRow
-              key={index}
-              label={itemLabelOf(index)}
-              entry={expense}
-              removeButtonLabel={removeItemButtonLabel}
-              onChange={(entry) => handleUpdateItem(index, entry)}
-              onRemove={() => handleRemoveItem(index)}
-            />
-          ))
+          <div className="flex flex-col">
+            {items.map((expense, index) => (
+              <BudgetEntryRow
+                key={index}
+                entry={expense}
+                removeButtonLabel={removeItemButtonLabel}
+                onClick={() => handleClickItem(index)}
+                onRemove={() => handleRemoveItem(index)}
+              />
+            ))}
+          </div>
         )}
       </div>
 
       <BudgetEntryModal
-        title={`Add ${itemLabel}`}
-        isOpen={isAddModalOpen}
-        onSave={handleAddItem}
-        onClose={onAddModalClose}
+        title={editedAmount ? `Edit ${itemLabel}` : `Add ${itemLabel}`}
+        isOpen={isModalOpen}
+        amount={editedAmount}
+        onSave={handleModalSave}
+        onClose={onModalClose}
       />
     </div>
   );
