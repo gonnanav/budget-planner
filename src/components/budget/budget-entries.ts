@@ -1,5 +1,9 @@
 import type { BudgetEntry } from "./types";
 
+export function createBudgetEntry(amount?: number | null): BudgetEntry {
+  return { amount: amount ?? 0 };
+}
+
 export function createBudgetEntries(entries?: BudgetEntry[]): BudgetEntry[] {
   return entries ?? [];
 }
@@ -8,7 +12,7 @@ export function addBudgetEntry(
   entries: BudgetEntry[],
   amount: number,
 ): BudgetEntry[] {
-  return [...entries, { amount }];
+  return [...entries, createBudgetEntry(amount)];
 }
 
 export function updateBudgetEntry(

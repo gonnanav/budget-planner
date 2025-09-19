@@ -12,7 +12,7 @@ export function BudgetEntryRow({ entry, onClick }: BudgetEntryRowProps) {
       onClick={onClick}
     >
       <div className="text-gray-900 truncate">
-        ₪{entry.amount?.toLocaleString()}
+        ₪{entry.amount.toLocaleString()}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 export type BudgetStatus = "balanced" | "positive" | "negative";
 export interface BudgetEntry {
-  amount: number | null;
+  amount: number;
 }
 
 export interface BudgetEvaluation {

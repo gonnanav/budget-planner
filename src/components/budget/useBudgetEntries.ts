@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   createBudgetEntries,
+  createBudgetEntry,
   addBudgetEntry,
   updateBudgetEntry,
   removeBudgetEntry,
@@ -17,7 +18,7 @@ export function useBudgetEntries(initialEntries?: BudgetEntry[]) {
   };
 
   const handleUpdateEntry = (index: number, amount: number) => {
-    setEntries(updateBudgetEntry(entries, index, { amount }));
+    setEntries(updateBudgetEntry(entries, index, createBudgetEntry(amount)));
   };
 
   const handleDeleteEntry = (index: number) => {
