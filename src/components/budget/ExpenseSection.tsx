@@ -3,18 +3,26 @@ import { BudgetEntry } from "./types";
 
 interface ExpenseSectionProps {
   expenses: BudgetEntry[];
-  onChange: (expenses: BudgetEntry[]) => void;
+  onAddEntry: (entry: BudgetEntry) => void;
+  onUpdateEntry: (index: number, nextEntry: BudgetEntry) => void;
+  onDeleteEntry: (index: number) => void;
 }
 
-export function ExpenseSection({ expenses, onChange }: ExpenseSectionProps) {
+export function ExpenseSection({
+  expenses,
+  onAddEntry,
+  onUpdateEntry,
+  onDeleteEntry,
+}: ExpenseSectionProps) {
   return (
     <BudgetSection
       items={expenses}
       title="Expenses"
       itemLabel="Expense"
       addItemButtonLabel="Add expense"
-      removeItemButtonLabel="Remove expense"
-      onChange={onChange}
+      onAddEntry={onAddEntry}
+      onUpdateEntry={onUpdateEntry}
+      onDeleteEntry={onDeleteEntry}
     />
   );
 }

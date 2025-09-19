@@ -10,8 +10,9 @@ const meta = {
     title: "Budget Section",
     itemLabel: "Entry",
     addItemButtonLabel: "Add entry",
-    removeItemButtonLabel: "Remove entry",
-    onChange: fn(),
+    onAddEntry: fn(),
+    onUpdateEntry: fn(),
+    onDeleteEntry: fn(),
   },
 } satisfies Meta<typeof BudgetSection>;
 

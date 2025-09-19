@@ -3,11 +3,6 @@ import { Button } from "@heroui/button";
 import { useDisclosure } from "@heroui/react";
 import { Plus } from "lucide-react";
 import { BudgetEntry } from "./types";
-import {
-  addBudgetEntry,
-  updateBudgetEntry,
-  removeBudgetEntry,
-} from "./budget-entries";
 import { BudgetEntryRow } from "./BudgetEntryRow";
 import { BudgetEntryModal } from "./BudgetEntryModal";
 
@@ -16,8 +11,9 @@ interface BudgetSection {
   title: string;
   itemLabel: string;
   addItemButtonLabel: string;
-  removeItemButtonLabel: string;
-  onChange: (entries: BudgetEntry[]) => void;
+  onAddEntry: (entry: BudgetEntry) => void;
+  onUpdateEntry: (index: number, nextEntry: BudgetEntry) => void;
+  onDeleteEntry: (index: number) => void;
 }
 
 export function BudgetSection({
@@ -25,8 +21,9 @@ export function BudgetSection({
   title,
   itemLabel,
   addItemButtonLabel,
-  removeItemButtonLabel,
-  onChange,
+  onAddEntry,
+  onUpdateEntry,
+  onDeleteEntry,
 }: BudgetSection) {
   const {
     isOpen: isModalOpen,
@@ -39,20 +36,20 @@ export function BudgetSection({
 
   const handleModalSave = (amount: number) => {
     if (editedEntryIndex !== null) {
-      onChange(updateBudgetEntry(items, editedEntryIndex, amount));
+      onUpdateEntry(editedEntryIndex, amount);
       setEditedEntryIndex(null);
     } else {
-      onChange(addBudgetEntry(items, amount));
+      onAddEntry(amount);
     }
   };
 
-  const handleRemoveItem = (index: number | null) => {
+  const handleDeleteEntry = (index: number | null) => {
     if (index === null) return;
-    onChange(removeBudgetEntry(items, index));
+    onDeleteEntry(index);
     setEditedEntryIndex(null);
   };
 
-  const handleClickItem = (index: number) => {
+  const handleClickEntry = (index: number) => {
     setEditedEntryIndex(index);
     onModalOpen();
   };
@@ -81,7 +78,7 @@ export function BudgetSection({
               <BudgetEntryRow
                 key={index}
                 entry={expense}
-                onClick={() => handleClickItem(index)}
+                onClick={() => handleClickEntry(index)}
               />
             ))}
           </div>
@@ -94,7 +91,7 @@ export function BudgetSection({
         amount={editedAmount}
         onSave={handleModalSave}
         onClose={onModalClose}
-        onDelete={() => handleRemoveItem(editedEntryIndex)}
+        onDelete={() => handleDeleteEntry(editedEntryIndex)}
       />
     </div>
   );
