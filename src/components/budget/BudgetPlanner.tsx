@@ -1,12 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import {
-  createBudgetEntries,
-  addBudgetEntry,
-  updateBudgetEntry,
-  removeBudgetEntry,
-} from "./budget-entries";
+import { useBudgetEntries } from "./useBudgetEntries";
 import { IncomeSection } from "./IncomeSection";
 import { ExpenseSection } from "./ExpenseSection";
 import { Balance } from "./Balance";
@@ -21,32 +15,19 @@ export function BudgetPlanner({
   initialIncomes,
   initialExpenses,
 }: BudgetPlannerProps) {
-  const [incomes, setIncomes] = useState(() =>
-    createBudgetEntries(initialIncomes),
-  );
-  const [expenses, setExpenses] = useState(() =>
-    createBudgetEntries(initialExpenses),
-  );
+  const {
+    entries: incomes,
+    handleAddEntry: handleAddIncome,
+    handleUpdateEntry: handleUpdateIncome,
+    handleDeleteEntry: handleDeleteIncome,
+  } = useBudgetEntries(initialIncomes);
 
-  const handleAddIncome = (income: BudgetEntry) => {
-    setIncomes(addBudgetEntry(incomes, income ?? 0));
-  };
-  const handleUpdateIncome = (index: number, nextIncome: BudgetEntry) => {
-    setIncomes(updateBudgetEntry(incomes, index, nextIncome));
-  };
-  const handleDeleteIncome = (index: number) => {
-    setIncomes(removeBudgetEntry(incomes, index));
-  };
-
-  const handleAddExpense = (expense: BudgetEntry) => {
-    setExpenses(addBudgetEntry(expenses, expense ?? 0));
-  };
-  const handleUpdateExpense = (index: number, nextExpense: BudgetEntry) => {
-    setExpenses(updateBudgetEntry(expenses, index, nextExpense));
-  };
-  const handleDeleteExpense = (index: number) => {
-    setExpenses(removeBudgetEntry(expenses, index));
-  };
+  const {
+    entries: expenses,
+    handleAddEntry: handleAddExpense,
+    handleUpdateEntry: handleUpdateExpense,
+    handleDeleteEntry: handleDeleteExpense,
+  } = useBudgetEntries(initialExpenses);
 
   return (
     <section className="flex flex-col gap-4">
