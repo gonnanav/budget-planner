@@ -11,7 +11,9 @@ export function BudgetEntryRow({ entry, onClick }: BudgetEntryRowProps) {
       className="flex justify-between px-2 py-2 transition-colors hover:bg-gray-50 active:bg-gray-100 cursor-pointer"
       onClick={onClick}
     >
-      <div className="text-gray-900 truncate">₪{entry?.toLocaleString()}</div>
+      <div className="text-gray-900 truncate">
+        ₪{entry.amount?.toLocaleString()}
+      </div>
     </div>
   );
 }

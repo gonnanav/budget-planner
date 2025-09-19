@@ -12,12 +12,12 @@ export function useBudgetEntries(initialEntries?: BudgetEntry[]) {
     createBudgetEntries(initialEntries),
   );
 
-  const handleAddEntry = (entry: BudgetEntry) => {
-    setEntries(addBudgetEntry(entries, entry ?? 0));
+  const handleAddEntry = (amount: number) => {
+    setEntries(addBudgetEntry(entries, amount));
   };
 
-  const handleUpdateEntry = (index: number, nextEntry: BudgetEntry) => {
-    setEntries(updateBudgetEntry(entries, index, nextEntry));
+  const handleUpdateEntry = (index: number, amount: number) => {
+    setEntries(updateBudgetEntry(entries, index, { amount }));
   };
 
   const handleDeleteEntry = (index: number) => {

@@ -11,10 +11,12 @@ import { Button } from "@heroui/button";
 import { Trash2 } from "lucide-react";
 import { AmountInput } from "./AmountInput";
 
+import { BudgetEntry } from "./types";
+
 interface BudgetEntryModalProps {
   title: string;
   isOpen: boolean;
-  amount?: number | null;
+  amount?: BudgetEntry | null;
   onSave: (amount: number) => void;
   onClose: () => void;
   onDelete?: () => void;
@@ -34,7 +36,7 @@ export const BudgetEntryModal = ({
   useEffect(() => {
     if (!entryAmount) return;
 
-    setAmount(entryAmount);
+    setAmount(entryAmount.amount);
   }, [entryAmount]);
 
   const handleAmountChange = (amount: number | null) => {

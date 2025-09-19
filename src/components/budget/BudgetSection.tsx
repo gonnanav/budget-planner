@@ -11,8 +11,8 @@ interface BudgetSection {
   title: string;
   itemLabel: string;
   addItemButtonLabel: string;
-  onAddEntry: (entry: BudgetEntry) => void;
-  onUpdateEntry: (index: number, nextEntry: BudgetEntry) => void;
+  onAddEntry: (amount: number) => void;
+  onUpdateEntry: (index: number, amount: number) => void;
   onDeleteEntry: (index: number) => void;
 }
 

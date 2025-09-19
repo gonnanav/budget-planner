@@ -8,7 +8,7 @@ export function addBudgetEntry(
   entries: BudgetEntry[],
   amount: number,
 ): BudgetEntry[] {
-  return [...entries, amount];
+  return [...entries, { amount }];
 }
 
 export function updateBudgetEntry(

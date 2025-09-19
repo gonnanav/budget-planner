@@ -22,5 +22,5 @@ export function budgetBalance(
 }
 
 function budgetEntriesSum(entries: BudgetEntry[]): number {
-  return entries.reduce((sum: number, entry) => sum + (entry ?? 0), 0);
+  return entries.reduce((sum: number, entry) => sum + (entry.amount ?? 0), 0);
 }

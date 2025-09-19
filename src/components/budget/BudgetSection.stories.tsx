@@ -22,7 +22,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    items: [100, 200, 300],
+    items: [{ amount: 100 }, { amount: 200 }, { amount: 300 }],
   },
 };
 
