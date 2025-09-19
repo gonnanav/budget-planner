@@ -16,8 +16,10 @@ export function BudgetPlanner({
   initialIncomes,
   initialExpenses,
 }: BudgetPlannerProps) {
-  const [incomes, setIncomes] = useState(createBudgetEntries(initialIncomes));
-  const [expenses, setExpenses] = useState(
+  const [incomes, setIncomes] = useState(() =>
+    createBudgetEntries(initialIncomes),
+  );
+  const [expenses, setExpenses] = useState(() =>
     createBudgetEntries(initialExpenses),
   );
 

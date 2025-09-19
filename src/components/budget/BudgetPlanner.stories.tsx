@@ -14,45 +14,31 @@ type Story = StoryObj<typeof meta>;
 
 export const PositiveBalance: Story = {
   args: {
-    initialIncomes: [5000],
-    initialExpenses: [2000],
+    initialIncomes: [4000, 5000],
+    initialExpenses: [500, 100, 1000],
   },
   play: async ({ canvas }) => {
-    await expect(getBalanceOutput(canvas)).toHaveTextContent("3,000");
+    await expect(getBalanceOutput(canvas)).toHaveTextContent("7,400");
   },
 };
 
 export const NegativeBalance: Story = {
   args: {
-    initialIncomes: [1000],
-    initialExpenses: [1500],
+    initialIncomes: [1000, 2000],
+    initialExpenses: [2000, 1100, 500],
   },
 };
 
 export const ZeroBalance: Story = {
   args: {
-    initialIncomes: [3000],
-    initialExpenses: [3000],
+    initialIncomes: [1000, 2000],
+    initialExpenses: [2000, 1000],
   },
 };
 
 export const Pristine: Story = {
   play: async ({ canvas }) => {
     await expect(getBalanceOutput(canvas)).toHaveTextContent("0");
-  },
-};
-
-export const MultipleIncomes: Story = {
-  args: {
-    initialIncomes: [5000, 3000, 2000],
-    initialExpenses: [8000],
-  },
-};
-
-export const MultipleExpenses: Story = {
-  args: {
-    initialIncomes: [10000],
-    initialExpenses: [2000, 1000, 3000],
   },
 };
 
