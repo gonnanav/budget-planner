@@ -49,7 +49,7 @@ export const AddBudgetEntryModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} hideCloseButton>
+    <Modal isOpen={isOpen} onClose={handleClose} placement="center">
       <Form onSubmit={handleSubmit}>
         <ModalContent>
           {(onClose) => (
