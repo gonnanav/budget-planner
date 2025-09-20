@@ -1,43 +1,42 @@
-import type { BudgetEntry } from "./types";
+import type { BudgetEntry, BudgetEntryInput } from "./types";
 
-export function createBudgetEntry(amount?: number | null): BudgetEntry {
-  return { amount: amount ?? 0 };
+export function createBudgetEntry(input?: BudgetEntryInput): BudgetEntry {
+  return { amount: input?.amount ?? 0 };
 }
 
-export function createBudgetEntries(entries?: BudgetEntry[]): BudgetEntry[] {
-  return entries ?? [];
+export function createBudgetEntries(
+  inputs: BudgetEntryInput[] = [],
+): BudgetEntry[] {
+  return inputs.map((input) => createBudgetEntry(input));
 }
 
 export function addBudgetEntry(
   entries: BudgetEntry[],
-  amount: number,
+  input: BudgetEntryInput,
 ): BudgetEntry[] {
-  return [...entries, createBudgetEntry(amount)];
+  return [...entries, createBudgetEntry(input)];
 }
 
 export function updateBudgetEntry(
   entries: BudgetEntry[],
   index: number,
-  entry: BudgetEntry,
+  input: BudgetEntryInput,
 ): BudgetEntry[] {
   validateIndex(index, entries);
 
   const updatedEntries = [...entries];
-  updatedEntries[index] = entry;
+  updatedEntries[index] = createBudgetEntry(input);
+
   return updatedEntries;
 }
 
-export function removeBudgetEntry(
+export function deleteBudgetEntry(
   entries: BudgetEntry[],
   index: number,
 ): BudgetEntry[] {
   validateIndex(index, entries);
 
   return entries.filter((_, i) => i !== index);
-}
-
-export function makeLabel(baseLabel: string) {
-  return (index: number) => `${baseLabel} ${index + 1}`;
 }
 
 function validateIndex(index: number, entries: BudgetEntry[]) {

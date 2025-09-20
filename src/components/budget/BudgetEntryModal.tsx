@@ -9,15 +9,14 @@ import {
 import { Form } from "@heroui/form";
 import { Button } from "@heroui/button";
 import { Trash2 } from "lucide-react";
+import { BudgetEntry, BudgetEntryInput } from "./types";
 import { AmountInput } from "./AmountInput";
-
-import { BudgetEntry } from "./types";
 
 interface BudgetEntryModalProps {
   title: string;
   isOpen: boolean;
-  amount?: BudgetEntry | null;
-  onSave: (amount: number) => void;
+  entry?: BudgetEntry | null;
+  onSave: (input: BudgetEntryInput) => void;
   onClose: () => void;
   onDelete?: () => void;
 }
@@ -25,19 +24,19 @@ interface BudgetEntryModalProps {
 export const BudgetEntryModal = ({
   title,
   isOpen,
-  amount: entryAmount,
+  entry,
   onSave,
   onClose,
   onDelete,
 }: BudgetEntryModalProps) => {
   const [amount, setAmount] = useState<number | null>(null);
-  const isEditMode = entryAmount !== null;
+  const isEditMode = entry !== null;
 
   useEffect(() => {
-    if (!entryAmount) return;
+    if (!entry) return;
 
-    setAmount(entryAmount.amount);
-  }, [entryAmount]);
+    setAmount(entry.amount);
+  }, [entry]);
 
   const handleAmountChange = (amount: number | null) => {
     setAmount(amount ?? 0);
@@ -53,7 +52,7 @@ export const BudgetEntryModal = ({
   };
 
   const handleSave = () => {
-    onSave(amount ?? 0);
+    onSave({ amount: amount ?? 0 });
     handleClose();
   };
 

@@ -31,7 +31,7 @@ export const AddEntry: Story = {
 export const UpdateEntry: Story = {
   args: {
     title: "Update Budget Entry",
-    amount: createBudgetEntry(123),
+    entry: createBudgetEntry({ amount: 123 }),
   },
   play: async () => {
     await expect(screen.getByText("Update Budget Entry")).toBeInTheDocument();
@@ -54,7 +54,7 @@ export const Saving: Story = {
     await userEvent.type(getAmountInput(), "100");
     await userEvent.click(getSaveButton());
 
-    await expect(args.onSave).toHaveBeenCalledWith(100);
+    await expect(args.onSave).toHaveBeenCalledWith({ amount: 100 });
     await expect(getAmountInput()).not.toHaveValue();
   },
 };

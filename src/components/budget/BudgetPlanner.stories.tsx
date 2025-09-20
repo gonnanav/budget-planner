@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, screen } from "storybook/test";
 import { Canvas } from "storybook/internal/types";
 import { BudgetPlanner } from "./BudgetPlanner";
-import { createBudgetEntry } from "./budget-entries";
 
 const meta = {
   title: "components/BudgetPlanner",
@@ -15,12 +14,8 @@ type Story = StoryObj<typeof meta>;
 
 export const PositiveBalance: Story = {
   args: {
-    initialIncomes: [createBudgetEntry(4000), createBudgetEntry(5000)],
-    initialExpenses: [
-      createBudgetEntry(500),
-      createBudgetEntry(100),
-      createBudgetEntry(1000),
-    ],
+    initialIncomes: [{ amount: 4000 }, { amount: 5000 }],
+    initialExpenses: [{ amount: 500 }, { amount: 100 }, { amount: 1000 }],
   },
   play: async ({ canvas }) => {
     await expect(getBalanceOutput(canvas)).toHaveTextContent("7,400");
@@ -29,19 +24,15 @@ export const PositiveBalance: Story = {
 
 export const NegativeBalance: Story = {
   args: {
-    initialIncomes: [createBudgetEntry(1000), createBudgetEntry(2000)],
-    initialExpenses: [
-      createBudgetEntry(2000),
-      createBudgetEntry(1100),
-      createBudgetEntry(500),
-    ],
+    initialIncomes: [{ amount: 1000 }, { amount: 2000 }],
+    initialExpenses: [{ amount: 2000 }, { amount: 1100 }, { amount: 500 }],
   },
 };
 
 export const ZeroBalance: Story = {
   args: {
-    initialIncomes: [createBudgetEntry(1000), createBudgetEntry(2000)],
-    initialExpenses: [createBudgetEntry(2000), createBudgetEntry(1000)],
+    initialIncomes: [{ amount: 1000 }, { amount: 2000 }],
+    initialExpenses: [{ amount: 2000 }, { amount: 1000 }],
   },
 };
 

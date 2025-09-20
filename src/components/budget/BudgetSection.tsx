@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@heroui/button";
 import { useDisclosure } from "@heroui/react";
 import { Plus } from "lucide-react";
-import { BudgetEntry } from "./types";
+import { BudgetEntry, BudgetEntryInput } from "./types";
 import { BudgetEntryRow } from "./BudgetEntryRow";
 import { BudgetEntryModal } from "./BudgetEntryModal";
 
@@ -11,8 +11,8 @@ interface BudgetSection {
   title: string;
   itemLabel: string;
   addItemButtonLabel: string;
-  onAddEntry: (amount: number) => void;
-  onUpdateEntry: (index: number, amount: number) => void;
+  onAddEntry: (input: BudgetEntryInput) => void;
+  onUpdateEntry: (index: number, input: BudgetEntryInput) => void;
   onDeleteEntry: (index: number) => void;
 }
 
@@ -31,15 +31,15 @@ export function BudgetSection({
     onClose: onModalClose,
   } = useDisclosure();
   const [editedEntryIndex, setEditedEntryIndex] = useState<number | null>(null);
-  const editedAmount =
+  const editedEntry =
     editedEntryIndex === null ? null : items[editedEntryIndex];
 
-  const handleModalSave = (amount: number) => {
+  const handleModalSave = (input: BudgetEntryInput) => {
     if (editedEntryIndex !== null) {
-      onUpdateEntry(editedEntryIndex, amount);
+      onUpdateEntry(editedEntryIndex, input);
       setEditedEntryIndex(null);
     } else {
-      onAddEntry(amount);
+      onAddEntry(input);
     }
   };
 
@@ -86,9 +86,9 @@ export function BudgetSection({
       </div>
 
       <BudgetEntryModal
-        title={editedAmount ? `Edit ${itemLabel}` : `Add ${itemLabel}`}
+        title={editedEntryIndex ? `Edit ${itemLabel}` : `Add ${itemLabel}`}
         isOpen={isModalOpen}
-        amount={editedAmount}
+        entry={editedEntry}
         onSave={handleModalSave}
         onClose={onModalClose}
         onDelete={() => handleDeleteEntry(editedEntryIndex)}
