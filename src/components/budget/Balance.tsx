@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
-import { budgetBalance } from "./budget-balance";
-import { BudgetEntry, BudgetEvaluation } from "./types";
+import { budgetBalance } from "./core/budget-balance";
+import { BudgetEntry, BudgetEvaluation } from "./core/types";
 
 export interface BalanceProps {
   incomes: BudgetEntry[];

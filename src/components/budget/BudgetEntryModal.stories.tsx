@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { BudgetEntryModal } from "./BudgetEntryModal";
 import { expect, fn, screen } from "storybook/test";
-import { createBudgetEntry } from "./budget-entries";
+import { createBudgetEntry } from "./core/budget-entries";
 
 const meta = {
   title: "Components/BudgetEntryModal",

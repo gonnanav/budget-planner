@@ -1,4 +1,4 @@
-import { BudgetEntry } from "./types";
+import { BudgetEntry } from "./core/types";
 
 interface BudgetEntryRowProps {
   entry: BudgetEntry;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@heroui/button";
 import { useDisclosure } from "@heroui/react";
 import { Plus } from "lucide-react";
-import { BudgetEntry, BudgetEntryInput } from "./types";
+import { BudgetEntry, BudgetEntryInput } from "./core/types";
 import { BudgetEntryRow } from "./BudgetEntryRow";
 import { BudgetEntryModal } from "./BudgetEntryModal";
 

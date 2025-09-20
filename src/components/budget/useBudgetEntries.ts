@@ -4,8 +4,8 @@ import {
   addBudgetEntry,
   updateBudgetEntry,
   deleteBudgetEntry,
-} from "./budget-entries";
-import { BudgetEntryInput } from "./types";
+} from "./core/budget-entries";
+import { BudgetEntryInput } from "./core/types";
 
 export function useBudgetEntries(initialEntries?: BudgetEntryInput[]) {
   const [entries, setEntries] = useState(() =>

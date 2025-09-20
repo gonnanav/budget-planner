@@ -9,7 +9,7 @@ import {
 import { Form } from "@heroui/form";
 import { Button } from "@heroui/button";
 import { Trash2 } from "lucide-react";
-import { BudgetEntry, BudgetEntryInput } from "./types";
+import { BudgetEntry, BudgetEntryInput } from "./core/types";
 import { AmountInput } from "./AmountInput";
 
 interface BudgetEntryModalProps {
