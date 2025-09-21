@@ -1,17 +1,17 @@
 import type { BudgetEntry, BudgetEntryInput } from "./types";
 
-export function createBudgetEntry(input?: BudgetEntryInput): BudgetEntry {
+export function createEntry(input?: BudgetEntryInput): BudgetEntry {
   return { amount: input?.amount ?? 0 };
 }
 
-export function addBudgetEntry(
+export function addEntry(
   entries: BudgetEntry[],
   input: BudgetEntryInput,
 ): BudgetEntry[] {
-  return [...entries, createBudgetEntry(input)];
+  return [...entries, createEntry(input)];
 }
 
-export function updateBudgetEntry(
+export function updateEntryIn(
   entries: BudgetEntry[],
   index: number,
   input: BudgetEntryInput,
@@ -19,12 +19,12 @@ export function updateBudgetEntry(
   validateIndex(index, entries);
 
   const updatedEntries = [...entries];
-  updatedEntries[index] = createBudgetEntry(input);
+  updatedEntries[index] = createEntry(input);
 
   return updatedEntries;
 }
 
-export function deleteBudgetEntry(
+export function removeEntry(
   entries: BudgetEntry[],
   index: number,
 ): BudgetEntry[] {

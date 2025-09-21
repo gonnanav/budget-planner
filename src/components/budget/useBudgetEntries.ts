@@ -1,24 +1,20 @@
 import { useState } from "react";
-import {
-  addBudgetEntry,
-  updateBudgetEntry,
-  deleteBudgetEntry,
-} from "./core/budget-entries";
+import { addEntry, updateEntryIn, removeEntry } from "./core/budget-entries";
 import { BudgetEntry, BudgetEntryInput } from "./core/types";
 
 export function useBudgetEntries(initialEntries: BudgetEntry[] = []) {
   const [entries, setEntries] = useState(initialEntries);
 
   const handleAddEntry = (input: BudgetEntryInput) => {
-    setEntries(addBudgetEntry(entries, input));
+    setEntries(addEntry(entries, input));
   };
 
   const handleUpdateEntry = (index: number, input: BudgetEntryInput) => {
-    setEntries(updateBudgetEntry(entries, index, input));
+    setEntries(updateEntryIn(entries, index, input));
   };
 
   const handleDeleteEntry = (index: number) => {
-    setEntries(deleteBudgetEntry(entries, index));
+    setEntries(removeEntry(entries, index));
   };
 
   return {
