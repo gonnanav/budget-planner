@@ -31,7 +31,7 @@ export const AddEntry: Story = {
 export const UpdateEntry: Story = {
   args: {
     title: "Update Budget Entry",
-    entry: createEntry({ amount: 123 }),
+    entry: createEntry("1", { amount: 123 }),
   },
   play: async () => {
     await expect(screen.getByText("Update Budget Entry")).toBeInTheDocument();

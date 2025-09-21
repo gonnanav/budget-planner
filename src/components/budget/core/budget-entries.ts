@@ -1,7 +1,7 @@
 import type { BudgetEntry, BudgetEntryInput } from "./types";
 
-export function createEntry(input?: BudgetEntryInput): BudgetEntry {
-  return { amount: input?.amount ?? 0 };
+export function createEntry(id: string, input?: BudgetEntryInput): BudgetEntry {
+  return { id, amount: input?.amount ?? 0 };
 }
 
 function updateEntry(entry: BudgetEntry, input: BudgetEntryInput): BudgetEntry {
@@ -10,9 +10,10 @@ function updateEntry(entry: BudgetEntry, input: BudgetEntryInput): BudgetEntry {
 
 export function addEntry(
   entries: BudgetEntry[],
+  id: string,
   input: BudgetEntryInput,
 ): BudgetEntry[] {
-  return [...entries, createEntry(input)];
+  return [...entries, createEntry(id, input)];
 }
 
 export function updateEntryIn(

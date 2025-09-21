@@ -6,7 +6,7 @@ export function useBudgetEntries(initialEntries: BudgetEntry[] = []) {
   const [entries, setEntries] = useState(initialEntries);
 
   const handleAddEntry = (input: BudgetEntryInput) => {
-    setEntries(addEntry(entries, input));
+    setEntries(addEntry(entries, crypto.randomUUID(), input));
   };
 
   const handleUpdateEntry = (index: number, input: BudgetEntryInput) => {

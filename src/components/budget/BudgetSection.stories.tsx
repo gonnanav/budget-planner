@@ -24,9 +24,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     items: [
-      createEntry({ amount: 100 }),
-      createEntry({ amount: 200 }),
-      createEntry({ amount: 300 }),
+      createEntry("1", { amount: 100 }),
+      createEntry("2", { amount: 200 }),
+      createEntry("3", { amount: 300 }),
     ],
   },
 };

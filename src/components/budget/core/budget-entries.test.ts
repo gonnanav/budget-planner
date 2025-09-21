@@ -7,69 +7,75 @@ import {
 } from "./budget-entries";
 
 test("creates a budget entry with the given amount", () => {
-  const budgetEntry = createEntry({ amount: 100 });
+  const budgetEntry = createEntry("1", { amount: 100 });
 
-  expect(budgetEntry).toEqual({ amount: 100 });
+  expect(budgetEntry).toMatchObject({ amount: 100 });
 });
 
 test("creates a budget entry with zero amount when null is provided", () => {
-  const budgetEntry = createEntry({ amount: null });
+  const budgetEntry = createEntry("1", { amount: null });
 
-  expect(budgetEntry).toEqual({ amount: 0 });
+  expect(budgetEntry).toMatchObject({ amount: 0 });
 });
 
 test("creates a budget entry with zero amount when undefined is provided", () => {
-  const budgetEntry = createEntry({ amount: undefined });
+  const budgetEntry = createEntry("1", { amount: undefined });
 
-  expect(budgetEntry).toEqual({ amount: 0 });
+  expect(budgetEntry).toMatchObject({ amount: 0 });
 });
 
 test("creates a budget entry with zero amount when no amount is provided", () => {
-  const budgetEntry = createEntry();
+  const budgetEntry = createEntry("1");
 
-  expect(budgetEntry).toEqual({ amount: 0 });
+  expect(budgetEntry).toMatchObject({ amount: 0 });
 });
 
 test("adds a new budget entry with the given amount", () => {
-  const budgetEntries = [createEntry({ amount: 100 })];
-  const updatedBudgetEntries = addEntry(budgetEntries, { amount: 200 });
+  const budgetEntries = [createEntry("1", { amount: 100 })];
+  const updatedBudgetEntries = addEntry(budgetEntries, "2", { amount: 200 });
 
-  expect(updatedBudgetEntries).toEqual([{ amount: 100 }, { amount: 200 }]);
+  expect(updatedBudgetEntries).toEqual([
+    { id: "1", amount: 100 },
+    { id: "2", amount: 200 },
+  ]);
 });
 
 test("updates the budget entry amount at the given index", () => {
   const budgetEntries = [
-    createEntry({ amount: 100 }),
-    createEntry({ amount: 50 }),
+    createEntry("1", { amount: 100 }),
+    createEntry("2", { amount: 50 }),
   ];
   const updatedBudgetEntries = updateEntryIn(budgetEntries, 1, {
     amount: 200,
   });
 
-  expect(updatedBudgetEntries).toEqual([{ amount: 100 }, { amount: 200 }]);
+  expect(updatedBudgetEntries).toEqual([
+    { id: "1", amount: 100 },
+    { id: "2", amount: 200 },
+  ]);
 });
 
 test("throws error for invalid index when updating", () => {
-  const budgetEntries = [createEntry({ amount: 100 })];
+  const budgetEntries = [createEntry("1", { amount: 100 })];
 
   expect(() => updateEntryIn(budgetEntries, -1, { amount: 200 })).toThrow();
   expect(() => updateEntryIn(budgetEntries, 1, { amount: 200 })).toThrow();
 });
 
-test("deletes the budget entry at the given index", () => {
+test("removes the budget entry at the given index", () => {
   const budgetEntries = [
-    createEntry({ amount: 100 }),
-    createEntry({ amount: 50 }),
+    createEntry("1", { amount: 100 }),
+    createEntry("2", { amount: 50 }),
   ];
-  const updatedBudgetEntries = removeEntry(budgetEntries, 1);
+  const updated = removeEntry(budgetEntries, 1);
 
-  expect(updatedBudgetEntries).toEqual([{ amount: 100 }]);
+  expect(updated).toMatchObject([{ id: "1" }]);
 });
 
 test("throws error for invalid index when deleting", () => {
   const budgetEntries = [
-    createEntry({ amount: 100 }),
-    createEntry({ amount: 50 }),
+    createEntry("1", { amount: 100 }),
+    createEntry("2", { amount: 50 }),
   ];
 
   expect(() => removeEntry(budgetEntries, -1)).toThrow();

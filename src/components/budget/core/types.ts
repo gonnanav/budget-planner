@@ -5,6 +5,7 @@ export interface BudgetEntryInput {
 }
 
 export interface BudgetEntry {
+  id: string;
   amount: number;
 }
 

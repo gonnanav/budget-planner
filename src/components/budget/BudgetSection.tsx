@@ -74,10 +74,10 @@ export function BudgetSection({
           <p className="text-sm text-center text-gray-400">No entries yet</p>
         ) : (
           <div className="flex flex-col">
-            {items.map((expense, index) => (
+            {items.map((entry, index) => (
               <BudgetEntryRow
-                key={index}
-                entry={expense}
+                key={entry.id}
+                entry={entry}
                 onClick={() => handleClickEntry(index)}
               />
             ))}
