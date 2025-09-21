@@ -1,16 +1,13 @@
 import { useState } from "react";
 import {
-  createBudgetEntries,
   addBudgetEntry,
   updateBudgetEntry,
   deleteBudgetEntry,
 } from "./core/budget-entries";
-import { BudgetEntryInput } from "./core/types";
+import { BudgetEntry, BudgetEntryInput } from "./core/types";
 
-export function useBudgetEntries(initialEntries?: BudgetEntryInput[]) {
-  const [entries, setEntries] = useState(() =>
-    createBudgetEntries(initialEntries),
-  );
+export function useBudgetEntries(initialEntries: BudgetEntry[] = []) {
+  const [entries, setEntries] = useState(initialEntries);
 
   const handleAddEntry = (input: BudgetEntryInput) => {
     setEntries(addBudgetEntry(entries, input));

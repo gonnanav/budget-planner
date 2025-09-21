@@ -4,11 +4,11 @@ import { useBudgetEntries } from "./useBudgetEntries";
 import { IncomeSection } from "./IncomeSection";
 import { ExpenseSection } from "./ExpenseSection";
 import { Balance } from "./Balance";
-import { BudgetEntryInput } from "./core/types";
+import { BudgetEntry } from "./core/types";
 
 interface BudgetPlannerProps {
-  initialIncomes?: BudgetEntryInput[];
-  initialExpenses?: BudgetEntryInput[];
+  initialIncomes?: BudgetEntry[];
+  initialExpenses?: BudgetEntry[];
 }
 
 export function BudgetPlanner({

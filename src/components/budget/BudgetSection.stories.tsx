@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, fn } from "storybook/test";
 import { BudgetSection } from "./BudgetSection";
-import { createBudgetEntries } from "./core/budget-entries";
+import { createBudgetEntry } from "./core/budget-entries";
 
 const meta = {
   title: "Components/BudgetSection",
@@ -23,11 +23,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    items: createBudgetEntries([
-      { amount: 100 },
-      { amount: 200 },
-      { amount: 300 },
-    ]),
+    items: [
+      createBudgetEntry({ amount: 100 }),
+      createBudgetEntry({ amount: 200 }),
+      createBudgetEntry({ amount: 300 }),
+    ],
   },
 };
 

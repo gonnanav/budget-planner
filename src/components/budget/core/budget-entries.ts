@@ -4,12 +4,6 @@ export function createBudgetEntry(input?: BudgetEntryInput): BudgetEntry {
   return { amount: input?.amount ?? 0 };
 }
 
-export function createBudgetEntries(
-  inputs: BudgetEntryInput[] = [],
-): BudgetEntry[] {
-  return inputs.map((input) => createBudgetEntry(input));
-}
-
 export function addBudgetEntry(
   entries: BudgetEntry[],
   input: BudgetEntryInput,

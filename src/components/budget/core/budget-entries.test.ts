@@ -1,6 +1,5 @@
 import { test, expect } from "vitest";
 import {
-  createBudgetEntries,
   createBudgetEntry,
   addBudgetEntry,
   updateBudgetEntry,
@@ -31,20 +30,8 @@ test("creates a budget entry with zero amount when no amount is provided", () =>
   expect(budgetEntry).toEqual({ amount: 0 });
 });
 
-test("creates an empty array of budget entries by default", () => {
-  const budgetEntries = createBudgetEntries();
-
-  expect(budgetEntries).toEqual([]);
-});
-
-test("creates budget entries based on the given values provided", () => {
-  const budgetEntries = createBudgetEntries([{ amount: 100 }, { amount: 50 }]);
-
-  expect(budgetEntries).toEqual([{ amount: 100 }, { amount: 50 }]);
-});
-
 test("adds a new budget entry with the given amount", () => {
-  const budgetEntries = createBudgetEntries([{ amount: 100 }]);
+  const budgetEntries = [createBudgetEntry({ amount: 100 })];
   const updatedBudgetEntries = addBudgetEntry(budgetEntries, { amount: 200 });
 
   expect(updatedBudgetEntries).toEqual([{ amount: 100 }, { amount: 200 }]);
@@ -63,21 +50,27 @@ test("updates the budget entry amount at the given index", () => {
 });
 
 test("throws error for invalid index when updating", () => {
-  const budgetEntries = createBudgetEntries([{ amount: 100 }]);
+  const budgetEntries = [createBudgetEntry({ amount: 100 })];
 
   expect(() => updateBudgetEntry(budgetEntries, -1, { amount: 200 })).toThrow();
   expect(() => updateBudgetEntry(budgetEntries, 1, { amount: 200 })).toThrow();
 });
 
-test("removes the budget entry at the given index", () => {
-  const budgetEntries = createBudgetEntries([{ amount: 100 }, { amount: 50 }]);
+test("deletes the budget entry at the given index", () => {
+  const budgetEntries = [
+    createBudgetEntry({ amount: 100 }),
+    createBudgetEntry({ amount: 50 }),
+  ];
   const updatedBudgetEntries = deleteBudgetEntry(budgetEntries, 1);
 
   expect(updatedBudgetEntries).toEqual([{ amount: 100 }]);
 });
 
-test("throws error for invalid index when removing", () => {
-  const budgetEntries = createBudgetEntries([{ amount: 100 }, { amount: 50 }]);
+test("throws error for invalid index when deleting", () => {
+  const budgetEntries = [
+    createBudgetEntry({ amount: 100 }),
+    createBudgetEntry({ amount: 50 }),
+  ];
 
   expect(() => deleteBudgetEntry(budgetEntries, -1)).toThrow();
   expect(() => deleteBudgetEntry(budgetEntries, 2)).toThrow();
