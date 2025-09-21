@@ -4,6 +4,10 @@ export function createEntry(input?: BudgetEntryInput): BudgetEntry {
   return { amount: input?.amount ?? 0 };
 }
 
+function updateEntry(entry: BudgetEntry, input: BudgetEntryInput): BudgetEntry {
+  return { ...entry, amount: input.amount ?? 0 };
+}
+
 export function addEntry(
   entries: BudgetEntry[],
   input: BudgetEntryInput,
@@ -18,10 +22,10 @@ export function updateEntryIn(
 ): BudgetEntry[] {
   validateIndex(index, entries);
 
-  const updatedEntries = [...entries];
-  updatedEntries[index] = createEntry(input);
+  const updated = [...entries];
+  updated[index] = updateEntry(entries[index], input);
 
-  return updatedEntries;
+  return updated;
 }
 
 export function removeEntry(
