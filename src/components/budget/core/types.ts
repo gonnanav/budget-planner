@@ -4,6 +4,8 @@ export interface BudgetEntryInput {
   amount?: number | null;
 }
 
+export type CreateBudgetEntryInput = BudgetEntryInput & { id: string };
+
 export interface BudgetEntry {
   id: string;
   amount: number | null;

@@ -8,32 +8,32 @@ import {
 import { createTestEntry, createTestEntries } from "./test-utils";
 
 test("creates an entry based on the given input", () => {
-  const entry = createEntry("1", { amount: 100 });
+  const entry = createEntry({ id: "1", amount: 100 });
 
   expect(entry).toMatchObject({ id: "1", amount: 100 });
 });
 
 test("creates an entry with defaults for optional input properties", () => {
-  const entry = createEntry("1");
+  const entry = createEntry({ id: "1" });
 
   expect(entry).toMatchObject({ amount: null });
 });
 
 test("adds a new entry to an empty array", () => {
-  const entries = addEntry([], "1", { amount: 200 });
+  const entries = addEntry([], { id: "1", amount: 200 });
 
   expect(entries).toMatchObject([{ id: "1" }]);
 });
 
 test("adds a new entry to an array with existing entries", () => {
   const original = createTestEntries([{ id: "1" }]);
-  const entries = addEntry(original, "2", { amount: 300 });
+  const entries = addEntry(original, { id: "2", amount: 300 });
 
   expect(entries).toMatchObject([{ id: "1" }, { id: "2" }]);
 });
 
 test("adds a new entry based on the given input", () => {
-  const [entry] = addEntry([], "1", { amount: 200 });
+  const [entry] = addEntry([], { id: "1", amount: 200 });
 
   expect(entry).toMatchObject({ id: "1", amount: 200 });
 });
