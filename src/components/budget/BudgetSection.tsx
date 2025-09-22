@@ -37,7 +37,6 @@ export function BudgetSection({
   const handleModalSave = (input: BudgetEntryInput) => {
     if (editedEntryIndex !== null) {
       onUpdateEntry(editedEntryIndex, input);
-      setEditedEntryIndex(null);
     } else {
       onAddEntry(input);
     }
@@ -46,12 +45,16 @@ export function BudgetSection({
   const handleDeleteEntry = (index: number | null) => {
     if (index === null) return;
     onDeleteEntry(index);
-    setEditedEntryIndex(null);
   };
 
   const handleClickEntry = (index: number) => {
     setEditedEntryIndex(index);
     onModalOpen();
+  };
+
+  const handleModalClose = () => {
+    onModalClose();
+    setEditedEntryIndex(null);
   };
 
   return (
@@ -90,7 +93,7 @@ export function BudgetSection({
         isOpen={isModalOpen}
         entry={editedEntry}
         onSave={handleModalSave}
-        onClose={onModalClose}
+        onClose={handleModalClose}
         onDelete={() => handleDeleteEntry(editedEntryIndex)}
       />
     </div>
