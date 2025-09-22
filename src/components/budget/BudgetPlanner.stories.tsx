@@ -3,6 +3,14 @@ import { expect } from "storybook/test";
 import { Canvas } from "storybook/internal/types";
 import { BudgetPlanner } from "./BudgetPlanner";
 import { createTestEntries } from "./core/test-utils";
+import {
+  salary,
+  allowance,
+  investment,
+  rent,
+  groceries,
+  diningOut,
+} from "./core/fixtures";
 
 const meta = {
   title: "components/BudgetPlanner",
@@ -15,38 +23,26 @@ type Story = StoryObj<typeof meta>;
 
 export const PositiveBalance: Story = {
   args: {
-    initialIncomes: createTestEntries([{ amount: 4000 }, { amount: 5000 }]),
-    initialExpenses: createTestEntries([
-      { amount: 500 },
-      { amount: 100 },
-      { amount: 1000 },
-    ]),
+    initialIncomes: [salary, allowance],
+    initialExpenses: [rent, groceries, diningOut],
   },
   play: async ({ canvas }) => {
-    await expect(getBalanceOutput(canvas)).toHaveTextContent("7,400");
+    await expect(getBalanceOutput(canvas)).toHaveTextContent("2,550");
   },
 };
 
 export const NegativeBalance: Story = {
   args: {
-    initialIncomes: createTestEntries([{ amount: 1000 }, { amount: 2000 }]),
-    initialExpenses: createTestEntries([
-      { amount: 2000 },
-      { amount: 1100 },
-      { amount: 500 },
-    ]),
+    initialIncomes: [allowance, investment],
+    initialExpenses: [rent, groceries, diningOut],
   },
 };
 
 export const ZeroBalance: Story = {
   args: {
-    initialIncomes: createTestEntries([
-      { id: "1", amount: 1000 },
-      { id: "2", amount: 2000 },
-    ]),
+    initialIncomes: [salary],
     initialExpenses: createTestEntries([
-      { id: "3", amount: 2000 },
-      { id: "4", amount: 1000 },
+      { name: "Misc", amount: salary.amount },
     ]),
   },
 };

@@ -5,7 +5,8 @@ import {
   updateEntryIn,
   removeEntry,
 } from "./budget-entries";
-import { createTestEntry, createTestEntries } from "./test-utils";
+import { createTestEntries } from "./test-utils";
+import { salary, allowance } from "./fixtures";
 
 test("creates an entry based on the given input", () => {
   const entry = createEntry({ id: "1", name: "Some entry", amount: 100 });
@@ -20,20 +21,15 @@ test("creates an entry with defaults for optional input properties", () => {
 });
 
 test("adds a new entry to an empty array", () => {
-  const entries = addEntry([], { id: "1", name: "Some entry", amount: 200 });
+  const entries = addEntry([], salary);
 
-  expect(entries).toMatchObject([{ id: "1" }]);
+  expect(entries).toMatchObject([salary]);
 });
 
 test("adds a new entry to an array with existing entries", () => {
-  const original = createTestEntries([{ id: "1" }]);
-  const entries = addEntry(original, {
-    id: "2",
-    name: "Some entry",
-    amount: 300,
-  });
+  const entries = addEntry([salary], allowance);
 
-  expect(entries).toMatchObject([{ id: "1" }, { id: "2" }]);
+  expect(entries).toMatchObject([salary, allowance]);
 });
 
 test("adds a new entry based on the given input", () => {
@@ -44,45 +40,39 @@ test("adds a new entry based on the given input", () => {
 
 test("updates an entry at the given index", () => {
   const original = createTestEntries([
-    { id: "1", name: "Bills", amount: 100 },
-    { id: "2", name: "Rent", amount: 200 },
+    salary,
+    { id: "misc-income", name: "Misc Income", amount: 500 },
   ]);
-  const entries = updateEntryIn(original, 1, { name: "Mortgage", amount: 500 });
+  const entries = updateEntryIn(original, 1, { name: "Misc", amount: 1000 });
 
   expect(entries).toMatchObject([
-    { id: "1", name: "Bills", amount: 100 },
-    { id: "2", name: "Mortgage", amount: 500 },
+    salary,
+    { id: "misc-income", name: "Misc", amount: 1000 },
   ]);
 });
 
 test("throws error for updating an entry at an invalid index", () => {
-  const entries = [createTestEntry()];
+  const entries = [salary];
 
-  expect(() =>
-    updateEntryIn(entries, -1, { name: "Some entry", amount: 200 }),
-  ).toThrow();
-  expect(() =>
-    updateEntryIn(entries, 1, { name: "Some entry", amount: 200 }),
-  ).toThrow();
+  expect(() => updateEntryIn(entries, -1, { name: "Misc" })).toThrow();
+  expect(() => updateEntryIn(entries, 1, { name: "Misc" })).toThrow();
 });
 
 test("removes an entry at the given index from multiple entries array", () => {
-  const original = createTestEntries([{ id: "1" }, { id: "2" }]);
-  const entries = removeEntry(original, 1);
+  const entries = removeEntry([salary, allowance], 1);
 
-  expect(entries).toMatchObject([{ id: "1" }]);
+  expect(entries).toMatchObject([salary]);
 });
 
 test("removes an entry at the given index from single entry array", () => {
-  const original = [createTestEntry()];
-  const entries = removeEntry(original, 0);
+  const entries = removeEntry([salary], 0);
 
   expect(entries).toEqual([]);
 });
 
 test("throws error for removing an entry at an invalid index", () => {
-  const entries = createTestEntries([{ id: "1" }, { id: "2" }]);
+  const entries = [salary];
 
   expect(() => removeEntry(entries, -1)).toThrow();
-  expect(() => removeEntry(entries, 2)).toThrow();
+  expect(() => removeEntry(entries, 1)).toThrow();
 });

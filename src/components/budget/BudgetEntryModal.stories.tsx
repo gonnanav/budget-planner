@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { BudgetEntryModal } from "./BudgetEntryModal";
 import { expect, fn, screen } from "storybook/test";
-import { createTestEntry } from "./core/test-utils";
+import { salary } from "./core/fixtures";
 
 const meta = {
   title: "Components/BudgetEntryModal",
@@ -31,11 +31,11 @@ export const AddEntry: Story = {
 export const UpdateEntry: Story = {
   args: {
     title: "Update Budget Entry",
-    entry: createTestEntry({ amount: 123 }),
+    entry: salary,
   },
   play: async () => {
     await expect(screen.getByText("Update Budget Entry")).toBeInTheDocument();
-    await expect(getAmountInput()).toHaveValue("123");
+    await expect(getAmountInput()).toHaveValue("5,000");
   },
 };
 
