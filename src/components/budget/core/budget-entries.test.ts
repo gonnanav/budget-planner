@@ -8,54 +8,62 @@ import {
 import { createTestEntry, createTestEntries } from "./test-utils";
 
 test("creates an entry based on the given input", () => {
-  const entry = createEntry({ id: "1", amount: 100 });
+  const entry = createEntry({ id: "1", name: "Some entry", amount: 100 });
 
-  expect(entry).toMatchObject({ id: "1", amount: 100 });
+  expect(entry).toMatchObject({ id: "1", name: "Some entry", amount: 100 });
 });
 
 test("creates an entry with defaults for optional input properties", () => {
-  const entry = createEntry({ id: "1" });
+  const entry = createEntry({ id: "1", name: "Some entry" });
 
   expect(entry).toMatchObject({ amount: null });
 });
 
 test("adds a new entry to an empty array", () => {
-  const entries = addEntry([], { id: "1", amount: 200 });
+  const entries = addEntry([], { id: "1", name: "Some entry", amount: 200 });
 
   expect(entries).toMatchObject([{ id: "1" }]);
 });
 
 test("adds a new entry to an array with existing entries", () => {
   const original = createTestEntries([{ id: "1" }]);
-  const entries = addEntry(original, { id: "2", amount: 300 });
+  const entries = addEntry(original, {
+    id: "2",
+    name: "Some entry",
+    amount: 300,
+  });
 
   expect(entries).toMatchObject([{ id: "1" }, { id: "2" }]);
 });
 
 test("adds a new entry based on the given input", () => {
-  const [entry] = addEntry([], { id: "1", amount: 200 });
+  const [entry] = addEntry([], { id: "1", name: "Some entry", amount: 200 });
 
-  expect(entry).toMatchObject({ id: "1", amount: 200 });
+  expect(entry).toMatchObject({ id: "1", name: "Some entry", amount: 200 });
 });
 
 test("updates an entry at the given index", () => {
   const original = createTestEntries([
-    { id: "1", amount: 100 },
-    { id: "2", amount: 200 },
+    { id: "1", name: "Bills", amount: 100 },
+    { id: "2", name: "Rent", amount: 200 },
   ]);
-  const entries = updateEntryIn(original, 1, { amount: 500 });
+  const entries = updateEntryIn(original, 1, { name: "Mortgage", amount: 500 });
 
   expect(entries).toMatchObject([
-    { id: "1", amount: 100 },
-    { id: "2", amount: 500 },
+    { id: "1", name: "Bills", amount: 100 },
+    { id: "2", name: "Mortgage", amount: 500 },
   ]);
 });
 
 test("throws error for updating an entry at an invalid index", () => {
   const entries = [createTestEntry()];
 
-  expect(() => updateEntryIn(entries, -1, { amount: 200 })).toThrow();
-  expect(() => updateEntryIn(entries, 1, { amount: 200 })).toThrow();
+  expect(() =>
+    updateEntryIn(entries, -1, { name: "Some entry", amount: 200 }),
+  ).toThrow();
+  expect(() =>
+    updateEntryIn(entries, 1, { name: "Some entry", amount: 200 }),
+  ).toThrow();
 });
 
 test("removes an entry at the given index from multiple entries array", () => {

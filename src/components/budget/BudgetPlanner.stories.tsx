@@ -40,14 +40,14 @@ export const NegativeBalance: Story = {
 
 export const ZeroBalance: Story = {
   args: {
-    initialIncomes: [
+    initialIncomes: createTestEntries([
       { id: "1", amount: 1000 },
       { id: "2", amount: 2000 },
-    ],
-    initialExpenses: [
+    ]),
+    initialExpenses: createTestEntries([
       { id: "3", amount: 2000 },
       { id: "4", amount: 1000 },
-    ],
+    ]),
   },
 };
 

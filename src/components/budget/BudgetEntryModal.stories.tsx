@@ -51,10 +51,14 @@ export const Cancelling: Story = {
 
 export const Saving: Story = {
   play: async ({ userEvent, args }) => {
+    await userEvent.type(getNameInput(), "Some entry");
     await userEvent.type(getAmountInput(), "100");
     await userEvent.click(getSaveButton());
 
-    await expect(args.onSave).toHaveBeenCalledWith({ amount: 100 });
+    await expect(args.onSave).toHaveBeenCalledWith({
+      name: "Some entry",
+      amount: 100,
+    });
     await expect(getAmountInput()).not.toHaveValue();
   },
 };
@@ -65,6 +69,10 @@ function getCancelButton() {
 
 function getSaveButton() {
   return screen.getByRole("button", { name: "Save" });
+}
+
+function getNameInput() {
+  return screen.getByLabelText("Name");
 }
 
 function getAmountInput() {

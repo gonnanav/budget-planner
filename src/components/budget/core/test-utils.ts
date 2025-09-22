@@ -1,14 +1,13 @@
 import { createEntry } from "./budget-entries";
 import type { BudgetEntry, CreateBudgetEntryInput } from "./types";
 
-type CreateTestEntryInput = Omit<CreateBudgetEntryInput, "id"> & {
+type CreateTestEntryInput = Omit<CreateBudgetEntryInput, "id" | "name"> & {
   id?: string;
+  name?: string;
 };
 
-export function createTestEntry(
-  input: CreateTestEntryInput = { id: "1" },
-): BudgetEntry {
-  return createEntry({ id: "1", ...input });
+export function createTestEntry(input: CreateTestEntryInput = {}): BudgetEntry {
+  return createEntry({ id: "1", name: "Test entry", ...input });
 }
 
 export function createTestEntries(
@@ -16,6 +15,8 @@ export function createTestEntries(
 ): BudgetEntry[] {
   return inputs.map((input, index) => {
     const defaultId = String(index + 1);
-    return createTestEntry({ id: defaultId, ...input });
+    const defaultName = `Test entry ${defaultId}`;
+
+    return createTestEntry({ id: defaultId, name: defaultName, ...input });
   });
 }

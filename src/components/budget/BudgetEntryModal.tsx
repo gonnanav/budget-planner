@@ -11,6 +11,7 @@ import { Button } from "@heroui/button";
 import { Trash2 } from "lucide-react";
 import { BudgetEntry, BudgetEntryInput } from "./core/types";
 import { AmountInput } from "./AmountInput";
+import { NameInput } from "./NameInput";
 
 interface BudgetEntryModalProps {
   title: string;
@@ -29,20 +30,27 @@ export const BudgetEntryModal = ({
   onClose,
   onDelete,
 }: BudgetEntryModalProps) => {
+  const [name, setName] = useState<string | null>(null);
   const [amount, setAmount] = useState<number | null>(null);
   const isEditMode = entry !== null;
 
   useEffect(() => {
     if (!entry) return;
 
+    setName(entry.name ?? null);
     setAmount(entry.amount);
   }, [entry]);
 
+  const handleNameChange = (name: string | null) => {
+    setName(name);
+  };
+
   const handleAmountChange = (amount: number | null) => {
-    setAmount(amount ?? 0);
+    setAmount(amount);
   };
 
   const reset = () => {
+    setName(null);
     setAmount(null);
   };
 
@@ -52,7 +60,7 @@ export const BudgetEntryModal = ({
   };
 
   const handleSave = () => {
-    onSave({ amount: amount ?? 0 });
+    onSave({ name: name ?? "", amount });
     handleClose();
   };
 
@@ -74,6 +82,11 @@ export const BudgetEntryModal = ({
             <>
               <ModalHeader>{title}</ModalHeader>
               <ModalBody>
+                <NameInput
+                  label="Name"
+                  name={name}
+                  onChange={handleNameChange}
+                />
                 <AmountInput
                   label="Amount"
                   amount={amount}
