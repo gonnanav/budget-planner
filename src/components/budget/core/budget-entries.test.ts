@@ -16,7 +16,7 @@ test("creates an entry based on the given input", () => {
 test("creates an entry with defaults for optional input properties", () => {
   const entry = createEntry("1");
 
-  expect(entry).toMatchObject({ amount: 0 });
+  expect(entry).toMatchObject({ amount: null });
 });
 
 test("adds a new entry to an empty array", () => {

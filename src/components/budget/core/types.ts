@@ -6,7 +6,7 @@ export interface BudgetEntryInput {
 
 export interface BudgetEntry {
   id: string;
-  amount: number;
+  amount: number | null;
 }
 
 export interface BudgetEvaluation {
