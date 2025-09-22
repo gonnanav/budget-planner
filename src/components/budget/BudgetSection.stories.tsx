@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, fn } from "storybook/test";
 import { BudgetSection } from "./BudgetSection";
 import { createEntry } from "./core/budget-entries";
+import { createTestEntries } from "./core/test-utils";
 
 const meta = {
   title: "Components/BudgetSection",
@@ -23,11 +24,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    items: [
-      createEntry({ id: "1", amount: 100 }),
-      createEntry({ id: "2", amount: 200 }),
-      createEntry({ id: "3", amount: 300 }),
-    ],
+    items: createTestEntries([
+      { amount: 100 },
+      { amount: 200 },
+      { amount: 300 },
+    ]),
   },
 };
 
