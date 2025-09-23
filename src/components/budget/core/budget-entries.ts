@@ -1,10 +1,13 @@
 import type {
   BudgetEntry,
+  BudgetEntryAmount,
   BudgetEntryInput,
   CreateBudgetEntryInput,
 } from "./types";
 
 export function createEntry(input: CreateBudgetEntryInput): BudgetEntry {
+  validateAmount(input.amount);
+
   return { amount: null, ...input };
 }
 
@@ -25,6 +28,7 @@ export function updateEntryIn(
   input: BudgetEntryInput,
 ): BudgetEntry[] {
   validateIndex(index, entries);
+  validateAmount(input.amount);
 
   const updated = [...entries];
   updated[index] = updateEntry(entries[index], input);
@@ -43,4 +47,8 @@ export function removeEntry(
 
 function validateIndex(index: number, entries: BudgetEntry[]) {
   if (index < 0 || index >= entries.length) throw new Error("Invalid index");
+}
+
+function validateAmount(amount?: BudgetEntryAmount) {
+  if (amount && amount < 0) throw new Error("Amount must be greater than 0");
 }

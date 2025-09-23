@@ -20,6 +20,12 @@ test("creates an entry with defaults for optional input properties", () => {
   expect(entry).toMatchObject({ amount: null });
 });
 
+test("throws error for creating an entry with an invalid amount", () => {
+  expect(() =>
+    createEntry({ id: "1", name: "Some entry", amount: -1 }),
+  ).toThrow();
+});
+
 test("adds a new entry to an empty array", () => {
   const entries = addEntry([], salary);
 
@@ -36,6 +42,12 @@ test("adds a new entry based on the given input", () => {
   const [entry] = addEntry([], { id: "1", name: "Some entry", amount: 200 });
 
   expect(entry).toMatchObject({ id: "1", name: "Some entry", amount: 200 });
+});
+
+test("throws error for adding an entry with an invalid amount", () => {
+  expect(() =>
+    addEntry([], { id: "1", name: "Some entry", amount: -1 }),
+  ).toThrow();
 });
 
 test("updates an entry at the given index", () => {
@@ -56,6 +68,14 @@ test("throws error for updating an entry at an invalid index", () => {
 
   expect(() => updateEntryIn(entries, -1, { name: "Misc" })).toThrow();
   expect(() => updateEntryIn(entries, 1, { name: "Misc" })).toThrow();
+});
+
+test("throws error for updating an entry with an invalid amount", () => {
+  const entries = [salary];
+
+  expect(() =>
+    updateEntryIn(entries, 0, { name: "Misc", amount: -1 }),
+  ).toThrow();
 });
 
 test("removes an entry at the given index from multiple entries array", () => {
