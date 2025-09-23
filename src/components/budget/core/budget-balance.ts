@@ -21,6 +21,12 @@ export function budgetBalance(
   };
 }
 
-function budgetEntriesSum(entries: BudgetEntry[]): number {
-  return entries.reduce((sum: number, entry) => sum + (entry.amount ?? 0), 0);
+export function budgetEntriesSum(entries: BudgetEntry[]): number {
+  return entries
+    .map(normalizeAmount)
+    .reduce((sum: number, entry) => sum + entry, 0);
+}
+
+export function normalizeAmount(entry: BudgetEntry): number {
+  return (entry.amount ?? 0) / (entry.frequency === "biMonthly" ? 2 : 1);
 }

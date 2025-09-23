@@ -1,6 +1,10 @@
 import { test, expect } from "vitest";
-import { budgetBalance } from "./budget-balance";
-import { createTestEntries } from "./test-utils";
+import {
+  budgetBalance,
+  budgetEntriesSum,
+  normalizeAmount,
+} from "./budget-balance";
+import { createTestEntries, createTestEntry } from "./test-utils";
 
 test("balance is balanced when incomes and expenses are equal", () => {
   const { balance, status } = budgetBalance(
@@ -60,4 +64,31 @@ test("multiple expenses are summed up", () => {
   );
 
   expect(balance).toBe(500);
+});
+
+test("entries with different frequencies are summed up", () => {
+  const sum = budgetEntriesSum(
+    createTestEntries([
+      { amount: 1000, frequency: "biMonthly" },
+      { amount: 300, frequency: "monthly" },
+    ]),
+  );
+
+  expect(sum).toBe(800);
+});
+
+test("monthly entries are not divided", () => {
+  const sum = normalizeAmount(
+    createTestEntry({ amount: 1000, frequency: "monthly" }),
+  );
+
+  expect(sum).toBe(1000);
+});
+
+test("biMonthly entries are divided by 2", () => {
+  const sum = normalizeAmount(
+    createTestEntry({ amount: 1000, frequency: "biMonthly" }),
+  );
+
+  expect(sum).toBe(500);
 });

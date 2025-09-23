@@ -9,9 +9,14 @@ import {
 import { Form } from "@heroui/form";
 import { Button } from "@heroui/button";
 import { Trash2 } from "lucide-react";
-import { BudgetEntry, BudgetEntryInput } from "./core/types";
+import {
+  BudgetEntry,
+  BudgetEntryInput,
+  BudgetEntryFrequency,
+} from "./core/types";
 import { AmountInput } from "./AmountInput";
 import { NameInput } from "./NameInput";
+import { FrequencyInput } from "./FrequencyInput";
 
 interface BudgetEntryModalProps {
   title: string;
@@ -32,6 +37,9 @@ export const BudgetEntryModal = ({
 }: BudgetEntryModalProps) => {
   const [name, setName] = useState<string | null>(null);
   const [amount, setAmount] = useState<number | null>(null);
+  const [frequency, setFrequency] = useState<BudgetEntryFrequency | null>(
+    "monthly",
+  );
   const isEditMode = entry !== null;
 
   useEffect(() => {
@@ -39,6 +47,7 @@ export const BudgetEntryModal = ({
 
     setName(entry.name ?? null);
     setAmount(entry.amount);
+    setFrequency(entry.frequency ?? null);
   }, [entry]);
 
   const handleNameChange = (name: string | null) => {
@@ -49,9 +58,14 @@ export const BudgetEntryModal = ({
     setAmount(amount);
   };
 
+  const handleFrequencyChange = (frequency: BudgetEntryFrequency | null) => {
+    setFrequency(frequency);
+  };
+
   const reset = () => {
     setName(null);
     setAmount(null);
+    setFrequency("monthly");
   };
 
   const handleClose = () => {
@@ -60,7 +74,7 @@ export const BudgetEntryModal = ({
   };
 
   const handleSave = () => {
-    onSave({ name: name ?? "", amount });
+    onSave({ name: name ?? "", amount, frequency: frequency ?? undefined });
     handleClose();
   };
 
@@ -91,6 +105,11 @@ export const BudgetEntryModal = ({
                   label="Amount"
                   amount={amount}
                   onChange={handleAmountChange}
+                />
+                <FrequencyInput
+                  label="Frequency"
+                  frequency={frequency}
+                  onChange={handleFrequencyChange}
                 />
               </ModalBody>
               <ModalFooter>

@@ -8,7 +8,7 @@ import type {
 export function createEntry(input: CreateBudgetEntryInput): BudgetEntry {
   validateAmount(input.amount);
 
-  return { amount: null, ...input };
+  return { amount: null, frequency: "monthly", ...input };
 }
 
 function updateEntry(entry: BudgetEntry, input: BudgetEntryInput): BudgetEntry {

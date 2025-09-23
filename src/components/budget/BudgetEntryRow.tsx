@@ -1,4 +1,5 @@
 import { BudgetEntry } from "./core/types";
+import { normalizeAmount } from "./core/budget-balance";
 
 interface BudgetEntryRowProps {
   entry: BudgetEntry;
@@ -13,7 +14,16 @@ export function BudgetEntryRow({ entry, onClick }: BudgetEntryRowProps) {
     >
       <div className="flex justify-between text-gray-900 truncate w-full">
         {entry.name && <span className="mr-3">{entry.name}</span>}
-        {entry.amount && `₪${entry.amount.toLocaleString()}`}
+        {entry.amount && (
+          <span>
+            ₪{entry.amount.toLocaleString()}
+            {entry.frequency === "biMonthly" && (
+              <span className="text-sm text-gray-600 ml-1">
+                (₪{normalizeAmount(entry).toLocaleString()}/month)
+              </span>
+            )}
+          </span>
+        )}
       </div>
     </div>
   );

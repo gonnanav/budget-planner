@@ -58,6 +58,7 @@ export const Saving: Story = {
     await expect(args.onSave).toHaveBeenCalledWith({
       name: "Some entry",
       amount: 100,
+      frequency: "monthly",
     });
     await expect(getAmountInput()).not.toHaveValue();
   },

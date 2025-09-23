@@ -9,15 +9,25 @@ import { createTestEntries } from "./test-utils";
 import { salary, allowance } from "./fixtures";
 
 test("creates an entry based on the given input", () => {
-  const entry = createEntry({ id: "1", name: "Some entry", amount: 100 });
+  const entry = createEntry({
+    id: "1",
+    name: "Some entry",
+    amount: 100,
+    frequency: "biMonthly",
+  });
 
-  expect(entry).toMatchObject({ id: "1", name: "Some entry", amount: 100 });
+  expect(entry).toMatchObject({
+    id: "1",
+    name: "Some entry",
+    amount: 100,
+    frequency: "biMonthly",
+  });
 });
 
 test("creates an entry with defaults for optional input properties", () => {
   const entry = createEntry({ id: "1", name: "Some entry" });
 
-  expect(entry).toMatchObject({ amount: null });
+  expect(entry).toMatchObject({ amount: null, frequency: "monthly" });
 });
 
 test("throws error for creating an entry with an invalid amount", () => {
@@ -55,11 +65,15 @@ test("updates an entry at the given index", () => {
     salary,
     { id: "misc-income", name: "Misc Income", amount: 500 },
   ]);
-  const entries = updateEntryIn(original, 1, { name: "Misc", amount: 1000 });
+  const entries = updateEntryIn(original, 1, {
+    name: "Misc",
+    amount: 1000,
+    frequency: "biMonthly",
+  });
 
   expect(entries).toMatchObject([
     salary,
-    { id: "misc-income", name: "Misc", amount: 1000 },
+    { id: "misc-income", name: "Misc", amount: 1000, frequency: "biMonthly" },
   ]);
 });
 
