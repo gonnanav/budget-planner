@@ -20,14 +20,14 @@ export function BudgetPlanner({
     handleAddEntry: handleAddIncome,
     handleUpdateEntry: handleUpdateIncome,
     handleDeleteEntry: handleDeleteIncome,
-  } = useBudgetEntries(initialIncomes);
+  } = useBudgetEntries("incomes", initialIncomes);
 
   const {
     entries: expenses,
     handleAddEntry: handleAddExpense,
     handleUpdateEntry: handleUpdateExpense,
     handleDeleteEntry: handleDeleteExpense,
-  } = useBudgetEntries(initialExpenses);
+  } = useBudgetEntries("expenses", initialExpenses);
 
   return (
     <section className="flex flex-col gap-4">

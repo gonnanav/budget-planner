@@ -1,9 +1,14 @@
 "use client";
 
 import { HeroUIProvider } from "@heroui/react";
+import { StorageProvider } from "../providers/StorageProvider";
 
 export function Providers({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  return <HeroUIProvider>{children}</HeroUIProvider>;
+  return (
+    <HeroUIProvider>
+      <StorageProvider>{children}</StorageProvider>
+    </HeroUIProvider>
+  );
 }
