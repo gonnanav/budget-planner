@@ -4,7 +4,7 @@ import { useDisclosure } from "@heroui/react";
 import { Plus } from "lucide-react";
 import { BudgetEntry, BudgetEntryInput } from "./core/types";
 import { BudgetEntryRow } from "./BudgetEntryRow";
-import { BudgetEntryModal } from "./BudgetEntryModal";
+import { BudgetEntryDrawer } from "./BudgetEntryDrawer";
 
 interface BudgetSection {
   items: BudgetEntry[];
@@ -88,7 +88,7 @@ export function BudgetSection({
         )}
       </div>
 
-      <BudgetEntryModal
+      <BudgetEntryDrawer
         title={editedEntryIndex ? `Edit ${itemLabel}` : `Add ${itemLabel}`}
         isOpen={isModalOpen}
         entry={editedEntry}
