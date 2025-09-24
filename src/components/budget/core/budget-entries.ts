@@ -6,12 +6,16 @@ import type {
 } from "./types";
 
 export function createEntry(input: CreateBudgetEntryInput): BudgetEntry {
+  validateName(input.name);
   validateAmount(input.amount);
 
   return { amount: null, frequency: "monthly", ...input };
 }
 
 function updateEntry(entry: BudgetEntry, input: BudgetEntryInput): BudgetEntry {
+  validateName(input.name);
+  validateAmount(input.amount);
+
   return { ...entry, ...input };
 }
 
@@ -28,7 +32,6 @@ export function updateEntryIn(
   input: BudgetEntryInput,
 ): BudgetEntry[] {
   validateIndex(index, entries);
-  validateAmount(input.amount);
 
   const updated = [...entries];
   updated[index] = updateEntry(entries[index], input);
@@ -45,10 +48,14 @@ export function removeEntry(
   return entries.filter((_, i) => i !== index);
 }
 
-function validateIndex(index: number, entries: BudgetEntry[]) {
-  if (index < 0 || index >= entries.length) throw new Error("Invalid index");
+function validateName(name?: string) {
+  if (!name) throw new Error("Name is required");
 }
 
 function validateAmount(amount?: BudgetEntryAmount) {
   if (amount && amount < 0) throw new Error("Amount must be greater than 0");
+}
+
+function validateIndex(index: number, entries: BudgetEntry[]) {
+  if (index < 0 || index >= entries.length) throw new Error("Invalid index");
 }

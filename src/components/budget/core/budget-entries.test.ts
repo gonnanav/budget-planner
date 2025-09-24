@@ -30,6 +30,10 @@ test("creates an entry with defaults for optional input properties", () => {
   expect(entry).toMatchObject({ amount: null, frequency: "monthly" });
 });
 
+test("throws error for creating an entry without a name", () => {
+  expect(() => createEntry({ id: "1", name: "", amount: 100 })).toThrow();
+});
+
 test("throws error for creating an entry with an invalid amount", () => {
   expect(() =>
     createEntry({ id: "1", name: "Some entry", amount: -1 }),
