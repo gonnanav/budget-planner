@@ -1,6 +1,8 @@
-import { cn } from "@/lib/utils";
-import { budgetBalance } from "./core/budget-balance";
+import { budgetBalance, budgetEntriesSum } from "./core/budget-balance";
 import { BudgetEntry, BudgetEvaluation } from "./core/types";
+import { SummaryRow } from "./SummaryRow";
+import { IncomeSummaryRow } from "./IncomeSummaryRow";
+import { ExpensesSummaryRow } from "./ExpensesSummaryRow";
 
 export interface BalanceProps {
   incomes: BudgetEntry[];
@@ -10,22 +12,25 @@ export interface BalanceProps {
 export function Balance({ incomes, expenses }: BalanceProps) {
   const evaluation = budgetBalance(incomes, expenses);
   const { isGood, formattedBalance } = fromEvaluation(evaluation);
+  const totalIncomes = budgetEntriesSum(incomes);
+  const totalExpenses = budgetEntriesSum(expenses);
+  const { formattedIncomes, formattedExpenses } = formatAmounts(
+    totalIncomes,
+    totalExpenses,
+  );
 
   return (
-    <div className="flex flex-wrap items-baseline justify-between">
-      <label htmlFor="balance-output" className="text-foreground font-semibold">
-        Balance
-      </label>
-      <output
-        id="balance-output"
-        className={cn(
-          "text-foreground font-semibold",
-          isGood ? "text-emerald-600" : "text-rose-600",
-        )}
-        aria-live="polite"
-      >
-        {formattedBalance}
-      </output>
+    <div className="space-y-1">
+      <IncomeSummaryRow value={formattedIncomes} />
+      <ExpensesSummaryRow value={formattedExpenses} />
+
+      <SummaryRow
+        label="Balance"
+        value={formattedBalance}
+        backgroundColor="bg-slate-50"
+        valueColor={isGood ? "text-emerald-600" : "text-rose-600"}
+        isBold={true}
+      />
     </div>
   );
 }
@@ -42,5 +47,19 @@ function fromEvaluation({ status, balance }: BudgetEvaluation) {
   return {
     isGood,
     formattedBalance,
+  };
+}
+
+function formatAmounts(incomes: number, expenses: number) {
+  const formatter = new Intl.NumberFormat(undefined, {
+    style: "currency",
+    currency: "ILS",
+    currencyDisplay: "narrowSymbol",
+    maximumFractionDigits: 0,
+  });
+
+  return {
+    formattedIncomes: formatter.format(incomes),
+    formattedExpenses: formatter.format(expenses),
   };
 }
