@@ -19,7 +19,7 @@ export function BudgetEntryRow({ entry, onClick }: BudgetEntryRowProps) {
           </span>
         )}
         {entry.amount && (
-          <span className="font-medium text-gray-900">
+          <span className="text-sm text-gray-900">
             ₪{entry.amount.toLocaleString()}
             {entry.frequency === "biMonthly" && (
               <span className="text-xs text-muted-foreground ml-2">

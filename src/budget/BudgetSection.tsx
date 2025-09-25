@@ -58,7 +58,7 @@ export function BudgetSection({
         {entries.length === 0 ? (
           <p className="text-sm text-center text-gray-400">No entries yet</p>
         ) : (
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-px">
             {entries.map((entry, index) => (
               <BudgetEntryRow
                 key={entry.id}
