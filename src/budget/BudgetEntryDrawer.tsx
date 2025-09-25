@@ -94,14 +94,9 @@ export const BudgetEntryDrawer = ({
         <form onSubmit={handleSubmit}>
           <DrawerHeader>{title}</DrawerHeader>
           <DrawerBody>
-            <NameInput label="Name" name={name} onChange={handleNameChange} />
-            <AmountInput
-              label="Amount"
-              amount={amount}
-              onChange={handleAmountChange}
-            />
+            <NameInput name={name} onChange={handleNameChange} />
+            <AmountInput amount={amount} onChange={handleAmountChange} />
             <FrequencyInput
-              label="Frequency"
               frequency={frequency}
               onChange={handleFrequencyChange}
             />

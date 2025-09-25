@@ -1,25 +1,19 @@
 import { NumberInput } from "@heroui/number-input";
 
 interface AmountInputProps {
-  label: string;
   amount: number | null;
   className?: string;
   onChange: (amount: number | null) => void;
 }
 
-export function AmountInput({
-  label,
-  amount,
-  className,
-  onChange,
-}: AmountInputProps) {
+export function AmountInput({ amount, className, onChange }: AmountInputProps) {
   const handleChange = (value: number) => {
     onChange(fromValue(value));
   };
 
   return (
     <NumberInput
-      label={label}
+      label="Amount"
       minValue={0}
       defaultValue={0}
       value={toValue(amount)}
