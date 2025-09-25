@@ -27,17 +27,23 @@ export function Overview({
   );
 
   return (
-    <div className="space-y-1">
-      <IncomeSummaryRow value={formattedIncomes} onClick={onIncomeClick} />
-      <ExpensesSummaryRow value={formattedExpenses} onClick={onExpensesClick} />
+    <div className="space-y-4">
+      <h3 className="text-lg font-semibold">Overview</h3>
+      <div className="space-y-1">
+        <IncomeSummaryRow value={formattedIncomes} onClick={onIncomeClick} />
+        <ExpensesSummaryRow
+          value={formattedExpenses}
+          onClick={onExpensesClick}
+        />
 
-      <SummaryRow
-        label="Balance"
-        value={formattedBalance}
-        backgroundColor="bg-slate-50"
-        valueColor={isGood ? "text-emerald-600" : "text-rose-600"}
-        isBold={true}
-      />
+        <SummaryRow
+          label="Balance"
+          value={formattedBalance}
+          backgroundColor="bg-slate-50"
+          valueColor={isGood ? "text-emerald-600" : "text-rose-600"}
+          isBold={true}
+        />
+      </div>
     </div>
   );
 }
