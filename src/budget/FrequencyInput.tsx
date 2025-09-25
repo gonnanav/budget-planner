@@ -15,11 +15,9 @@ export const FrequencyInput = ({
       label="Frequency"
       selectedKeys={[frequency]}
       onSelectionChange={(keys) => {
-        const selectedKey = Array.from(keys)[0] as
-          | BudgetEntryFrequency
-          | undefined;
+        const selectedKey = Array.from(keys)[0];
 
-        if (selectedKey) {
+        if (selectedKey === "monthly" || selectedKey === "biMonthly") {
           onChange(selectedKey);
         }
       }}
