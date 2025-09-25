@@ -1,4 +1,4 @@
-import { BudgetPlanner } from "@/components/budget";
+import { BudgetPlanner } from "@/budget";
 
 export default function Home() {
   return (

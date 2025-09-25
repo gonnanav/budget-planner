@@ -1,5 +1,5 @@
 import { useEffect, useRef, useContext } from "react";
-import { StorageContext } from "@/providers/StorageProvider";
+import { StorageContext } from "@/contexts/StorageContext";
 
 export function useSynchStorage<T>(
   key: string,

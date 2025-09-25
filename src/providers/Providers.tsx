@@ -1,7 +1,7 @@
 "use client";
 
 import { HeroUIProvider } from "@heroui/react";
-import { StorageProvider } from "../providers/StorageProvider";
+import { StorageProvider } from "./StorageProvider";
 
 export function Providers({
   children,

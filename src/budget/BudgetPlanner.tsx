@@ -1,6 +1,6 @@
 "use client";
 
-import { useBudgetEntries } from "./useBudgetEntries";
+import { useBudgetEntries } from "./hooks/useBudgetEntries";
 import { IncomeSection } from "./IncomeSection";
 import { ExpenseSection } from "./ExpenseSection";
 import { Balance } from "./Balance";
