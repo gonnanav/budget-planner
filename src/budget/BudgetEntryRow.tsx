@@ -9,19 +9,23 @@ interface BudgetEntryRowProps {
 export function BudgetEntryRow({ entry, onClick }: BudgetEntryRowProps) {
   return (
     <div
-      className="flex justify-between px-2 py-2 transition-colors hover:bg-gray-50 active:bg-gray-100 cursor-pointer"
+      className="flex items-baseline justify-between rounded-md px-3 py-2 cursor-pointer bg-slate-50 hover:opacity-80 active:bg-slate-100 transition-colors transition-opacity"
       onClick={onClick}
     >
-      <div className="flex justify-between text-gray-900 truncate w-full">
-        {entry.name && <span className="mr-3">{entry.name}</span>}
+      <div className="flex items-baseline justify-between w-full gap-3">
+        {entry.name && (
+          <span className="text-muted-foreground text-sm truncate">
+            {entry.name}
+          </span>
+        )}
         {entry.amount && (
-          <span>
-            ₪{entry.amount.toLocaleString()}
+          <span className="text-sm text-gray-900">
             {entry.frequency === "biMonthly" && (
-              <span className="text-sm text-gray-600 ml-1">
+              <span className="text-xs text-muted-foreground mr-2">
                 (₪{normalizeAmount(entry).toLocaleString()}/month)
               </span>
             )}
+            ₪{entry.amount.toLocaleString()}
           </span>
         )}
       </div>

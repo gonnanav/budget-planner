@@ -34,9 +34,7 @@ export function SummaryRow({
       >
         {label}
       </span>
-      <span
-        className={cn("font-medium", valueColor, isBold && "font-semibold")}
-      >
+      <span className={cn("text-sm", valueColor, isBold && "font-semibold")}>
         {value}
       </span>
     </div>
