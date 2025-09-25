@@ -24,8 +24,8 @@ export function useBudgetEntries(
 
   return {
     entries,
-    handleAddEntry,
-    handleUpdateEntry,
-    handleDeleteEntry,
+    addEntry: handleAddEntry,
+    updateEntry: handleUpdateEntry,
+    deleteEntry: handleDeleteEntry,
   };
 }

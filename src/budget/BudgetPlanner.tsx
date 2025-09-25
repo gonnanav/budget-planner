@@ -1,6 +1,7 @@
 "use client";
 
-import { useBudgetEntries } from "./hooks/useBudgetEntries";
+import { useIncomes } from "./hooks/useIncomes";
+import { useExpenses } from "./hooks/useExpenses";
 import { IncomeSection } from "./IncomeSection";
 import { ExpenseSection } from "./ExpenseSection";
 import { Balance } from "./Balance";
@@ -15,33 +16,24 @@ export function BudgetPlanner({
   initialIncomes,
   initialExpenses,
 }: BudgetPlannerProps) {
-  const {
-    entries: incomes,
-    handleAddEntry: handleAddIncome,
-    handleUpdateEntry: handleUpdateIncome,
-    handleDeleteEntry: handleDeleteIncome,
-  } = useBudgetEntries("incomes", initialIncomes);
-
-  const {
-    entries: expenses,
-    handleAddEntry: handleAddExpense,
-    handleUpdateEntry: handleUpdateExpense,
-    handleDeleteEntry: handleDeleteExpense,
-  } = useBudgetEntries("expenses", initialExpenses);
+  const { incomes, addIncome, updateIncome, deleteIncome } =
+    useIncomes(initialIncomes);
+  const { expenses, addExpense, updateExpense, deleteExpense } =
+    useExpenses(initialExpenses);
 
   return (
     <section className="flex flex-col gap-4">
       <IncomeSection
         incomes={incomes}
-        onAddEntry={handleAddIncome}
-        onUpdateEntry={handleUpdateIncome}
-        onDeleteEntry={handleDeleteIncome}
+        onAddEntry={addIncome}
+        onUpdateEntry={updateIncome}
+        onDeleteEntry={deleteIncome}
       />
       <ExpenseSection
         expenses={expenses}
-        onAddEntry={handleAddExpense}
-        onUpdateEntry={handleUpdateExpense}
-        onDeleteEntry={handleDeleteExpense}
+        onAddEntry={addExpense}
+        onUpdateEntry={updateExpense}
+        onDeleteEntry={deleteExpense}
       />
       <Balance incomes={incomes} expenses={expenses} />
     </section>
