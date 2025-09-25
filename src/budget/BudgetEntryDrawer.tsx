@@ -48,18 +48,6 @@ export const BudgetEntryDrawer = ({
     setFrequency(entry.frequency);
   }, [entry]);
 
-  const handleNameChange = (name: string | null) => {
-    setName(name);
-  };
-
-  const handleAmountChange = (amount: number | null) => {
-    setAmount(amount);
-  };
-
-  const handleFrequencyChange = (frequency: BudgetEntryFrequency) => {
-    setFrequency(frequency);
-  };
-
   const reset = () => {
     setName(null);
     setAmount(null);
@@ -92,12 +80,9 @@ export const BudgetEntryDrawer = ({
         <form onSubmit={handleSubmit}>
           <DrawerHeader>{title}</DrawerHeader>
           <DrawerBody>
-            <NameInput name={name} onChange={handleNameChange} />
-            <AmountInput amount={amount} onChange={handleAmountChange} />
-            <FrequencyInput
-              frequency={frequency}
-              onChange={handleFrequencyChange}
-            />
+            <NameInput name={name} onChange={setName} />
+            <AmountInput amount={amount} onChange={setAmount} />
+            <FrequencyInput frequency={frequency} onChange={setFrequency} />
           </DrawerBody>
           <DrawerFooter>
             <Button color="danger" variant="light" onPress={handleClose}>
