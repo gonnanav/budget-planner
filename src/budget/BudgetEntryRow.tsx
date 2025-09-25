@@ -9,7 +9,7 @@ interface BudgetEntryRowProps {
 export function BudgetEntryRow({ entry, onClick }: BudgetEntryRowProps) {
   return (
     <div
-      className="flex items-baseline justify-between rounded-md px-3 py-2 cursor-pointer hover:opacity-80 transition-opacity hover:bg-gray-50 active:bg-gray-100"
+      className="flex items-baseline justify-between rounded-md px-3 py-2 cursor-pointer bg-slate-50 hover:opacity-80 transition-opacity"
       onClick={onClick}
     >
       <div className="flex items-baseline justify-between w-full gap-3">
