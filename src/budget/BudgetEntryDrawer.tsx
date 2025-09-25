@@ -34,22 +34,23 @@ export const BudgetEntryDrawer = ({
   onClose,
   onDelete,
 }: BudgetEntryDrawerProps) => {
-  const [name, setName] = useState<string | null>(null);
+  const [name, setName] = useState("");
   const [amount, setAmount] = useState<number | null>(null);
   const [frequency, setFrequency] = useState<BudgetEntryFrequency>("monthly");
+
   const isEditMode = Boolean(entry);
   const title = isEditMode ? `Edit ${itemLabel}` : `Add ${itemLabel}`;
 
   useEffect(() => {
     if (!entry) return;
 
-    setName(entry.name ?? null);
+    setName(entry.name);
     setAmount(entry.amount);
     setFrequency(entry.frequency);
   }, [entry]);
 
   const reset = () => {
-    setName(null);
+    setName("");
     setAmount(null);
     setFrequency("monthly");
   };
@@ -60,7 +61,7 @@ export const BudgetEntryDrawer = ({
   };
 
   const handleSave = () => {
-    onSave({ name: name ?? "", amount, frequency: frequency ?? undefined });
+    onSave({ name, amount, frequency });
     handleClose();
   };
 
