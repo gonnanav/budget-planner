@@ -14,7 +14,7 @@ export interface BudgetEntry {
   id: string;
   name: string;
   amount: BudgetEntryAmount;
-  frequency?: BudgetEntryFrequency;
+  frequency: BudgetEntryFrequency;
 }
 
 export type BudgetStatus = "balanced" | "positive" | "negative";

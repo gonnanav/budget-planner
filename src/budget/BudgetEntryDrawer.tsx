@@ -36,9 +36,7 @@ export const BudgetEntryDrawer = ({
 }: BudgetEntryDrawerProps) => {
   const [name, setName] = useState<string | null>(null);
   const [amount, setAmount] = useState<number | null>(null);
-  const [frequency, setFrequency] = useState<BudgetEntryFrequency | null>(
-    "monthly",
-  );
+  const [frequency, setFrequency] = useState<BudgetEntryFrequency>("monthly");
   const isEditMode = Boolean(entry);
   const title = isEditMode ? `Edit ${itemLabel}` : `Add ${itemLabel}`;
 
@@ -47,7 +45,7 @@ export const BudgetEntryDrawer = ({
 
     setName(entry.name ?? null);
     setAmount(entry.amount);
-    setFrequency(entry.frequency ?? null);
+    setFrequency(entry.frequency);
   }, [entry]);
 
   const handleNameChange = (name: string | null) => {
@@ -58,7 +56,7 @@ export const BudgetEntryDrawer = ({
     setAmount(amount);
   };
 
-  const handleFrequencyChange = (frequency: BudgetEntryFrequency | null) => {
+  const handleFrequencyChange = (frequency: BudgetEntryFrequency) => {
     setFrequency(frequency);
   };
 

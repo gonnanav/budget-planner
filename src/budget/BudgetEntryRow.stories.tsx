@@ -41,6 +41,7 @@ export const NoAmount: Story = {
       id: "3",
       name: "Groceries",
       amount: null,
+      frequency: "monthly",
     },
     onClick: () => {},
   },

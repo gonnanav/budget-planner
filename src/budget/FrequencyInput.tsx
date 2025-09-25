@@ -2,8 +2,8 @@ import { Select, SelectItem } from "@heroui/select";
 import { BudgetEntryFrequency } from "./core/types";
 
 interface FrequencyInputProps {
-  frequency: BudgetEntryFrequency | null;
-  onChange: (frequency: BudgetEntryFrequency | null) => void;
+  frequency: BudgetEntryFrequency;
+  onChange: (frequency: BudgetEntryFrequency) => void;
 }
 
 export const FrequencyInput = ({
@@ -13,11 +13,15 @@ export const FrequencyInput = ({
   return (
     <Select
       label="Frequency"
-      placeholder="Select frequency"
-      selectedKeys={frequency ? [frequency] : []}
+      selectedKeys={[frequency]}
       onSelectionChange={(keys) => {
-        const selectedKey = Array.from(keys)[0] as BudgetEntryFrequency | null;
-        onChange(selectedKey);
+        const selectedKey = Array.from(keys)[0] as
+          | BudgetEntryFrequency
+          | undefined;
+
+        if (selectedKey) {
+          onChange(selectedKey);
+        }
       }}
     >
       <SelectItem key="monthly">Monthly</SelectItem>
