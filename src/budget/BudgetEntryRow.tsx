@@ -20,12 +20,12 @@ export function BudgetEntryRow({ entry, onClick }: BudgetEntryRowProps) {
         )}
         {entry.amount && (
           <span className="text-sm text-gray-900">
-            ₪{entry.amount.toLocaleString()}
             {entry.frequency === "biMonthly" && (
-              <span className="text-xs text-muted-foreground ml-2">
+              <span className="text-xs text-muted-foreground mr-2">
                 (₪{normalizeAmount(entry).toLocaleString()}/month)
               </span>
             )}
+            ₪{entry.amount.toLocaleString()}
           </span>
         )}
       </div>
