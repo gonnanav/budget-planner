@@ -11,7 +11,7 @@ export interface BalanceProps {
   onExpensesClick?: () => void;
 }
 
-export function Balance({
+export function Overview({
   incomes,
   expenses,
   onIncomeClick,

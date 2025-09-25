@@ -6,7 +6,7 @@ import { useIncomes } from "./hooks/useIncomes";
 import { useExpenses } from "./hooks/useExpenses";
 import { IncomeSection } from "./IncomeSection";
 import { ExpenseSection } from "./ExpenseSection";
-import { Balance } from "./Balance";
+import { Overview } from "./Overview";
 import { BudgetEntry } from "./core/types";
 
 interface BudgetPlannerProps {
@@ -36,7 +36,7 @@ export function BudgetPlanner({
       fullWidth
     >
       <Tab key="overview" title="Overview">
-        <Balance
+        <Overview
           incomes={incomes}
           expenses={expenses}
           onIncomeClick={() => setSelectedTab("income")}
