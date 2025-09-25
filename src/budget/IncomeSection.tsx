@@ -4,7 +4,7 @@ import { BudgetEntry } from "./core/types";
 interface IncomeSectionProps
   extends Omit<
     React.ComponentProps<typeof BudgetSection>,
-    "items" | "title" | "itemLabel" | "addItemButtonLabel"
+    "entries" | "title" | "itemLabel" | "addItemButtonLabel"
   > {
   incomes: BudgetEntry[];
 }
@@ -12,8 +12,8 @@ interface IncomeSectionProps
 export function IncomeSection({ incomes, ...props }: IncomeSectionProps) {
   return (
     <BudgetSection
-      items={incomes}
-      title="Incomes"
+      entries={incomes}
+      title="Income"
       itemLabel="Income"
       addItemButtonLabel="Add income"
       {...props}

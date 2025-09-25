@@ -18,7 +18,7 @@ import { NameInput } from "./NameInput";
 import { FrequencyInput } from "./FrequencyInput";
 
 interface BudgetEntryDrawerProps {
-  title: string;
+  itemLabel: string;
   isOpen: boolean;
   entry?: BudgetEntry | null;
   onSave: (input: BudgetEntryInput) => void;
@@ -27,7 +27,7 @@ interface BudgetEntryDrawerProps {
 }
 
 export const BudgetEntryDrawer = ({
-  title,
+  itemLabel,
   isOpen,
   entry,
   onSave,
@@ -39,7 +39,8 @@ export const BudgetEntryDrawer = ({
   const [frequency, setFrequency] = useState<BudgetEntryFrequency | null>(
     "monthly",
   );
-  const isEditMode = entry !== null;
+  const isEditMode = Boolean(entry);
+  const title = isEditMode ? `Edit ${itemLabel}` : `Add ${itemLabel}`;
 
   useEffect(() => {
     if (!entry) return;

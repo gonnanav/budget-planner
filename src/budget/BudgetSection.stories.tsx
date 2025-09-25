@@ -7,7 +7,7 @@ const meta = {
   title: "Components/BudgetSection",
   component: BudgetSection,
   args: {
-    items: [],
+    entries: [],
     title: "Budget Section",
     itemLabel: "Entry",
     addItemButtonLabel: "Add entry",
@@ -23,7 +23,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    items: [rent, groceries, diningOut],
+    entries: [rent, groceries, diningOut],
   },
 };
 

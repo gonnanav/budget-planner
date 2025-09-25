@@ -7,7 +7,7 @@ const meta = {
   title: "Components/BudgetEntryDrawer",
   component: BudgetEntryDrawer,
   args: {
-    title: "Budget Entry",
+    itemLabel: "Budget Entry",
     isOpen: true,
     onSave: fn(),
     onClose: fn(),
@@ -20,7 +20,7 @@ type Story = StoryObj<typeof meta>;
 
 export const AddEntry: Story = {
   args: {
-    title: "Add Budget Entry",
+    entry: null,
   },
   play: async () => {
     await expect(screen.getByText("Add Budget Entry")).toBeInTheDocument();
@@ -30,11 +30,10 @@ export const AddEntry: Story = {
 
 export const UpdateEntry: Story = {
   args: {
-    title: "Update Budget Entry",
     entry: salary,
   },
   play: async () => {
-    await expect(screen.getByText("Update Budget Entry")).toBeInTheDocument();
+    await expect(screen.getByText("Edit Budget Entry")).toBeInTheDocument();
     await expect(getAmountInput()).toHaveValue("5,000");
   },
 };
