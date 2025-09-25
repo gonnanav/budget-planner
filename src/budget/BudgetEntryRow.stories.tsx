@@ -59,11 +59,21 @@ export const ListPreview: Story = {
         onClick={() => {}}
       />
       <BudgetEntryRow
-        entry={{ id: "2", name: "Internet", amount: 500, frequency: "biMonthly" }}
+        entry={{
+          id: "2",
+          name: "Internet",
+          amount: 500,
+          frequency: "biMonthly",
+        }}
         onClick={() => {}}
       />
       <BudgetEntryRow
-        entry={{ id: "3", name: "Groceries", amount: null, frequency: "monthly" }}
+        entry={{
+          id: "3",
+          name: "Groceries",
+          amount: null,
+          frequency: "monthly",
+        }}
         onClick={() => {}}
       />
     </div>

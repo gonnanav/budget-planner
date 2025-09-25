@@ -14,7 +14,9 @@ export function BudgetEntryRow({ entry, onClick }: BudgetEntryRowProps) {
     >
       <div className="flex items-baseline justify-between w-full gap-3">
         {entry.name && (
-          <span className="text-muted-foreground text-sm truncate">{entry.name}</span>
+          <span className="text-muted-foreground text-sm truncate">
+            {entry.name}
+          </span>
         )}
         {entry.amount && (
           <span className="font-medium text-gray-900">
