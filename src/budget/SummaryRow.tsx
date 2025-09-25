@@ -6,6 +6,7 @@ interface SummaryRowProps {
   backgroundColor: string;
   valueColor?: string;
   isBold?: boolean;
+  onClick?: () => void;
 }
 
 export function SummaryRow({
@@ -14,13 +15,16 @@ export function SummaryRow({
   backgroundColor,
   valueColor,
   isBold,
+  onClick,
 }: SummaryRowProps) {
   return (
     <div
       className={cn(
         "flex flex-wrap items-baseline justify-between rounded-md px-3 py-2",
         backgroundColor,
+        onClick && "cursor-pointer hover:opacity-80 transition-opacity",
       )}
+      onClick={onClick}
     >
       <span
         className={cn(

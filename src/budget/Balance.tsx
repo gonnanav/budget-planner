@@ -7,9 +7,16 @@ import { ExpensesSummaryRow } from "./ExpensesSummaryRow";
 export interface BalanceProps {
   incomes: BudgetEntry[];
   expenses: BudgetEntry[];
+  onIncomeClick?: () => void;
+  onExpensesClick?: () => void;
 }
 
-export function Balance({ incomes, expenses }: BalanceProps) {
+export function Balance({
+  incomes,
+  expenses,
+  onIncomeClick,
+  onExpensesClick,
+}: BalanceProps) {
   const evaluation = budgetBalance(incomes, expenses);
   const { isGood, formattedBalance } = fromEvaluation(evaluation);
   const totalIncomes = budgetEntriesSum(incomes);
@@ -21,8 +28,8 @@ export function Balance({ incomes, expenses }: BalanceProps) {
 
   return (
     <div className="space-y-1">
-      <IncomeSummaryRow value={formattedIncomes} />
-      <ExpensesSummaryRow value={formattedExpenses} />
+      <IncomeSummaryRow value={formattedIncomes} onClick={onIncomeClick} />
+      <ExpensesSummaryRow value={formattedExpenses} onClick={onExpensesClick} />
 
       <SummaryRow
         label="Balance"

@@ -1,5 +1,7 @@
 "use client";
 
+import React, { useState } from "react";
+import { Tabs, Tab } from "@heroui/tabs";
 import { useIncomes } from "./hooks/useIncomes";
 import { useExpenses } from "./hooks/useExpenses";
 import { IncomeSection } from "./IncomeSection";
@@ -16,26 +18,47 @@ export function BudgetPlanner({
   initialIncomes,
   initialExpenses,
 }: BudgetPlannerProps) {
+  const [selectedTab, setSelectedTab] = useState("overview");
+
   const { incomes, addIncome, updateIncome, deleteIncome } =
     useIncomes(initialIncomes);
   const { expenses, addExpense, updateExpense, deleteExpense } =
     useExpenses(initialExpenses);
 
+  const handleTabChange = (key: React.Key) => {
+    setSelectedTab(String(key));
+  };
+
   return (
-    <section className="flex flex-col gap-4">
-      <IncomeSection
-        incomes={incomes}
-        onAddEntry={addIncome}
-        onUpdateEntry={updateIncome}
-        onDeleteEntry={deleteIncome}
-      />
-      <ExpenseSection
-        expenses={expenses}
-        onAddEntry={addExpense}
-        onUpdateEntry={updateExpense}
-        onDeleteEntry={deleteExpense}
-      />
-      <Balance incomes={incomes} expenses={expenses} />
-    </section>
+    <Tabs
+      selectedKey={selectedTab}
+      onSelectionChange={handleTabChange}
+      fullWidth
+    >
+      <Tab key="overview" title="Overview">
+        <Balance
+          incomes={incomes}
+          expenses={expenses}
+          onIncomeClick={() => setSelectedTab("income")}
+          onExpensesClick={() => setSelectedTab("expenses")}
+        />
+      </Tab>
+      <Tab key="income" title="Income">
+        <IncomeSection
+          incomes={incomes}
+          onAddEntry={addIncome}
+          onUpdateEntry={updateIncome}
+          onDeleteEntry={deleteIncome}
+        />
+      </Tab>
+      <Tab key="expenses" title="Expenses">
+        <ExpenseSection
+          expenses={expenses}
+          onAddEntry={addExpense}
+          onUpdateEntry={updateExpense}
+          onDeleteEntry={deleteExpense}
+        />
+      </Tab>
+    </Tabs>
   );
 }
