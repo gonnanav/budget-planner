@@ -21,6 +21,7 @@ interface BudgetEntryDrawerProps {
   itemLabel: string;
   isOpen: boolean;
   entry?: BudgetEntry | null;
+  onCancel: () => void;
   onSave: (input: BudgetEntryInput) => void;
   onClose: () => void;
   onDelete?: () => void;
@@ -30,6 +31,7 @@ export const BudgetEntryDrawer = ({
   itemLabel,
   isOpen,
   entry,
+  onCancel,
   onSave,
   onClose,
   onDelete,
@@ -42,11 +44,13 @@ export const BudgetEntryDrawer = ({
   const title = isEditMode ? `Edit ${itemLabel}` : `Add ${itemLabel}`;
 
   useEffect(() => {
-    if (!entry) return;
-
-    setName(entry.name);
-    setAmount(entry.amount);
-    setFrequency(entry.frequency);
+    if (!entry) {
+      reset();
+    } else {
+      setName(entry.name);
+      setAmount(entry.amount);
+      setFrequency(entry.frequency);
+    }
   }, [entry]);
 
   const reset = () => {
@@ -55,28 +59,19 @@ export const BudgetEntryDrawer = ({
     setFrequency("monthly");
   };
 
-  const handleClose = () => {
-    onClose();
+  const handleCancel = () => {
+    onCancel();
     reset();
-  };
-
-  const handleSave = () => {
-    onSave({ name, amount, frequency });
-    handleClose();
-  };
-
-  const handleDelete = () => {
-    onDelete?.();
-    handleClose();
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleSave();
+    onSave({ name, amount, frequency });
+    reset();
   };
 
   return (
-    <Drawer isOpen={isOpen} onOpenChange={handleClose}>
+    <Drawer isOpen={isOpen} onOpenChange={onClose}>
       <DrawerContent>
         <form onSubmit={handleSubmit}>
           <DrawerHeader>{title}</DrawerHeader>
@@ -86,13 +81,13 @@ export const BudgetEntryDrawer = ({
             <FrequencyInput frequency={frequency} onChange={setFrequency} />
           </DrawerBody>
           <DrawerFooter>
-            <Button color="danger" variant="light" onPress={handleClose}>
+            <Button color="danger" variant="light" onPress={handleCancel}>
               Cancel
             </Button>
             {isEditMode && (
               <Button
                 color="danger"
-                onPress={handleDelete}
+                onPress={onDelete}
                 isIconOnly
                 aria-label="Delete"
               >

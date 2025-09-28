@@ -11,6 +11,7 @@ const meta = {
     isOpen: true,
     onSave: fn(),
     onClose: fn(),
+    onCancel: fn(),
   },
 } satisfies Meta<typeof BudgetEntryDrawer>;
 
@@ -43,7 +44,7 @@ export const Cancelling: Story = {
     await userEvent.type(getAmountInput(), "100");
     await userEvent.click(getCancelButton());
 
-    await expect(args.onClose).toHaveBeenCalled();
+    await expect(args.onCancel).toHaveBeenCalled();
     await expect(getAmountInput()).not.toHaveValue();
   },
 };

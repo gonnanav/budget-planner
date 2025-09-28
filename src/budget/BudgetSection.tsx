@@ -39,6 +39,20 @@ export function BudgetSection({
     onDeleteEntry,
   });
 
+  const handleCancel = () => {
+    onClose();
+  };
+
+  const handleSave = (input: BudgetEntryInput) => {
+    onSave(input);
+    onClose();
+  };
+
+  const handleDelete = () => {
+    onDelete();
+    onClose();
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -74,9 +88,10 @@ export function BudgetSection({
         itemLabel={itemLabel}
         isOpen={isOpen}
         entry={editedEntry}
-        onSave={onSave}
-        onClose={onClose}
-        onDelete={onDelete}
+        onSave={handleSave}
+        onClose={handleCancel}
+        onCancel={handleCancel}
+        onDelete={handleDelete}
       />
     </div>
   );
