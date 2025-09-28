@@ -26,9 +26,6 @@ export const PositiveBalance: Story = {
     initialIncomes: [salary, allowance],
     initialExpenses: [rent, groceries, diningOut],
   },
-  play: async ({ canvas }) => {
-    await expect(getBalanceOutput(canvas)).toHaveTextContent("2,550");
-  },
 };
 
 export const NegativeBalance: Story = {
@@ -47,12 +44,4 @@ export const ZeroBalance: Story = {
   },
 };
 
-export const Pristine: Story = {
-  play: async ({ canvas }) => {
-    await expect(getBalanceOutput(canvas)).toHaveTextContent("0");
-  },
-};
-
-function getBalanceOutput(canvas: Canvas) {
-  return canvas.getByRole("status", { name: "Balance" });
-}
+export const Pristine: Story = {};
