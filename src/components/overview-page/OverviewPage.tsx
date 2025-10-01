@@ -1,22 +1,17 @@
+"use client";
+
+import { useContext } from "react";
 import { budgetBalance, budgetEntriesSum } from "@/core/budget-balance";
-import { BudgetEntry, BudgetEvaluation } from "@/core/types";
+import { BudgetEvaluation } from "@/core/types";
+import { IncomeContext } from "@/contexts/IncomeContext";
+import { ExpenseContext } from "@/contexts/ExpenseContext";
 import { SummaryRow } from "./SummaryRow";
 import { IncomeSummaryRow } from "./IncomeSummaryRow";
 import { ExpensesSummaryRow } from "./ExpensesSummaryRow";
 
-export interface BalanceProps {
-  incomes: BudgetEntry[];
-  expenses: BudgetEntry[];
-  onIncomeClick?: () => void;
-  onExpensesClick?: () => void;
-}
-
-export function Overview({
-  incomes,
-  expenses,
-  onIncomeClick,
-  onExpensesClick,
-}: BalanceProps) {
+export function OverviewPage() {
+  const { incomes } = useContext(IncomeContext);
+  const { expenses } = useContext(ExpenseContext);
   const evaluation = budgetBalance(incomes, expenses);
   const { isGood, formattedBalance } = fromEvaluation(evaluation);
   const totalIncomes = budgetEntriesSum(incomes);
@@ -30,11 +25,8 @@ export function Overview({
     <div className="space-y-4">
       <h3 className="text-lg font-semibold">Overview</h3>
       <div className="space-y-1">
-        <IncomeSummaryRow value={formattedIncomes} onClick={onIncomeClick} />
-        <ExpensesSummaryRow
-          value={formattedExpenses}
-          onClick={onExpensesClick}
-        />
+        <IncomeSummaryRow value={formattedIncomes} />
+        <ExpensesSummaryRow value={formattedExpenses} />
 
         <SummaryRow
           label="Balance"
