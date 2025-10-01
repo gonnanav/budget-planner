@@ -2,7 +2,7 @@
 
 import { useContext } from "react";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
-import { ExpenseSection } from "@/budget/ExpenseSection";
+import { ExpenseSection } from "@/components/budget/ExpenseSection";
 
 export default function ExpensesPage() {
   const { expenses, addExpense, updateExpense, deleteExpense } =

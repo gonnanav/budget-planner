@@ -1,6 +1,6 @@
 "use client";
 
-import { IncomeSection } from "@/budget/IncomeSection";
+import { IncomeSection } from "@/components/budget/IncomeSection";
 import { IncomeContext } from "@/contexts/IncomeContext";
 import { useContext } from "react";
 

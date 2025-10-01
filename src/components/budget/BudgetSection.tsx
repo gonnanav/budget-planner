@@ -2,7 +2,7 @@ import { Button } from "@heroui/button";
 import { Plus } from "lucide-react";
 import { BudgetEntry, BudgetEntryInput } from "@/core/types";
 import { BudgetEntryRow } from "./BudgetEntryRow";
-import { BudgetEntryDrawer } from "@/entry-drawer";
+import { BudgetEntryDrawer } from "@/components/entry-drawer";
 import { useBudgetEntryDrawer } from "./hooks/useBudgetEntryDrawer";
 
 interface BudgetSection {
