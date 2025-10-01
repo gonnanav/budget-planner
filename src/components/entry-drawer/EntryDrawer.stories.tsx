@@ -28,7 +28,7 @@ export const AddEntry: Story = {
   },
 };
 
-export const UpdateEntry: Story = {
+export const EditEntry: Story = {
   args: {
     entry: salary,
   },
