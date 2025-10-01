@@ -1,10 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-
+import { fn } from "storybook/test";
 import { BudgetEntryRow } from "./BudgetEntryRow";
+import { createTestEntry } from "@/fixtures";
 
 const meta = {
   title: "Components/BudgetEntryRow",
   component: BudgetEntryRow,
+  args: {
+    onClick: fn(),
+  },
 } satisfies Meta<typeof BudgetEntryRow>;
 
 export default meta;
@@ -13,69 +17,34 @@ type Story = StoryObj<typeof meta>;
 
 export const Monthly: Story = {
   args: {
-    entry: {
-      id: "1",
-      name: "Electricity",
-      amount: 500,
+    entry: createTestEntry({
       frequency: "monthly",
-    },
-    onClick: () => {},
+    }),
   },
 };
 
 export const BiMonthly: Story = {
   args: {
-    entry: {
-      id: "2",
-      name: "Internet",
-      amount: 500,
+    entry: createTestEntry({
       frequency: "biMonthly",
-    },
-    onClick: () => {},
+    }),
   },
 };
 
 export const NoAmount: Story = {
   args: {
-    entry: {
-      id: "3",
-      name: "Groceries",
+    entry: createTestEntry({
       amount: null,
-      frequency: "monthly",
-    },
-    onClick: () => {},
+    }),
   },
 };
 
-export const ListPreview: Story = {
+export const LongTextAndAmount: Story = {
   args: {
-    entry: { id: "x", name: "", amount: 0, frequency: "monthly" },
-    onClick: () => {},
+    entry: createTestEntry({
+      name: "This is a very long budget entry name that should test overflow and wrapping in the BudgetEntryRow component for visual robustness",
+      amount: 1234567890.99,
+      frequency: "biMonthly",
+    }),
   },
-  render: () => (
-    <div className="flex flex-col gap-1">
-      <BudgetEntryRow
-        entry={{ id: "1", name: "Salary", amount: 12000, frequency: "monthly" }}
-        onClick={() => {}}
-      />
-      <BudgetEntryRow
-        entry={{
-          id: "2",
-          name: "Internet",
-          amount: 500,
-          frequency: "biMonthly",
-        }}
-        onClick={() => {}}
-      />
-      <BudgetEntryRow
-        entry={{
-          id: "3",
-          name: "Groceries",
-          amount: null,
-          frequency: "monthly",
-        }}
-        onClick={() => {}}
-      />
-    </div>
-  ),
 };

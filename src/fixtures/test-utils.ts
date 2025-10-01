@@ -1,5 +1,6 @@
 import { createEntry } from "@/core/budget-entries";
 import type { BudgetEntry, CreateBudgetEntryInput } from "@/core/types";
+import { groceries } from "./fixtures";
 
 type CreateTestEntryInput = Omit<CreateBudgetEntryInput, "id" | "name"> & {
   id?: string;
@@ -7,7 +8,7 @@ type CreateTestEntryInput = Omit<CreateBudgetEntryInput, "id" | "name"> & {
 };
 
 export function createTestEntry(input: CreateTestEntryInput = {}): BudgetEntry {
-  return createEntry({ id: "1", name: "Test entry", ...input });
+  return createEntry({ ...groceries, ...input });
 }
 
 export function createTestEntries(
