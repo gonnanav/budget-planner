@@ -5,8 +5,8 @@ import {
   updateEntryIn,
   removeEntry,
 } from "./budget-entries";
-import { createTestEntries } from "./test-utils";
-import { salary, allowance } from "./fixtures";
+import { createTestEntries } from "@/fixtures";
+import { salary, allowance } from "@/fixtures";
 
 test("creates an entry based on the given input", () => {
   const entry = createEntry({

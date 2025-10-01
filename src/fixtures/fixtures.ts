@@ -1,4 +1,4 @@
-import { createEntry } from "./budget-entries";
+import { createEntry } from "@/core/budget-entries";
 
 // Income fixtures
 export const salary = createEntry({

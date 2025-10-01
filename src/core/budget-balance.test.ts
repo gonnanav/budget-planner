@@ -4,7 +4,7 @@ import {
   budgetEntriesSum,
   normalizeAmount,
 } from "./budget-balance";
-import { createTestEntries, createTestEntry } from "./test-utils";
+import { createTestEntries, createTestEntry } from "@/fixtures";
 
 test("balance is balanced when incomes and expenses are equal", () => {
   const { balance, status } = budgetBalance(
