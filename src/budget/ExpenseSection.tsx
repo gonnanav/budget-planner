@@ -1,5 +1,5 @@
 import { BudgetSection } from "./BudgetSection";
-import { BudgetEntry } from "./core/types";
+import { BudgetEntry } from "@/core/types";
 
 interface ExpenseSectionProps
   extends Omit<

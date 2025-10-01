@@ -1,5 +1,5 @@
 import { Select, SelectItem } from "@heroui/select";
-import { BudgetEntryFrequency } from "@/budget/core/types";
+import { BudgetEntryFrequency } from "@/core/types";
 
 interface FrequencyInputProps {
   frequency: BudgetEntryFrequency;

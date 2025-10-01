@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { BudgetEntry, BudgetEntryInput } from "@/budget/core/types";
+import { BudgetEntry, BudgetEntryInput } from "@/core/types";
 
 export interface IncomeContextValue {
   incomes: BudgetEntry[];

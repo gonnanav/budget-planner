@@ -2,7 +2,7 @@
 
 import { ExpenseContext, ExpenseContextValue } from "@/contexts/ExpenseContext";
 import { useExpenses } from "@/hooks/useExpenses";
-import { BudgetEntry } from "@/budget/core/types";
+import { BudgetEntry } from "@/core/types";
 
 interface ExpenseProviderProps {
   children: React.ReactNode;

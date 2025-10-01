@@ -1,10 +1,6 @@
 import { useState } from "react";
-import {
-  addEntry,
-  updateEntryIn,
-  removeEntry,
-} from "@/budget/core/budget-entries";
-import { BudgetEntry, BudgetEntryInput } from "@/budget/core/types";
+import { addEntry, updateEntryIn, removeEntry } from "@/core/budget-entries";
+import { BudgetEntry, BudgetEntryInput } from "@/core/types";
 import { useSynchStorage } from "@/hooks/useSynchStorage";
 
 export function useBudgetEntries(

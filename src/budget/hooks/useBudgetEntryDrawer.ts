@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDisclosure } from "@heroui/use-disclosure";
-import { BudgetEntry, BudgetEntryInput } from "../core/types";
+import { BudgetEntry, BudgetEntryInput } from "@/core/types";
 
 interface UseBudgetEntryDrawerProps {
   entries: BudgetEntry[];

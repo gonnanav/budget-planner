@@ -1,5 +1,5 @@
-import { BudgetEntry } from "./core/types";
-import { normalizeAmount } from "./core/budget-balance";
+import { BudgetEntry } from "@/core/types";
+import { normalizeAmount } from "@/core/budget-balance";
 
 interface BudgetEntryRowProps {
   entry: BudgetEntry;

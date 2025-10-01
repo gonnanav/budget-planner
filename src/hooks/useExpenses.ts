@@ -1,4 +1,4 @@
-import { BudgetEntry } from "@/budget/core/types";
+import { BudgetEntry } from "@/core/types";
 import { useBudgetEntries } from "./useBudgetEntries";
 
 export function useExpenses(initialExpenses?: BudgetEntry[]) {

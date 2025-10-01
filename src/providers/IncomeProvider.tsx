@@ -2,7 +2,7 @@
 
 import { IncomeContext, IncomeContextValue } from "@/contexts/IncomeContext";
 import { useIncomes } from "@/hooks/useIncomes";
-import { BudgetEntry } from "@/budget/core/types";
+import { BudgetEntry } from "@/core/types";
 
 interface IncomeProviderProps {
   children: React.ReactNode;
