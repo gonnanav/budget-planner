@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 const dirname =
   typeof __dirname !== "undefined"
@@ -12,6 +13,7 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
+  plugins: [tsconfigPaths()],
   test: {
     projects: [
       {
@@ -33,6 +35,7 @@ export default defineConfig({
         },
       },
       {
+        extends: true,
         test: {
           name: "unit tests",
           include: ["src/**/*.test.ts"],
