@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { BudgetEntryDrawer } from "./BudgetEntryDrawer";
+import { EntryDrawer } from "./EntryDrawer";
 import { expect, fn, screen } from "storybook/test";
 import { salary } from "@/fixtures";
 
 const meta = {
   title: "Components/BudgetEntryDrawer",
-  component: BudgetEntryDrawer,
+  component: EntryDrawer,
   args: {
     itemLabel: "Budget Entry",
     isOpen: true,
@@ -13,7 +13,7 @@ const meta = {
     onClose: fn(),
     onCancel: fn(),
   },
-} satisfies Meta<typeof BudgetEntryDrawer>;
+} satisfies Meta<typeof EntryDrawer>;
 
 export default meta;
 

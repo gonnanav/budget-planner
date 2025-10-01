@@ -17,7 +17,7 @@ import { AmountInput } from "./AmountInput";
 import { NameInput } from "./NameInput";
 import { FrequencyInput } from "./FrequencyInput";
 
-interface BudgetEntryDrawerProps {
+interface EntryDrawerProps {
   itemLabel: string;
   isOpen: boolean;
   entry?: BudgetEntry | null;
@@ -27,7 +27,7 @@ interface BudgetEntryDrawerProps {
   onDelete?: () => void;
 }
 
-export const BudgetEntryDrawer = ({
+export const EntryDrawer = ({
   itemLabel,
   isOpen,
   entry,
@@ -35,7 +35,7 @@ export const BudgetEntryDrawer = ({
   onSave,
   onClose,
   onDelete,
-}: BudgetEntryDrawerProps) => {
+}: EntryDrawerProps) => {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState<number | null>(null);
   const [frequency, setFrequency] = useState<BudgetEntryFrequency>("monthly");

@@ -1,1 +1,1 @@
-export { BudgetEntryDrawer } from "./BudgetEntryDrawer";
+export { EntryDrawer } from "./EntryDrawer";
