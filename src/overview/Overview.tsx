@@ -1,5 +1,5 @@
-import { budgetBalance, budgetEntriesSum } from "./core/budget-balance";
-import { BudgetEntry, BudgetEvaluation } from "./core/types";
+import { budgetBalance, budgetEntriesSum } from "../budget/core/budget-balance";
+import { BudgetEntry, BudgetEvaluation } from "../budget/core/types";
 import { SummaryRow } from "./SummaryRow";
 import { IncomeSummaryRow } from "./IncomeSummaryRow";
 import { ExpensesSummaryRow } from "./ExpensesSummaryRow";

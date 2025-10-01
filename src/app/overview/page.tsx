@@ -3,7 +3,7 @@
 import { useContext } from "react";
 import { IncomeContext } from "@/contexts/IncomeContext";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
-import { Overview } from "@/budget/Overview";
+import { Overview } from "@/overview";
 
 export default function OverviewPage() {
   const { incomes } = useContext(IncomeContext);
