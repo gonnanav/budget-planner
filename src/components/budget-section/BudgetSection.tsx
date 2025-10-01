@@ -3,7 +3,7 @@ import { Plus } from "lucide-react";
 import { BudgetEntry, BudgetEntryInput } from "@/core/types";
 import { BudgetEntryRow } from "./BudgetEntryRow";
 import { BudgetEntryDrawer } from "@/components/entry-drawer";
-import { useBudgetEntryDrawer } from "./hooks/useBudgetEntryDrawer";
+import { useBudgetEntryDrawer } from "@/hooks/useBudgetEntryDrawer";
 
 interface BudgetSection {
   entries: BudgetEntry[];
