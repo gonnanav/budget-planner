@@ -4,7 +4,6 @@ import { BudgetSection } from "./BudgetSection";
 import { rent, groceries, diningOut } from "@/fixtures";
 
 const meta = {
-  title: "Components/BudgetSection",
   component: BudgetSection,
   args: {
     entries: [],

@@ -4,7 +4,6 @@ import { EntryRow } from "./EntryRow";
 import { createTestEntry } from "@/fixtures";
 
 const meta = {
-  title: "Components/BudgetEntryRow",
   component: EntryRow,
   args: {
     onClick: fn(),

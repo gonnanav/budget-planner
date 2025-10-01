@@ -4,7 +4,6 @@ import { expect, fn, screen } from "storybook/test";
 import { salary } from "@/fixtures";
 
 const meta = {
-  title: "Components/BudgetEntryDrawer",
   component: EntryDrawer,
   args: {
     itemLabel: "Budget Entry",
