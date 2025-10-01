@@ -1,5 +1,5 @@
 import { NumberInput } from "@heroui/number-input";
-import { BudgetEntryAmount } from "./core/types";
+import { BudgetEntryAmount } from "@/budget/core/types";
 
 interface AmountInputProps {
   amount: number | null;

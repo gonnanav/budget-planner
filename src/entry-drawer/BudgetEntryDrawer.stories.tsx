@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { BudgetEntryDrawer } from "./BudgetEntryDrawer";
 import { expect, fn, screen } from "storybook/test";
-import { salary } from "./core/fixtures";
+import { salary } from "@/budget/core/fixtures";
 
 const meta = {
   title: "Components/BudgetEntryDrawer",

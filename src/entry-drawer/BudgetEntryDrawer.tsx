@@ -12,7 +12,7 @@ import {
   BudgetEntry,
   BudgetEntryInput,
   BudgetEntryFrequency,
-} from "./core/types";
+} from "@/budget/core/types";
 import { AmountInput } from "./AmountInput";
 import { NameInput } from "./NameInput";
 import { FrequencyInput } from "./FrequencyInput";
