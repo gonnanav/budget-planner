@@ -1,7 +1,7 @@
 import { Button } from "@heroui/button";
 import { Plus } from "lucide-react";
 import { BudgetEntry, BudgetEntryInput } from "@/core/types";
-import { BudgetEntryRow } from "./BudgetEntryRow";
+import { EntryRow } from "./EntryRow";
 import { BudgetEntryDrawer } from "@/components/entry-drawer";
 import { useBudgetEntryDrawer } from "@/hooks/useBudgetEntryDrawer";
 
@@ -74,7 +74,7 @@ export function BudgetSection({
         ) : (
           <div className="flex flex-col gap-px">
             {entries.map((entry, index) => (
-              <BudgetEntryRow
+              <EntryRow
                 key={entry.id}
                 entry={entry}
                 onClick={() => onEditEntry(index)}

@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { fn } from "storybook/test";
-import { BudgetEntryRow } from "./BudgetEntryRow";
+import { EntryRow } from "./EntryRow";
 import { createTestEntry } from "@/fixtures";
 
 const meta = {
   title: "Components/BudgetEntryRow",
-  component: BudgetEntryRow,
+  component: EntryRow,
   args: {
     onClick: fn(),
   },
-} satisfies Meta<typeof BudgetEntryRow>;
+} satisfies Meta<typeof EntryRow>;
 
 export default meta;
 
