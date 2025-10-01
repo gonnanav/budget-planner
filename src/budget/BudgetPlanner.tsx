@@ -1,29 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Tabs, Tab } from "@heroui/tabs";
-import { useIncomes } from "./hooks/useIncomes";
-import { useExpenses } from "./hooks/useExpenses";
 import { IncomeSection } from "./IncomeSection";
 import { ExpenseSection } from "./ExpenseSection";
 import { Overview } from "./Overview";
-import { BudgetEntry } from "./core/types";
+import { IncomeContext } from "@/contexts/IncomeContext";
+import { ExpenseContext } from "@/contexts/ExpenseContext";
 
-interface BudgetPlannerProps {
-  initialIncomes?: BudgetEntry[];
-  initialExpenses?: BudgetEntry[];
-}
-
-export function BudgetPlanner({
-  initialIncomes,
-  initialExpenses,
-}: BudgetPlannerProps) {
+export function BudgetPlanner() {
   const [selectedTab, setSelectedTab] = useState("overview");
 
   const { incomes, addIncome, updateIncome, deleteIncome } =
-    useIncomes(initialIncomes);
+    useContext(IncomeContext);
   const { expenses, addExpense, updateExpense, deleteExpense } =
-    useExpenses(initialExpenses);
+    useContext(ExpenseContext);
 
   const handleTabChange = (key: React.Key) => {
     setSelectedTab(String(key));
