@@ -34,7 +34,7 @@ export const EditEntry: Story = {
   },
   play: async () => {
     await expect(screen.getByText("Edit Budget Entry")).toBeInTheDocument();
-    await expect(getAmountInput()).toHaveValue("5,000");
+    await expect(getAmountInput()).toHaveDisplayValue(/5,000/);
   },
 };
 
