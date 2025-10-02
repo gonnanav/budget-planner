@@ -18,7 +18,8 @@ export function SummaryRow({
   onClick,
 }: SummaryRowProps) {
   return (
-    <div
+    <section
+      aria-label={label}
       className={cn(
         "flex flex-wrap items-baseline justify-between rounded-md px-3 py-2",
         backgroundColor,
@@ -37,6 +38,6 @@ export function SummaryRow({
       <span className={cn("text-sm", valueColor, isBold && "font-semibold")}>
         {value}
       </span>
-    </div>
+    </section>
   );
 }

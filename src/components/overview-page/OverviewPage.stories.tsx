@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { expect } from "storybook/test";
+import { Canvas } from "storybook/internal/types";
 import { OverviewPage } from "./OverviewPage";
 import { IncomesProvider } from "@/providers/IncomesProvider";
 import { ExpensesProvider } from "@/providers/ExpensesProvider";
@@ -34,6 +36,11 @@ export const PositiveBalance: Story = {
     incomeAmount: 5000,
     expenseAmount: 2800,
   },
+  play: async ({ canvas }) => {
+    await expect(getSection(canvas, "Income")).toHaveTextContent(/5,000/);
+    await expect(getSection(canvas, "Expenses")).toHaveTextContent(/2,800/);
+    await expect(getSection(canvas, "Balance")).toHaveTextContent(/2,200/);
+  },
 };
 
 export const NegativeBalance: Story = {
@@ -49,3 +56,7 @@ export const Balanced: Story = {
     expenseAmount: 5000,
   },
 };
+
+function getSection(canvas: Canvas, label: string) {
+  return canvas.getByRole("region", { name: label });
+}

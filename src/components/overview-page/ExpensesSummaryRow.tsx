@@ -11,7 +11,7 @@ export function ExpensesSummaryRow({
 }: ExpensesSummaryRowProps) {
   return (
     <SummaryRow
-      label="Total Expenses"
+      label="Expenses"
       value={value}
       backgroundColor="bg-rose-50"
       valueColor="text-foreground"

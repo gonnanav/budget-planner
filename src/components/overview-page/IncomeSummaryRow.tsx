@@ -8,7 +8,7 @@ interface IncomeSummaryRowProps {
 export function IncomeSummaryRow({ value, onClick }: IncomeSummaryRowProps) {
   return (
     <SummaryRow
-      label="Total Income"
+      label="Income"
       value={value}
       backgroundColor="bg-emerald-50"
       valueColor="text-foreground"
