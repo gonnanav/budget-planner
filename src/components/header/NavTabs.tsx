@@ -1,10 +1,11 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useContext } from "react";
 import { Tab, Tabs } from "@heroui/tabs";
+import { PathnameContext } from "@/contexts/PathnameContext";
 
 export function NavTabs() {
-  const pathname = usePathname();
+  const pathname = useContext(PathnameContext);
 
   return (
     <Tabs fullWidth selectedKey={pathname}>

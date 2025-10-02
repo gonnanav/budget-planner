@@ -1,7 +1,7 @@
 import React from "react";
 import type { Preview } from "@storybook/nextjs-vite";
 import { INITIAL_VIEWPORTS } from "storybook/viewport";
-import { HeroUIProvider } from "@heroui/react";
+import { AppHeroUIProvider } from "../src/providers/AppHeroUIProvider";
 import "../src/app/globals.css";
 
 const preview: Preview = {
@@ -11,6 +11,9 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
+    },
+    nextjs: {
+      appDirectory: true,
     },
 
     a11y: {
@@ -28,9 +31,9 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <HeroUIProvider>
+      <AppHeroUIProvider>
         <Story />
-      </HeroUIProvider>
+      </AppHeroUIProvider>
     ),
   ],
 };
