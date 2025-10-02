@@ -3,11 +3,10 @@ import { BudgetEntryAmount } from "@/core/types";
 
 interface AmountInputProps {
   amount: number | null;
-  className?: string;
   onChange: (amount: BudgetEntryAmount | null) => void;
 }
 
-export function AmountInput({ amount, className, onChange }: AmountInputProps) {
+export function AmountInput({ amount, onChange }: AmountInputProps) {
   const handleChange = (value: number) => {
     onChange(fromValue(value));
   };
@@ -15,10 +14,9 @@ export function AmountInput({ amount, className, onChange }: AmountInputProps) {
   return (
     <NumberInput
       label="Amount"
+      formatOptions={{ style: "currency", currency: "ILS" }}
       minValue={0}
-      defaultValue={0}
       value={toValue(amount)}
-      className={className}
       onValueChange={handleChange}
     />
   );
