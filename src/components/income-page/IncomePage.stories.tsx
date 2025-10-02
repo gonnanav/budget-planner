@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { expect } from "storybook/test";
 import { IncomePage } from "./IncomePage";
 import { IncomesProvider } from "@/providers/IncomesProvider";
 import { salary, allowance, investment } from "@/fixtures";
@@ -19,4 +20,7 @@ export const Default: Story = {
       </IncomesProvider>
     ),
   ],
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole("heading")).toHaveTextContent(/income/i);
+  },
 };

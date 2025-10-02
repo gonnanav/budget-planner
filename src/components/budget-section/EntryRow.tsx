@@ -8,7 +8,8 @@ interface EntryRowProps {
 
 export function EntryRow({ entry, onClick }: EntryRowProps) {
   return (
-    <div
+    <article
+      aria-label={entry.name}
       className="flex items-baseline justify-between rounded-md px-3 py-2 cursor-pointer bg-slate-50 hover:opacity-80 active:bg-slate-100 transition-colors transition-opacity"
       onClick={onClick}
     >
@@ -29,6 +30,6 @@ export function EntryRow({ entry, onClick }: EntryRowProps) {
           </span>
         )}
       </div>
-    </div>
+    </article>
   );
 }
