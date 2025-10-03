@@ -4,8 +4,8 @@ import { BudgetEntry, BudgetEntryInput } from "@/core/types";
 export interface IncomeContextValue {
   incomes: BudgetEntry[];
   addIncome: (input: BudgetEntryInput) => void;
-  updateIncome: (index: number, input: BudgetEntryInput) => void;
-  deleteIncome: (index: number) => void;
+  updateIncome: (id: string, input: BudgetEntryInput) => void;
+  deleteIncome: (id: string) => void;
 }
 
 export const IncomeContext = createContext<IncomeContextValue>({

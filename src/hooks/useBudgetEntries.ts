@@ -1,29 +1,27 @@
-import { useState } from "react";
-import { addEntry, updateEntryIn, removeEntry } from "@/core/budget-entries";
+import { useLiveQuery } from "dexie-react-hooks";
+import { createEntry } from "@/core/budget-entries";
 import { BudgetEntry, BudgetEntryInput } from "@/core/types";
-import { useSynchStorage } from "@/hooks/useSynchStorage";
+import { db } from "@/lib/db";
 
-export function useBudgetEntries(
-  key: string,
-  initialEntries: BudgetEntry[] = [],
-) {
-  const [entries, setEntries] = useState(initialEntries);
-  useSynchStorage(key, entries, setEntries);
+export function useBudgetEntries(key: string) {
+  const entries = useLiveQuery(() => db.table(key).toArray()) as
+    | BudgetEntry[]
+    | undefined;
 
   const handleAddEntry = (input: BudgetEntryInput) => {
-    setEntries(addEntry(entries, { id: crypto.randomUUID(), ...input }));
+    db.table(key).add(createEntry({ id: crypto.randomUUID(), ...input }));
   };
 
-  const handleUpdateEntry = (index: number, input: BudgetEntryInput) => {
-    setEntries(updateEntryIn(entries, index, input));
+  const handleUpdateEntry = (id: string, input: BudgetEntryInput) => {
+    db.table(key).update(id, createEntry({ id, ...input }));
   };
 
-  const handleDeleteEntry = (index: number) => {
-    setEntries(removeEntry(entries, index));
+  const handleDeleteEntry = (id: string) => {
+    db.table(key).delete(id);
   };
 
   return {
-    entries,
+    entries: entries ?? [],
     addEntry: handleAddEntry,
     updateEntry: handleUpdateEntry,
     deleteEntry: handleDeleteEntry,

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect } from "storybook/test";
 import { IncomePage } from "./IncomePage";
-import { IncomesProvider } from "@/providers/IncomesProvider";
 import { salary, allowance, investment } from "@/fixtures";
+import { IncomeContext } from "@/contexts/IncomeContext";
 
 const meta = {
   component: IncomePage,
@@ -15,9 +15,16 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   decorators: [
     (Story) => (
-      <IncomesProvider initialIncomes={[salary, allowance, investment]}>
+      <IncomeContext
+        value={{
+          incomes: [salary, allowance, investment],
+          addIncome: () => {},
+          updateIncome: () => {},
+          deleteIncome: () => {},
+        }}
+      >
         <Story />
-      </IncomesProvider>
+      </IncomeContext>
     ),
   ],
   play: async ({ canvas }) => {

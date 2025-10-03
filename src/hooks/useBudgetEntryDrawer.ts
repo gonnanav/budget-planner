@@ -5,14 +5,14 @@ import { BudgetEntry, BudgetEntryInput } from "@/core/types";
 interface UseBudgetEntryDrawerProps {
   entries: BudgetEntry[];
   onAddEntry: (input: BudgetEntryInput) => void;
-  onUpdateEntry: (index: number, input: BudgetEntryInput) => void;
-  onDeleteEntry: (index: number) => void;
+  onUpdateEntry: (id: string, input: BudgetEntryInput) => void;
+  onDeleteEntry: (id: string) => void;
 }
 
 interface UseBudgetEntryDrawerReturn {
   isOpen: boolean;
   editedEntry: BudgetEntry | null;
-  onEditEntry: (index: number) => void;
+  onEditEntry: (id: string) => void;
   onOpen: () => void;
   onClose: () => void;
   onSave: (input: BudgetEntryInput) => void;
@@ -26,31 +26,31 @@ export function useBudgetEntryDrawer({
   onDeleteEntry,
 }: UseBudgetEntryDrawerProps): UseBudgetEntryDrawerReturn {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [editedEntryIndex, setEditedEntryIndex] = useState<number | null>(null);
+  const [editedEntryId, setEditedEntryId] = useState<string | null>(null);
   const editedEntry =
-    editedEntryIndex === null ? null : entries[editedEntryIndex];
+    entries.find((entry) => entry.id === editedEntryId) ?? null;
 
-  const onEditEntry = (index: number) => {
-    setEditedEntryIndex(index);
+  const onEditEntry = (id: string) => {
+    setEditedEntryId(id);
     onOpen();
   };
 
   const handleClose = () => {
-    setEditedEntryIndex(null);
+    setEditedEntryId(null);
     onClose();
   };
 
   const onSave = (input: BudgetEntryInput) => {
-    if (editedEntryIndex !== null) {
-      onUpdateEntry(editedEntryIndex, input);
+    if (editedEntryId !== null) {
+      onUpdateEntry(editedEntryId, input);
     } else {
       onAddEntry(input);
     }
   };
 
   const handleDeleteEntry = () => {
-    if (editedEntryIndex === null) return;
-    onDeleteEntry(editedEntryIndex);
+    if (editedEntryId === null) return;
+    onDeleteEntry(editedEntryId);
   };
 
   return {

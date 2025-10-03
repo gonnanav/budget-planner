@@ -1,11 +1,8 @@
-import { BudgetEntry } from "@/core/types";
 import { useBudgetEntries } from "./useBudgetEntries";
 
-export function useExpenses(initialExpenses?: BudgetEntry[]) {
-  const { entries, addEntry, updateEntry, deleteEntry } = useBudgetEntries(
-    "expenses",
-    initialExpenses,
-  );
+export function useExpenses() {
+  const { entries, addEntry, updateEntry, deleteEntry } =
+    useBudgetEntries("expenses");
 
   return {
     expenses: entries,

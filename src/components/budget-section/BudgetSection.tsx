@@ -11,8 +11,8 @@ interface BudgetSection {
   itemLabel: string;
   addItemButtonLabel: string;
   onAddEntry: (input: BudgetEntryInput) => void;
-  onUpdateEntry: (index: number, input: BudgetEntryInput) => void;
-  onDeleteEntry: (index: number) => void;
+  onUpdateEntry: (id: string, input: BudgetEntryInput) => void;
+  onDeleteEntry: (id: string) => void;
 }
 
 export function BudgetSection({
@@ -73,11 +73,11 @@ export function BudgetSection({
           <p className="text-sm text-center text-gray-400">No entries yet</p>
         ) : (
           <div className="flex flex-col gap-px">
-            {entries.map((entry, index) => (
+            {entries.map((entry) => (
               <EntryRow
                 key={entry.id}
                 entry={entry}
-                onClick={() => onEditEntry(index)}
+                onClick={() => onEditEntry(entry.id)}
               />
             ))}
           </div>

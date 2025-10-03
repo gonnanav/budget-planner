@@ -2,27 +2,33 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect } from "storybook/test";
 import { Canvas } from "storybook/internal/types";
 import { OverviewPage } from "./OverviewPage";
-import { IncomesProvider } from "@/providers/IncomesProvider";
-import { ExpensesProvider } from "@/providers/ExpensesProvider";
 import { createTestEntries } from "@/fixtures";
+import { IncomeContext } from "@/contexts/IncomeContext";
+import { ExpenseContext } from "@/contexts/ExpenseContext";
 
 const meta = {
   component: OverviewPage,
   decorators: [
     (Story, { parameters }) => (
-      <IncomesProvider
-        initialIncomes={createTestEntries([
-          { amount: parameters.incomeAmount },
-        ])}
+      <IncomeContext
+        value={{
+          incomes: createTestEntries([{ amount: parameters.incomeAmount }]),
+          addIncome: () => {},
+          updateIncome: () => {},
+          deleteIncome: () => {},
+        }}
       >
-        <ExpensesProvider
-          initialExpenses={createTestEntries([
-            { amount: parameters.expenseAmount },
-          ])}
+        <ExpenseContext
+          value={{
+            expenses: createTestEntries([{ amount: parameters.expenseAmount }]),
+            addExpense: () => {},
+            updateExpense: () => {},
+            deleteExpense: () => {},
+          }}
         >
           <Story />
-        </ExpensesProvider>
-      </IncomesProvider>
+        </ExpenseContext>
+      </IncomeContext>
     ),
   ],
 } satisfies Meta<typeof OverviewPage>;
