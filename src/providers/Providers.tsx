@@ -4,6 +4,7 @@ import { AppHeroUIProvider } from "./AppHeroUIProvider";
 import { IncomesProvider } from "./IncomesProvider";
 import { ExpensesProvider } from "./ExpensesProvider";
 import { PathnameProvider } from "./PathnameProvider";
+import { JsonExportImportProvider } from "./JsonExportImportProvider";
 
 export function Providers({
   children,
@@ -12,7 +13,9 @@ export function Providers({
     <AppHeroUIProvider>
       <IncomesProvider>
         <ExpensesProvider>
-          <PathnameProvider>{children}</PathnameProvider>
+          <PathnameProvider>
+            <JsonExportImportProvider>{children}</JsonExportImportProvider>
+          </PathnameProvider>
         </ExpensesProvider>
       </IncomesProvider>
     </AppHeroUIProvider>
