@@ -1,4 +1,5 @@
 import { ExportButton } from "./ExportButton";
+import { ImportButton } from "./ImportButton";
 import { NavTabs } from "./NavTabs";
 
 export function Header() {
@@ -8,7 +9,10 @@ export function Header() {
         <span className="text-2xl font-bold tracking-tight">
           Budget Planner
         </span>
-        <ExportButton />
+        <div className="flex items-center gap-2">
+          <ImportButton />
+          <ExportButton />
+        </div>
       </div>
       <NavTabs />
     </header>

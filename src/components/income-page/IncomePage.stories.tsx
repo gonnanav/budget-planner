@@ -21,6 +21,7 @@ export const Default: Story = {
           addIncome: () => {},
           updateIncome: () => {},
           deleteIncome: () => {},
+          addIncomes: () => {},
         }}
       >
         <Story />
