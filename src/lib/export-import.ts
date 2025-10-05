@@ -1,6 +1,6 @@
 import type { BudgetEntry } from "@/core/types";
 
-interface ExportData {
+export interface ExportImportData {
   metadata: {
     version: string;
     exportedAt: string;
@@ -15,14 +15,14 @@ export function exportBudgetData(
   incomes: BudgetEntry[],
   expenses: BudgetEntry[],
 ) {
-  const data = createExportData(expenses, incomes);
+  const data = createExportData(incomes, expenses);
   downloadExportData(data);
 }
 
 export function createExportData(
   incomes: BudgetEntry[],
   expenses: BudgetEntry[],
-): ExportData {
+): ExportImportData {
   return {
     metadata: {
       version: "0.1.0",
@@ -35,7 +35,7 @@ export function createExportData(
   };
 }
 
-function downloadExportData(data: ExportData): void {
+function downloadExportData(data: ExportImportData): void {
   const timestamp = new Date()
     .toISOString()
     .replace(/[:.]/g, "-")
@@ -60,4 +60,39 @@ function downloadFile(blob: Blob, filename: string): void {
   link.download = filename;
   link.click();
   URL.revokeObjectURL(url);
+}
+
+export function importBudgetData(): Promise<ExportImportData | null> {
+  return new Promise((resolve) => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+
+    input.onchange = (event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+
+      if (!file) {
+        resolve(null);
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        try {
+          const content = e.target?.result as string;
+          const data = JSON.parse(content) as ExportImportData;
+
+          resolve(data);
+        } catch (error) {
+          console.error("Failed to parse imported file:", error);
+          resolve(null);
+        }
+      };
+
+      reader.readAsText(file);
+    };
+
+    input.click();
+  });
 }

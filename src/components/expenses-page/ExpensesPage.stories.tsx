@@ -21,6 +21,7 @@ export const Default: Story = {
           addExpense: () => {},
           updateExpense: () => {},
           deleteExpense: () => {},
+          addExpenses: () => {},
         }}
       >
         <Story />

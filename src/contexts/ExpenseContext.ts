@@ -6,6 +6,7 @@ export interface ExpenseContextValue {
   addExpense: (input: BudgetEntryInput) => void;
   updateExpense: (id: string, input: BudgetEntryInput) => void;
   deleteExpense: (id: string) => void;
+  addExpenses: (inputs: BudgetEntryInput[]) => void;
 }
 
 export const ExpenseContext = createContext<ExpenseContextValue>({
@@ -13,4 +14,5 @@ export const ExpenseContext = createContext<ExpenseContextValue>({
   addExpense: () => {},
   updateExpense: () => {},
   deleteExpense: () => {},
+  addExpenses: () => {},
 });

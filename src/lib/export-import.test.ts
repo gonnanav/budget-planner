@@ -1,5 +1,5 @@
 import { test, expect } from "vitest";
-import { createExportData } from "./export";
+import { createExportData } from "./export-import";
 import { salary, allowance, rent, groceries, diningOut } from "@/fixtures";
 
 const incomes = [salary, allowance];

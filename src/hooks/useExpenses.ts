@@ -1,7 +1,7 @@
 import { useBudgetEntries } from "./useBudgetEntries";
 
 export function useExpenses() {
-  const { entries, addEntry, updateEntry, deleteEntry } =
+  const { entries, addEntry, updateEntry, deleteEntry, addEntries } =
     useBudgetEntries("expenses");
 
   return {
@@ -9,5 +9,6 @@ export function useExpenses() {
     addExpense: addEntry,
     updateExpense: updateEntry,
     deleteExpense: deleteEntry,
+    addExpenses: addEntries,
   };
 }

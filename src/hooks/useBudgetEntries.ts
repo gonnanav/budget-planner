@@ -20,10 +20,18 @@ export function useBudgetEntries(key: string) {
     db.table(key).delete(id);
   };
 
+  const handleAddEntries = (inputEntries: BudgetEntryInput[]) => {
+    const budgetEntries = inputEntries.map((input) =>
+      createEntry({ ...input, id: crypto.randomUUID() }),
+    );
+    return db.table(key).bulkAdd(budgetEntries);
+  };
+
   return {
     entries: entries ?? [],
     addEntry: handleAddEntry,
     updateEntry: handleUpdateEntry,
     deleteEntry: handleDeleteEntry,
+    addEntries: handleAddEntries,
   };
 }

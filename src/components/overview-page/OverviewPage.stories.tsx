@@ -16,6 +16,7 @@ const meta = {
           addIncome: () => {},
           updateIncome: () => {},
           deleteIncome: () => {},
+          addIncomes: () => {},
         }}
       >
         <ExpenseContext
@@ -24,6 +25,7 @@ const meta = {
             addExpense: () => {},
             updateExpense: () => {},
             deleteExpense: () => {},
+            addExpenses: () => {},
           }}
         >
           <Story />
