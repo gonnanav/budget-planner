@@ -23,3 +23,8 @@ export interface BudgetEvaluation {
   balance: number;
   status: BudgetStatus;
 }
+
+export interface Category {
+  id: string;
+  name: string;
+}
