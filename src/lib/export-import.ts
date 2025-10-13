@@ -1,4 +1,4 @@
-import type { BudgetEntry } from "@/core/types";
+import type { BudgetEntry, Category } from "@/core/types";
 
 export interface ExportImportData {
   metadata: {
@@ -8,21 +8,29 @@ export interface ExportImportData {
   data: {
     expenses: BudgetEntry[];
     incomes: BudgetEntry[];
+    incomeCategories: Category[];
+    expenseCategories: Category[];
   };
 }
 
-export function exportBudgetData(
-  incomes: BudgetEntry[],
-  expenses: BudgetEntry[],
-) {
-  const data = createExportData(incomes, expenses);
+interface ExportDataInput {
+  incomes: BudgetEntry[];
+  expenses: BudgetEntry[];
+  incomeCategories: Category[];
+  expenseCategories: Category[];
+}
+
+export function exportBudgetData(input: ExportDataInput) {
+  const data = createExportData(input);
   downloadExportData(data);
 }
 
-export function createExportData(
-  incomes: BudgetEntry[],
-  expenses: BudgetEntry[],
-): ExportImportData {
+export function createExportData({
+  incomes,
+  expenses,
+  incomeCategories,
+  expenseCategories,
+}: ExportDataInput): ExportImportData {
   return {
     metadata: {
       version: "0.1.0",
@@ -31,6 +39,8 @@ export function createExportData(
     data: {
       incomes,
       expenses,
+      incomeCategories,
+      expenseCategories,
     },
   };
 }

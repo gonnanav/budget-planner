@@ -1,6 +1,6 @@
 import { createEntry } from "@/core/budget-entries";
 import type { BudgetEntry, CreateBudgetEntryInput } from "@/core/types";
-import { groceries } from "./fixtures";
+import { groceries } from "./expenses";
 
 type CreateTestEntryInput = Omit<CreateBudgetEntryInput, "id" | "name"> & {
   id?: string;
