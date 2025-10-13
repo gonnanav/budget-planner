@@ -13,6 +13,7 @@ interface BudgetSection {
   onAddEntry: (input: BudgetEntryInput) => void;
   onUpdateEntry: (id: string, input: BudgetEntryInput) => void;
   onDeleteEntry: (id: string) => void;
+  onClickCategories: () => void;
 }
 
 export function BudgetSection({
@@ -23,6 +24,7 @@ export function BudgetSection({
   onAddEntry,
   onUpdateEntry,
   onDeleteEntry,
+  onClickCategories,
 }: BudgetSection) {
   const {
     isOpen,
@@ -67,6 +69,14 @@ export function BudgetSection({
           <Plus size={16} />
         </Button>
       </div>
+      <Button
+        size="sm"
+        variant="light"
+        color="primary"
+        onPress={onClickCategories}
+      >
+        Categories
+      </Button>
 
       <div className="space-y-3">
         {entries.length === 0 ? (

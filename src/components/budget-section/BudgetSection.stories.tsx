@@ -14,6 +14,7 @@ const meta = {
     onAddEntry: fn(),
     onUpdateEntry: fn(),
     onDeleteEntry: fn(),
+    onClickCategories: fn(),
   },
 } satisfies Meta<typeof BudgetSection>;
 
@@ -25,13 +26,16 @@ export const Default: Story = {
   args: {
     entries: [rent, groceries, diningOut],
   },
-  play: async ({ canvas }) => {
+  play: async ({ canvas, args, userEvent }) => {
     await expect(canvas.getByRole("heading")).toHaveTextContent(
       /budget section/i,
     );
     await expect(getEntry(canvas, "Rent")).toBeInTheDocument();
     await expect(getEntry(canvas, "Groceries")).toBeInTheDocument();
     await expect(getEntry(canvas, "Dining Out")).toBeInTheDocument();
+
+    await userEvent.click(canvas.getByRole("button", { name: "Categories" }));
+    await expect(args.onClickCategories).toHaveBeenCalled();
   },
 };
 
