@@ -3,6 +3,8 @@
 import { AppHeroUIProvider } from "./AppHeroUIProvider";
 import { IncomesProvider } from "./IncomesProvider";
 import { ExpensesProvider } from "./ExpensesProvider";
+import { IncomeCategoriesProvider } from "./IncomeCategoriesProvider";
+import { ExpenseCategoriesProvider } from "./ExpenseCategoriesProvider";
 import { PathnameProvider } from "./PathnameProvider";
 import { JsonExportImportProvider } from "./JsonExportImportProvider";
 
@@ -13,9 +15,13 @@ export function Providers({
     <AppHeroUIProvider>
       <IncomesProvider>
         <ExpensesProvider>
-          <PathnameProvider>
-            <JsonExportImportProvider>{children}</JsonExportImportProvider>
-          </PathnameProvider>
+          <IncomeCategoriesProvider>
+            <ExpenseCategoriesProvider>
+              <PathnameProvider>
+                <JsonExportImportProvider>{children}</JsonExportImportProvider>
+              </PathnameProvider>
+            </ExpenseCategoriesProvider>
+          </IncomeCategoriesProvider>
         </ExpensesProvider>
       </IncomesProvider>
     </AppHeroUIProvider>

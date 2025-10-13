@@ -1,14 +1,18 @@
 import Dexie, { type EntityTable } from "dexie";
-import { BudgetEntry } from "@/core/types";
+import { BudgetEntry, Category } from "@/core/types";
 
 const db = new Dexie("BudgetDatabase") as Dexie & {
   incomes: EntityTable<BudgetEntry, "id">;
   expenses: EntityTable<BudgetEntry, "id">;
+  incomeCategories: EntityTable<Category, "id">;
+  expenseCategories: EntityTable<Category, "id">;
 };
 
-db.version(1).stores({
+db.version(2).stores({
   incomes: "id",
   expenses: "id",
+  incomeCategories: "id",
+  expenseCategories: "id",
 });
 
 db.on("populate", (tx) => {
