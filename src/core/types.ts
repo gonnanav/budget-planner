@@ -6,6 +6,7 @@ export interface BudgetEntryInput {
   name: string;
   amount?: BudgetEntryAmount;
   frequency?: BudgetEntryFrequency;
+  categoryId?: string;
 }
 
 export type CreateBudgetEntryInput = BudgetEntryInput & { id: string };
@@ -15,6 +16,7 @@ export interface BudgetEntry {
   name: string;
   amount: BudgetEntryAmount;
   frequency: BudgetEntryFrequency;
+  categoryId?: string;
 }
 
 export type BudgetStatus = "balanced" | "positive" | "negative";

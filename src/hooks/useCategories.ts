@@ -10,16 +10,30 @@ export function useCategories(tableName: CategoryTableName) {
     | Category[]
     | undefined;
 
-  const handleAddCategory = (name: string) => {
-    db.table(tableName).add(createCategory(crypto.randomUUID(), name));
+  const handleAddCategory = async (name: string) => {
+    await db.table(tableName).add(createCategory(crypto.randomUUID(), name));
   };
 
-  const handleUpdateCategory = (id: string, name: string) => {
-    db.table(tableName).update(id, createCategory(id, name));
+  const handleUpdateCategory = async (id: string, name: string) => {
+    await db.table(tableName).update(id, createCategory(id, name));
   };
 
-  const handleDeleteCategory = (id: string) => {
-    db.table(tableName).delete(id);
+  const handleDeleteCategory = async (id: string) => {
+    await db.transaction(
+      "rw",
+      [db.expenses, db.incomes, db.expenseCategories, db.incomeCategories],
+      async () => {
+        const entriesTable =
+          tableName === "expenseCategories" ? db.expenses : db.incomes;
+
+        await entriesTable
+          .where("categoryId")
+          .equals(id)
+          .modify({ categoryId: undefined });
+
+        await db.table(tableName).delete(id);
+      },
+    );
   };
 
   const handleAddCategories = (categories: Category[]) => {

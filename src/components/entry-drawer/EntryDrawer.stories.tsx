@@ -8,6 +8,7 @@ const meta = {
   args: {
     itemLabel: "Budget Entry",
     isOpen: true,
+    categories: [],
     onSave: fn(),
     onClose: fn(),
     onCancel: fn(),
@@ -58,6 +59,7 @@ export const Saving: Story = {
       name: "Some entry",
       amount: 100,
       frequency: "monthly",
+      categoryId: undefined,
     });
     await expect(getAmountInput()).not.toHaveValue();
   },

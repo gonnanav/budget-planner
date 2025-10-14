@@ -7,6 +7,7 @@ test("creates an entry based on the given input", () => {
     name: "Some entry",
     amount: 100,
     frequency: "biMonthly",
+    categoryId: "category-1",
   });
 
   expect(entry).toMatchObject({
@@ -14,6 +15,7 @@ test("creates an entry based on the given input", () => {
     name: "Some entry",
     amount: 100,
     frequency: "biMonthly",
+    categoryId: "category-1",
   });
 });
 

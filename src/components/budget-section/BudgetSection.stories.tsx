@@ -8,6 +8,7 @@ const meta = {
   component: BudgetSection,
   args: {
     entries: [],
+    categories: [],
     title: "Budget Section",
     itemLabel: "Entry",
     addItemButtonLabel: "Add entry",
@@ -40,6 +41,9 @@ export const Default: Story = {
 };
 
 export const Empty: Story = {
+  args: {
+    categories: [],
+  },
   play: async ({ canvas }) => {
     await expect(canvas.getByText(/no entries yet/i)).toBeInTheDocument();
   },

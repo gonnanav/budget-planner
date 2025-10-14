@@ -22,6 +22,7 @@ export function ExpensesPage() {
     <>
       <BudgetSection
         entries={expenses}
+        categories={expenseCategories}
         title="Expenses"
         itemLabel="Expense"
         addItemButtonLabel="Add expense"

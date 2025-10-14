@@ -12,15 +12,18 @@ import {
   BudgetEntry,
   BudgetEntryInput,
   BudgetEntryFrequency,
+  Category,
 } from "@/core/types";
 import { AmountInput } from "./AmountInput";
 import { NameInput } from "./NameInput";
 import { FrequencyInput } from "./FrequencyInput";
+import { CategoryInput } from "./CategoryInput";
 
 interface EntryDrawerProps {
   itemLabel: string;
   isOpen: boolean;
   entry?: BudgetEntry | null;
+  categories: Category[];
   onCancel: () => void;
   onSave: (input: BudgetEntryInput) => void;
   onClose: () => void;
@@ -31,6 +34,7 @@ export const EntryDrawer = ({
   itemLabel,
   isOpen,
   entry,
+  categories,
   onCancel,
   onSave,
   onClose,
@@ -39,6 +43,7 @@ export const EntryDrawer = ({
   const [name, setName] = useState("");
   const [amount, setAmount] = useState<number | null>(null);
   const [frequency, setFrequency] = useState<BudgetEntryFrequency>("monthly");
+  const [categoryId, setCategoryId] = useState<string | undefined>(undefined);
 
   const isEditMode = Boolean(entry);
   const title = isEditMode ? `Edit ${itemLabel}` : `Add ${itemLabel}`;
@@ -50,6 +55,7 @@ export const EntryDrawer = ({
       setName(entry.name);
       setAmount(entry.amount);
       setFrequency(entry.frequency);
+      setCategoryId(entry.categoryId);
     }
   }, [entry]);
 
@@ -57,6 +63,7 @@ export const EntryDrawer = ({
     setName("");
     setAmount(null);
     setFrequency("monthly");
+    setCategoryId(undefined);
   };
 
   const handleCancel = () => {
@@ -66,7 +73,7 @@ export const EntryDrawer = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSave({ name, amount, frequency });
+    onSave({ name, amount, frequency, categoryId });
     reset();
   };
 
@@ -79,6 +86,11 @@ export const EntryDrawer = ({
             <NameInput name={name} onChange={setName} />
             <AmountInput amount={amount} onChange={setAmount} />
             <FrequencyInput frequency={frequency} onChange={setFrequency} />
+            <CategoryInput
+              categoryId={categoryId}
+              categories={categories}
+              onChange={setCategoryId}
+            />
           </DrawerBody>
           <DrawerFooter>
             <Button color="danger" variant="light" onPress={handleCancel}>

@@ -1,12 +1,13 @@
 import { Button } from "@heroui/button";
 import { Plus } from "lucide-react";
-import { BudgetEntry, BudgetEntryInput } from "@/core/types";
+import { BudgetEntry, BudgetEntryInput, Category } from "@/core/types";
 import { EntryRow } from "./EntryRow";
 import { EntryDrawer } from "@/components/entry-drawer";
 import { useBudgetEntryDrawer } from "@/hooks/useBudgetEntryDrawer";
 
 interface BudgetSection {
   entries: BudgetEntry[];
+  categories: Category[];
   title: string;
   itemLabel: string;
   addItemButtonLabel: string;
@@ -18,6 +19,7 @@ interface BudgetSection {
 
 export function BudgetSection({
   entries,
+  categories,
   title,
   itemLabel,
   addItemButtonLabel,
@@ -98,6 +100,7 @@ export function BudgetSection({
         itemLabel={itemLabel}
         isOpen={isOpen}
         entry={editedEntry}
+        categories={categories}
         onSave={handleSave}
         onClose={handleCancel}
         onCancel={handleCancel}
