@@ -30,3 +30,13 @@ export function budgetEntriesSum(entries: BudgetEntry[]): number {
 export function normalizeAmount(entry: BudgetEntry): number {
   return (entry.amount ?? 0) / (entry.frequency === "biMonthly" ? 2 : 1);
 }
+
+export function calculateCategoryTotal(
+  categoryId: string,
+  entries: BudgetEntry[],
+): number {
+  return entries
+    .filter((entry) => entry.categoryId === categoryId)
+    .map(normalizeAmount)
+    .reduce((sum, amount) => sum + amount, 0);
+}

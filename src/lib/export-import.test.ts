@@ -1,12 +1,13 @@
 import { test, expect } from "vitest";
 import { createExportData } from "./export-import";
-import { salary, allowance, rent, groceries, diningOut } from "@/fixtures";
-import { transportation, entertainment, shopping } from "@/fixtures/categories";
+import { salary, allowance } from "@/fixtures/incomes";
+import { electricity, water, gas } from "@/fixtures/expenses";
+import { transportation, bills, personal } from "@/fixtures/expense-categories";
 
 const incomes = [salary, allowance];
-const expenses = [rent, groceries, diningOut];
+const expenses = [electricity, water, gas];
 const incomeCategories = [transportation];
-const expenseCategories = [entertainment, shopping];
+const expenseCategories = [bills, personal];
 
 test("metadata contains correct version number and timestamp", () => {
   const { metadata } = createExportData({

@@ -2,20 +2,25 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, fn } from "storybook/test";
 import { Canvas } from "storybook/internal/types";
 import { BudgetSection } from "./BudgetSection";
-import { rent, groceries, diningOut } from "@/fixtures";
+import {
+  electricity,
+  water,
+  gas,
+  diningOut,
+  hobbies,
+} from "@/fixtures/expenses";
+import { bills, personal } from "@/fixtures/expense-categories";
 
 const meta = {
   component: BudgetSection,
   args: {
-    entries: [],
+    items: [],
     categories: [],
     title: "Budget Section",
-    itemLabel: "Entry",
-    addItemButtonLabel: "Add entry",
-    onAddEntry: fn(),
-    onUpdateEntry: fn(),
-    onDeleteEntry: fn(),
-    onClickCategories: fn(),
+    onAddItem: fn(),
+    onEditItem: fn(),
+    onAddCategory: fn(),
+    onEditCategory: fn(),
   },
 } satisfies Meta<typeof BudgetSection>;
 
@@ -25,30 +30,44 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    entries: [rent, groceries, diningOut],
+    items: [electricity, water, gas, diningOut, hobbies],
+    categories: [bills, personal],
   },
-  play: async ({ canvas, args, userEvent }) => {
+  play: async ({ canvas }) => {
     await expect(canvas.getByRole("heading")).toHaveTextContent(
       /budget section/i,
     );
-    await expect(getEntry(canvas, "Rent")).toBeInTheDocument();
-    await expect(getEntry(canvas, "Groceries")).toBeInTheDocument();
-    await expect(getEntry(canvas, "Dining Out")).toBeInTheDocument();
+    await expect(getItem(canvas, "Electricity")).toBeInTheDocument();
+    await expect(getItem(canvas, "Water")).toBeInTheDocument();
+    await expect(getItem(canvas, "Gas")).toBeInTheDocument();
+    await expect(getItem(canvas, "Dining Out")).toBeInTheDocument();
+    await expect(getItem(canvas, "Hobbies")).toBeInTheDocument();
+  },
+};
 
-    await userEvent.click(canvas.getByRole("button", { name: "Categories" }));
-    await expect(args.onClickCategories).toHaveBeenCalled();
+export const Categories: Story = {
+  args: {
+    items: [electricity, water, gas, diningOut, hobbies],
+    categories: [bills, personal],
+  },
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(canvas.getByRole("tab", { name: "Categories" }));
+
+    await expect(getItem(canvas, "Bills")).toBeInTheDocument();
+    await expect(getItem(canvas, "Personal")).toBeInTheDocument();
   },
 };
 
 export const Empty: Story = {
   args: {
+    items: [],
     categories: [],
   },
   play: async ({ canvas }) => {
-    await expect(canvas.getByText(/no entries yet/i)).toBeInTheDocument();
+    await expect(canvas.getByText(/no items yet/i)).toBeInTheDocument();
   },
 };
 
-function getEntry(canvas: Canvas, name: string) {
+function getItem(canvas: Canvas, name: string) {
   return canvas.getByRole("article", { name });
 }

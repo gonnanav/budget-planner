@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect } from "storybook/test";
 import { ExpensesPage } from "./ExpensesPage";
-import { rent, groceries, diningOut } from "@/fixtures";
+import { electricity, water, gas } from "@/fixtures/expenses";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
 
 const meta = {
@@ -17,7 +17,7 @@ export const Default: Story = {
     (Story) => (
       <ExpenseContext
         value={{
-          expenses: [rent, groceries, diningOut],
+          expenses: [electricity, water, gas],
           addExpense: () => {},
           updateExpense: () => {},
           deleteExpense: () => {},
