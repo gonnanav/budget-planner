@@ -3,8 +3,9 @@ import {
   budgetBalance,
   budgetEntriesSum,
   normalizeAmount,
+  calculateCategoryTotal,
 } from "./budget-balance";
-import { createTestEntries, createTestEntry } from "@/fixtures";
+import { createTestEntries, createTestEntry } from "@/fixtures/test-utils";
 
 test("balance is balanced when incomes and expenses are equal", () => {
   const { balance, status } = budgetBalance(
@@ -91,4 +92,21 @@ test("biMonthly entries are divided by 2", () => {
   );
 
   expect(sum).toBe(500);
+});
+
+test("calculateCategoryTotal sums entries for a specific category", () => {
+  const entries = createTestEntries([
+    { amount: 200, frequency: "monthly", categoryId: "transportation" },
+    { amount: 400, frequency: "biMonthly", categoryId: "transportation" },
+    { amount: 150, frequency: "monthly", categoryId: "entertainment" },
+    { amount: 300, frequency: "monthly", categoryId: "transportation" },
+  ]);
+
+  const transportationTotal = calculateCategoryTotal("transportation", entries);
+  const entertainmentTotal = calculateCategoryTotal("entertainment", entries);
+  const emptyTotal = calculateCategoryTotal("nonexistent", entries);
+
+  expect(transportationTotal).toBe(700); // 200 + 400/2 + 300 = 700
+  expect(entertainmentTotal).toBe(150); // 150
+  expect(emptyTotal).toBe(0); // No entries for this category
 });

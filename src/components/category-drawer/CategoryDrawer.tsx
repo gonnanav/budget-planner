@@ -8,60 +8,41 @@ import {
 } from "@heroui/drawer";
 import { Button } from "@heroui/button";
 import { Trash2 } from "lucide-react";
-import {
-  BudgetEntry,
-  BudgetEntryInput,
-  BudgetEntryFrequency,
-  Category,
-} from "@/core/types";
-import { AmountInput } from "./AmountInput";
-import { NameInput } from "./NameInput";
-import { FrequencyInput } from "./FrequencyInput";
-import { CategoryInput } from "./CategoryInput";
+import { Category } from "@/core/types";
+import { CategoryNameInput } from "./CategoryNameInput";
 
-interface EntryDrawerProps {
+interface CategoryDrawerProps {
   isOpen: boolean;
-  entry?: BudgetEntry | null;
-  categories: Category[];
+  category?: Category | null;
   onCancel: () => void;
-  onSave: (input: BudgetEntryInput) => void;
+  onSave: (name: string) => void;
   onClose: () => void;
   onDelete?: () => void;
 }
 
-export const EntryDrawer = ({
+export const CategoryDrawer = ({
   isOpen,
-  entry,
-  categories,
+  category,
   onCancel,
   onSave,
   onClose,
   onDelete,
-}: EntryDrawerProps) => {
+}: CategoryDrawerProps) => {
   const [name, setName] = useState("");
-  const [amount, setAmount] = useState<number | null>(null);
-  const [frequency, setFrequency] = useState<BudgetEntryFrequency>("monthly");
-  const [categoryId, setCategoryId] = useState<string | undefined>(undefined);
 
-  const isEditMode = Boolean(entry);
-  const title = isEditMode ? "Edit Item" : "Add Item";
+  const isEditMode = Boolean(category);
+  const title = isEditMode ? "Edit Category" : "Add Category";
 
   useEffect(() => {
-    if (!entry) {
+    if (!category) {
       reset();
     } else {
-      setName(entry.name);
-      setAmount(entry.amount);
-      setFrequency(entry.frequency);
-      setCategoryId(entry.categoryId);
+      setName(category.name);
     }
-  }, [entry]);
+  }, [category]);
 
   const reset = () => {
     setName("");
-    setAmount(null);
-    setFrequency("monthly");
-    setCategoryId(undefined);
   };
 
   const handleCancel = () => {
@@ -71,7 +52,7 @@ export const EntryDrawer = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSave({ name, amount, frequency, categoryId });
+    onSave(name);
     reset();
   };
 
@@ -81,14 +62,7 @@ export const EntryDrawer = ({
         <form onSubmit={handleSubmit}>
           <DrawerHeader>{title}</DrawerHeader>
           <DrawerBody>
-            <NameInput name={name} onChange={setName} />
-            <AmountInput amount={amount} onChange={setAmount} />
-            <FrequencyInput frequency={frequency} onChange={setFrequency} />
-            <CategoryInput
-              categoryId={categoryId}
-              categories={categories}
-              onChange={setCategoryId}
-            />
+            <CategoryNameInput name={name} onChange={setName} />
           </DrawerBody>
           <DrawerFooter>
             <Button color="danger" variant="light" onPress={handleCancel}>

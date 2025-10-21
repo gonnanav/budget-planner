@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect } from "storybook/test";
 import { Canvas } from "storybook/internal/types";
 import { OverviewPage } from "./OverviewPage";
-import { createTestEntries } from "@/fixtures";
+import { createTestEntries } from "@/fixtures/test-utils";
 import { IncomeContext } from "@/contexts/IncomeContext";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
 

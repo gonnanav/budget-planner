@@ -1,12 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { EntryDrawer } from "./EntryDrawer";
 import { expect, fn, screen } from "storybook/test";
-import { salary } from "@/fixtures";
+import { salary } from "@/fixtures/incomes";
 
 const meta = {
   component: EntryDrawer,
   args: {
-    itemLabel: "Budget Entry",
     isOpen: true,
     categories: [],
     onSave: fn(),
@@ -24,7 +23,7 @@ export const AddEntry: Story = {
     entry: null,
   },
   play: async () => {
-    await expect(screen.getByText("Add Budget Entry")).toBeInTheDocument();
+    await expect(screen.getByText("Add Item")).toBeInTheDocument();
     await expect(getAmountInput()).not.toHaveValue();
   },
 };
@@ -34,7 +33,7 @@ export const EditEntry: Story = {
     entry: salary,
   },
   play: async () => {
-    await expect(screen.getByText("Edit Budget Entry")).toBeInTheDocument();
+    await expect(screen.getByText("Edit Item")).toBeInTheDocument();
     await expect(getAmountInput()).toHaveDisplayValue(/5,000/);
   },
 };

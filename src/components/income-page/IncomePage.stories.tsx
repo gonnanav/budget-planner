@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect } from "storybook/test";
 import { IncomePage } from "./IncomePage";
-import { salary, allowance, investment } from "@/fixtures";
+import { salary, allowance, investment } from "@/fixtures/incomes";
 import { IncomeContext } from "@/contexts/IncomeContext";
 
 const meta = {
