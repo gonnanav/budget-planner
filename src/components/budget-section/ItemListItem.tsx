@@ -24,7 +24,7 @@ export function ItemListItem({
   } = formatItemDisplay({ amount, frequency, normalizedAmount });
 
   return (
-    <ItemWrapper name={name} onClick={onClick}>
+    <ItemLayout name={name} onClick={onClick}>
       <PrimaryLine>
         <NameText>{name}</NameText>
         {formattedAmount && <AmountText>{formattedAmount}</AmountText>}
@@ -37,17 +37,17 @@ export function ItemListItem({
           </NormalizedAmountText>
         )}
       </SecondaryLine>
-    </ItemWrapper>
+    </ItemLayout>
   );
 }
 
-interface ItemWrapperProps {
+interface ItemLayoutProps {
   name: string;
   onClick: () => void;
   children: React.ReactNode;
 }
 
-function ItemWrapper({ name, onClick, children }: ItemWrapperProps) {
+function ItemLayout({ name, onClick, children }: ItemLayoutProps) {
   return (
     <article
       aria-label={name}
