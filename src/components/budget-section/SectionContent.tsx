@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { EmptyState } from "./EmptyState";
+import { EmptyStateText } from "./EmptyStateText";
 
 interface SectionContentProps<T> {
   items: T[];
@@ -17,7 +17,7 @@ export function SectionContent<T>({
   return (
     <div className="space-y-3">
       {isEmpty ? (
-        <EmptyState>{emptyStateText}</EmptyState>
+        <EmptyStateText>{emptyStateText}</EmptyStateText>
       ) : (
         <ul className="flex flex-col gap-px">{items.map(children)}</ul>
       )}
