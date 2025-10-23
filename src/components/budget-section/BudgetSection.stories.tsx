@@ -10,6 +10,7 @@ import {
   hobbies,
 } from "@/fixtures/expenses";
 import { bills, personal } from "@/fixtures/expense-categories";
+import { calculateCategoryTotal, normalizeAmount } from "@/core/budget-balance";
 
 const meta = {
   component: BudgetSection,
@@ -30,8 +31,20 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    items: [electricity, water, gas, diningOut, hobbies],
-    categories: [bills, personal],
+    items: [electricity, water, gas, diningOut, hobbies].map((income) => ({
+      ...income,
+      normalizedAmount: normalizeAmount(income),
+    })),
+    categories: [bills, personal].map((category) => ({
+      ...category,
+      amount: calculateCategoryTotal(category.id, [
+        electricity,
+        water,
+        gas,
+        diningOut,
+        hobbies,
+      ]),
+    })),
   },
   play: async ({ canvas }) => {
     await expect(canvas.getByRole("heading")).toHaveTextContent(
@@ -47,8 +60,20 @@ export const Default: Story = {
 
 export const Categories: Story = {
   args: {
-    items: [electricity, water, gas, diningOut, hobbies],
-    categories: [bills, personal],
+    items: [electricity, water, gas, diningOut, hobbies].map((income) => ({
+      ...income,
+      normalizedAmount: normalizeAmount(income),
+    })),
+    categories: [bills, personal].map((category) => ({
+      ...category,
+      amount: calculateCategoryTotal(category.id, [
+        electricity,
+        water,
+        gas,
+        diningOut,
+        hobbies,
+      ]),
+    })),
   },
   play: async ({ canvas, userEvent }) => {
     await userEvent.click(canvas.getByRole("tab", { name: "Categories" }));

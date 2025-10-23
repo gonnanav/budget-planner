@@ -1,15 +1,23 @@
 import { useState } from "react";
 import { Tabs, Tab } from "@heroui/tabs";
-import { BudgetEntry, Category } from "@/core/types";
-import { calculateCategoryTotal, normalizeAmount } from "@/core/budget-balance";
 import { ItemsContent } from "./ItemsContent";
 import { CategoriesContent } from "./CategoriesContent";
 import { AddButton } from "./AddButton";
 
 interface BudgetSectionProps {
   title: string;
-  items: BudgetEntry[];
-  categories: Category[];
+  items: {
+    id: string;
+    name: string;
+    amount: number | null;
+    frequency: string;
+    normalizedAmount: number;
+  }[];
+  categories: {
+    id: string;
+    name: string;
+    amount: number;
+  }[];
   onAddItem: () => void;
   onEditItem: (id: string) => void;
   onAddCategory: () => void;
@@ -51,21 +59,11 @@ export function BudgetSection({
         onSelectionChange={setView}
       >
         <Tab key="items" title="Items">
-          <ItemsContent
-            items={items.map((item) => ({
-              ...item,
-              normalizedAmount: normalizeAmount(item),
-            }))}
-            onClickItem={onEditItem}
-          />
+          <ItemsContent items={items} onClickItem={onEditItem} />
         </Tab>
         <Tab key="categories" title="Categories">
           <CategoriesContent
-            categories={categories.map((category) => ({
-              id: category.id,
-              name: category.name,
-              amount: calculateCategoryTotal(category.id, items),
-            }))}
+            categories={categories}
             onClickCategory={onEditCategory}
           />
         </Tab>

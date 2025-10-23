@@ -8,6 +8,7 @@ import { EntryDrawer } from "@/components/entry-drawer";
 import { CategoryDrawer } from "@/components/category-drawer";
 import { useBudgetEntryDrawer } from "@/hooks/useBudgetEntryDrawer";
 import { BudgetEntryInput, Category } from "@/core/types";
+import { calculateCategoryTotal, normalizeAmount } from "@/core/budget-balance";
 
 export function ExpensesPage() {
   const { expenses, addExpense, updateExpense, deleteExpense } =
@@ -96,8 +97,14 @@ export function ExpensesPage() {
   return (
     <>
       <BudgetSection
-        items={expenses}
-        categories={expenseCategories}
+        items={expenses.map((expense) => ({
+          ...expense,
+          normalizedAmount: normalizeAmount(expense),
+        }))}
+        categories={expenseCategories.map((category) => ({
+          ...category,
+          amount: calculateCategoryTotal(category.id, expenses),
+        }))}
         title="Expenses"
         onAddItem={handleAddExpense}
         onEditItem={handleEditExpense}

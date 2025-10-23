@@ -8,6 +8,7 @@ import { EntryDrawer } from "@/components/entry-drawer";
 import { CategoryDrawer } from "@/components/category-drawer";
 import { useBudgetEntryDrawer } from "@/hooks/useBudgetEntryDrawer";
 import { BudgetEntryInput, Category } from "@/core/types";
+import { calculateCategoryTotal, normalizeAmount } from "@/core/budget-balance";
 
 export function IncomePage() {
   const { incomes, addIncome, updateIncome, deleteIncome } =
@@ -31,7 +32,10 @@ export function IncomePage() {
     onSave,
     onDelete,
   } = useBudgetEntryDrawer({
-    entries: incomes,
+    entries: incomes.map((income) => ({
+      ...income,
+      normalizedAmount: normalizeAmount(income),
+    })),
     onAddEntry: addIncome,
     onUpdateEntry: updateIncome,
     onDeleteEntry: deleteIncome,
@@ -96,8 +100,14 @@ export function IncomePage() {
   return (
     <>
       <BudgetSection
-        items={incomes}
-        categories={incomeCategories}
+        items={incomes.map((income) => ({
+          ...income,
+          normalizedAmount: normalizeAmount(income),
+        }))}
+        categories={incomeCategories.map((category) => ({
+          ...category,
+          amount: calculateCategoryTotal(category.id, incomes),
+        }))}
         title="Income"
         onAddItem={handleAddIncome}
         onEditItem={handleEditIncome}
