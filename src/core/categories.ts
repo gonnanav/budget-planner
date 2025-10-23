@@ -1,4 +1,5 @@
-import type { Category } from "./types";
+import type { BudgetEntry, Category } from "./types";
+import { calculateCategoryTotal } from "./budget-balance";
 
 export function createCategory(id: string, name: string): Category {
   validateId(id);
@@ -31,4 +32,14 @@ function validateNonEmptyString(value: string, name: string): void {
   if (value.length === 0) {
     throw new Error(`${name} is required`);
   }
+}
+
+export function enrichCategory(
+  category: Category,
+  items: BudgetEntry[],
+): Category & { amount: number } {
+  return {
+    ...category,
+    amount: calculateCategoryTotal(category.id, items),
+  };
 }
