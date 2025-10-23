@@ -1,24 +1,28 @@
-import { BudgetEntry } from "@/core/types";
-import { normalizeAmount } from "@/core/budget-balance";
 import { ItemListItem } from "./ItemListItem";
 import { SectionContent } from "./SectionContent";
 
 interface ItemsContentProps {
-  items: BudgetEntry[];
-  onEditItem: (id: string) => void;
+  items: {
+    id: string;
+    name: string;
+    amount: number | null;
+    frequency: string;
+    normalizedAmount: number;
+  }[];
+  onClickItem: (id: string) => void;
 }
 
-export function ItemsContent({ items, onEditItem }: ItemsContentProps) {
+export function ItemsContent({ items, onClickItem }: ItemsContentProps) {
   return (
     <SectionContent items={items} emptyStateText="No items yet">
-      {(item) => (
+      {({ id, name, amount, frequency, normalizedAmount }) => (
         <ItemListItem
-          key={item.id}
-          name={item.name}
-          amount={item.amount}
-          frequency={item.frequency}
-          normalizedAmount={normalizeAmount(item)}
-          onClick={() => onEditItem(item.id)}
+          key={id}
+          name={name}
+          amount={amount}
+          frequency={frequency}
+          normalizedAmount={normalizedAmount}
+          onClick={() => onClickItem(id)}
         />
       )}
     </SectionContent>

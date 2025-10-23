@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Tabs, Tab } from "@heroui/tabs";
 import { BudgetEntry, Category } from "@/core/types";
-import { calculateCategoryTotal } from "@/core/budget-balance";
+import { calculateCategoryTotal, normalizeAmount } from "@/core/budget-balance";
 import { ItemsContent } from "./ItemsContent";
 import { CategoriesContent } from "./CategoriesContent";
 import { AddButton } from "./AddButton";
@@ -51,7 +51,13 @@ export function BudgetSection({
         onSelectionChange={setView}
       >
         <Tab key="items" title="Items">
-          <ItemsContent items={items} onEditItem={onEditItem} />
+          <ItemsContent
+            items={items.map((item) => ({
+              ...item,
+              normalizedAmount: normalizeAmount(item),
+            }))}
+            onClickItem={onEditItem}
+          />
         </Tab>
         <Tab key="categories" title="Categories">
           <CategoriesContent

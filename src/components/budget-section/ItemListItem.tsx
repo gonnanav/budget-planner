@@ -1,10 +1,9 @@
-import { BudgetEntryAmount, BudgetEntryFrequency } from "@/core/types";
 import { cn } from "@/lib/utils";
 
 interface ItemListItemProps {
   name: string;
-  amount: BudgetEntryAmount;
-  frequency: BudgetEntryFrequency;
+  amount: number | null;
+  frequency: string;
   normalizedAmount: number;
   onClick: () => void;
 }
@@ -126,8 +125,8 @@ function formatItemDisplay({
   frequency,
   normalizedAmount,
 }: {
-  amount: BudgetEntryAmount;
-  frequency: BudgetEntryFrequency;
+  amount: number | null;
+  frequency: string;
   normalizedAmount: number;
 }) {
   return {
