@@ -10,7 +10,7 @@ interface ItemsContentProps {
 
 export function ItemsContent({ items, onEditItem }: ItemsContentProps) {
   return (
-    <SectionContent items={items} emptyMessage="No items yet">
+    <SectionContent items={items} emptyStateText="No items yet">
       {(item) => (
         <ItemListItem
           key={item.id}

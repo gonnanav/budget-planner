@@ -15,7 +15,7 @@ export function CategoriesContent({
   onEditCategory,
 }: CategoriesContentProps) {
   return (
-    <SectionContent items={categories} emptyMessage="No categories yet">
+    <SectionContent items={categories} emptyStateText="No categories yet">
       {({ id, name }) => (
         <CategoryListItem
           key={id}

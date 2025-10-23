@@ -69,5 +69,5 @@ export const Empty: Story = {
 };
 
 function getItem(canvas: Canvas, name: string) {
-  return canvas.getByRole("article", { name });
+  return canvas.getByText(name);
 }

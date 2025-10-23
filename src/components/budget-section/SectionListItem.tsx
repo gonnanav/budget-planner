@@ -12,8 +12,7 @@ export function SectionListItem({
   children,
 }: SectionListItemProps) {
   return (
-    <article
-      aria-label={name}
+    <li
       className={cn(
         "flex items-baseline justify-between rounded-md px-3 py-2",
         "cursor-pointer bg-slate-50 hover:opacity-80 active:bg-slate-100 transition-colors transition-opacity",
@@ -24,6 +23,6 @@ export function SectionListItem({
         <span className="text-muted-foreground text-sm truncate">{name}</span>
         {children}
       </div>
-    </article>
+    </li>
   );
 }
