@@ -1,4 +1,5 @@
 import { Header } from "@/components/header";
+import { NavTabs } from "./NavTabs";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -6,9 +7,10 @@ interface AppLayoutProps {
 
 export function AppLayout({ children }: AppLayoutProps) {
   return (
-    <>
+    <div className="flex flex-col gap-5 p-4">
       <Header />
-      <main className="px-4 py-6">{children}</main>
-    </>
+      <NavTabs />
+      <main>{children}</main>
+    </div>
   );
 }

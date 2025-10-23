@@ -5,6 +5,9 @@ import { AppLayout } from "@/components/app-layout";
 
 const meta = {
   component: LoadingPage,
+  parameters: {
+    layout: "full",
+  },
   decorators: [
     (Story) => (
       <AppLayout>

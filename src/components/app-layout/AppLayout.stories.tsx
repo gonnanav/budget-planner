@@ -4,6 +4,9 @@ import { PathnameContext } from "@/contexts/PathnameContext";
 
 const meta = {
   component: AppLayout,
+  parameters: {
+    layout: "full",
+  },
   decorators: [
     (Story) => (
       <PathnameContext value="/overview">
