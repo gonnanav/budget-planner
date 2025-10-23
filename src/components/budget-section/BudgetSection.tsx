@@ -40,7 +40,7 @@ export function BudgetSection({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">{title}</h3>
-        <AddButton onAdd={handleAdd} ariaLabel={addButtonLabel} />
+        <AddButton label={addButtonLabel} onAdd={handleAdd}  />
       </div>
 
       <Tabs
