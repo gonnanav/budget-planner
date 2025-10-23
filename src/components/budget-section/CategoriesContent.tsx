@@ -1,4 +1,5 @@
 import { BudgetEntry, Category } from "@/core/types";
+import { calculateCategoryTotal } from "@/core/budget-balance";
 import { CategoryListItem } from "./CategoryListItem";
 import { SectionContent } from "./SectionContent";
 
@@ -15,12 +16,12 @@ export function CategoriesContent({
 }: CategoriesContentProps) {
   return (
     <SectionContent items={categories} emptyMessage="No categories yet">
-      {(category) => (
+      {({ id, name }) => (
         <CategoryListItem
-          key={category.id}
-          category={category}
-          entries={items}
-          onClick={() => onEditCategory(category.id)}
+          key={id}
+          name={name}
+          amount={calculateCategoryTotal(id, items)}
+          onClick={() => onEditCategory(id)}
         />
       )}
     </SectionContent>

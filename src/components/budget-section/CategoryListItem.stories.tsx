@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { fn } from "storybook/test";
 import { CategoryListItem } from "./CategoryListItem";
-import { bills, personal, transportation } from "@/fixtures/expense-categories";
+import { bills, transportation } from "@/fixtures/expense-categories";
 import {
   electricity,
   water,
@@ -9,6 +9,7 @@ import {
   diningOut,
   hobbies,
 } from "@/fixtures/expenses";
+import { calculateCategoryTotal } from "@/core/budget-balance";
 
 const meta = {
   component: CategoryListItem,
@@ -23,25 +24,22 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    category: bills,
-    entries: [electricity, water, gas],
+    name: bills.name,
+    amount: calculateCategoryTotal(bills.id, [electricity, water, gas]),
   },
 };
 
 export const Empty: Story = {
   args: {
-    category: transportation,
-    entries: [],
+    name: transportation.name,
+    amount: calculateCategoryTotal(transportation.id, []),
   },
 };
 
 export const LargeAmountAndLongName: Story = {
   args: {
-    category: {
-      id: "long-name",
-      name: "This is a very long category name that should test overflow and wrapping in the CategoryListItem component for visual robustness",
-    },
-    entries: [
+    name: "This is a very long category name that should test overflow and wrapping in the CategoryListItem component for visual robustness",
+    amount: calculateCategoryTotal("long-name", [
       {
         ...diningOut,
         amount: 999999999.99,
@@ -52,6 +50,6 @@ export const LargeAmountAndLongName: Story = {
         amount: 888888888.88,
         categoryId: "long-name",
       },
-    ],
+    ]),
   },
 };

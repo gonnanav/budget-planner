@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 interface SectionListItemProps {
   name: string;
   onClick: () => void;
@@ -12,7 +14,10 @@ export function SectionListItem({
   return (
     <article
       aria-label={name}
-      className="flex items-baseline justify-between rounded-md px-3 py-2 cursor-pointer bg-slate-50 hover:opacity-80 active:bg-slate-100 transition-colors transition-opacity"
+      className={cn(
+        "flex items-baseline justify-between rounded-md px-3 py-2",
+        "cursor-pointer bg-slate-50 hover:opacity-80 active:bg-slate-100 transition-colors transition-opacity",
+      )}
       onClick={onClick}
     >
       <div className="flex items-baseline justify-between w-full gap-3">
