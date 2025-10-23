@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Tabs, Tab } from "@heroui/tabs";
 import { BudgetEntry, Category } from "@/core/types";
+import { calculateCategoryTotal } from "@/core/budget-balance";
 import { ItemsContent } from "./ItemsContent";
 import { CategoriesContent } from "./CategoriesContent";
 import { AddButton } from "./AddButton";
@@ -40,7 +41,7 @@ export function BudgetSection({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">{title}</h3>
-        <AddButton label={addButtonLabel} onAdd={handleAdd}  />
+        <AddButton label={addButtonLabel} onAdd={handleAdd} />
       </div>
 
       <Tabs
@@ -54,9 +55,12 @@ export function BudgetSection({
         </Tab>
         <Tab key="categories" title="Categories">
           <CategoriesContent
-            categories={categories}
-            items={items}
-            onEditCategory={onEditCategory}
+            categories={categories.map((category) => ({
+              id: category.id,
+              name: category.name,
+              amount: calculateCategoryTotal(category.id, items),
+            }))}
+            onClickCategory={onEditCategory}
           />
         </Tab>
       </Tabs>

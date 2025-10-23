@@ -1,27 +1,23 @@
-import { BudgetEntry, Category } from "@/core/types";
-import { calculateCategoryTotal } from "@/core/budget-balance";
-import { CategoryListItem } from "./CategoryListItem";
 import { SectionContent } from "./SectionContent";
+import { CategoryListItem } from "./CategoryListItem";
 
 interface CategoriesContentProps {
-  categories: Category[];
-  items: BudgetEntry[];
-  onEditCategory: (id: string) => void;
+  categories: { id: string; name: string; amount: number }[];
+  onClickCategory: (id: string) => void;
 }
 
 export function CategoriesContent({
   categories,
-  items,
-  onEditCategory,
+  onClickCategory,
 }: CategoriesContentProps) {
   return (
     <SectionContent items={categories} emptyStateText="No categories yet">
-      {({ id, name }) => (
+      {({ id, name, amount }) => (
         <CategoryListItem
           key={id}
           name={name}
-          amount={calculateCategoryTotal(id, items)}
-          onClick={() => onEditCategory(id)}
+          amount={amount}
+          onClick={() => onClickCategory(id)}
         />
       )}
     </SectionContent>
