@@ -1,5 +1,5 @@
-import { SectionContent } from "../shared";
-import { CategoryListItem } from "./CategoryListItem";
+import { SectionContent } from "@/components/shared";
+import { CategoryListItem } from "@/components/category-list-item";
 
 interface CategoriesContentProps {
   categories: { id: string; name: string; amount: number }[];

@@ -1,4 +1,4 @@
-import { ItemListItem } from "./ItemListItem";
+import { ItemListItem } from "@/components/item-list-item";
 import { SectionContent } from "@/components/shared";
 
 interface ItemsContentProps {
