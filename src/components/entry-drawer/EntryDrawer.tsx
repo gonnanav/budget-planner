@@ -96,22 +96,29 @@ export const EntryDrawer = ({
             <NotesInput notes={notes} onChange={setNotes} />
           </DrawerBody>
           <DrawerFooter>
-            <Button color="danger" variant="light" onPress={handleCancel}>
-              Cancel
-            </Button>
-            {isEditMode && (
-              <Button
-                color="danger"
-                onPress={onDelete}
-                isIconOnly
-                aria-label="Delete"
-              >
-                <Trash2 size={16} />
-              </Button>
-            )}
-            <Button color="primary" type="submit">
-              Save
-            </Button>
+            <div className="flex justify-between items-center w-full">
+              <div className="flex items-center gap-2">
+                <Button color="danger" variant="light" onPress={handleCancel}>
+                  Cancel
+                </Button>
+                <Button color="primary" type="submit">
+                  Save
+                </Button>
+              </div>
+
+              {isEditMode && (
+                <div>
+                  <Button
+                    color="danger"
+                    onPress={onDelete}
+                    isIconOnly
+                    aria-label="Delete"
+                  >
+                    <Trash2 size={16} />
+                  </Button>
+                </div>
+              )}
+            </div>
           </DrawerFooter>
         </form>
       </DrawerContent>
