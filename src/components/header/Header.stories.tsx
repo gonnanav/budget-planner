@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { expect, fn, userEvent } from "storybook/test";
+import { expect, fn, userEvent, within } from "storybook/test";
 import { Header } from "./Header";
 import { DataBackupRestoreContext } from "@/contexts/DataBackupRestoreContext";
 
@@ -25,13 +25,18 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  play: async ({ canvas, parameters: { onBackup, onRestore } }) => {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const body = within(document.body);
+
     const backupButton = canvas.getByRole("button", { name: "Backup data" });
     await userEvent.click(backupButton);
-    await expect(onBackup).toHaveBeenCalled();
+    await expect(body.getByText("Download backup")).toBeInTheDocument();
 
-    const restoreButton = canvas.getByRole("button", { name: "Restore data" });
+    const restoreButton = canvas.getByRole("button", {
+      name: "Restore data",
+    });
     await userEvent.click(restoreButton);
-    await expect(onRestore).toHaveBeenCalled();
+    await expect(body.getByText("Restore from backup")).toBeInTheDocument();
   },
 };

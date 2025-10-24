@@ -1,5 +1,6 @@
 "use client";
 
+import { ToastProvider } from "@heroui/toast";
 import { AppHeroUIProvider } from "./AppHeroUIProvider";
 import { IncomesProvider } from "./IncomesProvider";
 import { ExpensesProvider } from "./ExpensesProvider";
@@ -24,6 +25,7 @@ export function Providers({
           </IncomeCategoriesProvider>
         </ExpensesProvider>
       </IncomesProvider>
+      <ToastProvider />
     </AppHeroUIProvider>
   );
 }
