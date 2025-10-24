@@ -29,14 +29,20 @@ export const Default: Story = {
     const canvas = within(canvasElement);
     const body = within(document.body);
 
-    const backupButton = canvas.getByRole("button", { name: "Backup data" });
-    await userEvent.click(backupButton);
+    const dataMenuButton = canvas.getByRole("button", {
+      name: "Data actions",
+    });
+    await userEvent.click(dataMenuButton);
+
+    const backupMenuItem = body.getByRole("menuitem", { name: /Backup data/i });
+    await userEvent.click(backupMenuItem);
     await expect(body.getByText("Download backup")).toBeInTheDocument();
 
-    const restoreButton = canvas.getByRole("button", {
-      name: "Restore data",
+    await userEvent.click(dataMenuButton);
+    const restoreMenuItem = body.getByRole("menuitem", {
+      name: /Restore data/i,
     });
-    await userEvent.click(restoreButton);
+    await userEvent.click(restoreMenuItem);
     await expect(body.getByText("Restore from backup")).toBeInTheDocument();
   },
 };
