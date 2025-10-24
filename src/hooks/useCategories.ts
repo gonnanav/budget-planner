@@ -23,10 +23,10 @@ export function useCategories(tableName: CategoryTableName) {
       "rw",
       [db.expenses, db.incomes, db.expenseCategories, db.incomeCategories],
       async () => {
-        const entriesTable =
+        const itemsTable =
           tableName === "expenseCategories" ? db.expenses : db.incomes;
 
-        await entriesTable
+        await itemsTable
           .where("categoryId")
           .equals(id)
           .modify({ categoryId: undefined });

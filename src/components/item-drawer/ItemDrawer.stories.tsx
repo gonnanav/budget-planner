@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { EntryDrawer } from "./EntryDrawer";
+import { ItemDrawer } from "./ItemDrawer";
 import { expect, fn, screen } from "storybook/test";
 import { salary } from "@/fixtures/incomes";
 
 const meta = {
-  component: EntryDrawer,
+  component: ItemDrawer,
   args: {
     isOpen: true,
     categories: [],
@@ -12,15 +12,15 @@ const meta = {
     onClose: fn(),
     onCancel: fn(),
   },
-} satisfies Meta<typeof EntryDrawer>;
+} satisfies Meta<typeof ItemDrawer>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const AddEntry: Story = {
+export const AddItem: Story = {
   args: {
-    entry: null,
+    item: null,
   },
   play: async () => {
     await expect(screen.getByText("Add Item")).toBeInTheDocument();
@@ -28,9 +28,9 @@ export const AddEntry: Story = {
   },
 };
 
-export const EditEntry: Story = {
+export const EditItem: Story = {
   args: {
-    entry: salary,
+    item: salary,
   },
   play: async () => {
     await expect(screen.getByText("Edit Item")).toBeInTheDocument();
@@ -50,12 +50,12 @@ export const Cancelling: Story = {
 
 export const Saving: Story = {
   play: async ({ userEvent, args }) => {
-    await userEvent.type(getNameInput(), "Some entry");
+    await userEvent.type(getNameInput(), "Some item");
     await userEvent.type(getAmountInput(), "100");
     await userEvent.click(getSaveButton());
 
     await expect(args.onSave).toHaveBeenCalledWith({
-      name: "Some entry",
+      name: "Some item",
       amount: 100,
       frequency: "monthly",
       categoryId: undefined,

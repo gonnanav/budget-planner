@@ -1,4 +1,4 @@
-import type { BudgetEntry, Category } from "@/core/types";
+import type { BudgetItem, Category } from "@/core/types";
 
 export interface ExportImportData {
   metadata: {
@@ -6,16 +6,16 @@ export interface ExportImportData {
     exportedAt: string;
   };
   data: {
-    expenses: BudgetEntry[];
-    incomes: BudgetEntry[];
+    expenses: BudgetItem[];
+    incomes: BudgetItem[];
     incomeCategories: Category[];
     expenseCategories: Category[];
   };
 }
 
 interface ExportDataInput {
-  incomes: BudgetEntry[];
-  expenses: BudgetEntry[];
+  incomes: BudgetItem[];
+  expenses: BudgetItem[];
   incomeCategories: Category[];
   expenseCategories: Category[];
 }

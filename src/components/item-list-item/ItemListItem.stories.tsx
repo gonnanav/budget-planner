@@ -42,7 +42,7 @@ export const NoAmount: Story = {
 
 export const LongTextAndAmount: Story = {
   args: {
-    name: "This is a very long budget entry name that should test overflow and wrapping in the BudgetEntryRow component for visual robustness",
+    name: "This is a very long budget item name that should test overflow and wrapping in the component for visual robustness",
     amount: 1234567890.99,
     frequency: "biMonthly",
     normalizedAmount: 617283945.495,

@@ -10,7 +10,7 @@ import {
   hobbies,
 } from "@/fixtures/expenses";
 import { bills, personal } from "@/fixtures/expense-categories";
-import { enrichItem } from "@/core/budget-entries";
+import { enrichItem } from "@/core/budget-items";
 import { enrichCategory } from "@/core/categories";
 
 const meta = {

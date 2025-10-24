@@ -1,14 +1,14 @@
-import { useBudgetEntries } from "./useBudgetEntries";
+import { useBudgetItems } from "./useBudgetItems";
 
 export function useIncomes() {
-  const { entries, addEntry, updateEntry, deleteEntry, addEntries } =
-    useBudgetEntries("incomes");
+  const { items, addItem, updateItem, deleteItem, addItems } =
+    useBudgetItems("incomes");
 
   return {
-    incomes: entries,
-    addIncome: addEntry,
-    updateIncome: updateEntry,
-    deleteIncome: deleteEntry,
-    addIncomes: addEntries,
+    incomes: items,
+    addIncome: addItem,
+    updateIncome: updateItem,
+    deleteIncome: deleteItem,
+    addIncomes: addItems,
   };
 }

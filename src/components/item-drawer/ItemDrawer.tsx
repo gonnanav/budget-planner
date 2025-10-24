@@ -8,57 +8,52 @@ import {
 } from "@heroui/drawer";
 import { Button } from "@heroui/button";
 import { Trash2 } from "lucide-react";
-import {
-  BudgetEntry,
-  BudgetEntryInput,
-  BudgetEntryFrequency,
-  Category,
-} from "@/core/types";
+import { BudgetItem, BudgetItemInput, Frequency, Category } from "@/core/types";
 import { AmountInput } from "./AmountInput";
 import { NameInput } from "./NameInput";
 import { FrequencyInput } from "./FrequencyInput";
 import { CategoryInput } from "./CategoryInput";
 import { NotesInput } from "./NotesInput";
 
-interface EntryDrawerProps {
+interface ItemDrawerProps {
   isOpen: boolean;
-  entry?: BudgetEntry | null;
+  item?: BudgetItem | null;
   categories: Category[];
   onCancel: () => void;
-  onSave: (input: BudgetEntryInput) => void;
+  onSave: (input: BudgetItemInput) => void;
   onClose: () => void;
   onDelete?: () => void;
 }
 
-export const EntryDrawer = ({
+export const ItemDrawer = ({
   isOpen,
-  entry,
+  item,
   categories,
   onCancel,
   onSave,
   onClose,
   onDelete,
-}: EntryDrawerProps) => {
+}: ItemDrawerProps) => {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState<number | null>(null);
-  const [frequency, setFrequency] = useState<BudgetEntryFrequency>("monthly");
+  const [frequency, setFrequency] = useState<Frequency>("monthly");
   const [categoryId, setCategoryId] = useState<string | undefined>(undefined);
   const [notes, setNotes] = useState<string | undefined>();
 
-  const isEditMode = Boolean(entry);
+  const isEditMode = Boolean(item);
   const title = isEditMode ? "Edit Item" : "Add Item";
 
   useEffect(() => {
-    if (!entry) {
+    if (!item) {
       reset();
     } else {
-      setName(entry.name);
-      setAmount(entry.amount);
-      setFrequency(entry.frequency);
-      setCategoryId(entry.categoryId);
-      setNotes(entry.notes);
+      setName(item.name);
+      setAmount(item.amount);
+      setFrequency(item.frequency);
+      setCategoryId(item.categoryId);
+      setNotes(item.notes);
     }
-  }, [entry]);
+  }, [item]);
 
   const reset = () => {
     setName("");

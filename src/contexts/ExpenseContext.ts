@@ -1,12 +1,12 @@
 import { createContext } from "react";
-import { BudgetEntry, BudgetEntryInput } from "@/core/types";
+import { BudgetItem, BudgetItemInput } from "@/core/types";
 
 export interface ExpenseContextValue {
-  expenses: BudgetEntry[];
-  addExpense: (input: BudgetEntryInput) => void;
-  updateExpense: (id: string, input: BudgetEntryInput) => void;
+  expenses: BudgetItem[];
+  addExpense: (input: BudgetItemInput) => void;
+  updateExpense: (id: string, input: BudgetItemInput) => void;
   deleteExpense: (id: string) => void;
-  addExpenses: (inputs: BudgetEntryInput[]) => void;
+  addExpenses: (inputs: BudgetItemInput[]) => void;
 }
 
 export const ExpenseContext = createContext<ExpenseContextValue>({

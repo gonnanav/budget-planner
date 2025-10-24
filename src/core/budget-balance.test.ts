@@ -1,16 +1,16 @@
 import { test, expect } from "vitest";
 import {
   budgetBalance,
-  budgetEntriesSum,
+  budgetItemsSum,
   normalizeAmount,
   calculateCategoryTotal,
 } from "./budget-balance";
-import { createTestEntries, createTestEntry } from "@/fixtures/test-utils";
+import { createTestItems, createTestItem } from "@/fixtures/test-utils";
 
 test("balance is balanced when incomes and expenses are equal", () => {
   const { balance, status } = budgetBalance(
-    createTestEntries([{ amount: 1000 }]),
-    createTestEntries([{ amount: 1000 }]),
+    createTestItems([{ amount: 1000 }]),
+    createTestItems([{ amount: 1000 }]),
   );
 
   expect(balance).toBe(0);
@@ -19,8 +19,8 @@ test("balance is balanced when incomes and expenses are equal", () => {
 
 test("balance is positive when incomes are greater than expenses", () => {
   const { balance, status } = budgetBalance(
-    createTestEntries([{ amount: 1000 }]),
-    createTestEntries([{ amount: 500 }]),
+    createTestItems([{ amount: 1000 }]),
+    createTestItems([{ amount: 500 }]),
   );
 
   expect(balance).toBe(500);
@@ -29,8 +29,8 @@ test("balance is positive when incomes are greater than expenses", () => {
 
 test("balance is negative when expenses are greater than incomes", () => {
   const { balance, status } = budgetBalance(
-    createTestEntries([{ amount: 500 }]),
-    createTestEntries([{ amount: 1000 }]),
+    createTestItems([{ amount: 500 }]),
+    createTestItems([{ amount: 1000 }]),
   );
 
   expect(balance).toBe(-500);
@@ -38,38 +38,38 @@ test("balance is negative when expenses are greater than incomes", () => {
 });
 
 test("no income is counted as zero", () => {
-  const { balance } = budgetBalance([], createTestEntries([{ amount: 1000 }]));
+  const { balance } = budgetBalance([], createTestItems([{ amount: 1000 }]));
 
   expect(balance).toBe(-1000);
 });
 
 test("multiple incomes are summed up", () => {
   const { balance } = budgetBalance(
-    createTestEntries([{ amount: 400 }, { amount: 600 }]),
-    createTestEntries([{ amount: 500 }]),
+    createTestItems([{ amount: 400 }, { amount: 600 }]),
+    createTestItems([{ amount: 500 }]),
   );
 
   expect(balance).toBe(500);
 });
 
 test("no expense is counted as zero", () => {
-  const { balance } = budgetBalance(createTestEntries([{ amount: 1000 }]), []);
+  const { balance } = budgetBalance(createTestItems([{ amount: 1000 }]), []);
 
   expect(balance).toBe(1000);
 });
 
 test("multiple expenses are summed up", () => {
   const { balance } = budgetBalance(
-    createTestEntries([{ amount: 1000 }]),
-    createTestEntries([{ amount: 300 }, { amount: 200 }]),
+    createTestItems([{ amount: 1000 }]),
+    createTestItems([{ amount: 300 }, { amount: 200 }]),
   );
 
   expect(balance).toBe(500);
 });
 
-test("entries with different frequencies are summed up", () => {
-  const sum = budgetEntriesSum(
-    createTestEntries([
+test("items with different frequencies are summed up", () => {
+  const sum = budgetItemsSum(
+    createTestItems([
       { amount: 1000, frequency: "biMonthly" },
       { amount: 300, frequency: "monthly" },
     ]),
@@ -78,35 +78,35 @@ test("entries with different frequencies are summed up", () => {
   expect(sum).toBe(800);
 });
 
-test("monthly entries are not divided", () => {
+test("monthly items are not divided", () => {
   const sum = normalizeAmount(
-    createTestEntry({ amount: 1000, frequency: "monthly" }),
+    createTestItem({ amount: 1000, frequency: "monthly" }),
   );
 
   expect(sum).toBe(1000);
 });
 
-test("biMonthly entries are divided by 2", () => {
+test("biMonthly items are divided by 2", () => {
   const sum = normalizeAmount(
-    createTestEntry({ amount: 1000, frequency: "biMonthly" }),
+    createTestItem({ amount: 1000, frequency: "biMonthly" }),
   );
 
   expect(sum).toBe(500);
 });
 
-test("calculateCategoryTotal sums entries for a specific category", () => {
-  const entries = createTestEntries([
+test("items for a specific category are summed up", () => {
+  const items = createTestItems([
     { amount: 200, frequency: "monthly", categoryId: "transportation" },
     { amount: 400, frequency: "biMonthly", categoryId: "transportation" },
     { amount: 150, frequency: "monthly", categoryId: "entertainment" },
     { amount: 300, frequency: "monthly", categoryId: "transportation" },
   ]);
 
-  const transportationTotal = calculateCategoryTotal("transportation", entries);
-  const entertainmentTotal = calculateCategoryTotal("entertainment", entries);
-  const emptyTotal = calculateCategoryTotal("nonexistent", entries);
+  const transportationTotal = calculateCategoryTotal("transportation", items);
+  const entertainmentTotal = calculateCategoryTotal("entertainment", items);
+  const emptyTotal = calculateCategoryTotal("nonexistent", items);
 
   expect(transportationTotal).toBe(700); // 200 + 400/2 + 300 = 700
   expect(entertainmentTotal).toBe(150); // 150
-  expect(emptyTotal).toBe(0); // No entries for this category
+  expect(emptyTotal).toBe(0); // No items for this category
 });

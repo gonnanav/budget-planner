@@ -1,9 +1,9 @@
 import { NumberInput } from "@heroui/number-input";
-import { BudgetEntryAmount } from "@/core/types";
+import { ItemAmount } from "@/core/types";
 
 interface AmountInputProps {
   amount: number | null;
-  onChange: (amount: BudgetEntryAmount | null) => void;
+  onChange: (amount: ItemAmount | null) => void;
 }
 
 export function AmountInput({ amount, onChange }: AmountInputProps) {
@@ -22,10 +22,10 @@ export function AmountInput({ amount, onChange }: AmountInputProps) {
   );
 }
 
-function toValue(amount: BudgetEntryAmount): number {
+function toValue(amount: ItemAmount): number {
   return amount ?? NaN;
 }
 
-function fromValue(value: number): BudgetEntryAmount {
+function fromValue(value: number): ItemAmount {
   return Number.isNaN(value) ? null : value;
 }

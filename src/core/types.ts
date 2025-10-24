@@ -1,22 +1,22 @@
-export type BudgetEntryAmount = number | null;
+export type ItemAmount = number | null;
 
-export type BudgetEntryFrequency = "monthly" | "biMonthly";
+export type Frequency = "monthly" | "biMonthly";
 
-export interface BudgetEntryInput {
+export interface BudgetItemInput {
   name: string;
-  amount?: BudgetEntryAmount;
-  frequency?: BudgetEntryFrequency;
+  amount?: ItemAmount;
+  frequency?: Frequency;
   categoryId?: string;
   notes?: string;
 }
 
-export type CreateBudgetEntryInput = BudgetEntryInput & { id: string };
+export type CreateBudgetItemInput = BudgetItemInput & { id: string };
 
-export interface BudgetEntry {
+export interface BudgetItem {
   id: string;
   name: string;
-  amount: BudgetEntryAmount;
-  frequency: BudgetEntryFrequency;
+  amount: ItemAmount;
+  frequency: Frequency;
   categoryId?: string;
   notes?: string;
 }

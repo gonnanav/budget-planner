@@ -4,11 +4,11 @@ import { useContext, useState } from "react";
 import { IncomeContext } from "@/contexts/IncomeContext";
 import { IncomeCategoryContext } from "@/contexts/IncomeCategoryContext";
 import { BudgetSection } from "@/components/budget-section";
-import { EntryDrawer } from "@/components/entry-drawer";
+import { ItemDrawer } from "@/components/item-drawer";
 import { CategoryDrawer } from "@/components/category-drawer";
-import { useBudgetEntryDrawer } from "@/hooks/useBudgetEntryDrawer";
-import { BudgetEntryInput, Category } from "@/core/types";
-import { enrichItem } from "@/core/budget-entries";
+import { useBudgetItemDrawer } from "@/hooks/useBudgetItemDrawer";
+import { BudgetItemInput, Category } from "@/core/types";
+import { enrichItem } from "@/core/budget-items";
 import { enrichCategory } from "@/core/categories";
 
 export function IncomePage() {
@@ -24,27 +24,20 @@ export function IncomePage() {
   const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
   const [editedCategory, setEditedCategory] = useState<Category | null>(null);
 
-  const {
-    isOpen,
-    editedEntry,
-    onEditEntry,
-    onOpen,
-    onClose,
-    onSave,
-    onDelete,
-  } = useBudgetEntryDrawer({
-    entries: incomes,
-    onAddEntry: addIncome,
-    onUpdateEntry: updateIncome,
-    onDeleteEntry: deleteIncome,
-  });
+  const { isOpen, editedItem, onEditItem, onOpen, onClose, onSave, onDelete } =
+    useBudgetItemDrawer({
+      items: incomes,
+      onAdd: addIncome,
+      onUpdate: updateIncome,
+      onDelete: deleteIncome,
+    });
 
   const handleAddIncome = () => {
     onOpen();
   };
 
   const handleEditIncome = (id: string) => {
-    onEditEntry(id);
+    onEditItem(id);
   };
 
   const handleAddCategory = () => {
@@ -58,16 +51,16 @@ export function IncomePage() {
     setIsCategoryDrawerOpen(true);
   };
 
-  const handleEntryCancel = () => {
+  const handleItemCancel = () => {
     onClose();
   };
 
-  const handleEntrySave = (input: BudgetEntryInput) => {
+  const handleItemSave = (input: BudgetItemInput) => {
     onSave(input);
     onClose();
   };
 
-  const handleEntryDelete = () => {
+  const handleItemDelete = () => {
     onDelete();
     onClose();
   };
@@ -109,14 +102,14 @@ export function IncomePage() {
         onEditCategory={handleEditCategory}
       />
 
-      <EntryDrawer
+      <ItemDrawer
         isOpen={isOpen}
-        entry={editedEntry}
+        item={editedItem}
         categories={incomeCategories}
-        onSave={handleEntrySave}
-        onClose={handleEntryCancel}
-        onCancel={handleEntryCancel}
-        onDelete={handleEntryDelete}
+        onSave={handleItemSave}
+        onClose={handleItemCancel}
+        onCancel={handleItemCancel}
+        onDelete={handleItemDelete}
       />
 
       <CategoryDrawer

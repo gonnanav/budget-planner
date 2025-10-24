@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext } from "react";
-import { budgetBalance, budgetEntriesSum } from "@/core/budget-balance";
+import { budgetBalance, budgetItemsSum } from "@/core/budget-balance";
 import { BudgetEvaluation } from "@/core/types";
 import { IncomeContext } from "@/contexts/IncomeContext";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
@@ -14,8 +14,8 @@ export function OverviewPage() {
   const { expenses } = useContext(ExpenseContext);
   const evaluation = budgetBalance(incomes, expenses);
   const { isGood, formattedBalance } = fromEvaluation(evaluation);
-  const totalIncomes = budgetEntriesSum(incomes);
-  const totalExpenses = budgetEntriesSum(expenses);
+  const totalIncomes = budgetItemsSum(incomes);
+  const totalExpenses = budgetItemsSum(expenses);
   const { formattedIncomes, formattedExpenses } = formatAmounts(
     totalIncomes,
     totalExpenses,

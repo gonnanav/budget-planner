@@ -1,23 +1,23 @@
-import { createEntry } from "@/core/budget-entries";
-import type { BudgetEntry, CreateBudgetEntryInput } from "@/core/types";
+import { createItem } from "@/core/budget-items";
+import type { BudgetItem, CreateBudgetItemInput } from "@/core/types";
 import { electricity } from "./expenses";
 
-type CreateTestEntryInput = Omit<CreateBudgetEntryInput, "id" | "name"> & {
+type CreateTestItemInput = Omit<CreateBudgetItemInput, "id" | "name"> & {
   id?: string;
   name?: string;
 };
 
-export function createTestEntry(input: CreateTestEntryInput = {}): BudgetEntry {
-  return createEntry({ ...electricity, ...input });
+export function createTestItem(input: CreateTestItemInput = {}): BudgetItem {
+  return createItem({ ...electricity, ...input });
 }
 
-export function createTestEntries(
-  inputs: Array<CreateTestEntryInput>,
-): BudgetEntry[] {
+export function createTestItems(
+  inputs: Array<CreateTestItemInput>,
+): BudgetItem[] {
   return inputs.map((input, index) => {
     const defaultId = String(index + 1);
-    const defaultName = `Test entry ${defaultId}`;
+    const defaultName = `Test item ${defaultId}`;
 
-    return createTestEntry({ id: defaultId, name: defaultName, ...input });
+    return createTestItem({ id: defaultId, name: defaultName, ...input });
   });
 }

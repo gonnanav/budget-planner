@@ -1,11 +1,11 @@
-import type { BudgetEntry, BudgetEvaluation, BudgetStatus } from "./types";
+import type { BudgetItem, BudgetEvaluation, BudgetStatus } from "./types";
 
 export function budgetBalance(
-  incomes: BudgetEntry[],
-  expenses: BudgetEntry[],
+  incomes: BudgetItem[],
+  expenses: BudgetItem[],
 ): BudgetEvaluation {
-  const totalExpenses = budgetEntriesSum(expenses);
-  const totalIncomes = budgetEntriesSum(incomes);
+  const totalExpenses = budgetItemsSum(expenses);
+  const totalIncomes = budgetItemsSum(incomes);
   const balance = totalIncomes - totalExpenses;
 
   let status: BudgetStatus = "balanced";
@@ -21,22 +21,22 @@ export function budgetBalance(
   };
 }
 
-export function budgetEntriesSum(entries: BudgetEntry[]): number {
-  return entries
+export function budgetItemsSum(items: BudgetItem[]): number {
+  return items
     .map(normalizeAmount)
-    .reduce((sum: number, entry) => sum + entry, 0);
+    .reduce((sum: number, item) => sum + item, 0);
 }
 
-export function normalizeAmount(entry: BudgetEntry): number {
-  return (entry.amount ?? 0) / (entry.frequency === "biMonthly" ? 2 : 1);
+export function normalizeAmount(item: BudgetItem): number {
+  return (item.amount ?? 0) / (item.frequency === "biMonthly" ? 2 : 1);
 }
 
 export function calculateCategoryTotal(
   categoryId: string,
-  entries: BudgetEntry[],
+  items: BudgetItem[],
 ): number {
-  return entries
-    .filter((entry) => entry.categoryId === categoryId)
+  return items
+    .filter((item) => item.categoryId === categoryId)
     .map(normalizeAmount)
     .reduce((sum, amount) => sum + amount, 0);
 }

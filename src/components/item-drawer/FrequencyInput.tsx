@@ -1,9 +1,9 @@
 import { Select, SelectItem } from "@heroui/select";
-import { BudgetEntryFrequency } from "@/core/types";
+import { Frequency } from "@/core/types";
 
 interface FrequencyInputProps {
-  frequency: BudgetEntryFrequency;
-  onChange: (frequency: BudgetEntryFrequency) => void;
+  frequency: Frequency;
+  onChange: (frequency: Frequency) => void;
 }
 
 export const FrequencyInput = ({

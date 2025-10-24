@@ -1,4 +1,4 @@
-import type { BudgetEntry, Category } from "./types";
+import type { BudgetItem, Category } from "./types";
 import { calculateCategoryTotal } from "./budget-balance";
 
 export function createCategory(id: string, name: string): Category {
@@ -36,7 +36,7 @@ function validateNonEmptyString(value: string, name: string): void {
 
 export function enrichCategory(
   category: Category,
-  items: BudgetEntry[],
+  items: BudgetItem[],
 ): Category & { amount: number } {
   return {
     ...category,
