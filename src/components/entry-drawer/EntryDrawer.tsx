@@ -18,6 +18,7 @@ import { AmountInput } from "./AmountInput";
 import { NameInput } from "./NameInput";
 import { FrequencyInput } from "./FrequencyInput";
 import { CategoryInput } from "./CategoryInput";
+import { NotesInput } from "./NotesInput";
 
 interface EntryDrawerProps {
   isOpen: boolean;
@@ -42,6 +43,7 @@ export const EntryDrawer = ({
   const [amount, setAmount] = useState<number | null>(null);
   const [frequency, setFrequency] = useState<BudgetEntryFrequency>("monthly");
   const [categoryId, setCategoryId] = useState<string | undefined>(undefined);
+  const [notes, setNotes] = useState<string | undefined>();
 
   const isEditMode = Boolean(entry);
   const title = isEditMode ? "Edit Item" : "Add Item";
@@ -54,6 +56,7 @@ export const EntryDrawer = ({
       setAmount(entry.amount);
       setFrequency(entry.frequency);
       setCategoryId(entry.categoryId);
+      setNotes(entry.notes);
     }
   }, [entry]);
 
@@ -62,6 +65,7 @@ export const EntryDrawer = ({
     setAmount(null);
     setFrequency("monthly");
     setCategoryId(undefined);
+    setNotes(undefined);
   };
 
   const handleCancel = () => {
@@ -71,7 +75,7 @@ export const EntryDrawer = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSave({ name, amount, frequency, categoryId });
+    onSave({ name, amount, frequency, categoryId, notes });
     reset();
   };
 
@@ -89,6 +93,7 @@ export const EntryDrawer = ({
               categories={categories}
               onChange={setCategoryId}
             />
+            <NotesInput notes={notes} onChange={setNotes} />
           </DrawerBody>
           <DrawerFooter>
             <Button color="danger" variant="light" onPress={handleCancel}>

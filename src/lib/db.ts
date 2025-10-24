@@ -8,7 +8,7 @@ const db = new Dexie("BudgetDatabase") as Dexie & {
   expenseCategories: EntityTable<Category, "id">;
 };
 
-db.version(3).stores({
+db.version(4).stores({
   incomes: "id, categoryId",
   expenses: "id, categoryId",
   incomeCategories: "id",
