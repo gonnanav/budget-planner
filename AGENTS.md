@@ -80,6 +80,8 @@ Include technical details like validation, error handling, UI elements added.
 - **TypeScript strict mode** - no `any`, handle all cases
 - **No code explanation summaries** unless user requests
 - **Never assume libraries are available** - check package.json first
+- **Component imports** - Always use barrel files (index.ts) and absolute paths (e.g., `@/components/action-buttons` not `../action-buttons/ActionButtons`)
+- **Prop ordering** - Data props first, then event handler props (e.g., `onCancel`, `onClick`, etc.)
 
 ## Key Patterns
 

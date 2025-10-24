@@ -6,9 +6,8 @@ import {
   DrawerBody,
   DrawerFooter,
 } from "@heroui/drawer";
-import { Button } from "@heroui/button";
-import { Trash2 } from "lucide-react";
 import { Category } from "@/core/types";
+import { ActionButtons } from "@/components/action-buttons";
 import { CategoryNameInput } from "./CategoryNameInput";
 
 interface CategoryDrawerProps {
@@ -65,22 +64,7 @@ export const CategoryDrawer = ({
             <CategoryNameInput name={name} onChange={setName} />
           </DrawerBody>
           <DrawerFooter>
-            <Button color="danger" variant="light" onPress={handleCancel}>
-              Cancel
-            </Button>
-            {isEditMode && (
-              <Button
-                color="danger"
-                onPress={onDelete}
-                isIconOnly
-                aria-label="Delete"
-              >
-                <Trash2 size={16} />
-              </Button>
-            )}
-            <Button color="primary" type="submit">
-              Save
-            </Button>
+            <ActionButtons onCancel={handleCancel} onDelete={onDelete} />
           </DrawerFooter>
         </form>
       </DrawerContent>
