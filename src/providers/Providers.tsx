@@ -19,7 +19,9 @@ export function Providers({
           <IncomeCategoriesProvider>
             <ExpenseCategoriesProvider>
               <PathnameProvider>
-                <JsonBackupRestoreProvider>{children}</JsonBackupRestoreProvider>
+                <JsonBackupRestoreProvider>
+                  {children}
+                </JsonBackupRestoreProvider>
               </PathnameProvider>
             </ExpenseCategoriesProvider>
           </IncomeCategoriesProvider>

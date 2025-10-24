@@ -7,6 +7,7 @@ This file contains conventions and preferences for AI agents working on this pro
 Budget planner web application for tracking incomes, expenses, and categories.
 
 **Tech Stack:**
+
 - Next.js 15 (App Router) + TypeScript (strict mode)
 - HeroUI component library (https://www.heroui.com/docs/components/)
 - Dexie (IndexedDB wrapper) with live queries
@@ -16,6 +17,7 @@ Budget planner web application for tracking incomes, expenses, and categories.
 ## Working with the Oracle
 
 Use the oracle tool for:
+
 - Planning complex features or refactors
 - UX/design decisions
 - Architecture reviews
@@ -27,11 +29,13 @@ The oracle provides structured planning and deeper analysis - use it before divi
 ## Commit Message Format
 
 Commit messages should be:
+
 - **User-perspective**: Focus on what changed for the user, not implementation details
 - **No fluff**: Avoid words like "improved", "enhanced", "better" without specifics
 - **Format**: `type: brief summary` followed by optional detailed description
 
 ### Structure
+
 ```
 type: brief one-line summary (50-72 chars)
 
@@ -40,6 +44,7 @@ Include technical details like validation, error handling, UI elements added.
 ```
 
 ### Types
+
 - `feat:` - New feature
 - `fix:` - Bug fix
 - `refactor:` - Code restructuring without behavior change
@@ -47,12 +52,15 @@ Include technical details like validation, error handling, UI elements added.
 - `test:` - Test additions or changes
 
 ### Examples
+
 **Good:**
+
 - `feat: add confirmation modals to backup and restore operations`
 - `feat: replace import/export with backup/restore that replaces all data`
 - `refactor: replace old "budget entry" name with "budget item"`
 
 **Bad:**
+
 - `feat: improve backup UX` (vague, "improve" is fluff)
 - `feat: add cool new modals` (subjective, not descriptive)
 - `refactor: make code better` (meaningless)
@@ -61,9 +69,9 @@ Include technical details like validation, error handling, UI elements added.
 
 - `npm run build` - Build for production (always run before committing)
 - `npm test` - Run tests (always run before committing)
+- `npm run format` - Format code with Prettier (always run before committing)
 - `npm run dev` - Start development server
 - `npm run lint` - Run linter
-- `npm run format` - Format code with Prettier
 
 ## Code Style
 

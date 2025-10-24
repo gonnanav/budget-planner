@@ -68,8 +68,8 @@ export function BackupConfirmModal({
                   <strong>Format:</strong> Plain JSON file
                 </p>
                 <p>
-                  <strong>Privacy:</strong> Keep this file secure as it
-                  contains your personal financial data
+                  <strong>Privacy:</strong> Keep this file secure as it contains
+                  your personal financial data
                 </p>
               </div>
               <p className="mt-4 text-sm text-default-600">

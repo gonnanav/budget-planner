@@ -210,7 +210,9 @@ export function RestoreConfirmModal({
                       <p>Incomes: {summary.incomesCount}</p>
                       <p>Expenses: {summary.expensesCount}</p>
                       <p>Income categories: {summary.incomeCategoriesCount}</p>
-                      <p>Expense categories: {summary.expenseCategoriesCount}</p>
+                      <p>
+                        Expense categories: {summary.expenseCategoriesCount}
+                      </p>
                     </div>
                   </div>
                 )}
