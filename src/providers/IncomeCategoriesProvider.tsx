@@ -14,6 +14,7 @@ export function IncomeCategoriesProvider({
     updateCategory,
     deleteCategory,
     addCategories,
+    isAtLimit,
   } = useCategories("incomeCategories");
 
   const incomeCategoriesContext = {
@@ -22,6 +23,7 @@ export function IncomeCategoriesProvider({
     updateIncomeCategory: updateCategory,
     deleteIncomeCategory: deleteCategory,
     addIncomeCategories: addCategories,
+    isIncomeCategoryAtLimit: isAtLimit,
   };
 
   return (

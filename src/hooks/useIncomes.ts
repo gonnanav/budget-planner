@@ -1,7 +1,7 @@
 import { useBudgetItems } from "./useBudgetItems";
 
 export function useIncomes() {
-  const { items, addItem, updateItem, deleteItem, addItems } =
+  const { items, addItem, updateItem, deleteItem, addItems, isAtLimit } =
     useBudgetItems("incomes");
 
   return {
@@ -10,5 +10,6 @@ export function useIncomes() {
     updateIncome: updateItem,
     deleteIncome: deleteItem,
     addIncomes: addItems,
+    isIncomeAtLimit: isAtLimit,
   };
 }

@@ -3,6 +3,7 @@ import { expect } from "storybook/test";
 import { ExpensesPage } from "./ExpensesPage";
 import { electricity, water, gas } from "@/fixtures/expenses";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
+import { ExpenseCategoryContext } from "@/contexts/ExpenseCategoryContext";
 
 const meta = {
   component: ExpensesPage,
@@ -22,9 +23,21 @@ export const Default: Story = {
           updateExpense: () => {},
           deleteExpense: () => {},
           addExpenses: () => {},
+          isExpenseAtLimit: false,
         }}
       >
-        <Story />
+        <ExpenseCategoryContext
+          value={{
+            expenseCategories: [],
+            addExpenseCategory: () => {},
+            updateExpenseCategory: () => {},
+            deleteExpenseCategory: () => {},
+            addExpenseCategories: () => {},
+            isExpenseCategoryAtLimit: false,
+          }}
+        >
+          <Story />
+        </ExpenseCategoryContext>
       </ExpenseContext>
     ),
   ],

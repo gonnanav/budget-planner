@@ -1,6 +1,7 @@
 "use client";
 
 import { useContext, useState } from "react";
+import { addToast } from "@heroui/toast";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
 import { ExpenseCategoryContext } from "@/contexts/ExpenseCategoryContext";
 import { BudgetSection } from "@/components/budget-section";
@@ -12,13 +13,19 @@ import { enrichItem } from "@/core/budget-items";
 import { enrichCategory } from "@/core/categories";
 
 export function ExpensesPage() {
-  const { expenses, addExpense, updateExpense, deleteExpense } =
-    useContext(ExpenseContext);
+  const {
+    expenses,
+    addExpense,
+    updateExpense,
+    deleteExpense,
+    isExpenseAtLimit,
+  } = useContext(ExpenseContext);
   const {
     expenseCategories,
     addExpenseCategory,
     updateExpenseCategory,
     deleteExpenseCategory,
+    isExpenseCategoryAtLimit,
   } = useContext(ExpenseCategoryContext);
 
   const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
@@ -33,6 +40,14 @@ export function ExpensesPage() {
     });
 
   const handleAddExpense = () => {
+    if (isExpenseAtLimit) {
+      addToast({
+        title: "Limit reached",
+        description: "You've reached the maximum number of expense items.",
+        color: "warning",
+      });
+      return;
+    }
     onOpen();
   };
 
@@ -41,6 +56,14 @@ export function ExpensesPage() {
   };
 
   const handleAddCategory = () => {
+    if (isExpenseCategoryAtLimit) {
+      addToast({
+        title: "Limit reached",
+        description: "You've reached the maximum number of expense categories.",
+        color: "warning",
+      });
+      return;
+    }
     setEditedCategory(null);
     setIsCategoryDrawerOpen(true);
   };

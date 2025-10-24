@@ -7,6 +7,7 @@ interface ExpenseCategoryContextValue {
   updateExpenseCategory: (id: string, name: string) => void;
   deleteExpenseCategory: (id: string) => void;
   addExpenseCategories: (categories: Category[]) => void;
+  isExpenseCategoryAtLimit: boolean;
 }
 
 export const ExpenseCategoryContext =
@@ -16,4 +17,5 @@ export const ExpenseCategoryContext =
     updateExpenseCategory: () => {},
     deleteExpenseCategory: () => {},
     addExpenseCategories: () => {},
+    isExpenseCategoryAtLimit: false,
   });

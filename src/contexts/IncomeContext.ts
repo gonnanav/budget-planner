@@ -7,6 +7,7 @@ export interface IncomeContextValue {
   updateIncome: (id: string, input: BudgetItemInput) => void;
   deleteIncome: (id: string) => void;
   addIncomes: (inputs: BudgetItemInput[]) => void;
+  isIncomeAtLimit: boolean;
 }
 
 export const IncomeContext = createContext<IncomeContextValue>({
@@ -15,4 +16,5 @@ export const IncomeContext = createContext<IncomeContextValue>({
   updateIncome: () => {},
   deleteIncome: () => {},
   addIncomes: () => {},
+  isIncomeAtLimit: false,
 });

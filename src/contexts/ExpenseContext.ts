@@ -7,6 +7,7 @@ export interface ExpenseContextValue {
   updateExpense: (id: string, input: BudgetItemInput) => void;
   deleteExpense: (id: string) => void;
   addExpenses: (inputs: BudgetItemInput[]) => void;
+  isExpenseAtLimit: boolean;
 }
 
 export const ExpenseContext = createContext<ExpenseContextValue>({
@@ -15,4 +16,5 @@ export const ExpenseContext = createContext<ExpenseContextValue>({
   updateExpense: () => {},
   deleteExpense: () => {},
   addExpenses: () => {},
+  isExpenseAtLimit: false,
 });

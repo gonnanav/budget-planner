@@ -7,6 +7,7 @@ interface IncomeCategoryContextValue {
   updateIncomeCategory: (id: string, name: string) => void;
   deleteIncomeCategory: (id: string) => void;
   addIncomeCategories: (categories: Category[]) => void;
+  isIncomeCategoryAtLimit: boolean;
 }
 
 export const IncomeCategoryContext = createContext<IncomeCategoryContextValue>({
@@ -15,4 +16,5 @@ export const IncomeCategoryContext = createContext<IncomeCategoryContextValue>({
   updateIncomeCategory: () => {},
   deleteIncomeCategory: () => {},
   addIncomeCategories: () => {},
+  isIncomeCategoryAtLimit: false,
 });

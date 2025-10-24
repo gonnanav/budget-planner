@@ -3,6 +3,7 @@ import { expect } from "storybook/test";
 import { IncomePage } from "./IncomePage";
 import { salary, allowance, investment } from "@/fixtures/incomes";
 import { IncomeContext } from "@/contexts/IncomeContext";
+import { IncomeCategoryContext } from "@/contexts/IncomeCategoryContext";
 
 const meta = {
   component: IncomePage,
@@ -22,9 +23,21 @@ export const Default: Story = {
           updateIncome: () => {},
           deleteIncome: () => {},
           addIncomes: () => {},
+          isIncomeAtLimit: false,
         }}
       >
-        <Story />
+        <IncomeCategoryContext
+          value={{
+            incomeCategories: [],
+            addIncomeCategory: () => {},
+            updateIncomeCategory: () => {},
+            deleteIncomeCategory: () => {},
+            addIncomeCategories: () => {},
+            isIncomeCategoryAtLimit: false,
+          }}
+        >
+          <Story />
+        </IncomeCategoryContext>
       </IncomeContext>
     ),
   ],

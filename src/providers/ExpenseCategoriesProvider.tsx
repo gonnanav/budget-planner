@@ -14,6 +14,7 @@ export function ExpenseCategoriesProvider({
     updateCategory,
     deleteCategory,
     addCategories,
+    isAtLimit,
   } = useCategories("expenseCategories");
 
   const expenseCategoriesContext = {
@@ -22,6 +23,7 @@ export function ExpenseCategoriesProvider({
     updateExpenseCategory: updateCategory,
     deleteExpenseCategory: deleteCategory,
     addExpenseCategories: addCategories,
+    isExpenseCategoryAtLimit: isAtLimit,
   };
 
   return (

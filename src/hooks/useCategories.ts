@@ -2,6 +2,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { createCategory } from "@/core/categories";
 import { Category } from "@/core/types";
 import { db } from "@/lib/db";
+import { LIMITS } from "@/lib/limits";
 
 type CategoryTableName = "incomeCategories" | "expenseCategories";
 
@@ -10,8 +11,17 @@ export function useCategories(tableName: CategoryTableName) {
     | Category[]
     | undefined;
 
-  const handleAddCategory = async (name: string) => {
-    await db.table(tableName).add(createCategory(crypto.randomUUID(), name));
+  const count = useLiveQuery(() => db.table(tableName).count()) ?? 0;
+  const limit = LIMITS[tableName as keyof typeof LIMITS];
+  const isAtLimit = count >= limit;
+
+  const handleAddCategory = (name: string) => {
+    if (count >= limit) {
+      const categoryType = tableName.replace(/([A-Z])/g, " $1").toLowerCase();
+      console.error(`You've reached the maximum number of ${categoryType}.`);
+      return;
+    }
+    db.table(tableName).add(createCategory(crypto.randomUUID(), name));
   };
 
   const handleUpdateCategory = async (id: string, name: string) => {
@@ -42,6 +52,9 @@ export function useCategories(tableName: CategoryTableName) {
 
   return {
     categories: categories ?? [],
+    count,
+    limit,
+    isAtLimit,
     addCategory: handleAddCategory,
     updateCategory: handleUpdateCategory,
     deleteCategory: handleDeleteCategory,

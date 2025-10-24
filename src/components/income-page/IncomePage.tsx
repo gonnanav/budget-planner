@@ -1,6 +1,7 @@
 "use client";
 
 import { useContext, useState } from "react";
+import { addToast } from "@heroui/toast";
 import { IncomeContext } from "@/contexts/IncomeContext";
 import { IncomeCategoryContext } from "@/contexts/IncomeCategoryContext";
 import { BudgetSection } from "@/components/budget-section";
@@ -12,13 +13,14 @@ import { enrichItem } from "@/core/budget-items";
 import { enrichCategory } from "@/core/categories";
 
 export function IncomePage() {
-  const { incomes, addIncome, updateIncome, deleteIncome } =
+  const { incomes, addIncome, updateIncome, deleteIncome, isIncomeAtLimit } =
     useContext(IncomeContext);
   const {
     incomeCategories,
     addIncomeCategory,
     updateIncomeCategory,
     deleteIncomeCategory,
+    isIncomeCategoryAtLimit,
   } = useContext(IncomeCategoryContext);
 
   const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
@@ -33,6 +35,14 @@ export function IncomePage() {
     });
 
   const handleAddIncome = () => {
+    if (isIncomeAtLimit) {
+      addToast({
+        title: "Limit reached",
+        description: "You've reached the maximum number of income items.",
+        color: "warning",
+      });
+      return;
+    }
     onOpen();
   };
 
@@ -41,6 +51,14 @@ export function IncomePage() {
   };
 
   const handleAddCategory = () => {
+    if (isIncomeCategoryAtLimit) {
+      addToast({
+        title: "Limit reached",
+        description: "You've reached the maximum number of income categories.",
+        color: "warning",
+      });
+      return;
+    }
     setEditedCategory(null);
     setIsCategoryDrawerOpen(true);
   };
