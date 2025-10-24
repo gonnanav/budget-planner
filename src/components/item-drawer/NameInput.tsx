@@ -1,4 +1,5 @@
 import { Input } from "@heroui/input";
+import { CHARACTER_LIMITS } from "@/lib/limits";
 
 interface NameInputProps {
   name: string;
@@ -13,6 +14,7 @@ export function NameInput({ name, className, onChange }: NameInputProps) {
       value={name}
       className={className}
       onValueChange={onChange}
+      maxLength={CHARACTER_LIMITS.itemName}
     />
   );
 }

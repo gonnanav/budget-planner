@@ -1,4 +1,5 @@
 import { Textarea } from "@heroui/input";
+import { CHARACTER_LIMITS } from "@/lib/limits";
 
 interface NotesInputProps {
   notes?: string;
@@ -12,6 +13,7 @@ export function NotesInput({ notes = "", onChange }: NotesInputProps) {
       value={notes}
       onValueChange={onChange}
       placeholder="Add notes or details..."
+      maxLength={CHARACTER_LIMITS.itemNotes}
     />
   );
 }

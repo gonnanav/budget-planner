@@ -1,4 +1,5 @@
 import { Input } from "@heroui/input";
+import { CHARACTER_LIMITS } from "@/lib/limits";
 
 interface CategoryNameInputProps {
   name: string;
@@ -13,6 +14,7 @@ export function CategoryNameInput({ name, onChange }: CategoryNameInputProps) {
       value={name}
       onChange={(e) => onChange(e.target.value)}
       isRequired
+      maxLength={CHARACTER_LIMITS.categoryName}
     />
   );
 }
