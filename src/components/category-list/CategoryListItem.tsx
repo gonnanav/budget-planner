@@ -1,4 +1,4 @@
-import { SectionListItem } from "./SectionListItem";
+import { SectionListItem } from "@/components/shared";
 
 interface CategoryListItemProps {
   name: string;

@@ -1,5 +1,5 @@
 import { ItemListItem } from "./ItemListItem";
-import { SectionContent } from "./SectionContent";
+import { SectionContent } from "@/components/shared";
 
 interface ItemsContentProps {
   items: {

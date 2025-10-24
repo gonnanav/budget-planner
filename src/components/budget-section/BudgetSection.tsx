@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Tabs, Tab } from "@heroui/tabs";
-import { ItemsContent } from "./ItemsContent";
-import { CategoriesContent } from "./CategoriesContent";
-import { AddButton } from "./AddButton";
+import { ItemsContent } from "@/components/item-list";
+import { CategoriesContent } from "@/components/category-list";
+import { AddButton } from "@/components/shared";
 
 interface BudgetSectionProps {
   title: string;

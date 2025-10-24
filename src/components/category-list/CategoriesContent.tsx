@@ -1,4 +1,4 @@
-import { SectionContent } from "./SectionContent";
+import { SectionContent } from "../shared";
 import { CategoryListItem } from "./CategoryListItem";
 
 interface CategoriesContentProps {
