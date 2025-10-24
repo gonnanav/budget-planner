@@ -1,5 +1,5 @@
 import { test, expect } from "vitest";
-import { createExportData } from "./export-import";
+import { createBackupData } from "./backup-restore";
 import { salary, allowance } from "@/fixtures/incomes";
 import { electricity, water, gas } from "@/fixtures/expenses";
 import { transportation, bills, personal } from "@/fixtures/expense-categories";
@@ -10,7 +10,7 @@ const incomeCategories = [transportation];
 const expenseCategories = [bills, personal];
 
 test("metadata contains correct version number and timestamp", () => {
-  const { metadata } = createExportData({
+  const { metadata } = createBackupData({
     incomes,
     expenses,
     incomeCategories,
@@ -24,7 +24,7 @@ test("metadata contains correct version number and timestamp", () => {
 });
 
 test("data section contains data in the correct format", () => {
-  const { data } = createExportData({
+  const { data } = createBackupData({
     incomes,
     expenses,
     incomeCategories,

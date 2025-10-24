@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, fn, userEvent } from "storybook/test";
 import { Header } from "./Header";
-import { DataExportImportContext } from "@/contexts/DataExportImportContext";
+import { DataBackupRestoreContext } from "@/contexts/DataBackupRestoreContext";
 
 const meta = {
   component: Header,
   parameters: {
-    onExport: fn(),
-    onImport: fn(),
+    onBackup: fn(),
+    onRestore: fn(),
   },
   decorators: [
-    (Story, { parameters: { onExport, onImport } }) => (
-      <DataExportImportContext
-        value={{ exportData: onExport, importData: onImport }}
+    (Story, { parameters: { onBackup, onRestore } }) => (
+      <DataBackupRestoreContext
+        value={{ backupData: onBackup, restoreData: onRestore }}
       >
         <Story />
-      </DataExportImportContext>
+      </DataBackupRestoreContext>
     ),
   ],
 } satisfies Meta<typeof Header>;
@@ -25,13 +25,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  play: async ({ canvas, parameters: { onExport, onImport } }) => {
-    const exportButton = canvas.getByRole("button", { name: "Export data" });
-    await userEvent.click(exportButton);
-    await expect(onExport).toHaveBeenCalled();
+  play: async ({ canvas, parameters: { onBackup, onRestore } }) => {
+    const backupButton = canvas.getByRole("button", { name: "Backup data" });
+    await userEvent.click(backupButton);
+    await expect(onBackup).toHaveBeenCalled();
 
-    const importButton = canvas.getByRole("button", { name: "Import data" });
-    await userEvent.click(importButton);
-    await expect(onImport).toHaveBeenCalled();
+    const restoreButton = canvas.getByRole("button", { name: "Restore data" });
+    await userEvent.click(restoreButton);
+    await expect(onRestore).toHaveBeenCalled();
   },
 };

@@ -1,6 +1,7 @@
 import type { BudgetItem, Category } from "@/core/types";
+import { db } from "@/lib/db";
 
-export interface ExportImportData {
+export interface BackupData {
   metadata: {
     version: string;
     exportedAt: string;
@@ -13,24 +14,24 @@ export interface ExportImportData {
   };
 }
 
-interface ExportDataInput {
+interface BackupDataInput {
   incomes: BudgetItem[];
   expenses: BudgetItem[];
   incomeCategories: Category[];
   expenseCategories: Category[];
 }
 
-export function exportBudgetData(input: ExportDataInput) {
-  const data = createExportData(input);
-  downloadExportData(data);
+export function triggerBackupDownload(input: BackupDataInput) {
+  const data = createBackupData(input);
+  downloadBackupData(data);
 }
 
-export function createExportData({
+export function createBackupData({
   incomes,
   expenses,
   incomeCategories,
   expenseCategories,
-}: ExportDataInput): ExportImportData {
+}: BackupDataInput): BackupData {
   return {
     metadata: {
       version: "0.1.0",
@@ -45,7 +46,7 @@ export function createExportData({
   };
 }
 
-function downloadExportData(data: ExportImportData): void {
+function downloadBackupData(data: BackupData): void {
   const timestamp = new Date()
     .toISOString()
     .replace(/[:.]/g, "-")
@@ -72,7 +73,7 @@ function downloadFile(blob: Blob, filename: string): void {
   URL.revokeObjectURL(url);
 }
 
-export function importBudgetData(): Promise<ExportImportData | null> {
+export function pickBackupFile(): Promise<BackupData | null> {
   return new Promise((resolve) => {
     const input = document.createElement("input");
     input.type = "file";
@@ -91,11 +92,11 @@ export function importBudgetData(): Promise<ExportImportData | null> {
       reader.onload = (e) => {
         try {
           const content = e.target?.result as string;
-          const data = JSON.parse(content) as ExportImportData;
+          const data = JSON.parse(content) as BackupData;
 
           resolve(data);
         } catch (error) {
-          console.error("Failed to parse imported file:", error);
+          console.error("Failed to parse backup file:", error);
           resolve(null);
         }
       };
@@ -105,4 +106,31 @@ export function importBudgetData(): Promise<ExportImportData | null> {
 
     input.click();
   });
+}
+
+export async function restoreBackupToDb(backup: BackupData): Promise<void> {
+  const { data } = backup ?? {};
+  const incomes = data?.incomes ?? [];
+  const expenses = data?.expenses ?? [];
+  const incomeCategories = data?.incomeCategories ?? [];
+  const expenseCategories = data?.expenseCategories ?? [];
+
+  await db.transaction(
+    "rw",
+    db.incomeCategories,
+    db.expenseCategories,
+    db.incomes,
+    db.expenses,
+    async () => {
+      await db.incomes.clear();
+      await db.expenses.clear();
+      await db.incomeCategories.clear();
+      await db.expenseCategories.clear();
+
+      await db.incomeCategories.bulkAdd(incomeCategories);
+      await db.expenseCategories.bulkAdd(expenseCategories);
+      await db.incomes.bulkAdd(incomes);
+      await db.expenses.bulkAdd(expenses);
+    },
+  );
 }

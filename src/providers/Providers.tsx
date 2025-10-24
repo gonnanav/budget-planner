@@ -6,7 +6,7 @@ import { ExpensesProvider } from "./ExpensesProvider";
 import { IncomeCategoriesProvider } from "./IncomeCategoriesProvider";
 import { ExpenseCategoriesProvider } from "./ExpenseCategoriesProvider";
 import { PathnameProvider } from "./PathnameProvider";
-import { JsonExportImportProvider } from "./JsonExportImportProvider";
+import { JsonBackupRestoreProvider } from "./JsonBackupRestoreProvider";
 
 export function Providers({
   children,
@@ -18,7 +18,7 @@ export function Providers({
           <IncomeCategoriesProvider>
             <ExpenseCategoriesProvider>
               <PathnameProvider>
-                <JsonExportImportProvider>{children}</JsonExportImportProvider>
+                <JsonBackupRestoreProvider>{children}</JsonBackupRestoreProvider>
               </PathnameProvider>
             </ExpenseCategoriesProvider>
           </IncomeCategoriesProvider>

@@ -1,5 +1,5 @@
-import { ExportButton } from "./ExportButton";
-import { ImportButton } from "./ImportButton";
+import { BackupButton } from "./BackupButton";
+import { RestoreButton } from "./RestoreButton";
 
 export function Header() {
   return (
@@ -9,8 +9,8 @@ export function Header() {
           Budget Planner
         </span>
         <div className="flex items-center gap-2">
-          <ImportButton />
-          <ExportButton />
+          <RestoreButton />
+          <BackupButton />
         </div>
       </div>
     </header>
