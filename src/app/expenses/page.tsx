@@ -5,21 +5,14 @@ import { addToast } from "@heroui/toast";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
 import { ExpenseCategoryContext } from "@/contexts/ExpenseCategoryContext";
 import { BudgetSection } from "@/components/budget-section";
-import { ItemDrawer } from "@/components/item-drawer";
 import { CategoryDrawer } from "@/components/category-drawer";
-import { useBudgetItemDrawer } from "@/hooks/useBudgetItemDrawer";
-import { BudgetItemInput, Category } from "@/core/types";
+import { Category } from "@/core/types";
 import { enrichItem } from "@/core/budget-items";
 import { enrichCategory } from "@/core/categories";
+import { ItemDrawerContext } from "@/contexts/ItemDrawerContext";
 
 export default function Page() {
-  const {
-    expenses,
-    addExpense,
-    updateExpense,
-    deleteExpense,
-    isExpenseAtLimit,
-  } = useContext(ExpenseContext);
+  const { expenses, isExpenseAtLimit } = useContext(ExpenseContext);
   const {
     expenseCategories,
     addExpenseCategory,
@@ -31,13 +24,7 @@ export default function Page() {
   const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
   const [editedCategory, setEditedCategory] = useState<Category | null>(null);
 
-  const { isOpen, editedItem, onEditItem, onOpen, onClose, onSave, onDelete } =
-    useBudgetItemDrawer({
-      items: expenses,
-      onAdd: addExpense,
-      onUpdate: updateExpense,
-      onDelete: deleteExpense,
-    });
+  const { onEditItem, onOpen } = useContext(ItemDrawerContext);
 
   const handleAddExpense = () => {
     if (isExpenseAtLimit) {
@@ -48,11 +35,11 @@ export default function Page() {
       });
       return;
     }
-    onOpen();
+    onOpen("expense");
   };
 
   const handleEditExpense = (id: string) => {
-    onEditItem(id);
+    onEditItem(id, "expense");
   };
 
   const handleAddCategory = () => {
@@ -72,20 +59,6 @@ export default function Page() {
     const category = expenseCategories.find((c) => c.id === categoryId);
     setEditedCategory(category || null);
     setIsCategoryDrawerOpen(true);
-  };
-
-  const handleItemCancel = () => {
-    onClose();
-  };
-
-  const handleItemSave = (input: BudgetItemInput) => {
-    onSave(input);
-    onClose();
-  };
-
-  const handleItemDelete = () => {
-    onDelete();
-    onClose();
   };
 
   const handleCategoryCancel = () => {
@@ -124,17 +97,6 @@ export default function Page() {
         onAddCategory={handleAddCategory}
         onEditCategory={handleEditCategory}
       />
-
-      <ItemDrawer
-        isOpen={isOpen}
-        item={editedItem}
-        categories={expenseCategories}
-        onSave={handleItemSave}
-        onClose={handleItemCancel}
-        onCancel={handleItemCancel}
-        onDelete={handleItemDelete}
-      />
-
       <CategoryDrawer
         isOpen={isCategoryDrawerOpen}
         category={editedCategory}
