@@ -9,7 +9,7 @@ import { SummaryRow } from "./SummaryRow";
 import { IncomeSummaryRow } from "./IncomeSummaryRow";
 import { ExpensesSummaryRow } from "./ExpensesSummaryRow";
 
-export function OverviewPage() {
+export function OverviewScreen() {
   const { incomes } = useContext(IncomeContext);
   const { expenses } = useContext(ExpenseContext);
   const evaluation = budgetBalance(incomes, expenses);

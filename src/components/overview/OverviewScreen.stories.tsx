@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect } from "storybook/test";
 import { Canvas } from "storybook/internal/types";
-import { OverviewPage } from "./OverviewPage";
+import { OverviewScreen } from "./OverviewScreen";
 import { createTestItems } from "@/fixtures/test-utils";
 import { IncomeContext } from "@/contexts/IncomeContext";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
 
 const meta = {
-  component: OverviewPage,
+  component: OverviewScreen,
   decorators: [
     (Story, { parameters }) => (
       <IncomeContext
@@ -35,7 +35,7 @@ const meta = {
       </IncomeContext>
     ),
   ],
-} satisfies Meta<typeof OverviewPage>;
+} satisfies Meta<typeof OverviewScreen>;
 
 export default meta;
 
