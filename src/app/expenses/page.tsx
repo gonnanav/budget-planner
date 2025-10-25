@@ -10,31 +10,17 @@ import { Category } from "@/core/types";
 import { enrichItem } from "@/core/budget-items";
 import { enrichCategory } from "@/core/categories";
 import { ItemDrawerContext } from "@/contexts/ItemDrawerContext";
+import { CategoryDrawerContext } from "@/contexts/CategoryDrawerContext";
 
 export default function Page() {
-  const { expenses, isExpenseAtLimit } = useContext(ExpenseContext);
-  const {
-    expenseCategories,
-    addExpenseCategory,
-    updateExpenseCategory,
-    deleteExpenseCategory,
-    isExpenseCategoryAtLimit,
-  } = useContext(ExpenseCategoryContext);
-
-  const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
-  const [editedCategory, setEditedCategory] = useState<Category | null>(null);
-
+  const { expenses } = useContext(ExpenseContext);
+  const { expenseCategories } = useContext(ExpenseCategoryContext);
   const { onEditItem, onOpen } = useContext(ItemDrawerContext);
+  const { onOpen: onCategoryOpen, onEditCategory } = useContext(
+    CategoryDrawerContext,
+  );
 
-  const handleAddExpense = () => {
-    if (isExpenseAtLimit) {
-      addToast({
-        title: "Limit reached",
-        description: "You've reached the maximum number of expense items.",
-        color: "warning",
-      });
-      return;
-    }
+  const handleOpen = () => {
     onOpen("expense");
   };
 
@@ -43,68 +29,24 @@ export default function Page() {
   };
 
   const handleAddCategory = () => {
-    if (isExpenseCategoryAtLimit) {
-      addToast({
-        title: "Limit reached",
-        description: "You've reached the maximum number of expense categories.",
-        color: "warning",
-      });
-      return;
-    }
-    setEditedCategory(null);
-    setIsCategoryDrawerOpen(true);
+    onCategoryOpen("expense");
   };
 
   const handleEditCategory = (categoryId: string) => {
-    const category = expenseCategories.find((c) => c.id === categoryId);
-    setEditedCategory(category || null);
-    setIsCategoryDrawerOpen(true);
-  };
-
-  const handleCategoryCancel = () => {
-    setIsCategoryDrawerOpen(false);
-    setEditedCategory(null);
-  };
-
-  const handleCategorySave = (name: string) => {
-    if (editedCategory) {
-      updateExpenseCategory(editedCategory.id, name);
-    } else {
-      addExpenseCategory(name);
-    }
-    setIsCategoryDrawerOpen(false);
-    setEditedCategory(null);
-  };
-
-  const handleCategoryDelete = () => {
-    if (editedCategory) {
-      deleteExpenseCategory(editedCategory.id);
-    }
-    setIsCategoryDrawerOpen(false);
-    setEditedCategory(null);
+    onEditCategory(categoryId, "expense");
   };
 
   return (
-    <>
-      <BudgetSection
-        items={expenses.map(enrichItem)}
-        categories={expenseCategories.map((category) =>
-          enrichCategory(category, expenses),
-        )}
-        title="Expenses"
-        onAddItem={handleAddExpense}
-        onEditItem={handleEditExpense}
-        onAddCategory={handleAddCategory}
-        onEditCategory={handleEditCategory}
-      />
-      <CategoryDrawer
-        isOpen={isCategoryDrawerOpen}
-        category={editedCategory}
-        onSave={handleCategorySave}
-        onClose={handleCategoryCancel}
-        onCancel={handleCategoryCancel}
-        onDelete={handleCategoryDelete}
-      />
-    </>
+    <BudgetSection
+      items={expenses.map(enrichItem)}
+      categories={expenseCategories.map((category) =>
+        enrichCategory(category, expenses),
+      )}
+      title="Expenses"
+      onAddItem={handleOpen}
+      onEditItem={handleEditExpense}
+      onAddCategory={handleAddCategory}
+      onEditCategory={handleEditCategory}
+    />
   );
 }

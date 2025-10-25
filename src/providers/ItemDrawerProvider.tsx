@@ -67,7 +67,7 @@ export function ItemDrawerProvider({ children }: ItemDrawerProviderProps) {
     <ItemDrawerContext
       value={{
         isOpen,
-        editedItem,
+        item: editedItem,
         categories,
         onClose,
         onOpen: handleOpen,
