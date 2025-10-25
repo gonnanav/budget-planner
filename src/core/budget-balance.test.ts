@@ -1,7 +1,6 @@
 import { test, expect } from "vitest";
 import {
   budgetBalance,
-  budgetItemsSum,
   normalizeAmount,
   calculateCategoryTotal,
 } from "./budget-balance";
@@ -65,17 +64,6 @@ test("multiple expenses are summed up", () => {
   );
 
   expect(balance).toBe(500);
-});
-
-test("items with different frequencies are summed up", () => {
-  const sum = budgetItemsSum(
-    createTestItems([
-      { amount: 1000, frequency: "biMonthly" },
-      { amount: 300, frequency: "monthly" },
-    ]),
-  );
-
-  expect(sum).toBe(800);
 });
 
 test("monthly items are not divided", () => {

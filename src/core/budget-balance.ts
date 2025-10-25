@@ -4,9 +4,9 @@ export function budgetBalance(
   incomes: BudgetItem[],
   expenses: BudgetItem[],
 ): BudgetEvaluation {
-  const totalExpenses = budgetItemsSum(expenses);
-  const totalIncomes = budgetItemsSum(incomes);
-  const balance = totalIncomes - totalExpenses;
+  const incomeSum = budgetItemsSum(incomes);
+  const expenseSum = budgetItemsSum(expenses);
+  const balance = incomeSum - expenseSum;
 
   let status: BudgetStatus = "balanced";
   if (balance > 0) {
@@ -16,12 +16,14 @@ export function budgetBalance(
   }
 
   return {
+    incomeSum,
+    expenseSum,
     balance,
     status,
   };
 }
 
-export function budgetItemsSum(items: BudgetItem[]): number {
+function budgetItemsSum(items: BudgetItem[]): number {
   return items
     .map(normalizeAmount)
     .reduce((sum: number, item) => sum + item, 0);

@@ -2,39 +2,11 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect } from "storybook/test";
 import { Canvas } from "storybook/internal/types";
 import { OverviewScreen } from "./OverviewScreen";
-import { createTestItems } from "@/fixtures/test-utils";
-import { IncomeContext } from "@/contexts/IncomeContext";
-import { ExpenseContext } from "@/contexts/ExpenseContext";
+import { formatAmount } from "@/lib/format";
 
 const meta = {
+  title: "Overview/OverviewScreen",
   component: OverviewScreen,
-  decorators: [
-    (Story, { parameters }) => (
-      <IncomeContext
-        value={{
-          incomes: createTestItems([{ amount: parameters.incomeAmount }]),
-          addIncome: () => {},
-          updateIncome: () => {},
-          deleteIncome: () => {},
-          addIncomes: () => {},
-          isIncomeAtLimit: false,
-        }}
-      >
-        <ExpenseContext
-          value={{
-            expenses: createTestItems([{ amount: parameters.expenseAmount }]),
-            addExpense: () => {},
-            updateExpense: () => {},
-            deleteExpense: () => {},
-            addExpenses: () => {},
-            isExpenseAtLimit: false,
-          }}
-        >
-          <Story />
-        </ExpenseContext>
-      </IncomeContext>
-    ),
-  ],
 } satisfies Meta<typeof OverviewScreen>;
 
 export default meta;
@@ -42,9 +14,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const PositiveBalance: Story = {
-  parameters: {
-    incomeAmount: 5000,
-    expenseAmount: 2800,
+  args: {
+    income: formatAmount(5000),
+    expense: formatAmount(2800),
+    balance: formatAmount(2200),
+    isGood: true,
   },
   play: async ({ canvas }) => {
     await expect(getSection(canvas, "Income")).toHaveTextContent(/5,000/);
@@ -54,16 +28,20 @@ export const PositiveBalance: Story = {
 };
 
 export const NegativeBalance: Story = {
-  parameters: {
-    incomeAmount: 2800,
-    expenseAmount: 5000,
+  args: {
+    income: formatAmount(2800),
+    expense: formatAmount(5000),
+    balance: formatAmount(-2200),
+    isGood: false,
   },
 };
 
 export const Balanced: Story = {
-  parameters: {
-    incomeAmount: 5000,
-    expenseAmount: 5000,
+  args: {
+    income: formatAmount(5000),
+    expense: formatAmount(5000),
+    balance: formatAmount(0),
+    isGood: true,
   },
 };
 

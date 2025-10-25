@@ -24,6 +24,8 @@ export interface BudgetItem {
 export type BudgetStatus = "balanced" | "positive" | "negative";
 
 export interface BudgetEvaluation {
+  incomeSum: number;
+  expenseSum: number;
   balance: number;
   status: BudgetStatus;
 }
