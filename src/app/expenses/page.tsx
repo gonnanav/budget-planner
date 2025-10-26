@@ -21,31 +21,31 @@ export default function Page() {
     enrichCategory(category, enrichedExpenses),
   );
 
-  const handleOpen = () => {
+  const handleClickAddItem = () => {
     onOpen("expense");
   };
 
-  const handleEditExpense = (id: string) => {
+  const handleClickItem = (id: string) => {
     onEditItem(id, "expense");
   };
 
-  const handleAddCategory = () => {
+  const handleClickAddCategory = () => {
     onCategoryOpen("expense");
   };
 
-  const handleEditCategory = (categoryId: string) => {
+  const handleClickCategory = (categoryId: string) => {
     onEditCategory(categoryId, "expense");
   };
 
   return (
     <BudgetSection
+      title="Expenses"
       items={enrichedExpenses}
       categories={enrichedExpenseCategories}
-      title="Expenses"
-      onAddItem={handleOpen}
-      onEditItem={handleEditExpense}
-      onAddCategory={handleAddCategory}
-      onEditCategory={handleEditCategory}
+      onClickAddItem={handleClickAddItem}
+      onClickItem={handleClickItem}
+      onClickAddCategory={handleClickAddCategory}
+      onClickCategory={handleClickCategory}
     />
   );
 }

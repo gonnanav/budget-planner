@@ -21,31 +21,31 @@ export default function Page() {
     enrichCategory(category, enrichedIncomes),
   );
 
-  const handleOpen = () => {
+  const handleClickAddItem = () => {
     onOpen("income");
   };
 
-  const handleEditIncome = (id: string) => {
+  const handleClickItem = (id: string) => {
     onEditItem(id, "income");
   };
 
-  const handleAddCategory = () => {
+  const handleClickAddCategory = () => {
     onCategoryOpen("income");
   };
 
-  const handleEditCategory = (categoryId: string) => {
+  const handleClickCategory = (categoryId: string) => {
     onEditCategory(categoryId, "income");
   };
 
   return (
     <BudgetSection
+      title="Income"
       items={enrichedIncomes}
       categories={enrichedIncomeCategories}
-      title="Income"
-      onAddItem={handleOpen}
-      onEditItem={handleEditIncome}
-      onAddCategory={handleAddCategory}
-      onEditCategory={handleEditCategory}
+      onClickAddItem={handleClickAddItem}
+      onClickItem={handleClickItem}
+      onClickAddCategory={handleClickAddCategory}
+      onClickCategory={handleClickCategory}
     />
   );
 }

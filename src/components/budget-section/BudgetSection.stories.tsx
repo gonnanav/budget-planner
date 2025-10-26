@@ -19,10 +19,10 @@ const meta = {
     items: [],
     categories: [],
     title: "Budget Section",
-    onAddItem: fn(),
-    onEditItem: fn(),
-    onAddCategory: fn(),
-    onEditCategory: fn(),
+    onClickAddItem: fn(),
+    onClickItem: fn(),
+    onClickAddCategory: fn(),
+    onClickCategory: fn(),
   },
 } satisfies Meta<typeof BudgetSection>;
 

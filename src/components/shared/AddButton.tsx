@@ -3,15 +3,15 @@ import { Plus } from "lucide-react";
 
 interface AddButtonProps {
   label: string;
-  onAdd: () => void;
+  onClick: () => void;
 }
 
-export function AddButton({ label, onAdd }: AddButtonProps) {
+export function AddButton({ label, onClick }: AddButtonProps) {
   return (
     <Button
       size="sm"
       color="primary"
-      onPress={onAdd}
+      onPress={onClick}
       aria-label={label}
       isIconOnly
     >

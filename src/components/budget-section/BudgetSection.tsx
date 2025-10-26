@@ -18,20 +18,20 @@ interface BudgetSectionProps {
     name: string;
     amount: number;
   }[];
-  onAddItem: () => void;
-  onEditItem: (id: string) => void;
-  onAddCategory: () => void;
-  onEditCategory: (id: string) => void;
+  onClickAddItem: () => void;
+  onClickItem: (id: string) => void;
+  onClickAddCategory: () => void;
+  onClickCategory: (id: string) => void;
 }
 
 export function BudgetSection({
   title,
   items,
   categories,
-  onAddItem,
-  onEditItem,
-  onAddCategory,
-  onEditCategory,
+  onClickAddItem,
+  onClickItem,
+  onClickAddCategory,
+  onClickCategory,
 }: BudgetSectionProps) {
   const [view, setView] = useState<string | number>("items");
 
@@ -39,9 +39,9 @@ export function BudgetSection({
 
   const handleAdd = () => {
     if (view === "items") {
-      onAddItem();
+      onClickAddItem();
     } else if (view === "categories") {
-      onAddCategory();
+      onClickAddCategory();
     }
   };
 
@@ -49,7 +49,7 @@ export function BudgetSection({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">{title}</h3>
-        <AddButton label={addButtonLabel} onAdd={handleAdd} />
+        <AddButton label={addButtonLabel} onClick={handleAdd} />
       </div>
 
       <Tabs
@@ -59,12 +59,12 @@ export function BudgetSection({
         onSelectionChange={setView}
       >
         <Tab key="items" title="Items">
-          <ItemsContent items={items} onClickItem={onEditItem} />
+          <ItemsContent items={items} onClickItem={onClickItem} />
         </Tab>
         <Tab key="categories" title="Categories">
           <CategoriesContent
             categories={categories}
-            onClickCategory={onEditCategory}
+            onClickCategory={onClickCategory}
           />
         </Tab>
       </Tabs>
