@@ -1,39 +1,27 @@
 "use client";
 
-import { useContext, useState } from "react";
-import { addToast } from "@heroui/toast";
+import { useContext } from "react";
 import { IncomeContext } from "@/contexts/IncomeContext";
 import { IncomeCategoryContext } from "@/contexts/IncomeCategoryContext";
 import { BudgetSection } from "@/components/budget-section";
-import { CategoryDrawer } from "@/components/category-drawer";
-import { Category } from "@/core/types";
 import { enrichItem } from "@/core/budget-items";
 import { enrichCategory } from "@/core/categories";
 import { ItemDrawerContext } from "@/contexts/ItemDrawerContext";
+import { CategoryDrawerContext } from "@/contexts/CategoryDrawerContext";
 
 export default function Page() {
-  const { incomes, isIncomeAtLimit } = useContext(IncomeContext);
-  const {
-    incomeCategories,
-    addIncomeCategory,
-    updateIncomeCategory,
-    deleteIncomeCategory,
-    isIncomeCategoryAtLimit,
-  } = useContext(IncomeCategoryContext);
+  const { incomes } = useContext(IncomeContext);
+  const { incomeCategories } = useContext(IncomeCategoryContext);
   const { onEditItem, onOpen } = useContext(ItemDrawerContext);
+  const { onOpen: onCategoryOpen, onEditCategory } = useContext(
+    CategoryDrawerContext,
+  );
+  const enrichedIncomes = incomes.map(enrichItem);
+  const enrichedIncomeCategories = incomeCategories.map((category) =>
+    enrichCategory(category, enrichedIncomes),
+  );
 
-  const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
-  const [editedCategory, setEditedCategory] = useState<Category | null>(null);
-
-  const handleAddIncome = () => {
-    if (isIncomeAtLimit) {
-      addToast({
-        title: "Limit reached",
-        description: "You've reached the maximum number of income items.",
-        color: "warning",
-      });
-      return;
-    }
+  const handleOpen = () => {
     onOpen("income");
   };
 
@@ -42,69 +30,22 @@ export default function Page() {
   };
 
   const handleAddCategory = () => {
-    if (isIncomeCategoryAtLimit) {
-      addToast({
-        title: "Limit reached",
-        description: "You've reached the maximum number of income categories.",
-        color: "warning",
-      });
-      return;
-    }
-    setEditedCategory(null);
-    setIsCategoryDrawerOpen(true);
+    onCategoryOpen("income");
   };
 
   const handleEditCategory = (categoryId: string) => {
-    const category = incomeCategories.find((c) => c.id === categoryId);
-    setEditedCategory(category || null);
-    setIsCategoryDrawerOpen(true);
-  };
-
-  const handleCategoryCancel = () => {
-    setIsCategoryDrawerOpen(false);
-    setEditedCategory(null);
-  };
-
-  const handleCategorySave = (name: string) => {
-    if (editedCategory) {
-      updateIncomeCategory(editedCategory.id, name);
-    } else {
-      addIncomeCategory(name);
-    }
-    setIsCategoryDrawerOpen(false);
-    setEditedCategory(null);
-  };
-
-  const handleCategoryDelete = () => {
-    if (editedCategory) {
-      deleteIncomeCategory(editedCategory.id);
-    }
-    setIsCategoryDrawerOpen(false);
-    setEditedCategory(null);
+    onEditCategory(categoryId, "income");
   };
 
   return (
-    <>
-      <BudgetSection
-        items={incomes.map(enrichItem)}
-        categories={incomeCategories.map((category) =>
-          enrichCategory(category, incomes),
-        )}
-        title="Income"
-        onAddItem={handleAddIncome}
-        onEditItem={handleEditIncome}
-        onAddCategory={handleAddCategory}
-        onEditCategory={handleEditCategory}
-      />
-
-      <CategoryDrawer
-        isOpen={isCategoryDrawerOpen}
-        category={editedCategory}
-        onSave={handleCategorySave}
-        onClose={handleCategoryCancel}
-        onCancel={handleCategoryCancel}
-        onDelete={handleCategoryDelete}
-      />
-    </>
+    <BudgetSection
+      items={enrichedIncomes}
+      categories={enrichedIncomeCategories}
+      title="Income"
+      onAddItem={handleOpen}
+      onEditItem={handleEditIncome}
+      onAddCategory={handleAddCategory}
+      onEditCategory={handleEditCategory}
+    />
   );
 }

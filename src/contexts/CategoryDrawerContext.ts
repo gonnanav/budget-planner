@@ -1,24 +1,23 @@
 import { createContext } from "react";
-import { BudgetItem, BudgetItemInput } from "@/core/types";
 import { Category } from "@/core/types";
 
-interface ItemDrawerContextValue {
+export interface CategoryDrawerContextValue {
   isOpen: boolean;
-  item: BudgetItem | null;
+  category: Category | null;
   categories: Category[];
-  onEditItem: (id: string, mode: "income" | "expense") => void;
+  onEditCategory: (id: string, mode: "income" | "expense") => void;
   onOpen: (mode: "income" | "expense") => void;
   onClose: () => void;
-  onSave: (input: BudgetItemInput) => void;
+  onSave: (name: string) => void;
   onDelete: () => void;
   onCancel: () => void;
 }
 
-export const ItemDrawerContext = createContext<ItemDrawerContextValue>({
+export const CategoryDrawerContext = createContext<CategoryDrawerContextValue>({
   isOpen: false,
-  item: null,
+  category: null,
   categories: [],
-  onEditItem: () => {},
+  onEditCategory: () => {},
   onOpen: () => {},
   onClose: () => {},
   onSave: () => {},
