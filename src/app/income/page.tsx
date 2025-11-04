@@ -10,13 +10,14 @@ import { CategoryDrawerContext } from "@/contexts/CategoryDrawerContext";
 export default function Page() {
   const { incomes } = useContext(IncomeContext);
   const { incomeCategories } = useContext(IncomeCategoryContext);
-  const { onEditItem, onOpen } = useContext(ItemDrawerContext);
-  const { onOpen: onCategoryOpen, onEditCategory } = useContext(
+  const { onOpen: onOpenItemDrawer, onEditItem } =
+    useContext(ItemDrawerContext);
+  const { onOpen: onOpenCategoryDrawer, onEditCategory } = useContext(
     CategoryDrawerContext,
   );
 
   const handleClickAddItem = () => {
-    onOpen("income");
+    onOpenItemDrawer("income");
   };
 
   const handleClickItem = (id: string) => {
@@ -24,7 +25,7 @@ export default function Page() {
   };
 
   const handleClickAddCategory = () => {
-    onCategoryOpen("income");
+    onOpenCategoryDrawer("income");
   };
 
   const handleClickCategory = (categoryId: string) => {

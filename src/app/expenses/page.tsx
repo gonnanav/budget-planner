@@ -10,13 +10,14 @@ import { CategoryDrawerContext } from "@/contexts/CategoryDrawerContext";
 export default function Page() {
   const { expenses } = useContext(ExpenseContext);
   const { expenseCategories } = useContext(ExpenseCategoryContext);
-  const { onEditItem, onOpen } = useContext(ItemDrawerContext);
-  const { onOpen: onCategoryOpen, onEditCategory } = useContext(
+  const { onOpen: onOpenItemDrawer, onEditItem } =
+    useContext(ItemDrawerContext);
+  const { onOpen: onOpenCategoryDrawer, onEditCategory } = useContext(
     CategoryDrawerContext,
   );
 
   const handleClickAddItem = () => {
-    onOpen("expense");
+    onOpenItemDrawer("expense");
   };
 
   const handleClickItem = (id: string) => {
@@ -24,7 +25,7 @@ export default function Page() {
   };
 
   const handleClickAddCategory = () => {
-    onCategoryOpen("expense");
+    onOpenCategoryDrawer("expense");
   };
 
   const handleClickCategory = (categoryId: string) => {
