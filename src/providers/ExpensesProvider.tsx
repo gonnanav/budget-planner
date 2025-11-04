@@ -7,7 +7,14 @@ interface ExpensesProviderProps {
 }
 
 export function ExpensesProvider({ children }: ExpensesProviderProps) {
-  const { expenses, addExpense, updateExpense, deleteExpense, addExpenses, isExpenseAtLimit } = useExpenses();
+  const {
+    expenses,
+    addExpense,
+    updateExpense,
+    deleteExpense,
+    addExpenses,
+    isExpenseAtLimit,
+  } = useExpenses();
 
   const enrichedExpenses = expenses.map(enrichItem);
 

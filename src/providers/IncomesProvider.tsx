@@ -7,7 +7,14 @@ interface IncomesProviderProps {
 }
 
 export function IncomesProvider({ children }: IncomesProviderProps) {
-  const { incomes, addIncome, updateIncome, deleteIncome, addIncomes, isIncomeAtLimit } = useIncomes();
+  const {
+    incomes,
+    addIncome,
+    updateIncome,
+    deleteIncome,
+    addIncomes,
+    isIncomeAtLimit,
+  } = useIncomes();
 
   const enrichedIncomes = incomes.map(enrichItem);
 
