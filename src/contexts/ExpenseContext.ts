@@ -1,8 +1,10 @@
 import { createContext } from "react";
 import { BudgetItem, BudgetItemInput } from "@/core/types";
 
+type EnrichedBudgetItem = BudgetItem & { normalizedAmount: number };
+
 export interface ExpenseContextValue {
-  expenses: BudgetItem[];
+  expenses: EnrichedBudgetItem[];
   addExpense: (input: BudgetItemInput) => void;
   updateExpense: (id: string, input: BudgetItemInput) => void;
   deleteExpense: (id: string) => void;

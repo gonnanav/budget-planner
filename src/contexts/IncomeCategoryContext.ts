@@ -1,8 +1,10 @@
 import { createContext } from "react";
 import { Category } from "@/core/types";
 
+type EnrichedCategory = Category & { amount: number };
+
 interface IncomeCategoryContextValue {
-  incomeCategories: Category[];
+  incomeCategories: EnrichedCategory[];
   addIncomeCategory: (name: string) => void;
   updateIncomeCategory: (id: string, name: string) => void;
   deleteIncomeCategory: (id: string) => void;
