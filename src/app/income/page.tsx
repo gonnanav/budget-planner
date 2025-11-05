@@ -4,43 +4,27 @@ import { useContext } from "react";
 import { IncomeContext } from "@/contexts/IncomeContext";
 import { IncomeCategoryContext } from "@/contexts/IncomeCategoryContext";
 import { BudgetSection } from "@/components/budget-section";
-import { ItemDrawerContext } from "@/contexts/ItemDrawerContext";
-import { CategoryDrawerContext } from "@/contexts/CategoryDrawerContext";
+import { AppActionsContext } from "@/contexts/AppActionsContext";
 
 export default function Page() {
   const { incomes } = useContext(IncomeContext);
   const { incomeCategories } = useContext(IncomeCategoryContext);
-  const { onOpen: onOpenItemDrawer, onEditItem } =
-    useContext(ItemDrawerContext);
-  const { onOpen: onOpenCategoryDrawer, onEditCategory } = useContext(
-    CategoryDrawerContext,
-  );
-
-  const handleClickAddItem = () => {
-    onOpenItemDrawer("income");
-  };
-
-  const handleClickItem = (id: string) => {
-    onEditItem(id, "income");
-  };
-
-  const handleClickAddCategory = () => {
-    onOpenCategoryDrawer("income");
-  };
-
-  const handleClickCategory = (categoryId: string) => {
-    onEditCategory(categoryId, "income");
-  };
+  const {
+    onClickAddIncomeItem,
+    onClickIncomeItem,
+    onClickAddIncomeCategory,
+    onClickIncomeCategory,
+  } = useContext(AppActionsContext);
 
   return (
     <BudgetSection
       title="Income"
       items={incomes}
       categories={incomeCategories}
-      onClickAddItem={handleClickAddItem}
-      onClickItem={handleClickItem}
-      onClickAddCategory={handleClickAddCategory}
-      onClickCategory={handleClickCategory}
+      onClickAddItem={onClickAddIncomeItem}
+      onClickItem={onClickIncomeItem}
+      onClickAddCategory={onClickAddIncomeCategory}
+      onClickCategory={onClickIncomeCategory}
     />
   );
 }

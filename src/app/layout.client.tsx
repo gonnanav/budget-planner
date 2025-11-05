@@ -4,8 +4,7 @@ import { useState, useContext } from "react";
 import { addToast } from "@heroui/toast";
 import { AppLayout } from "@/components/app-layout";
 import { ItemDrawer } from "@/components/item-drawer";
-import { ItemDrawerContext } from "@/contexts/ItemDrawerContext";
-import { CategoryDrawerContext } from "@/contexts/CategoryDrawerContext";
+import { AppActionsContext } from "@/contexts/AppActionsContext";
 import { CategoryDrawer } from "@/components/category-drawer";
 import { IncomeContext } from "@/contexts/IncomeContext";
 import { IncomeCategoryContext } from "@/contexts/IncomeCategoryContext";
@@ -68,13 +67,23 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
 
   const categories = mode === "income" ? incomeCategories : expenseCategories;
 
-  const handleItemOpen = (mode: "income" | "expense" = "income") => {
-    setMode(mode);
+  const handleClickAddIncomeItem = () => {
+    setMode("income");
     onOpen();
   };
 
-  const handleEdit = (id: string, mode: "income" | "expense" = "income") => {
-    setMode(mode);
+  const handleClickAddExpenseItem = () => {
+    setMode("expense");
+    onOpen();
+  };
+
+  const handleClickIncomeItem = (id: string) => {
+    setMode("income");
+    onEditItem(id);
+  };
+
+  const handleClickExpenseItem = (id: string) => {
+    setMode("expense");
     onEditItem(id);
   };
 
@@ -95,8 +104,8 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
   const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
   const [editedCategory, setEditedCategory] = useState<Category | null>(null);
 
-  const handleCategoryOpen = (mode: "income" | "expense" = "income") => {
-    if (mode === "income" && isIncomeCategoryAtLimit) {
+  const handleClickAddIncomeCategory = () => {
+    if (isIncomeCategoryAtLimit) {
       addToast({
         title: "Limit reached",
         description: "You've reached the maximum number of income categories.",
@@ -104,7 +113,13 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
       });
       return;
     }
-    if (mode === "expense" && isExpenseCategoryAtLimit) {
+    setMode("income");
+    setEditedCategory(null);
+    setIsCategoryDrawerOpen(true);
+  };
+
+  const handleClickAddExpenseCategory = () => {
+    if (isExpenseCategoryAtLimit) {
       addToast({
         title: "Limit reached",
         description: "You've reached the maximum number of expense categories.",
@@ -112,19 +127,21 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
       });
       return;
     }
-    setMode(mode);
+    setMode("expense");
     setEditedCategory(null);
     setIsCategoryDrawerOpen(true);
   };
 
-  const handleEditCategory = (
-    categoryId: string,
-    mode: "income" | "expense" = "income",
-  ) => {
-    const categories = mode === "income" ? incomeCategories : expenseCategories;
-    const category = categories.find((c) => c.id === categoryId);
+  const handleClickIncomeCategory = (categoryId: string) => {
+    const category = incomeCategories.find((c) => c.id === categoryId);
+    setMode("income");
+    setEditedCategory(category || null);
+    setIsCategoryDrawerOpen(true);
+  };
 
-    setMode(mode);
+  const handleClickExpenseCategory = (categoryId: string) => {
+    const category = expenseCategories.find((c) => c.id === categoryId);
+    setMode("expense");
     setEditedCategory(category || null);
     setIsCategoryDrawerOpen(true);
   };
@@ -189,21 +206,20 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
   return (
     <>
       <AppLayout>
-        <ItemDrawerContext
+        <AppActionsContext
           value={{
-            onOpen: handleItemOpen,
-            onEditItem: handleEdit,
+            onClickAddIncomeItem: handleClickAddIncomeItem,
+            onClickAddExpenseItem: handleClickAddExpenseItem,
+            onClickIncomeItem: handleClickIncomeItem,
+            onClickExpenseItem: handleClickExpenseItem,
+            onClickAddIncomeCategory: handleClickAddIncomeCategory,
+            onClickAddExpenseCategory: handleClickAddExpenseCategory,
+            onClickIncomeCategory: handleClickIncomeCategory,
+            onClickExpenseCategory: handleClickExpenseCategory,
           }}
         >
-          <CategoryDrawerContext
-            value={{
-              onOpen: handleCategoryOpen,
-              onEditCategory: handleEditCategory,
-            }}
-          >
-            {children}
-          </CategoryDrawerContext>
-        </ItemDrawerContext>
+          {children}
+        </AppActionsContext>
       </AppLayout>
       <ItemDrawer
         isOpen={isItemDrawerOpen}
