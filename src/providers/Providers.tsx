@@ -8,7 +8,6 @@ import { IncomeCategoriesProvider } from "./IncomeCategoriesProvider";
 import { ExpenseCategoriesProvider } from "./ExpenseCategoriesProvider";
 import { PathnameProvider } from "./PathnameProvider";
 import { JsonBackupRestoreProvider } from "./JsonBackupRestoreProvider";
-import { ItemDrawerProvider } from "./ItemDrawerProvider";
 import { CategoryDrawerProvider } from "./CategoryDrawerProvider";
 
 export function Providers({
@@ -22,9 +21,7 @@ export function Providers({
             <ExpenseCategoriesProvider>
               <PathnameProvider>
                 <JsonBackupRestoreProvider>
-                  <CategoryDrawerProvider>
-                    <ItemDrawerProvider>{children}</ItemDrawerProvider>
-                  </CategoryDrawerProvider>
+                  <CategoryDrawerProvider>{children}</CategoryDrawerProvider>
                 </JsonBackupRestoreProvider>
               </PathnameProvider>
             </ExpenseCategoriesProvider>
