@@ -2,13 +2,11 @@
 
 import { useContext } from "react";
 import { IncomeContext } from "@/contexts/IncomeContext";
-import { IncomeCategoryContext } from "@/contexts/IncomeCategoryContext";
 import { BudgetSection } from "@/components/budget-section";
 import { AppActionsContext } from "@/contexts/AppActionsContext";
 
 export default function Page() {
-  const { incomes } = useContext(IncomeContext);
-  const { incomeCategories } = useContext(IncomeCategoryContext);
+  const { items, categories } = useContext(IncomeContext);
   const {
     onClickAddIncomeItem,
     onClickIncomeItem,
@@ -19,8 +17,8 @@ export default function Page() {
   return (
     <BudgetSection
       title="Income"
-      items={incomes}
-      categories={incomeCategories}
+      items={items}
+      categories={categories}
       onClickAddItem={onClickAddIncomeItem}
       onClickItem={onClickIncomeItem}
       onClickAddCategory={onClickAddIncomeCategory}

@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { DataBackupRestoreContext } from "@/contexts/DataBackupRestoreContext";
 import { IncomeContext } from "@/contexts/IncomeContext";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
-import { IncomeCategoryContext } from "@/contexts/IncomeCategoryContext";
 import {
   triggerBackupDownload,
   pickBackupFile,
@@ -16,10 +15,10 @@ interface JsonBackupRestoreProviderProps {
 export function JsonBackupRestoreProvider({
   children,
 }: JsonBackupRestoreProviderProps) {
-  const { incomes } = useContext(IncomeContext);
+  const { items: incomes, categories: incomeCategories } =
+    useContext(IncomeContext);
   const { items: expenses, categories: expenseCategories } =
     useContext(ExpenseContext);
-  const { incomeCategories } = useContext(IncomeCategoryContext);
 
   const backupData = () =>
     triggerBackupDownload({

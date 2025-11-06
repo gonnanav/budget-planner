@@ -10,7 +10,7 @@ import { formatAmount } from "@/lib/format";
 
 export default function Page() {
   const router = useRouter();
-  const { incomes } = useContext(IncomeContext);
+  const { items: incomes } = useContext(IncomeContext);
   const { items: expenses } = useContext(ExpenseContext);
 
   const { incomeSum, expenseSum, balance, status } = budgetBalance(

@@ -99,9 +99,8 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
 
   return (
     <Providers
-      incomes={incomesValue}
+      incomes={{ items: incomes, categories: incomeCategories }}
       expenses={{ items: expenses, categories: expenseCategories }}
-      incomeCategories={incomeCategoriesValue}
     >
       <AppLayout>
         <AppActionsContext
