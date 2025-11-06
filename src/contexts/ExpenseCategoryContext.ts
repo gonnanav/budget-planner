@@ -3,7 +3,7 @@ import { Category } from "@/core/types";
 
 type EnrichedCategory = Category & { amount: number };
 
-interface ExpenseCategoryContextValue {
+export interface ExpenseCategoryContextValue {
   expenseCategories: EnrichedCategory[];
   addExpenseCategory: (name: string) => void;
   updateExpenseCategory: (id: string, name: string) => void;

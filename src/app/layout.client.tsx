@@ -1,6 +1,5 @@
 "use client";
 
-import { useContext } from "react";
 import { addToast } from "@heroui/toast";
 import { AppLayout } from "@/components/app-layout";
 import { ItemDrawer } from "@/components/item-drawer";
@@ -10,37 +9,40 @@ import {
   useCategoryDrawer,
   CategoryDrawerProps,
 } from "@/components/category-drawer";
-import { IncomeContext } from "@/contexts/IncomeContext";
-import { IncomeCategoryContext } from "@/contexts/IncomeCategoryContext";
-import { ExpenseContext } from "@/contexts/ExpenseContext";
-import { ExpenseCategoryContext } from "@/contexts/ExpenseCategoryContext";
-
+import { useIncomeCategories } from "@/hooks/useIncomeCategories";
+import { useExpenseCategories } from "@/hooks/useExpenseCategories";
 import { useItemDrawer } from "@/components/item-drawer";
 import { ItemDrawerProps } from "@/components/item-drawer/ItemDrawer";
+import { useIncomes } from "@/hooks/useIncomes";
+import { useExpenses } from "@/hooks/useExpenses";
+import { Providers } from "@/providers";
 
 interface RootLayoutClientProps {
   children: React.ReactNode;
 }
 
 export function RootLayoutClient({ children }: RootLayoutClientProps) {
-  const { incomes, addIncome, updateIncome, deleteIncome } =
-    useContext(IncomeContext);
-  const { expenses, addExpense, updateExpense, deleteExpense } =
-    useContext(ExpenseContext);
+  const incomesValue = useIncomes();
+  const { incomes, addIncome, updateIncome, deleteIncome } = incomesValue;
+
+  const expensesValue = useExpenses();
+  const { expenses, addExpense, updateExpense, deleteExpense } = expensesValue;
+  const incomeCategoriesValue = useIncomeCategories(incomes);
   const {
     incomeCategories,
     addIncomeCategory,
     updateIncomeCategory,
     deleteIncomeCategory,
     isIncomeCategoryAtLimit,
-  } = useContext(IncomeCategoryContext);
+  } = incomeCategoriesValue;
+  const expenseCategoriesValue = useExpenseCategories(expenses);
   const {
     expenseCategories,
     addExpenseCategory,
     updateExpenseCategory,
     deleteExpenseCategory,
     isExpenseCategoryAtLimit,
-  } = useContext(ExpenseCategoryContext);
+  } = expenseCategoriesValue;
 
   const { itemDrawerProps, openItemDrawer, closeItemDrawer } = useItemDrawer();
 
@@ -178,7 +180,12 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
   };
 
   return (
-    <>
+    <Providers
+      incomes={incomesValue}
+      expenses={expensesValue}
+      incomeCategories={incomeCategoriesValue}
+      expenseCategories={expenseCategoriesValue}
+    >
       <AppLayout>
         <AppActionsContext
           value={{
@@ -197,6 +204,6 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
       </AppLayout>
       <ItemDrawer {...itemDrawerProps} />
       <CategoryDrawer {...categoryDrawerProps} />
-    </>
+    </Providers>
   );
 }
