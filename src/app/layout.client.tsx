@@ -24,8 +24,7 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
   const incomesValue = useIncomes();
   const { incomes, addIncome, updateIncome, deleteIncome } = incomesValue;
 
-  const expensesValue = useExpenses();
-  const { expenses, addExpense, updateExpense, deleteExpense } = expensesValue;
+  const { expenses, addExpense, updateExpense, deleteExpense } = useExpenses();
   const incomeCategoriesValue = useIncomeCategories(incomes);
   const {
     incomeCategories,
@@ -101,9 +100,8 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
   return (
     <Providers
       incomes={incomesValue}
-      expenses={expensesValue}
+      expenses={{ items: expenses, categories: expenseCategories }}
       incomeCategories={incomeCategoriesValue}
-      expenseCategories={expenseCategoriesValue}
     >
       <AppLayout>
         <AppActionsContext

@@ -10,16 +10,11 @@ import {
   IncomeCategoryContext,
   IncomeCategoryContextValue,
 } from "@/contexts/IncomeCategoryContext";
-import {
-  ExpenseCategoryContext,
-  ExpenseCategoryContextValue,
-} from "@/contexts/ExpenseCategoryContext";
 
 interface ProvidersProps {
   incomes: IncomeContextValue;
   expenses: ExpenseContextValue;
   incomeCategories: IncomeCategoryContextValue;
-  expenseCategories: ExpenseCategoryContextValue;
   children: React.ReactNode;
 }
 
@@ -27,7 +22,6 @@ export function Providers({
   incomes,
   expenses,
   incomeCategories,
-  expenseCategories,
   children,
 }: Readonly<ProvidersProps>) {
   return (
@@ -35,13 +29,9 @@ export function Providers({
       <IncomeContext value={incomes}>
         <IncomeCategoryContext value={incomeCategories}>
           <ExpenseContext value={expenses}>
-            <ExpenseCategoryContext value={expenseCategories}>
-              <PathnameProvider>
-                <JsonBackupRestoreProvider>
-                  {children}
-                </JsonBackupRestoreProvider>
-              </PathnameProvider>
-            </ExpenseCategoryContext>
+            <PathnameProvider>
+              <JsonBackupRestoreProvider>{children}</JsonBackupRestoreProvider>
+            </PathnameProvider>
           </ExpenseContext>
         </IncomeCategoryContext>
       </IncomeContext>

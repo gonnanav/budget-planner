@@ -2,13 +2,11 @@
 
 import { useContext } from "react";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
-import { ExpenseCategoryContext } from "@/contexts/ExpenseCategoryContext";
 import { BudgetSection } from "@/components/budget-section";
 import { AppActionsContext } from "@/contexts/AppActionsContext";
 
 export default function Page() {
-  const { expenses } = useContext(ExpenseContext);
-  const { expenseCategories } = useContext(ExpenseCategoryContext);
+  const { items, categories } = useContext(ExpenseContext);
   const {
     onClickAddExpenseItem,
     onClickExpenseItem,
@@ -19,8 +17,8 @@ export default function Page() {
   return (
     <BudgetSection
       title="Expenses"
-      items={expenses}
-      categories={expenseCategories}
+      items={items}
+      categories={categories}
       onClickAddItem={onClickAddExpenseItem}
       onClickItem={onClickExpenseItem}
       onClickAddCategory={onClickAddExpenseCategory}
