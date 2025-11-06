@@ -10,7 +10,7 @@ import { Category } from "@/core/types";
 import { ActionButtons } from "@/components/action-buttons";
 import { CategoryNameInput } from "./CategoryNameInput";
 
-interface CategoryDrawerProps {
+export interface CategoryDrawerProps {
   isOpen: boolean;
   category?: Category | null;
   onCancel: () => void;
@@ -44,11 +44,6 @@ export const CategoryDrawer = ({
     setName("");
   };
 
-  const handleCancel = () => {
-    onCancel();
-    reset();
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSave(name);
@@ -64,7 +59,7 @@ export const CategoryDrawer = ({
             <CategoryNameInput name={name} onChange={setName} />
           </DrawerBody>
           <DrawerFooter>
-            <ActionButtons onCancel={handleCancel} onDelete={onDelete} />
+            <ActionButtons onCancel={onCancel} onDelete={onDelete} />
           </DrawerFooter>
         </form>
       </DrawerContent>

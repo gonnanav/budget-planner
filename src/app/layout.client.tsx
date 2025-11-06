@@ -1,17 +1,20 @@
 "use client";
 
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { addToast } from "@heroui/toast";
-import { useDisclosure } from "@heroui/react";
 import { AppLayout } from "@/components/app-layout";
 import { ItemDrawer } from "@/components/item-drawer";
 import { AppActionsContext } from "@/contexts/AppActionsContext";
-import { CategoryDrawer } from "@/components/category-drawer";
+import {
+  CategoryDrawer,
+  useCategoryDrawer,
+  CategoryDrawerProps,
+} from "@/components/category-drawer";
 import { IncomeContext } from "@/contexts/IncomeContext";
 import { IncomeCategoryContext } from "@/contexts/IncomeCategoryContext";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
 import { ExpenseCategoryContext } from "@/contexts/ExpenseCategoryContext";
-import { Category } from "@/core/types";
+
 import { useItemDrawer } from "@/components/item-drawer";
 import { ItemDrawerProps } from "@/components/item-drawer/ItemDrawer";
 
@@ -101,20 +104,30 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
     });
   };
 
-  const {
-    isOpen: isCategoryDrawerOpen,
-    onOpen: onCategoryDrawerOpen,
-    onClose: onCategoryDrawerClose,
-  } = useDisclosure();
-  const [categoryDrawerProps, setCategoryDrawerProps] = useState<{
-    category: Category | null;
-    onSave: (name: string, id?: string) => void;
-    onDelete?: () => void;
-  }>({
-    category: null,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    onSave: (_name: string) => {},
-  });
+  const { categoryDrawerProps, openCategoryDrawer, closeCategoryDrawer } =
+    useCategoryDrawer();
+
+  const handleOpenCategoryDrawer = ({
+    category,
+    onSave,
+    onDelete,
+  }: Omit<CategoryDrawerProps, "isOpen" | "onCancel" | "onClose">) => {
+    openCategoryDrawer({
+      category,
+      onSave: (name) => {
+        onSave(name);
+        closeCategoryDrawer();
+      },
+      onDelete:
+        onDelete &&
+        (() => {
+          onDelete();
+          closeCategoryDrawer();
+        }),
+      onCancel: closeCategoryDrawer,
+      onClose: closeCategoryDrawer,
+    });
+  };
 
   const handleClickAddIncomeCategory = () => {
     if (isIncomeCategoryAtLimit) {
@@ -125,9 +138,7 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
       });
       return;
     }
-    onCategoryDrawerOpen();
-
-    setCategoryDrawerProps({
+    handleOpenCategoryDrawer({
       category: null,
       onSave: addIncomeCategory,
     });
@@ -142,9 +153,7 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
       });
       return;
     }
-    onCategoryDrawerOpen();
-
-    setCategoryDrawerProps({
+    handleOpenCategoryDrawer({
       category: null,
       onSave: addExpenseCategory,
     });
@@ -152,22 +161,18 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
 
   const handleClickIncomeCategory = (categoryId: string) => {
     const category = incomeCategories.find((c) => c.id === categoryId);
-    onCategoryDrawerOpen();
-
-    setCategoryDrawerProps({
-      category: category ?? null,
-      onSave: (name) => updateIncomeCategory(categoryId, name),
+    handleOpenCategoryDrawer({
+      category: category,
+      onSave: (name: string) => updateIncomeCategory(categoryId, name),
       onDelete: () => deleteIncomeCategory(categoryId),
     });
   };
 
   const handleClickExpenseCategory = (categoryId: string) => {
     const category = expenseCategories.find((c) => c.id === categoryId);
-    onCategoryDrawerOpen();
-
-    setCategoryDrawerProps({
-      category: category ?? null,
-      onSave: (name) => updateExpenseCategory(categoryId, name),
+    handleOpenCategoryDrawer({
+      category: category,
+      onSave: (name: string) => updateExpenseCategory(categoryId, name),
       onDelete: () => deleteExpenseCategory(categoryId),
     });
   };
@@ -191,12 +196,7 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
         </AppActionsContext>
       </AppLayout>
       <ItemDrawer {...itemDrawerProps} />
-      <CategoryDrawer
-        {...categoryDrawerProps}
-        isOpen={isCategoryDrawerOpen}
-        onCancel={onCategoryDrawerClose}
-        onClose={onCategoryDrawerClose}
-      />
+      <CategoryDrawer {...categoryDrawerProps} />
     </>
   );
 }
