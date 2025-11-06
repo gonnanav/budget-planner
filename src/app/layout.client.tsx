@@ -1,21 +1,20 @@
 "use client";
 
-import { addToast } from "@heroui/toast";
 import { AppLayout } from "@/components/app-layout";
 import { ItemDrawer } from "@/components/item-drawer";
 import { AppActionsContext } from "@/contexts/AppActionsContext";
 import {
   CategoryDrawer,
   useCategoryDrawer,
-  CategoryDrawerProps,
 } from "@/components/category-drawer";
 import { useIncomeCategories } from "@/hooks/useIncomeCategories";
 import { useExpenseCategories } from "@/hooks/useExpenseCategories";
 import { useItemDrawer } from "@/components/item-drawer";
-import { ItemDrawerProps } from "@/components/item-drawer/ItemDrawer";
 import { useIncomes } from "@/hooks/useIncomes";
 import { useExpenses } from "@/hooks/useExpenses";
 import { Providers } from "@/providers";
+import { itemActions } from "@/lib/item-actions";
+import { categoryActions } from "@/lib/category-actions";
 
 interface RootLayoutClientProps {
   children: React.ReactNode;
@@ -45,139 +44,59 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
   } = expenseCategoriesValue;
 
   const { itemDrawerProps, openItemDrawer, closeItemDrawer } = useItemDrawer();
+  const {
+    onClickAddItem: onClickAddIncomeItem,
+    onClickItem: onClickIncomeItem,
+  } = itemActions({
+    items: incomes,
+    categories: incomeCategories,
+    onAddItem: addIncome,
+    onUpdateItem: updateIncome,
+    onDeleteItem: deleteIncome,
+    onOpenItemDrawer: openItemDrawer,
+    onCloseItemDrawer: closeItemDrawer,
+  });
 
-  const handleOpenItemDrawer = ({
-    item,
-    categories,
-    onSave,
-    onDelete,
-  }: Omit<ItemDrawerProps, "isOpen" | "onCancel" | "onClose">) => {
-    openItemDrawer({
-      item,
-      categories,
-      onSave: (input) => {
-        onSave(input);
-        closeItemDrawer();
-      },
-      onDelete:
-        onDelete &&
-        (() => {
-          onDelete();
-          closeItemDrawer();
-        }),
-      onCancel: closeItemDrawer,
-      onClose: closeItemDrawer,
-    });
-  };
-
-  const handleClickAddIncomeItem = () => {
-    handleOpenItemDrawer({
-      item: null,
-      categories: incomeCategories,
-      onSave: addIncome,
-    });
-  };
-
-  const handleClickAddExpenseItem = () => {
-    handleOpenItemDrawer({
-      item: null,
-      categories: expenseCategories,
-      onSave: addExpense,
-    });
-  };
-
-  const handleClickIncomeItem = (id: string) => {
-    const item = incomes.find((income) => income.id === id);
-    handleOpenItemDrawer({
-      item,
-      categories: incomeCategories,
-      onSave: (input) => updateIncome(id, input),
-      onDelete: () => deleteIncome(id),
-    });
-  };
-
-  const handleClickExpenseItem = (id: string) => {
-    const item = expenses.find((expense) => expense.id === id);
-    handleOpenItemDrawer({
-      item,
-      categories: expenseCategories,
-      onSave: (input) => updateExpense(id, input),
-      onDelete: () => deleteExpense(id),
-    });
-  };
+  const {
+    onClickAddItem: onClickAddExpenseItem,
+    onClickItem: onClickExpenseItem,
+  } = itemActions({
+    items: expenses,
+    categories: expenseCategories,
+    onAddItem: addExpense,
+    onUpdateItem: updateExpense,
+    onDeleteItem: deleteExpense,
+    onOpenItemDrawer: openItemDrawer,
+    onCloseItemDrawer: closeItemDrawer,
+  });
 
   const { categoryDrawerProps, openCategoryDrawer, closeCategoryDrawer } =
     useCategoryDrawer();
+  const {
+    onClickAddCategory: onClickAddIncomeCategory,
+    onClickCategory: onClickIncomeCategory,
+  } = categoryActions({
+    categories: incomeCategories,
+    isAtLimit: isIncomeCategoryAtLimit,
+    onAddCategory: addIncomeCategory,
+    onUpdateCategory: updateIncomeCategory,
+    onDeleteCategory: deleteIncomeCategory,
+    onOpenCategoryDrawer: openCategoryDrawer,
+    onCloseCategoryDrawer: closeCategoryDrawer,
+  });
 
-  const handleOpenCategoryDrawer = ({
-    category,
-    onSave,
-    onDelete,
-  }: Omit<CategoryDrawerProps, "isOpen" | "onCancel" | "onClose">) => {
-    openCategoryDrawer({
-      category,
-      onSave: (name) => {
-        onSave(name);
-        closeCategoryDrawer();
-      },
-      onDelete:
-        onDelete &&
-        (() => {
-          onDelete();
-          closeCategoryDrawer();
-        }),
-      onCancel: closeCategoryDrawer,
-      onClose: closeCategoryDrawer,
-    });
-  };
-
-  const handleClickAddIncomeCategory = () => {
-    if (isIncomeCategoryAtLimit) {
-      addToast({
-        title: "Limit reached",
-        description: "You've reached the maximum number of income categories.",
-        color: "warning",
-      });
-      return;
-    }
-    handleOpenCategoryDrawer({
-      category: null,
-      onSave: addIncomeCategory,
-    });
-  };
-
-  const handleClickAddExpenseCategory = () => {
-    if (isExpenseCategoryAtLimit) {
-      addToast({
-        title: "Limit reached",
-        description: "You've reached the maximum number of expense categories.",
-        color: "warning",
-      });
-      return;
-    }
-    handleOpenCategoryDrawer({
-      category: null,
-      onSave: addExpenseCategory,
-    });
-  };
-
-  const handleClickIncomeCategory = (categoryId: string) => {
-    const category = incomeCategories.find((c) => c.id === categoryId);
-    handleOpenCategoryDrawer({
-      category: category,
-      onSave: (name: string) => updateIncomeCategory(categoryId, name),
-      onDelete: () => deleteIncomeCategory(categoryId),
-    });
-  };
-
-  const handleClickExpenseCategory = (categoryId: string) => {
-    const category = expenseCategories.find((c) => c.id === categoryId);
-    handleOpenCategoryDrawer({
-      category: category,
-      onSave: (name: string) => updateExpenseCategory(categoryId, name),
-      onDelete: () => deleteExpenseCategory(categoryId),
-    });
-  };
+  const {
+    onClickAddCategory: onClickAddExpenseCategory,
+    onClickCategory: onClickExpenseCategory,
+  } = categoryActions({
+    categories: expenseCategories,
+    isAtLimit: isExpenseCategoryAtLimit,
+    onAddCategory: addExpenseCategory,
+    onUpdateCategory: updateExpenseCategory,
+    onDeleteCategory: deleteExpenseCategory,
+    onOpenCategoryDrawer: openCategoryDrawer,
+    onCloseCategoryDrawer: closeCategoryDrawer,
+  });
 
   return (
     <Providers
@@ -189,14 +108,14 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
       <AppLayout>
         <AppActionsContext
           value={{
-            onClickAddIncomeItem: handleClickAddIncomeItem,
-            onClickAddExpenseItem: handleClickAddExpenseItem,
-            onClickIncomeItem: handleClickIncomeItem,
-            onClickExpenseItem: handleClickExpenseItem,
-            onClickAddIncomeCategory: handleClickAddIncomeCategory,
-            onClickAddExpenseCategory: handleClickAddExpenseCategory,
-            onClickIncomeCategory: handleClickIncomeCategory,
-            onClickExpenseCategory: handleClickExpenseCategory,
+            onClickAddIncomeItem,
+            onClickAddExpenseItem,
+            onClickIncomeItem,
+            onClickExpenseItem,
+            onClickAddIncomeCategory,
+            onClickAddExpenseCategory,
+            onClickIncomeCategory,
+            onClickExpenseCategory,
           }}
         >
           {children}
