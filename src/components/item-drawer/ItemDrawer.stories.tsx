@@ -44,7 +44,6 @@ export const Cancelling: Story = {
     await userEvent.click(getCancelButton());
 
     await expect(args.onCancel).toHaveBeenCalled();
-    await expect(getAmountInput()).not.toHaveValue();
   },
 };
 

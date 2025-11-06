@@ -11,8 +11,9 @@ import { IncomeContext } from "@/contexts/IncomeContext";
 import { IncomeCategoryContext } from "@/contexts/IncomeCategoryContext";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
 import { ExpenseCategoryContext } from "@/contexts/ExpenseCategoryContext";
-import { BudgetItem, BudgetItemInput } from "@/core/types";
 import { Category } from "@/core/types";
+import { useItemDrawer } from "@/components/item-drawer";
+import { ItemDrawerProps } from "@/components/item-drawer/ItemDrawer";
 
 interface RootLayoutClientProps {
   children: React.ReactNode;
@@ -38,27 +39,34 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
     isExpenseCategoryAtLimit,
   } = useContext(ExpenseCategoryContext);
 
-  const {
-    isOpen: isItemDrawerOpen,
-    onOpen: onItemDrawerOpen,
-    onClose: onItemDrawerClose,
-  } = useDisclosure();
+  const { itemDrawerProps, openItemDrawer, closeItemDrawer } = useItemDrawer();
 
-  const [itemDrawerProps, setItemDrawerProps] = useState<{
-    item: BudgetItem | null;
-    categories: Category[];
-    onSave: (input: BudgetItemInput) => void;
-    onDelete?: () => void;
-  }>({
-    item: null,
-    categories: [],
-    onSave: () => {},
-  });
+  const handleOpenItemDrawer = ({
+    item,
+    categories,
+    onSave,
+    onDelete,
+  }: Omit<ItemDrawerProps, "isOpen" | "onCancel" | "onClose">) => {
+    openItemDrawer({
+      item,
+      categories,
+      onSave: (input) => {
+        onSave(input);
+        closeItemDrawer();
+      },
+      onDelete:
+        onDelete &&
+        (() => {
+          onDelete();
+          closeItemDrawer();
+        }),
+      onCancel: closeItemDrawer,
+      onClose: closeItemDrawer,
+    });
+  };
 
   const handleClickAddIncomeItem = () => {
-    onItemDrawerOpen();
-
-    setItemDrawerProps({
+    handleOpenItemDrawer({
       item: null,
       categories: incomeCategories,
       onSave: addIncome,
@@ -66,9 +74,7 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
   };
 
   const handleClickAddExpenseItem = () => {
-    onItemDrawerOpen();
-
-    setItemDrawerProps({
+    handleOpenItemDrawer({
       item: null,
       categories: expenseCategories,
       onSave: addExpense,
@@ -77,10 +83,8 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
 
   const handleClickIncomeItem = (id: string) => {
     const item = incomes.find((income) => income.id === id);
-    onItemDrawerOpen();
-
-    setItemDrawerProps({
-      item: item ?? null,
+    handleOpenItemDrawer({
+      item,
       categories: incomeCategories,
       onSave: (input) => updateIncome(id, input),
       onDelete: () => deleteIncome(id),
@@ -89,10 +93,8 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
 
   const handleClickExpenseItem = (id: string) => {
     const item = expenses.find((expense) => expense.id === id);
-    onItemDrawerOpen();
-
-    setItemDrawerProps({
-      item: item ?? null,
+    handleOpenItemDrawer({
+      item,
       categories: expenseCategories,
       onSave: (input) => updateExpense(id, input),
       onDelete: () => deleteExpense(id),
@@ -188,12 +190,7 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
           {children}
         </AppActionsContext>
       </AppLayout>
-      <ItemDrawer
-        {...itemDrawerProps}
-        isOpen={isItemDrawerOpen}
-        onCancel={onItemDrawerClose}
-        onClose={onItemDrawerClose}
-      />
+      <ItemDrawer {...itemDrawerProps} />
       <CategoryDrawer
         {...categoryDrawerProps}
         isOpen={isCategoryDrawerOpen}

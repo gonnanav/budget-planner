@@ -14,7 +14,7 @@ import { FrequencyInput } from "./FrequencyInput";
 import { CategoryInput } from "./CategoryInput";
 import { NotesInput } from "./NotesInput";
 
-interface ItemDrawerProps {
+export interface ItemDrawerProps {
   isOpen: boolean;
   item?: BudgetItem | null;
   categories: Category[];
@@ -62,11 +62,6 @@ export const ItemDrawer = ({
     setNotes(undefined);
   };
 
-  const handleCancel = () => {
-    onCancel();
-    reset();
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSave({ name, amount, frequency, categoryId, notes });
@@ -91,7 +86,7 @@ export const ItemDrawer = ({
           </DrawerBody>
           <DrawerFooter>
             <ActionButtons
-              onCancel={handleCancel}
+              onCancel={onCancel}
               onDelete={isEditMode ? onDelete : undefined}
             />
           </DrawerFooter>
