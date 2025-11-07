@@ -8,7 +8,7 @@ import { BudgetItem } from "@/core/types";
 
 type CategoryTableName = "incomeCategories" | "expenseCategories";
 
-export function useCategories(
+export function useIndexedDbCategories(
   tableName: CategoryTableName,
   items: BudgetItem[],
 ) {

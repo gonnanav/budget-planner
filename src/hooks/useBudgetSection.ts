@@ -1,5 +1,5 @@
 import { useIndexedDbItems } from "@/hooks/useIndexedDbItems";
-import { useCategories } from "@/hooks/useCategories";
+import { useIndexedDbCategories } from "@/hooks/useIndexedDbCategories";
 import { itemActions } from "@/lib/item-actions";
 import { categoryActions } from "@/lib/category-actions";
 import { ItemDrawerProps } from "@/components/item-drawer";
@@ -28,7 +28,7 @@ export function useBudgetSection({
   const { items, addItem, updateItem, deleteItem } =
     useIndexedDbItems(itemsTableName);
   const { categories, addCategory, updateCategory, deleteCategory, isAtLimit } =
-    useCategories(categoriesTableName, items);
+    useIndexedDbCategories(categoriesTableName, items);
 
   const { onClickAddItem, onClickItem } = itemActions({
     items,
