@@ -1,7 +1,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { createItem } from "@/core/budget-items";
 import { BudgetItem, BudgetItemInput } from "@/core/types";
-import { db } from "@/lib/db";
+import { db } from "./db";
 import { LIMITS } from "@/lib/limits";
 import { enrichItem } from "@/core/budget-items";
 

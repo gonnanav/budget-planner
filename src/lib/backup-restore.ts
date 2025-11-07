@@ -1,5 +1,5 @@
 import type { BudgetItem, Category } from "@/core/types";
-import { db } from "@/lib/db";
+import { replaceAll } from "@/indexed-db";
 
 export interface BackupData {
   metadata: {
@@ -115,22 +115,10 @@ export async function restoreBackupToDb(backup: BackupData): Promise<void> {
   const incomeCategories = data?.incomeCategories ?? [];
   const expenseCategories = data?.expenseCategories ?? [];
 
-  await db.transaction(
-    "rw",
-    db.incomeCategories,
-    db.expenseCategories,
-    db.incomes,
-    db.expenses,
-    async () => {
-      await db.incomes.clear();
-      await db.expenses.clear();
-      await db.incomeCategories.clear();
-      await db.expenseCategories.clear();
-
-      await db.incomeCategories.bulkAdd(incomeCategories);
-      await db.expenseCategories.bulkAdd(expenseCategories);
-      await db.incomes.bulkAdd(incomes);
-      await db.expenses.bulkAdd(expenses);
-    },
-  );
+  await replaceAll({
+    incomes,
+    expenses,
+    incomeCategories,
+    expenseCategories,
+  });
 }

@@ -1,7 +1,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { createCategory } from "@/core/categories";
 import { Category } from "@/core/types";
-import { db } from "@/lib/db";
+import { db } from "./db";
 import { LIMITS } from "@/lib/limits";
 import { enrichCategory } from "@/core/categories";
 import { BudgetItem } from "@/core/types";

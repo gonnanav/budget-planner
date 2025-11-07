@@ -1,5 +1,4 @@
-import { useIndexedDbItems } from "@/hooks/useIndexedDbItems";
-import { useIndexedDbCategories } from "@/hooks/useIndexedDbCategories";
+import { useIndexedDbItems, useIndexedDbCategories } from "@/indexed-db";
 import { itemActions } from "@/lib/item-actions";
 import { categoryActions } from "@/lib/category-actions";
 import { ItemDrawerProps } from "@/components/item-drawer";
