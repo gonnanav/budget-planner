@@ -4,8 +4,8 @@ import { CategoryDrawerProps } from "./CategoryDrawer";
 
 type UseCategoryDrawerReturn = {
   categoryDrawerProps: CategoryDrawerProps;
-  openCategoryDrawer: (props: Omit<CategoryDrawerProps, "isOpen">) => void;
-  closeCategoryDrawer: () => void;
+  onOpenCategoryDrawer: (props: Omit<CategoryDrawerProps, "isOpen">) => void;
+  onCloseCategoryDrawer: () => void;
 };
 
 export function useCategoryDrawer(): UseCategoryDrawerReturn {
@@ -24,7 +24,7 @@ export function useCategoryDrawer(): UseCategoryDrawerReturn {
 
   return {
     categoryDrawerProps: { ...props, isOpen },
-    openCategoryDrawer: openDrawer,
-    closeCategoryDrawer: onClose,
+    onOpenCategoryDrawer: openDrawer,
+    onCloseCategoryDrawer: onClose,
   };
 }

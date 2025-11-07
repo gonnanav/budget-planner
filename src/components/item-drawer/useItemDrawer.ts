@@ -4,8 +4,8 @@ import { ItemDrawerProps } from "./ItemDrawer";
 
 type UseItemDrawerReturn = {
   itemDrawerProps: ItemDrawerProps;
-  openItemDrawer: (props: Omit<ItemDrawerProps, "isOpen">) => void;
-  closeItemDrawer: () => void;
+  onOpenItemDrawer: (props: Omit<ItemDrawerProps, "isOpen">) => void;
+  onCloseItemDrawer: () => void;
 };
 
 export function useItemDrawer(): UseItemDrawerReturn {
@@ -25,7 +25,7 @@ export function useItemDrawer(): UseItemDrawerReturn {
 
   return {
     itemDrawerProps: { ...props, isOpen },
-    openItemDrawer: openDrawer,
-    closeItemDrawer: onClose,
+    onOpenItemDrawer: openDrawer,
+    onCloseItemDrawer: onClose,
   };
 }

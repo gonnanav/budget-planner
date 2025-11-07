@@ -3,10 +3,15 @@ import { createCategory } from "@/core/categories";
 import { Category } from "@/core/types";
 import { db } from "@/lib/db";
 import { LIMITS } from "@/lib/limits";
+import { enrichCategory } from "@/core/categories";
+import { BudgetItem } from "@/core/types";
 
 type CategoryTableName = "incomeCategories" | "expenseCategories";
 
-export function useCategories(tableName: CategoryTableName) {
+export function useCategories(
+  tableName: CategoryTableName,
+  items: BudgetItem[],
+) {
   const categories = useLiveQuery(() => db.table(tableName).toArray()) as
     | Category[]
     | undefined;
@@ -50,8 +55,12 @@ export function useCategories(tableName: CategoryTableName) {
     return db.table(tableName).bulkAdd(categories);
   };
 
+  const enrichedCategories = categories?.map((category) =>
+    enrichCategory(category, items),
+  );
+
   return {
-    categories: categories ?? [],
+    categories: enrichedCategories ?? [],
     count,
     limit,
     isAtLimit,

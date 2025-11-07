@@ -3,6 +3,7 @@ import { createItem } from "@/core/budget-items";
 import { BudgetItem, BudgetItemInput } from "@/core/types";
 import { db } from "@/lib/db";
 import { LIMITS } from "@/lib/limits";
+import { enrichItem } from "@/core/budget-items";
 
 export function useBudgetItems(key: string) {
   const items = useLiveQuery(() => db.table(key).toArray()) as
@@ -37,8 +38,10 @@ export function useBudgetItems(key: string) {
     return db.table(key).bulkAdd(items);
   };
 
+  const enrichedItems = items?.map(enrichItem);
+
   return {
-    items: items ?? [],
+    items: enrichedItems ?? [],
     count,
     limit,
     isAtLimit,

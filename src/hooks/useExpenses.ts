@@ -1,18 +1,42 @@
-import { useBudgetItems } from "./useBudgetItems";
-import { enrichItem } from "@/core/budget-items";
+import { useBudgetSection } from "./useBudgetSection";
+import { ItemDrawerProps } from "@/components/item-drawer";
+import { CategoryDrawerProps } from "@/components/category-drawer";
 
-export function useExpenses() {
-  const { items, addItem, updateItem, deleteItem, addItems, isAtLimit } =
-    useBudgetItems("expenses");
+interface UseExpensesProps {
+  onOpenItemDrawer: (props: Omit<ItemDrawerProps, "isOpen">) => void;
+  onCloseItemDrawer: () => void;
+  onOpenCategoryDrawer: (props: Omit<CategoryDrawerProps, "isOpen">) => void;
+  onCloseCategoryDrawer: () => void;
+}
 
-  const enrichedExpenses = items.map(enrichItem);
+export function useExpenses({
+  onOpenItemDrawer,
+  onCloseItemDrawer,
+  onOpenCategoryDrawer,
+  onCloseCategoryDrawer,
+}: UseExpensesProps) {
+  const {
+    items,
+    categories,
+    onClickAddItem,
+    onClickItem,
+    onClickAddCategory,
+    onClickCategory,
+  } = useBudgetSection({
+    itemsTableName: "expenses",
+    categoriesTableName: "expenseCategories",
+    onOpenItemDrawer,
+    onCloseItemDrawer,
+    onOpenCategoryDrawer,
+    onCloseCategoryDrawer,
+  });
 
   return {
-    expenses: enrichedExpenses,
-    addExpense: addItem,
-    updateExpense: updateItem,
-    deleteExpense: deleteItem,
-    addExpenses: addItems,
-    isExpenseAtLimit: isAtLimit,
+    expenses: items,
+    expenseCategories: categories,
+    onClickAddExpenseItem: onClickAddItem,
+    onClickExpenseItem: onClickItem,
+    onClickAddExpenseCategory: onClickAddCategory,
+    onClickExpenseCategory: onClickCategory,
   };
 }
