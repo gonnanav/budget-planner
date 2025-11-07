@@ -1,4 +1,4 @@
-import { useBudgetItems } from "@/hooks/useBudgetItems";
+import { useIndexedDbItems } from "@/hooks/useIndexedDbItems";
 import { useCategories } from "@/hooks/useCategories";
 import { itemActions } from "@/lib/item-actions";
 import { categoryActions } from "@/lib/category-actions";
@@ -26,7 +26,7 @@ export function useBudgetSection({
   onCloseCategoryDrawer,
 }: UseBudgetSectionProps) {
   const { items, addItem, updateItem, deleteItem } =
-    useBudgetItems(itemsTableName);
+    useIndexedDbItems(itemsTableName);
   const { categories, addCategory, updateCategory, deleteCategory, isAtLimit } =
     useCategories(categoriesTableName, items);
 

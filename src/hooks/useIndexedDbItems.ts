@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { LIMITS } from "@/lib/limits";
 import { enrichItem } from "@/core/budget-items";
 
-export function useBudgetItems(key: string) {
+export function useIndexedDbItems(key: string) {
   const items = useLiveQuery(() => db.table(key).toArray()) as
     | BudgetItem[]
     | undefined;
