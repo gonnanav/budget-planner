@@ -109,10 +109,10 @@ export function RestoreConfirmModal({
     } catch (err) {
       addToast({
         title: "Restore failed",
-        description:
-          err instanceof Error ? err.message : "Failed to restore backup",
+        description: "Failed to restore backup",
         color: "danger",
       });
+      console.error(err);
     } finally {
       setIsLoading(false);
     }

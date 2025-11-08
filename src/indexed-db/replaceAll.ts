@@ -14,22 +14,20 @@ export async function replaceAll({
   incomes,
   expenses,
 }: ReplaceAllProps): Promise<void> {
-  await db.transaction(
-    "rw",
-    db.incomeCategories,
-    db.expenseCategories,
-    db.incomes,
-    db.expenses,
-    async () => {
-      await db.incomes.clear();
-      await db.expenses.clear();
-      await db.incomeCategories.clear();
-      await db.expenseCategories.clear();
-
-      await db.incomeCategories.bulkAdd(incomeCategories);
-      await db.expenseCategories.bulkAdd(expenseCategories);
-      await db.incomes.bulkAdd(incomes);
-      await db.expenses.bulkAdd(expenses);
-    },
+  await db.transaction("rw", db.tables, async () =>
+    Promise.all([
+      replaceAllInTable("incomeCategories", incomeCategories),
+      replaceAllInTable("expenseCategories", expenseCategories),
+      replaceAllInTable("incomes", incomes),
+      replaceAllInTable("expenses", expenses),
+    ]),
   );
+}
+
+async function replaceAllInTable(
+  table: string,
+  data: unknown[],
+): Promise<void> {
+  await db.table(table).clear();
+  await db.table(table).bulkAdd(data);
 }
