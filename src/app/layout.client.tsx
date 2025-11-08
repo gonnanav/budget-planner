@@ -2,7 +2,6 @@
 
 import { AppLayout } from "@/components/app-layout";
 import { ItemDrawer } from "@/components/item-drawer";
-import { AppActionsContext } from "@/contexts/AppActionsContext";
 import {
   CategoryDrawer,
   useCategoryDrawer,
@@ -51,23 +50,18 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
     <Providers
       incomes={{ items: incomes, categories: incomeCategories }}
       expenses={{ items: expenses, categories: expenseCategories }}
+      appActions={{
+        onClickAddIncomeItem,
+        onClickAddExpenseItem,
+        onClickIncomeItem,
+        onClickExpenseItem,
+        onClickAddIncomeCategory,
+        onClickAddExpenseCategory,
+        onClickIncomeCategory,
+        onClickExpenseCategory,
+      }}
     >
-      <AppLayout>
-        <AppActionsContext
-          value={{
-            onClickAddIncomeItem,
-            onClickAddExpenseItem,
-            onClickIncomeItem,
-            onClickExpenseItem,
-            onClickAddIncomeCategory,
-            onClickAddExpenseCategory,
-            onClickIncomeCategory,
-            onClickExpenseCategory,
-          }}
-        >
-          {children}
-        </AppActionsContext>
-      </AppLayout>
+      <AppLayout>{children}</AppLayout>
       <ItemDrawer {...itemDrawerProps} />
       <CategoryDrawer {...categoryDrawerProps} />
     </Providers>

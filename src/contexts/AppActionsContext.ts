@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-interface AppActionsContextValue {
+export interface AppActionsContextValue {
   onClickAddIncomeItem: () => void;
   onClickAddExpenseItem: () => void;
   onClickIncomeItem: (id: string) => void;
