@@ -3,16 +3,16 @@
 import { useContext } from "react";
 import { ExpenseContext } from "@/contexts/ExpenseContext";
 import { BudgetSection } from "@/components/budget-section";
-import { AppActionsContext } from "@/contexts/AppActionsContext";
 
 export default function Page() {
-  const { items, categories } = useContext(ExpenseContext);
   const {
+    items,
+    categories,
     onClickAddExpenseItem,
     onClickExpenseItem,
     onClickAddExpenseCategory,
     onClickExpenseCategory,
-  } = useContext(AppActionsContext);
+  } = useContext(ExpenseContext);
 
   return (
     <BudgetSection

@@ -3,16 +3,16 @@
 import { useContext } from "react";
 import { IncomeContext } from "@/contexts/IncomeContext";
 import { BudgetSection } from "@/components/budget-section";
-import { AppActionsContext } from "@/contexts/AppActionsContext";
 
 export default function Page() {
-  const { items, categories } = useContext(IncomeContext);
   const {
+    items,
+    categories,
     onClickAddIncomeItem,
     onClickIncomeItem,
     onClickAddIncomeCategory,
     onClickIncomeCategory,
-  } = useContext(AppActionsContext);
+  } = useContext(IncomeContext);
 
   return (
     <BudgetSection

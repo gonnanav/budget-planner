@@ -48,16 +48,20 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
 
   return (
     <Providers
-      incomes={{ items: incomes, categories: incomeCategories }}
-      expenses={{ items: expenses, categories: expenseCategories }}
-      appActions={{
+      incomes={{
+        items: incomes,
+        categories: incomeCategories,
         onClickAddIncomeItem,
-        onClickAddExpenseItem,
         onClickIncomeItem,
-        onClickExpenseItem,
         onClickAddIncomeCategory,
-        onClickAddExpenseCategory,
         onClickIncomeCategory,
+      }}
+      expenses={{
+        items: expenses,
+        categories: expenseCategories,
+        onClickAddExpenseItem,
+        onClickExpenseItem,
+        onClickAddExpenseCategory,
         onClickExpenseCategory,
       }}
     >
