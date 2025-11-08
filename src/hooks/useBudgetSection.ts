@@ -1,15 +1,22 @@
-import { useIndexedDbItems, useIndexedDbCategories } from "@/indexed-db";
+import {
+  useTableItems,
+  useTableCategories,
+  addItem,
+  updateItem,
+  deleteItem,
+  addCategory,
+  updateCategory,
+  deleteCategory,
+} from "@/indexed-db";
 import { itemActions } from "@/lib/item-actions";
 import { categoryActions } from "@/lib/category-actions";
 import { ItemDrawerProps } from "@/components/item-drawer";
 import { CategoryDrawerProps } from "@/components/category-drawer";
-
-type ItemTableName = "incomes" | "expenses";
-type CategoryTableName = "incomeCategories" | "expenseCategories";
+import { ItemsTableName, CategoriesTableName } from "@/indexed-db/types";
 
 interface UseBudgetSectionProps {
-  itemsTableName: ItemTableName;
-  categoriesTableName: CategoryTableName;
+  itemsTableName: ItemsTableName;
+  categoriesTableName: CategoriesTableName;
   onOpenItemDrawer: (props: Omit<ItemDrawerProps, "isOpen">) => void;
   onCloseItemDrawer: () => void;
   onOpenCategoryDrawer: (props: Omit<CategoryDrawerProps, "isOpen">) => void;
@@ -24,17 +31,18 @@ export function useBudgetSection({
   onOpenCategoryDrawer,
   onCloseCategoryDrawer,
 }: UseBudgetSectionProps) {
-  const { items, addItem, updateItem, deleteItem } =
-    useIndexedDbItems(itemsTableName);
-  const { categories, addCategory, updateCategory, deleteCategory, isAtLimit } =
-    useIndexedDbCategories(categoriesTableName, items);
+  const { items } = useTableItems(itemsTableName);
+  const { categories, isAtLimit } = useTableCategories(
+    categoriesTableName,
+    items,
+  );
 
   const { onClickAddItem, onClickItem } = itemActions({
     items,
     categories,
-    onAddItem: addItem,
-    onUpdateItem: updateItem,
-    onDeleteItem: deleteItem,
+    onAddItem: (input) => addItem(itemsTableName, input),
+    onUpdateItem: (id, input) => updateItem(itemsTableName, id, input),
+    onDeleteItem: (id) => deleteItem(itemsTableName, id),
     onOpenItemDrawer,
     onCloseItemDrawer,
   });
@@ -42,9 +50,10 @@ export function useBudgetSection({
   const { onClickAddCategory, onClickCategory } = categoryActions({
     categories,
     isAtLimit,
-    onAddCategory: addCategory,
-    onUpdateCategory: updateCategory,
-    onDeleteCategory: deleteCategory,
+    onAddCategory: (name) => addCategory(categoriesTableName, name),
+    onUpdateCategory: (id, name) =>
+      updateCategory(categoriesTableName, id, name),
+    onDeleteCategory: (id) => deleteCategory(categoriesTableName, id),
     onOpenCategoryDrawer,
     onCloseCategoryDrawer,
   });
