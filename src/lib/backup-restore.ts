@@ -1,5 +1,5 @@
 import type { BudgetItem, Category } from "@/core/types";
-import { replaceAll } from "@/indexed-db";
+import { replaceAll, getAllData } from "@/db";
 
 export interface BackupData {
   metadata: {
@@ -7,29 +7,37 @@ export interface BackupData {
     exportedAt: string;
   };
   data: {
-    expenses: BudgetItem[];
-    incomes: BudgetItem[];
+    incomeItems: BudgetItem[];
     incomeCategories: Category[];
+    expenseItems: BudgetItem[];
     expenseCategories: Category[];
   };
 }
 
 interface BackupDataInput {
-  incomes: BudgetItem[];
-  expenses: BudgetItem[];
+  incomeItems: BudgetItem[];
+  expenseItems: BudgetItem[];
   incomeCategories: Category[];
   expenseCategories: Category[];
 }
 
-export function triggerBackupDownload(input: BackupDataInput) {
+export async function backupData(): Promise<void> {
+  const input = await getAllData();
   const data = createBackupData(input);
   downloadBackupData(data);
 }
 
+export async function restoreData(): Promise<void> {
+  const backup = await pickBackupFile();
+  if (!backup) return;
+
+  await restoreBackupToDb(backup);
+}
+
 export function createBackupData({
-  incomes,
-  expenses,
+  incomeItems,
   incomeCategories,
+  expenseItems,
   expenseCategories,
 }: BackupDataInput): BackupData {
   return {
@@ -38,9 +46,9 @@ export function createBackupData({
       exportedAt: new Date().toISOString(),
     },
     data: {
-      incomes,
-      expenses,
+      incomeItems,
       incomeCategories,
+      expenseItems,
       expenseCategories,
     },
   };
@@ -110,14 +118,14 @@ export function pickBackupFile(): Promise<BackupData | null> {
 
 export async function restoreBackupToDb(backup: BackupData): Promise<void> {
   const { data } = backup ?? {};
-  const incomes = data?.incomes ?? [];
-  const expenses = data?.expenses ?? [];
+  const incomeItems = data?.incomeItems ?? [];
+  const expenseItems = data?.expenseItems ?? [];
   const incomeCategories = data?.incomeCategories ?? [];
   const expenseCategories = data?.expenseCategories ?? [];
 
   await replaceAll({
-    incomes,
-    expenses,
+    incomeItems,
+    expenseItems,
     incomeCategories,
     expenseCategories,
   });

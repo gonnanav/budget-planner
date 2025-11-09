@@ -12,5 +12,5 @@ export {
   deleteCategory,
   addCategories,
 } from "./categories";
-export { replaceAll } from "./replaceAll";
+export { replaceAll, getAllData } from "./backup";
 export type { ItemsTableName, CategoriesTableName } from "./types";

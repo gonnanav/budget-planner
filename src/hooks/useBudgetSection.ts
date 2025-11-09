@@ -7,12 +7,12 @@ import {
   addCategory,
   updateCategory,
   deleteCategory,
-} from "@/indexed-db";
+} from "@/db";
 import { itemActions } from "@/lib/item-actions";
 import { categoryActions } from "@/lib/category-actions";
 import { ItemDrawerProps } from "@/components/item-drawer";
 import { CategoryDrawerProps } from "@/components/category-drawer";
-import { ItemsTableName, CategoriesTableName } from "@/indexed-db/types";
+import { ItemsTableName, CategoriesTableName } from "@/db/types";
 
 interface UseBudgetSectionProps {
   itemsTableName: ItemsTableName;

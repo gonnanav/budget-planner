@@ -62,8 +62,8 @@ export function RestoreConfirmModal({
         }
 
         if (
-          !Array.isArray(data.data.incomes) ||
-          !Array.isArray(data.data.expenses) ||
+          !Array.isArray(data.data.incomeItems) ||
+          !Array.isArray(data.data.expenseItems) ||
           !Array.isArray(data.data.incomeCategories) ||
           !Array.isArray(data.data.expenseCategories)
         ) {
@@ -74,8 +74,8 @@ export function RestoreConfirmModal({
         setSummary({
           version: data.metadata.version,
           exportedAt: data.metadata.exportedAt,
-          incomesCount: data.data.incomes.length,
-          expensesCount: data.data.expenses.length,
+          incomesCount: data.data.incomeItems.length,
+          expensesCount: data.data.expenseItems.length,
           incomeCategoriesCount: data.data.incomeCategories.length,
           expenseCategoriesCount: data.data.expenseCategories.length,
         });

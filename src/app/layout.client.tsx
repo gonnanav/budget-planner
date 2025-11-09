@@ -10,6 +10,8 @@ import { useItemDrawer } from "@/components/item-drawer";
 import { Providers } from "@/providers";
 import { useIncomes } from "@/hooks/useIncomes";
 import { useExpenses } from "@/hooks/useExpenses";
+import { DataBackupRestoreContext } from "@/contexts/DataBackupRestoreContext";
+import { backupData, restoreData } from "@/lib/backup-restore";
 
 interface RootLayoutClientProps {
   children: React.ReactNode;
@@ -65,9 +67,11 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
         onClickExpenseCategory,
       }}
     >
-      <AppLayout>{children}</AppLayout>
-      <ItemDrawer {...itemDrawerProps} />
-      <CategoryDrawer {...categoryDrawerProps} />
+      <DataBackupRestoreContext value={{ backupData, restoreData }}>
+        <AppLayout>{children}</AppLayout>
+        <ItemDrawer {...itemDrawerProps} />
+        <CategoryDrawer {...categoryDrawerProps} />
+      </DataBackupRestoreContext>
     </Providers>
   );
 }

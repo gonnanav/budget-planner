@@ -11,8 +11,8 @@ const expenseCategories = [bills, personal];
 
 test("metadata contains correct version number and timestamp", () => {
   const { metadata } = createBackupData({
-    incomes,
-    expenses,
+    incomeItems: incomes,
+    expenseItems: expenses,
     incomeCategories,
     expenseCategories,
   });
@@ -25,8 +25,8 @@ test("metadata contains correct version number and timestamp", () => {
 
 test("data section contains data in the correct format", () => {
   const { data } = createBackupData({
-    incomes,
-    expenses,
+    incomeItems: incomes,
+    expenseItems: expenses,
     incomeCategories,
     expenseCategories,
   });
