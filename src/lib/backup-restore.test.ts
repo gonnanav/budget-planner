@@ -4,15 +4,15 @@ import { salary, allowance } from "@/fixtures/incomes";
 import { electricity, water, gas } from "@/fixtures/expenses";
 import { transportation, bills, personal } from "@/fixtures/expense-categories";
 
-const incomes = [salary, allowance];
-const expenses = [electricity, water, gas];
+const incomeItems = [salary, allowance];
+const expenseItems = [electricity, water, gas];
 const incomeCategories = [transportation];
 const expenseCategories = [bills, personal];
 
 test("metadata contains correct version number and timestamp", () => {
   const { metadata } = createBackupData({
-    incomeItems: incomes,
-    expenseItems: expenses,
+    incomeItems,
+    expenseItems,
     incomeCategories,
     expenseCategories,
   });
@@ -25,15 +25,15 @@ test("metadata contains correct version number and timestamp", () => {
 
 test("data section contains data in the correct format", () => {
   const { data } = createBackupData({
-    incomeItems: incomes,
-    expenseItems: expenses,
+    incomeItems,
+    expenseItems,
     incomeCategories,
     expenseCategories,
   });
 
   expect(data).toEqual({
-    incomes,
-    expenses,
+    incomeItems,
+    expenseItems,
     incomeCategories,
     expenseCategories,
   });

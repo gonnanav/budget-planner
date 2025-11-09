@@ -11,12 +11,14 @@ import { Button } from "@heroui/button";
 import { EllipsisVertical, Download, Upload } from "lucide-react";
 import { BackupConfirmModal } from "@/components/modals/BackupConfirmModal";
 import { RestoreConfirmModal } from "@/components/modals/RestoreConfirmModal";
-import { DataBackupRestoreContext } from "@/contexts/DataBackupRestoreContext";
-import { useContext } from "react";
-import { restoreBackupToDb } from "@/lib/backup-restore";
+import type { BackupData } from "@/lib/backup-restore";
 
-export function DataMenu() {
-  const { backupData } = useContext(DataBackupRestoreContext);
+interface DataMenuProps {
+  onBackup: () => void;
+  onRestore: (backup: BackupData) => Promise<void>;
+}
+
+export function DataMenu({ onBackup, onRestore }: DataMenuProps) {
   const [isBackupModalOpen, setIsBackupModalOpen] = useState(false);
   const [isRestoreModalOpen, setIsRestoreModalOpen] = useState(false);
 
@@ -64,12 +66,12 @@ export function DataMenu() {
       <BackupConfirmModal
         isOpen={isBackupModalOpen}
         onOpenChange={setIsBackupModalOpen}
-        onConfirm={backupData}
+        onConfirm={onBackup}
       />
       <RestoreConfirmModal
         isOpen={isRestoreModalOpen}
         onOpenChange={setIsRestoreModalOpen}
-        onConfirm={restoreBackupToDb}
+        onConfirm={onRestore}
       />
     </>
   );
