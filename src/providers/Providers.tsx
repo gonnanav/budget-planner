@@ -2,7 +2,6 @@
 
 import { ToastProvider } from "@heroui/toast";
 import { AppHeroUIProvider } from "./AppHeroUIProvider";
-import { PathnameProvider } from "./PathnameProvider";
 import { IncomeContext, IncomeContextValue } from "@/contexts/IncomeContext";
 import { ExpenseContext, ExpenseContextValue } from "@/contexts/ExpenseContext";
 
@@ -20,9 +19,7 @@ export function Providers({
   return (
     <AppHeroUIProvider>
       <IncomeContext value={incomes}>
-        <ExpenseContext value={expenses}>
-          <PathnameProvider>{children}</PathnameProvider>
-        </ExpenseContext>
+        <ExpenseContext value={expenses}>{children}</ExpenseContext>
       </IncomeContext>
       <ToastProvider />
     </AppHeroUIProvider>

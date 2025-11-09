@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { AppLayout } from "@/components/app-layout";
 import { ItemDrawer } from "@/components/item-drawer";
 import {
@@ -47,6 +48,8 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
     onClickExpenseCategory,
   } = useExpenses(drawersHandlers);
 
+  const pathname = usePathname();
+
   return (
     <Providers
       incomes={{
@@ -66,7 +69,11 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
         onClickExpenseCategory,
       }}
     >
-      <AppLayout onBackup={backupData} onRestore={restoreBackupToDb}>
+      <AppLayout
+        selectedTab={pathname}
+        onBackup={backupData}
+        onRestore={restoreBackupToDb}
+      >
         {children}
       </AppLayout>
       <ItemDrawer {...itemDrawerProps} />

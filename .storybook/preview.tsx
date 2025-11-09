@@ -2,7 +2,6 @@ import React from "react";
 import type { Preview } from "@storybook/nextjs-vite";
 import { INITIAL_VIEWPORTS } from "storybook/viewport";
 import { AppHeroUIProvider } from "../src/providers/AppHeroUIProvider";
-import { PathnameContext } from "../src/contexts/PathnameContext";
 import "../src/app/globals.css";
 
 const preview: Preview = {
@@ -33,9 +32,7 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <AppHeroUIProvider>
-        <PathnameContext value="/overview">
-          <Story />
-        </PathnameContext>
+        <Story />
       </AppHeroUIProvider>
     ),
   ],
