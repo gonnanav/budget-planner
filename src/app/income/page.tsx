@@ -2,7 +2,7 @@
 
 import { useContext } from "react";
 import { IncomeContext } from "@/contexts/IncomeContext";
-import { BudgetSection } from "@/components/budget-section";
+import { BudgetSectionScreen } from "@/components/budget-section";
 
 export default function Page() {
   const {
@@ -15,7 +15,7 @@ export default function Page() {
   } = useContext(IncomeContext);
 
   return (
-    <BudgetSection
+    <BudgetSectionScreen
       title="Income"
       items={items}
       categories={categories}

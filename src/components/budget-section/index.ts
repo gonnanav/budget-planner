@@ -1,1 +1,1 @@
-export { BudgetSection } from "./BudgetSection";
+export { BudgetSectionScreen } from "./BudgetSectionScreen";

@@ -24,7 +24,7 @@ interface BudgetSectionProps {
   onClickCategory: (id: string) => void;
 }
 
-export function BudgetSection({
+export function BudgetSectionScreen({
   title,
   items,
   categories,
