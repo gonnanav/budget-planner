@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { fn } from "storybook/test";
-import { CategoryListItem } from "@/components/category-list-item";
+import { CategoryListItem } from "./CategoryListItem";
 import { bills, transportation } from "@/fixtures/expense-categories";
 import {
   electricity,
