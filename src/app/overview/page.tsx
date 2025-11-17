@@ -1,21 +1,19 @@
 "use client";
 
-import { useContext } from "react";
 import { useRouter } from "next/navigation";
 import { budgetBalance } from "@/core/budget-balance";
-import { IncomeContext } from "@/contexts/IncomeContext";
-import { ExpenseContext } from "@/contexts/ExpenseContext";
 import { OverviewScreen } from "@/components/overview";
 import { formatAmount } from "@/lib/format";
+import { useTableItems } from "@/db";
 
 export default function Page() {
   const router = useRouter();
-  const { items: incomes } = useContext(IncomeContext);
-  const { items: expenses } = useContext(ExpenseContext);
+  const { items: incomeItems } = useTableItems("incomes");
+  const { items: expenseItems } = useTableItems("expenses");
 
   const { incomeSum, expenseSum, balance, status } = budgetBalance(
-    incomes,
-    expenses,
+    incomeItems,
+    expenseItems,
   );
 
   const formattedIncome = formatAmount(incomeSum);
@@ -30,11 +28,11 @@ export default function Page() {
         : "deficit";
 
   const uniqueIncomeCategories = new Set(
-    incomes.map((item) => item.categoryId).filter(Boolean),
+    incomeItems.map((item) => item.categoryId).filter(Boolean),
   ).size;
 
   const uniqueExpenseCategories = new Set(
-    expenses.map((item) => item.categoryId).filter(Boolean),
+    expenseItems.map((item) => item.categoryId).filter(Boolean),
   ).size;
 
   return (
@@ -43,9 +41,9 @@ export default function Page() {
       expense={formattedExpense}
       balance={formattedBalance}
       balanceStatus={balanceStatus}
-      incomeItemCount={incomes.length}
+      incomeItemCount={incomeItems.length}
       incomeCategoryCount={uniqueIncomeCategories}
-      expenseItemCount={expenses.length}
+      expenseItemCount={expenseItems.length}
       expenseCategoryCount={uniqueExpenseCategories}
       onIncomeClick={() => router.push("/income")}
       onExpenseClick={() => router.push("/expenses")}

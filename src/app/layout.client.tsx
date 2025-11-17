@@ -19,12 +19,10 @@ interface RootLayoutClientProps {
 }
 
 export function RootLayoutClient({ children }: RootLayoutClientProps) {
-  const { items: incomes } = useTableItems("incomes");
-  const { items: expenses } = useTableItems("expenses");
   const pathname = usePathname();
 
   return (
-    <Providers incomes={{ items: incomes }} expenses={{ items: expenses }}>
+    <Providers>
       <AppLayout
         selectedTab={pathname}
         onBackup={backupData}

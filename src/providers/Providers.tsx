@@ -2,25 +2,15 @@
 
 import { ToastProvider } from "@heroui/toast";
 import { AppHeroUIProvider } from "./AppHeroUIProvider";
-import { IncomeContext, IncomeContextValue } from "@/contexts/IncomeContext";
-import { ExpenseContext, ExpenseContextValue } from "@/contexts/ExpenseContext";
 
 interface ProvidersProps {
-  incomes: IncomeContextValue;
-  expenses: ExpenseContextValue;
   children: React.ReactNode;
 }
 
-export function Providers({
-  incomes,
-  expenses,
-  children,
-}: Readonly<ProvidersProps>) {
+export function Providers({ children }: Readonly<ProvidersProps>) {
   return (
     <AppHeroUIProvider>
-      <IncomeContext value={incomes}>
-        <ExpenseContext value={expenses}>{children}</ExpenseContext>
-      </IncomeContext>
+      {children}
       <ToastProvider />
     </AppHeroUIProvider>
   );
