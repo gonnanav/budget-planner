@@ -32,9 +32,9 @@ export default function Page() {
     <SectionLayout
       heading={<Heading>Income</Heading>}
       addButton={<AddButton label={addButtonLabel} onClick={onAdd} />}
-    >
-      <SectionTabs selectedTab={view} onTabChange={onChangeView} />
-      {view === "items" && (
+      tabs={<SectionTabs selectedTab={view} onTabChange={onChangeView} />}
+      view={view}
+      items={
         <SectionList
           items={items}
           empty={<EmptyStateText>No items yet</EmptyStateText>}
@@ -50,8 +50,8 @@ export default function Page() {
             />
           )}
         </SectionList>
-      )}
-      {view === "categories" && (
+      }
+      categories={
         <SectionList
           items={categories}
           empty={<EmptyStateText>No categories yet</EmptyStateText>}
@@ -65,7 +65,7 @@ export default function Page() {
             />
           )}
         </SectionList>
-      )}
-    </SectionLayout>
+      }
+    />
   );
 }
