@@ -1,5 +1,6 @@
 "use client";
 
+import { useContext } from "react";
 import { useSectionView } from "@/hooks/useSectionView";
 import { SectionLayout } from "@/components/section-layout";
 import { SectionTabs } from "@/components/section-tabs";
@@ -15,8 +16,11 @@ import {
 } from "@/components/category-drawer";
 import { useItemDrawer } from "@/components/item-drawer";
 import { useIncomes } from "@/hooks/useIncomes";
+import { AppLayout } from "@/components/app-layout";
+import { BackupContext } from "@/contexts/BackupContext";
 
 export default function Page() {
+  const { backup, restore } = useContext(BackupContext);
   const { itemDrawerProps, onOpenItemDrawer, onCloseItemDrawer } =
     useItemDrawer();
   const { categoryDrawerProps, onOpenCategoryDrawer, onCloseCategoryDrawer } =
@@ -44,7 +48,7 @@ export default function Page() {
   });
 
   return (
-    <>
+    <AppLayout selectedTab="income" onBackup={backup} onRestore={restore}>
       <SectionLayout
         heading={<Heading>Income</Heading>}
         addButton={<AddButton label={addButtonLabel} onClick={onAdd} />}
@@ -85,6 +89,6 @@ export default function Page() {
       />
       <ItemDrawer {...itemDrawerProps} />
       <CategoryDrawer {...categoryDrawerProps} />
-    </>
+    </AppLayout>
   );
 }
