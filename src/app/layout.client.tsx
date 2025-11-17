@@ -12,63 +12,19 @@ import { Providers } from "@/providers";
 import { useIncomes } from "@/hooks/useIncomes";
 import { useExpenses } from "@/hooks/useExpenses";
 import { backupData, restoreBackupToDb } from "@/lib/backup-restore";
+import { useTableItems } from "@/db";
 
 interface RootLayoutClientProps {
   children: React.ReactNode;
 }
 
 export function RootLayoutClient({ children }: RootLayoutClientProps) {
-  const { itemDrawerProps, onOpenItemDrawer, onCloseItemDrawer } =
-    useItemDrawer();
-  const { categoryDrawerProps, onOpenCategoryDrawer, onCloseCategoryDrawer } =
-    useCategoryDrawer();
-
-  const drawersHandlers = {
-    onOpenItemDrawer,
-    onCloseItemDrawer,
-    onOpenCategoryDrawer,
-    onCloseCategoryDrawer,
-  };
-
-  const {
-    incomes,
-    incomeCategories,
-    onClickAddIncomeItem,
-    onClickIncomeItem,
-    onClickAddIncomeCategory,
-    onClickIncomeCategory,
-  } = useIncomes(drawersHandlers);
-
-  const {
-    expenses,
-    expenseCategories,
-    onClickAddExpenseItem,
-    onClickExpenseItem,
-    onClickAddExpenseCategory,
-    onClickExpenseCategory,
-  } = useExpenses(drawersHandlers);
-
+  const { items: incomes } = useTableItems("incomes");
+  const { items: expenses } = useTableItems("expenses");
   const pathname = usePathname();
 
   return (
-    <Providers
-      incomes={{
-        items: incomes,
-        categories: incomeCategories,
-        onClickAddIncomeItem,
-        onClickIncomeItem,
-        onClickAddIncomeCategory,
-        onClickIncomeCategory,
-      }}
-      expenses={{
-        items: expenses,
-        categories: expenseCategories,
-        onClickAddExpenseItem,
-        onClickExpenseItem,
-        onClickAddExpenseCategory,
-        onClickExpenseCategory,
-      }}
-    >
+    <Providers incomes={{ items: incomes }} expenses={{ items: expenses }}>
       <AppLayout
         selectedTab={pathname}
         onBackup={backupData}
@@ -76,8 +32,6 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
       >
         {children}
       </AppLayout>
-      <ItemDrawer {...itemDrawerProps} />
-      <CategoryDrawer {...categoryDrawerProps} />
     </Providers>
   );
 }
