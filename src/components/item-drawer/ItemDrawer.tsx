@@ -21,7 +21,7 @@ export interface ItemDrawerProps {
   onCancel: () => void;
   onSave: (input: BudgetItemInput) => void;
   onClose: () => void;
-  onDelete?: () => void;
+  onDelete: () => void;
 }
 
 export const ItemDrawer = ({

@@ -6,6 +6,7 @@ import { LIMITS } from "@/lib/limits";
 import { enrichCategory } from "@/core/categories";
 import { BudgetItem } from "@/core/types";
 import { CategoriesTableName } from "./types";
+import { useIncomeItems, useExpenseItems } from "@/db/items";
 
 export async function addCategory(
   tableName: CategoriesTableName,
@@ -79,4 +80,45 @@ export function useTableCategories(
     limit,
     isAtLimit,
   };
+}
+
+export async function addIncomeCategory(name: string) {
+  return db.incomeCategories.add(createCategory(crypto.randomUUID(), name));
+}
+
+export async function updateIncomeCategory(id: string, name: string) {
+  const result = await db.incomeCategories.update(id, createCategory(id, name));
+  return result === 1;
+}
+
+export async function deleteIncomeCategory(id: string) {
+  return db.incomeCategories.delete(id);
+}
+
+export function useIncomeCategories() {
+  const { items } = useIncomeItems();
+
+  return useTableCategories("incomeCategories", items);
+}
+
+export async function addExpenseCategory(name: string) {
+  return db.expenseCategories.add(createCategory(crypto.randomUUID(), name));
+}
+
+export async function updateExpenseCategory(id: string, name: string) {
+  const result = await db.expenseCategories.update(
+    id,
+    createCategory(id, name),
+  );
+  return result === 1;
+}
+
+export async function deleteExpenseCategory(id: string) {
+  return db.expenseCategories.delete(id);
+}
+
+export function useExpenseCategories() {
+  const { items } = useExpenseItems();
+
+  return useTableCategories("expenseCategories", items);
 }

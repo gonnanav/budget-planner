@@ -62,3 +62,51 @@ export function useTableItems(tableName: ItemsTableName) {
     isAtLimit,
   };
 }
+
+export async function addIncomeItem(input: BudgetItemInput): Promise<string> {
+  return db.incomes.add(createItem({ id: crypto.randomUUID(), ...input }));
+}
+
+export async function updateIncomeItem(
+  id: string,
+  input: BudgetItemInput,
+): Promise<boolean> {
+  const updatedCount = await db.incomes.update(
+    id,
+    createItem({ id, ...input }),
+  );
+
+  return updatedCount === 1;
+}
+
+export async function deleteIncomeItem(id: string): Promise<void> {
+  return db.incomes.delete(id);
+}
+
+export async function addExpenseItem(input: BudgetItemInput): Promise<string> {
+  return db.expenses.add(createItem({ id: crypto.randomUUID(), ...input }));
+}
+
+export async function updateExpenseItem(
+  id: string,
+  input: BudgetItemInput,
+): Promise<boolean> {
+  const updatedCount = await db.expenses.update(
+    id,
+    createItem({ id, ...input }),
+  );
+
+  return updatedCount === 1;
+}
+
+export async function deleteExpenseItem(id: string): Promise<void> {
+  return db.expenses.delete(id);
+}
+
+export function useIncomeItems() {
+  return useTableItems("incomes");
+}
+
+export function useExpenseItems() {
+  return useTableItems("expenses");
+}

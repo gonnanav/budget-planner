@@ -11,6 +11,7 @@ const meta = {
     onSave: fn(),
     onClose: fn(),
     onCancel: fn(),
+    onDelete: fn(),
   },
 } satisfies Meta<typeof ItemDrawer>;
 
