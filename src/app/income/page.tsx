@@ -11,7 +11,7 @@ export default function Page() {
     <SectionScreen
       addItemButtonLabel="Add Income"
       addCategoryButtonLabel="Add Income Category"
-      selectedTab="incomes"
+      selectedTab="income"
       headingText="Incomes"
       itemsTableName="incomes"
       categoriesTableName="incomeCategories"
