@@ -18,12 +18,12 @@ export function useSectionCategories({
     null,
   );
 
-  const handleClickAddCategory = () => {
+  const handleAddCategoryClick = () => {
     setSelectedCategory(null);
     onOpen();
   };
 
-  const handleClickCategory = (category: Category) => {
+  const handleCategoryClick = (category: Category) => {
     setSelectedCategory(category);
     onOpen();
   };
@@ -54,8 +54,8 @@ export function useSectionCategories({
   return {
     isCategoryDrawerOpen: isOpen,
     selectedCategory,
-    handleClickAddCategory,
-    handleClickCategory,
+    handleAddCategoryClick,
+    handleCategoryClick,
     handleSaveCategory,
     handleDeleteCategory,
     handleCloseCategoryDrawer: onClose,

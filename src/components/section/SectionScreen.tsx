@@ -50,8 +50,8 @@ export function SectionScreen({
   const {
     isItemDrawerOpen,
     selectedItem,
-    handleClickAddItem,
-    handleClickItem,
+    handleAddItemClick,
+    handleItemClick,
     handleSaveItem,
     handleDeleteItem,
     handleCloseItemDrawer,
@@ -64,8 +64,8 @@ export function SectionScreen({
   const {
     isCategoryDrawerOpen,
     selectedCategory,
-    handleClickAddCategory,
-    handleClickCategory,
+    handleAddCategoryClick,
+    handleCategoryClick,
     handleSaveCategory,
     handleDeleteCategory,
     handleCloseCategoryDrawer,
@@ -79,8 +79,8 @@ export function SectionScreen({
     useSectionView({
       addItemButtonLabel,
       addCategoryButtonLabel,
-      onAddItemClick: handleClickAddItem,
-      onAddCategoryClick: handleClickAddCategory,
+      onAddItemClick: handleAddItemClick,
+      onAddCategoryClick: handleAddCategoryClick,
     });
 
   return (
@@ -108,7 +108,7 @@ export function SectionScreen({
                 amount={item.amount}
                 frequency={item.frequency}
                 normalizedAmount={item.normalizedAmount}
-                onClick={() => handleClickItem(item)}
+                onClick={() => handleItemClick(item)}
               />
             )}
           </SectionList>
@@ -122,7 +122,7 @@ export function SectionScreen({
                 key={category.id}
                 name={category.name}
                 amount={category.amount}
-                onClick={() => handleClickCategory(category)}
+                onClick={() => handleCategoryClick(category)}
               />
             )}
           </SectionList>

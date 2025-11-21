@@ -16,12 +16,12 @@ export function useSectionItems({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedItem, setSelectedItem] = useState<BudgetItem | null>(null);
 
-  const handleClickAddItem = () => {
+  const handleAddItemClick = () => {
     setSelectedItem(null);
     onOpen();
   };
 
-  const handleClickItem = (item: BudgetItem) => {
+  const handleItemClick = (item: BudgetItem) => {
     setSelectedItem(item);
     onOpen();
   };
@@ -50,8 +50,8 @@ export function useSectionItems({
   return {
     isItemDrawerOpen: isOpen,
     selectedItem,
-    handleClickAddItem,
-    handleClickItem,
+    handleAddItemClick,
+    handleItemClick,
     handleSaveItem,
     handleDeleteItem,
     handleCloseItemDrawer: onClose,
