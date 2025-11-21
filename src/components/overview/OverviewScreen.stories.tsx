@@ -10,10 +10,8 @@ const meta = {
     layout: "fullscreen",
   },
   args: {
-    incomeRoute: "/income",
-    expenseRoute: "/expenses",
-    onBackup: fn(),
-    onRestore: fn(),
+    backup: fn(),
+    restore: fn(),
   },
 } satisfies Meta<typeof OverviewScreen>;
 

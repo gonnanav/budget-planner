@@ -14,8 +14,8 @@ export default function Page() {
     <OverviewScreen
       incomeItems={incomeItems}
       expenseItems={expenseItems}
-      onBackup={backup}
-      onRestore={restore}
+      backup={backup}
+      restore={restore}
     />
   );
 }

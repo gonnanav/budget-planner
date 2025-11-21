@@ -11,15 +11,15 @@ import { BudgetItem } from "@/core/types";
 interface OverviewScreenProps {
   incomeItems: BudgetItem[];
   expenseItems: BudgetItem[];
-  onBackup: () => Promise<void>;
-  onRestore: (data: BackupData) => Promise<void>;
+  backup: () => Promise<void>;
+  restore: (data: BackupData) => Promise<void>;
 }
 
 export function OverviewScreen({
   incomeItems,
   expenseItems,
-  onBackup,
-  onRestore,
+  backup,
+  restore,
 }: OverviewScreenProps) {
   const { incomeSum, expenseSum, balance, status } = budgetBalance(
     incomeItems,
@@ -48,8 +48,8 @@ export function OverviewScreen({
   return (
     <OverviewLayout
       heading={<Heading>Overview</Heading>}
-      onBackup={onBackup}
-      onRestore={onRestore}
+      onBackup={backup}
+      onRestore={restore}
       banner={
         <BalanceBanner status={balanceStatus} amount={formattedBalance} />
       }
