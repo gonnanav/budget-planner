@@ -17,20 +17,20 @@ import {
 } from "@/db/categories";
 
 export default function Page() {
-  const { backup, restore } = useContext(BackupContext);
+  const backupActions = useContext(BackupContext);
   const { items } = useIncomeItems();
   const { categories } = useIncomeCategories();
 
   return (
     <SectionScreen
       selectedTab="income"
-      headingText="Incomes"
+      headingText="Income"
       labels={{
-        addItem: "Add Income",
-        addCategory: "Add Income Category",
+        addItem: "Add income item",
+        addCategory: "Add income category",
       }}
       data={{ items, categories }}
-      backup={{ backup, restore }}
+      backupActions={backupActions}
       itemActions={{
         add: addIncomeItem,
         update: updateIncomeItem,

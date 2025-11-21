@@ -17,7 +17,7 @@ import {
 } from "@/db/categories";
 
 export default function Page() {
-  const { backup, restore } = useContext(BackupContext);
+  const backupActions = useContext(BackupContext);
   const { items } = useExpenseItems();
   const { categories } = useExpenseCategories();
 
@@ -26,11 +26,11 @@ export default function Page() {
       selectedTab="expenses"
       headingText="Expenses"
       labels={{
-        addItem: "Add Expense",
-        addCategory: "Add Expense Category",
+        addItem: "Add expense item",
+        addCategory: "Add expense category",
       }}
       data={{ items, categories }}
-      backup={{ backup, restore }}
+      backupActions={backupActions}
       itemActions={{
         add: addExpenseItem,
         update: updateExpenseItem,

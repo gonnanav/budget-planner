@@ -25,7 +25,7 @@ interface SectionScreenProps {
     items: (BudgetItem & { normalizedAmount: number })[];
     categories: (Category & { amount: number })[];
   };
-  backup: {
+  backupActions: {
     backup: () => Promise<void>;
     restore: (data: BackupData) => Promise<void>;
   };
@@ -46,14 +46,12 @@ export function SectionScreen({
   headingText,
   labels,
   data,
-  backup,
+  backupActions,
   itemActions,
   categoryActions,
 }: SectionScreenProps) {
-  const { addItem: addItemButtonLabel, addCategory: addCategoryButtonLabel } =
-    labels;
   const { items, categories } = data;
-  const { backup: onBackup, restore: onRestore } = backup;
+  const { backup, restore } = backupActions;
 
   const {
     isItemDrawerOpen,
@@ -85,18 +83,14 @@ export function SectionScreen({
 
   const { view, handleViewChange, addButtonLabel, handleAddButtonClick } =
     useSectionView({
-      addItemButtonLabel,
-      addCategoryButtonLabel,
+      addItemButtonLabel: labels.addItem,
+      addCategoryButtonLabel: labels.addCategory,
       onAddItemClick: handleAddItemClick,
       onAddCategoryClick: handleAddCategoryClick,
     });
 
   return (
-    <AppLayout
-      selectedTab={selectedTab}
-      onBackup={onBackup}
-      onRestore={onRestore}
-    >
+    <AppLayout selectedTab={selectedTab} onBackup={backup} onRestore={restore}>
       <SectionLayout
         heading={<Heading>{headingText}</Heading>}
         addButton={
