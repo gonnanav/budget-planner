@@ -1,6 +1,6 @@
 import { BudgetItem, BudgetItemInput, Category } from "@/core/types";
-import { SectionLayout } from "@/components/section-layout";
-import { SectionTabs } from "@/components/section-tabs";
+import { SectionLayout } from "./SectionLayout";
+import { SectionTabs } from "./SectionTabs";
 import { ItemListItem } from "@/components/item-list-item";
 import { CategoryListItem } from "@/components/category-list-item";
 import { EmptyStateText, SectionList } from "@/components/shared";
