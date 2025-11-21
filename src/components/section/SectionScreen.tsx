@@ -139,8 +139,8 @@ export function SectionScreen({
           <AddButton label={addButtonLabel} onClick={handleClickAdd} />
         }
         tabs={<SectionTabs selectedTab={view} onTabChange={setView} />}
-        view={view}
-        items={
+      >
+        {view === "items" ? (
           <SectionList
             items={items}
             empty={<EmptyStateText>No items yet</EmptyStateText>}
@@ -156,8 +156,7 @@ export function SectionScreen({
               />
             )}
           </SectionList>
-        }
-        categories={
+        ) : (
           <SectionList
             items={categories}
             empty={<EmptyStateText>No categories yet</EmptyStateText>}
@@ -171,8 +170,8 @@ export function SectionScreen({
               />
             )}
           </SectionList>
-        }
-      />
+        )}
+      </SectionLayout>
       <ItemDrawer
         isOpen={isItemDrawerOpen}
         item={selectedItem}
