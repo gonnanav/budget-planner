@@ -30,7 +30,7 @@ export default function Page() {
         addCategory: "Add Expense Category",
       }}
       data={{ items, categories }}
-      backup={{ onBackup: backup, onRestore: restore }}
+      backup={{ backup, restore }}
       itemActions={{
         add: addExpenseItem,
         update: updateExpenseItem,

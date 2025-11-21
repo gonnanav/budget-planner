@@ -26,8 +26,8 @@ interface SectionScreenProps {
     categories: (Category & { amount: number })[];
   };
   backup: {
-    onBackup: () => Promise<void>;
-    onRestore: (data: BackupData) => Promise<void>;
+    backup: () => Promise<void>;
+    restore: (data: BackupData) => Promise<void>;
   };
   itemActions: {
     add: (input: BudgetItemInput) => Promise<string>;
@@ -53,7 +53,7 @@ export function SectionScreen({
   const { addItem: addItemButtonLabel, addCategory: addCategoryButtonLabel } =
     labels;
   const { items, categories } = data;
-  const { onBackup, onRestore } = backup;
+  const { backup: onBackup, restore: onRestore } = backup;
 
   const {
     isItemDrawerOpen,
