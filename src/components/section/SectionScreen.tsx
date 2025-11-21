@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useDisclosure } from "@heroui/react";
 import { BudgetItem, BudgetItemInput, Category } from "@/core/types";
 import { SectionLayout } from "@/components/section-layout";
 import { SectionTabs } from "@/components/section-tabs";
@@ -12,6 +10,9 @@ import { ItemDrawer } from "@/components/item-drawer";
 import { CategoryDrawer } from "@/components/category-drawer";
 import { AppLayout } from "@/components/app-layout";
 import { BackupData } from "@/lib/backup-restore";
+import { useSectionCategories } from "@/components/section/useSectionCategories";
+import { useSectionItems } from "@/components/section/useSectionItems";
+import { useSectionView } from "@/components/section/useSectionView";
 
 interface SectionScreenProps {
   addItemButtonLabel: string;
@@ -47,89 +48,40 @@ export function SectionScreen({
   onDeleteCategory,
 }: SectionScreenProps) {
   const {
-    isOpen: isItemDrawerOpen,
-    onOpen: onItemDrawerOpen,
-    onClose: onItemDrawerClose,
-  } = useDisclosure();
-  const [view, setView] = useState<"items" | "categories">("items");
-  const [selectedItem, setSelectedItem] = useState<BudgetItem | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    null,
-  );
+    isItemDrawerOpen,
+    selectedItem,
+    handleClickAddItem,
+    handleClickItem,
+    handleSaveItem,
+    handleDeleteItem,
+    handleCloseItemDrawer,
+  } = useSectionItems({
+    onAddItem,
+    onUpdateItem,
+    onDeleteItem,
+  });
 
   const {
-    isOpen: isCategoryDrawerOpen,
-    onOpen: onCategoryDrawerOpen,
-    onClose: onCategoryDrawerClose,
-  } = useDisclosure();
+    isCategoryDrawerOpen,
+    selectedCategory,
+    handleClickAddCategory,
+    handleClickCategory,
+    handleSaveCategory,
+    handleDeleteCategory,
+    handleCloseCategoryDrawer,
+  } = useSectionCategories({
+    onAddCategory,
+    onUpdateCategory,
+    onDeleteCategory,
+  });
 
-  const handleClickAddItem = () => {
-    setSelectedItem(null);
-    onItemDrawerOpen();
-  };
-
-  const handleClickItem = (item: BudgetItem) => {
-    setSelectedItem(item);
-    onItemDrawerOpen();
-  };
-
-  const handleUpdateItem = async (input: BudgetItemInput) => {
-    if (!selectedItem) return;
-
-    await onUpdateItem(selectedItem.id, input);
-    onItemDrawerClose();
-  };
-
-  const handleAddItem = async (input: BudgetItemInput) => {
-    await onAddItem(input);
-    onItemDrawerClose();
-  };
-
-  const handleDeleteItem = async () => {
-    if (!selectedItem) return;
-
-    await onDeleteItem(selectedItem.id);
-    onItemDrawerClose();
-  };
-
-  const handleClickAddCategory = () => {
-    setSelectedCategory(null);
-    onCategoryDrawerOpen();
-  };
-
-  const handleClickCategory = (category: Category) => {
-    setSelectedCategory(category);
-    onCategoryDrawerOpen();
-  };
-
-  const handleUpdateCategory = async (name: string) => {
-    if (!selectedCategory) return;
-
-    await onUpdateCategory(selectedCategory.id, name);
-    onCategoryDrawerClose();
-  };
-
-  const handleAddCategory = async (name: string) => {
-    await onAddCategory(name);
-    onCategoryDrawerClose();
-  };
-
-  const handleDeleteCategory = async () => {
-    if (!selectedCategory) return;
-
-    await onDeleteCategory(selectedCategory.id);
-    onCategoryDrawerClose();
-  };
-
-  const addButtonProps =
-    view === "items"
-      ? { label: addItemButtonLabel, onClick: handleClickAddItem }
-      : { label: addCategoryButtonLabel, onClick: handleClickAddCategory };
-
-  const handleSaveItem = selectedItem ? handleUpdateItem : handleAddItem;
-  const handleSaveCategory = selectedCategory
-    ? handleUpdateCategory
-    : handleAddCategory;
+  const { view, handleViewChange, addButtonLabel, handleAddButtonClick } =
+    useSectionView({
+      addItemButtonLabel,
+      addCategoryButtonLabel,
+      onAddItemClick: handleClickAddItem,
+      onAddCategoryClick: handleClickAddCategory,
+    });
 
   return (
     <AppLayout
@@ -139,8 +91,10 @@ export function SectionScreen({
     >
       <SectionLayout
         heading={<Heading>{headingText}</Heading>}
-        addButton={<AddButton {...addButtonProps} />}
-        tabs={<SectionTabs selectedTab={view} onTabChange={setView} />}
+        addButton={
+          <AddButton label={addButtonLabel} onClick={handleAddButtonClick} />
+        }
+        tabs={<SectionTabs selectedTab={view} onTabChange={handleViewChange} />}
       >
         {view === "items" ? (
           <SectionList
@@ -178,17 +132,17 @@ export function SectionScreen({
         isOpen={isItemDrawerOpen}
         item={selectedItem}
         categories={categories}
-        onCancel={onItemDrawerClose}
+        onCancel={handleCloseItemDrawer}
         onSave={handleSaveItem}
-        onClose={onItemDrawerClose}
+        onClose={handleCloseItemDrawer}
         onDelete={handleDeleteItem}
       />
       <CategoryDrawer
         isOpen={isCategoryDrawerOpen}
         category={selectedCategory}
-        onCancel={onCategoryDrawerClose}
+        onCancel={handleCloseCategoryDrawer}
         onSave={handleSaveCategory}
-        onClose={onCategoryDrawerClose}
+        onClose={handleCloseCategoryDrawer}
         onDelete={handleDeleteCategory}
       />
     </AppLayout>
