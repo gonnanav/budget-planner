@@ -73,13 +73,15 @@ export function SectionScreen({
     onItemDrawerOpen();
   };
 
-  const handleSaveItem = async (input: BudgetItemInput) => {
-    if (selectedItem) {
-      await onUpdateItem(selectedItem.id, input);
-    } else {
-      await onAddItem(input);
-    }
+  const handleUpdateItem = async (input: BudgetItemInput) => {
+    if (!selectedItem) return;
 
+    await onUpdateItem(selectedItem.id, input);
+    onItemDrawerClose();
+  };
+
+  const handleAddItem = async (input: BudgetItemInput) => {
+    await onAddItem(input);
     onItemDrawerClose();
   };
 
@@ -100,12 +102,15 @@ export function SectionScreen({
     onCategoryDrawerOpen();
   };
 
-  const handleSaveCategory = async (name: string) => {
-    if (selectedCategory) {
-      await onUpdateCategory(selectedCategory.id, name);
-    } else {
-      await onAddCategory(name);
-    }
+  const handleUpdateCategory = async (name: string) => {
+    if (!selectedCategory) return;
+
+    await onUpdateCategory(selectedCategory.id, name);
+    onCategoryDrawerClose();
+  };
+
+  const handleAddCategory = async (name: string) => {
+    await onAddCategory(name);
     onCategoryDrawerClose();
   };
 
@@ -120,6 +125,11 @@ export function SectionScreen({
     view === "items"
       ? { label: addItemButtonLabel, onClick: handleClickAddItem }
       : { label: addCategoryButtonLabel, onClick: handleClickAddCategory };
+
+  const handleSaveItem = selectedItem ? handleUpdateItem : handleAddItem;
+  const handleSaveCategory = selectedCategory
+    ? handleUpdateCategory
+    : handleAddCategory;
 
   return (
     <AppLayout
