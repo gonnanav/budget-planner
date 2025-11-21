@@ -63,9 +63,6 @@ export function SectionScreen({
     onClose: onCategoryDrawerClose,
   } = useDisclosure();
 
-  const addButtonLabel =
-    view === "items" ? addItemButtonLabel : addCategoryButtonLabel;
-
   const handleClickAddItem = () => {
     setSelectedItem(null);
     onItemDrawerOpen();
@@ -119,13 +116,10 @@ export function SectionScreen({
     onCategoryDrawerClose();
   };
 
-  const handleClickAdd = () => {
-    if (view === "items") {
-      handleClickAddItem();
-    } else {
-      handleClickAddCategory();
-    }
-  };
+  const addButtonProps =
+    view === "items"
+      ? { label: addItemButtonLabel, onClick: handleClickAddItem }
+      : { label: addCategoryButtonLabel, onClick: handleClickAddCategory };
 
   return (
     <AppLayout
@@ -135,9 +129,7 @@ export function SectionScreen({
     >
       <SectionLayout
         heading={<Heading>{headingText}</Heading>}
-        addButton={
-          <AddButton label={addButtonLabel} onClick={handleClickAdd} />
-        }
+        addButton={<AddButton {...addButtonProps} />}
         tabs={<SectionTabs selectedTab={view} onTabChange={setView} />}
       >
         {view === "items" ? (
