@@ -1,7 +1,9 @@
+import Link from "next/link";
 import { BackupData } from "@/lib/backup-restore";
 import { BalanceBanner } from "./BalanceBanner";
 import { BudgetCard } from "./BudgetCard";
-import { AppLayout } from "@/components/app-layout";
+import { OverviewLayout } from "./OverviewLayout";
+import { Heading } from "@/components/shared/Heading";
 import { budgetBalance } from "@/core/budget-balance";
 import { formatAmount } from "@/lib/format";
 import { BudgetItem } from "@/core/types";
@@ -9,8 +11,6 @@ import { BudgetItem } from "@/core/types";
 interface OverviewScreenProps {
   incomeItems: BudgetItem[];
   expenseItems: BudgetItem[];
-  onIncomeClick: () => void;
-  onExpenseClick: () => void;
   onBackup: () => Promise<void>;
   onRestore: (data: BackupData) => Promise<void>;
 }
@@ -18,8 +18,6 @@ interface OverviewScreenProps {
 export function OverviewScreen({
   incomeItems,
   expenseItems,
-  onIncomeClick,
-  onExpenseClick,
   onBackup,
   onRestore,
 }: OverviewScreenProps) {
@@ -48,32 +46,36 @@ export function OverviewScreen({
   ).size;
 
   return (
-    <AppLayout selectedTab="overview" onBackup={onBackup} onRestore={onRestore}>
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Overview</h3>
-
+    <OverviewLayout
+      heading={<Heading>Overview</Heading>}
+      onBackup={onBackup}
+      onRestore={onRestore}
+      banner={
         <BalanceBanner status={balanceStatus} amount={formattedBalance} />
+      }
+      cards={
+        <>
+          <Link href="/income">
+            <BudgetCard
+              title="Income"
+              amount={formattedIncome}
+              itemCount={incomeItems.length}
+              categoryCount={uniqueIncomeCategories}
+              variant="income"
+            />
+          </Link>
 
-        <div className="grid grid-cols-2 gap-3">
-          <BudgetCard
-            title="Income"
-            amount={formattedIncome}
-            itemCount={incomeItems.length}
-            categoryCount={uniqueIncomeCategories}
-            variant="income"
-            onClick={onIncomeClick}
-          />
-
-          <BudgetCard
-            title="Expenses"
-            amount={formattedExpense}
-            itemCount={expenseItems.length}
-            categoryCount={uniqueExpenseCategories}
-            variant="expense"
-            onClick={onExpenseClick}
-          />
-        </div>
-      </div>
-    </AppLayout>
+          <Link href="/expenses">
+            <BudgetCard
+              title="Expenses"
+              amount={formattedExpense}
+              itemCount={expenseItems.length}
+              categoryCount={uniqueExpenseCategories}
+              variant="expense"
+            />
+          </Link>
+        </>
+      }
+    />
   );
 }

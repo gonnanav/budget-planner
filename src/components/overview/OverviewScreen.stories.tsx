@@ -10,8 +10,8 @@ const meta = {
     layout: "fullscreen",
   },
   args: {
-    onIncomeClick: fn(),
-    onExpenseClick: fn(),
+    incomeRoute: "/income",
+    expenseRoute: "/expenses",
     onBackup: fn(),
     onRestore: fn(),
   },

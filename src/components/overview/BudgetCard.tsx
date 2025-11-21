@@ -7,7 +7,6 @@ interface BudgetCardProps {
   itemCount: number;
   categoryCount: number;
   variant: "income" | "expense";
-  onClick?: () => void;
 }
 
 export function BudgetCard({
@@ -16,7 +15,6 @@ export function BudgetCard({
   itemCount,
   categoryCount,
   variant,
-  onClick,
 }: BudgetCardProps) {
   const variantStyles = {
     income: "bg-emerald-50 border-emerald-200 hover:border-emerald-300",
@@ -25,11 +23,9 @@ export function BudgetCard({
 
   return (
     <Card
-      isPressable
-      onPress={onClick}
       shadow="sm"
       className={cn(
-        "border-2 transition-all cursor-pointer hover:shadow-md hover:-translate-y-0.5",
+        "border-2 transition-all hover:shadow-md hover:-translate-y-0.5",
         variantStyles[variant],
       )}
     >
