@@ -40,11 +40,11 @@ export function useSectionCategories({
     onClose();
   };
 
-  const handleSaveCategory = selectedCategory
+  const handleSaveCategoryClick = selectedCategory
     ? handleUpdateCategory
     : handleAddCategory;
 
-  const handleDeleteCategory = async () => {
+  const handleDeleteCategoryClick = async () => {
     if (!selectedCategory) return;
 
     await onDeleteCategory(selectedCategory.id);
@@ -56,8 +56,8 @@ export function useSectionCategories({
     selectedCategory,
     handleAddCategoryClick,
     handleCategoryClick,
-    handleSaveCategory,
-    handleDeleteCategory,
+    handleSaveCategoryClick,
+    handleDeleteCategoryClick,
     handleCloseCategoryDrawer: onClose,
   };
 }

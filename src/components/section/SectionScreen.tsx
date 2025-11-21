@@ -15,50 +15,58 @@ import { useSectionItems } from "@/components/section/useSectionItems";
 import { useSectionView } from "@/components/section/useSectionView";
 
 interface SectionScreenProps {
-  addItemButtonLabel: string;
-  addCategoryButtonLabel: string;
   selectedTab: string;
   headingText: string;
-  items: (BudgetItem & { normalizedAmount: number })[];
-  categories: (Category & { amount: number })[];
-  onBackup: () => Promise<void>;
-  onRestore: (data: BackupData) => Promise<void>;
-  onAddItem: (input: BudgetItemInput) => Promise<string>;
-  onUpdateItem: (id: string, input: BudgetItemInput) => Promise<boolean>;
-  onDeleteItem: (id: string) => Promise<void>;
-  onAddCategory: (name: string) => Promise<string>;
-  onUpdateCategory: (id: string, name: string) => Promise<boolean>;
-  onDeleteCategory: (id: string) => Promise<void>;
+  labels: {
+    addItem: string;
+    addCategory: string;
+  };
+  data: {
+    items: (BudgetItem & { normalizedAmount: number })[];
+    categories: (Category & { amount: number })[];
+  };
+  backup: {
+    onBackup: () => Promise<void>;
+    onRestore: (data: BackupData) => Promise<void>;
+  };
+  itemActions: {
+    add: (input: BudgetItemInput) => Promise<string>;
+    update: (id: string, input: BudgetItemInput) => Promise<boolean>;
+    delete: (id: string) => Promise<void>;
+  };
+  categoryActions: {
+    add: (name: string) => Promise<string>;
+    update: (id: string, name: string) => Promise<boolean>;
+    delete: (id: string) => Promise<void>;
+  };
 }
 
 export function SectionScreen({
-  addItemButtonLabel,
-  addCategoryButtonLabel,
   selectedTab,
   headingText,
-  items,
-  categories,
-  onBackup,
-  onRestore,
-  onAddItem,
-  onUpdateItem,
-  onDeleteItem,
-  onAddCategory,
-  onUpdateCategory,
-  onDeleteCategory,
+  labels,
+  data,
+  backup,
+  itemActions,
+  categoryActions,
 }: SectionScreenProps) {
+  const { addItem: addItemButtonLabel, addCategory: addCategoryButtonLabel } =
+    labels;
+  const { items, categories } = data;
+  const { onBackup, onRestore } = backup;
+
   const {
     isItemDrawerOpen,
     selectedItem,
     handleAddItemClick,
     handleItemClick,
-    handleSaveItem,
-    handleDeleteItem,
+    handleSaveItemClick,
+    handleDeleteItemClick,
     handleCloseItemDrawer,
   } = useSectionItems({
-    onAddItem,
-    onUpdateItem,
-    onDeleteItem,
+    onAddItem: itemActions.add,
+    onUpdateItem: itemActions.update,
+    onDeleteItem: itemActions.delete,
   });
 
   const {
@@ -66,13 +74,13 @@ export function SectionScreen({
     selectedCategory,
     handleAddCategoryClick,
     handleCategoryClick,
-    handleSaveCategory,
-    handleDeleteCategory,
+    handleSaveCategoryClick,
+    handleDeleteCategoryClick,
     handleCloseCategoryDrawer,
   } = useSectionCategories({
-    onAddCategory,
-    onUpdateCategory,
-    onDeleteCategory,
+    onAddCategory: categoryActions.add,
+    onUpdateCategory: categoryActions.update,
+    onDeleteCategory: categoryActions.delete,
   });
 
   const { view, handleViewChange, addButtonLabel, handleAddButtonClick } =
@@ -133,17 +141,17 @@ export function SectionScreen({
         item={selectedItem}
         categories={categories}
         onCancel={handleCloseItemDrawer}
-        onSave={handleSaveItem}
+        onSave={handleSaveItemClick}
         onClose={handleCloseItemDrawer}
-        onDelete={handleDeleteItem}
+        onDelete={handleDeleteItemClick}
       />
       <CategoryDrawer
         isOpen={isCategoryDrawerOpen}
         category={selectedCategory}
         onCancel={handleCloseCategoryDrawer}
-        onSave={handleSaveCategory}
+        onSave={handleSaveCategoryClick}
         onClose={handleCloseCategoryDrawer}
-        onDelete={handleDeleteCategory}
+        onDelete={handleDeleteCategoryClick}
       />
     </AppLayout>
   );

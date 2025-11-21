@@ -23,20 +23,24 @@ export default function Page() {
 
   return (
     <SectionScreen
-      addItemButtonLabel="Add Income"
-      addCategoryButtonLabel="Add Income Category"
       selectedTab="income"
       headingText="Incomes"
-      items={items}
-      categories={categories}
-      onBackup={backup}
-      onRestore={restore}
-      onAddItem={addIncomeItem}
-      onUpdateItem={updateIncomeItem}
-      onDeleteItem={deleteIncomeItem}
-      onAddCategory={addIncomeCategory}
-      onUpdateCategory={updateIncomeCategory}
-      onDeleteCategory={deleteIncomeCategory}
+      labels={{
+        addItem: "Add Income",
+        addCategory: "Add Income Category",
+      }}
+      data={{ items, categories }}
+      backup={{ onBackup: backup, onRestore: restore }}
+      itemActions={{
+        add: addIncomeItem,
+        update: updateIncomeItem,
+        delete: deleteIncomeItem,
+      }}
+      categoryActions={{
+        add: addIncomeCategory,
+        update: updateIncomeCategory,
+        delete: deleteIncomeCategory,
+      }}
     />
   );
 }

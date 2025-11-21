@@ -23,20 +23,24 @@ export default function Page() {
 
   return (
     <SectionScreen
-      addItemButtonLabel="Add Expense"
-      addCategoryButtonLabel="Add Expense Category"
       selectedTab="expenses"
       headingText="Expenses"
-      items={items}
-      categories={categories}
-      onBackup={backup}
-      onRestore={restore}
-      onAddItem={addExpenseItem}
-      onUpdateItem={updateExpenseItem}
-      onDeleteItem={deleteExpenseItem}
-      onAddCategory={addExpenseCategory}
-      onUpdateCategory={updateExpenseCategory}
-      onDeleteCategory={deleteExpenseCategory}
+      labels={{
+        addItem: "Add Expense",
+        addCategory: "Add Expense Category",
+      }}
+      data={{ items, categories }}
+      backup={{ onBackup: backup, onRestore: restore }}
+      itemActions={{
+        add: addExpenseItem,
+        update: updateExpenseItem,
+        delete: deleteExpenseItem,
+      }}
+      categoryActions={{
+        add: addExpenseCategory,
+        update: updateExpenseCategory,
+        delete: deleteExpenseCategory,
+      }}
     />
   );
 }

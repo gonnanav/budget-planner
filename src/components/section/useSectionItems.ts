@@ -38,9 +38,9 @@ export function useSectionItems({
     onClose();
   };
 
-  const handleSaveItem = selectedItem ? handleUpdateItem : handleAddItem;
+  const handleSaveItemClick = selectedItem ? handleUpdateItem : handleAddItem;
 
-  const handleDeleteItem = async () => {
+  const handleDeleteItemClick = async () => {
     if (!selectedItem) return;
 
     await onDeleteItem(selectedItem.id);
@@ -52,8 +52,8 @@ export function useSectionItems({
     selectedItem,
     handleAddItemClick,
     handleItemClick,
-    handleSaveItem,
-    handleDeleteItem,
+    handleSaveItemClick,
+    handleDeleteItemClick,
     handleCloseItemDrawer: onClose,
   };
 }
