@@ -8,13 +8,6 @@ const db = new Dexie("BudgetDatabase") as Dexie & {
   expenseCategories: CategoriesTable;
 };
 
-db.version(4).stores({
-  incomes: "id, categoryId",
-  expenses: "id, categoryId",
-  incomeCategories: "id",
-  expenseCategories: "id",
-});
-
 db.version(5)
   .stores({
     incomeItems: "id, categoryId",
