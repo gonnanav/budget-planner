@@ -36,38 +36,4 @@ db.version(5)
     ]);
   });
 
-db.on("populate", (tx) => {
-  const migrateItems = (itemsType: string) => {
-    const data = localStorage.getItem(itemsType);
-    if (!data) return false;
-
-    try {
-      const items = JSON.parse(data) as BudgetItem[];
-
-      if (Array.isArray(items) && items.length > 0) {
-        tx.table(itemsType).bulkAdd(items);
-        return true;
-      }
-    } catch (error) {
-      console.error(`Failed to migrate ${itemsType}:`, error);
-    }
-
-    return false;
-  };
-
-  const migrateAndCleanup = (itemType: string, successMessage: string) => {
-    const migrated = migrateItems(itemType);
-
-    if (migrated) {
-      console.log(successMessage);
-      localStorage.removeItem(itemType);
-    }
-  };
-
-  ["incomeItems", "expenseItems"].forEach((itemType) => {
-    const message = `${itemType} migrated from localStorage to IndexedDB`;
-    migrateAndCleanup(itemType, message);
-  });
-});
-
 export { db };
