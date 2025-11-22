@@ -16,9 +16,9 @@ export async function replaceAll({
 }: ReplaceAllProps): Promise<void> {
   await db.transaction("rw", db.tables, async () =>
     Promise.all([
-      replaceAllInTable("incomes", incomeItems),
+      replaceAllInTable("incomeItems", incomeItems),
       replaceAllInTable("incomeCategories", incomeCategories),
-      replaceAllInTable("expenses", expenseItems),
+      replaceAllInTable("expenseItems", expenseItems),
       replaceAllInTable("expenseCategories", expenseCategories),
     ]),
   );
@@ -40,9 +40,9 @@ export async function getAllData(): Promise<{
 }> {
   const [incomeItems, incomeCategories, expenseItems, expenseCategories] =
     await Promise.all([
-      db.table("incomes").toArray(),
+      db.table("incomeItems").toArray(),
       db.table("incomeCategories").toArray(),
-      db.table("expenses").toArray(),
+      db.table("expenseItems").toArray(),
       db.table("expenseCategories").toArray(),
     ]);
 

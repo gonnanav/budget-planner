@@ -2,12 +2,12 @@
 
 import { useContext } from "react";
 import { OverviewScreen } from "@/components/overview";
-import { useTableItems } from "@/db";
+import { useIncomeItems, useExpenseItems } from "@/db/items";
 import { BackupContext } from "@/contexts/BackupContext";
 
 export default function Page() {
-  const { items: incomeItems } = useTableItems("incomes");
-  const { items: expenseItems } = useTableItems("expenses");
+  const { items: incomeItems } = useIncomeItems();
+  const { items: expenseItems } = useExpenseItems();
   const { backup, restore } = useContext(BackupContext);
 
   return (

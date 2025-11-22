@@ -36,10 +36,15 @@ export async function deleteCategory(
 ) {
   await db.transaction(
     "rw",
-    [db.expenses, db.incomes, db.expenseCategories, db.incomeCategories],
+    [
+      db.expenseItems,
+      db.incomeItems,
+      db.expenseCategories,
+      db.incomeCategories,
+    ],
     async () => {
       const itemsTable =
-        tableName === "expenseCategories" ? db.expenses : db.incomes;
+        tableName === "expenseCategories" ? db.expenseItems : db.incomeItems;
 
       await itemsTable
         .where("categoryId")

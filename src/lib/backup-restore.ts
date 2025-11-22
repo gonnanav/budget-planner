@@ -1,6 +1,19 @@
 import type { BudgetItem, Category } from "@/core/types";
 import { replaceAll, getAllData } from "@/db";
 
+interface BackupDataV1 {
+  metadata: {
+    version: string;
+    exportedAt: string;
+  };
+  data: {
+    incomes: BudgetItem[];
+    expenses: BudgetItem[];
+    incomeCategories: Category[];
+    expenseCategories: Category[];
+  };
+}
+
 export interface BackupData {
   metadata: {
     version: string;
@@ -13,6 +26,8 @@ export interface BackupData {
     expenseCategories: Category[];
   };
 }
+
+export type AnyBackupData = BackupData | BackupDataV1;
 
 interface BackupDataInput {
   incomeItems: BudgetItem[];
@@ -31,7 +46,7 @@ export async function restoreData(): Promise<void> {
   const backup = await pickBackupFile();
   if (!backup) return;
 
-  await restoreBackupToDb(backup);
+  await restoreBackupToDb(backup as AnyBackupData);
 }
 
 export function createBackupData({
@@ -42,7 +57,7 @@ export function createBackupData({
 }: BackupDataInput): BackupData {
   return {
     metadata: {
-      version: "0.1.0",
+      version: "0.2.0",
       exportedAt: new Date().toISOString(),
     },
     data: {
@@ -81,7 +96,7 @@ function downloadFile(blob: Blob, filename: string): void {
   URL.revokeObjectURL(url);
 }
 
-export function pickBackupFile(): Promise<BackupData | null> {
+export function pickBackupFile(): Promise<AnyBackupData | null> {
   return new Promise((resolve) => {
     const input = document.createElement("input");
     input.type = "file";
@@ -100,7 +115,7 @@ export function pickBackupFile(): Promise<BackupData | null> {
       reader.onload = (e) => {
         try {
           const content = e.target?.result as string;
-          const data = JSON.parse(content) as BackupData;
+          const data = JSON.parse(content) as AnyBackupData;
 
           resolve(data);
         } catch (error) {
@@ -116,12 +131,27 @@ export function pickBackupFile(): Promise<BackupData | null> {
   });
 }
 
-export async function restoreBackupToDb(backup: BackupData): Promise<void> {
-  const { data } = backup ?? {};
-  const incomeItems = data?.incomeItems ?? [];
-  const expenseItems = data?.expenseItems ?? [];
-  const incomeCategories = data?.incomeCategories ?? [];
-  const expenseCategories = data?.expenseCategories ?? [];
+export async function restoreBackupToDb(backup: AnyBackupData): Promise<void> {
+  const version = backup?.metadata?.version;
+  let incomeItems: BudgetItem[] = [];
+  let expenseItems: BudgetItem[] = [];
+  let incomeCategories: Category[] = [];
+  let expenseCategories: Category[] = [];
+
+  if (version === "0.1.0") {
+    const backupV1 = backup as BackupDataV1;
+    incomeItems = backupV1.data?.incomes ?? [];
+    expenseItems = backupV1.data?.expenses ?? [];
+    incomeCategories = backupV1.data?.incomeCategories ?? [];
+    expenseCategories = backupV1.data?.expenseCategories ?? [];
+    console.warn("Restored backup from version 0.1.0.");
+  } else {
+    const backupV2 = backup as BackupData;
+    incomeItems = backupV2.data?.incomeItems ?? [];
+    expenseItems = backupV2.data?.expenseItems ?? [];
+    incomeCategories = backupV2.data?.incomeCategories ?? [];
+    expenseCategories = backupV2.data?.expenseCategories ?? [];
+  }
 
   await replaceAll({
     incomeItems,

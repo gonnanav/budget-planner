@@ -64,14 +64,14 @@ export function useTableItems(tableName: ItemsTableName) {
 }
 
 export async function addIncomeItem(input: BudgetItemInput): Promise<string> {
-  return db.incomes.add(createItem({ id: crypto.randomUUID(), ...input }));
+  return db.incomeItems.add(createItem({ id: crypto.randomUUID(), ...input }));
 }
 
 export async function updateIncomeItem(
   id: string,
   input: BudgetItemInput,
 ): Promise<boolean> {
-  const updatedCount = await db.incomes.update(
+  const updatedCount = await db.incomeItems.update(
     id,
     createItem({ id, ...input }),
   );
@@ -80,18 +80,18 @@ export async function updateIncomeItem(
 }
 
 export async function deleteIncomeItem(id: string): Promise<void> {
-  return db.incomes.delete(id);
+  return db.incomeItems.delete(id);
 }
 
 export async function addExpenseItem(input: BudgetItemInput): Promise<string> {
-  return db.expenses.add(createItem({ id: crypto.randomUUID(), ...input }));
+  return db.expenseItems.add(createItem({ id: crypto.randomUUID(), ...input }));
 }
 
 export async function updateExpenseItem(
   id: string,
   input: BudgetItemInput,
 ): Promise<boolean> {
-  const updatedCount = await db.expenses.update(
+  const updatedCount = await db.expenseItems.update(
     id,
     createItem({ id, ...input }),
   );
@@ -100,13 +100,13 @@ export async function updateExpenseItem(
 }
 
 export async function deleteExpenseItem(id: string): Promise<void> {
-  return db.expenses.delete(id);
+  return db.expenseItems.delete(id);
 }
 
 export function useIncomeItems() {
-  return useTableItems("incomes");
+  return useTableItems("incomeItems");
 }
 
 export function useExpenseItems() {
-  return useTableItems("expenses");
+  return useTableItems("expenseItems");
 }
