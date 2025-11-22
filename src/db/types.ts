@@ -1,8 +1,8 @@
 import { BudgetItem, Category } from "@/core/types";
 import { EntityTable } from "dexie";
 
-export type BudgetItemDb = BudgetItem;
-export type CategoryDb = Category;
+export type DbBudgetItem = BudgetItem;
+export type DbCategory = Category;
 
-export type ItemsTable = EntityTable<BudgetItemDb, "id">;
-export type CategoriesTable = EntityTable<CategoryDb, "id">;
+export type ItemsTable = EntityTable<DbBudgetItem, "id">;
+export type CategoriesTable = EntityTable<DbCategory, "id">;

@@ -1,5 +1,5 @@
 import type { BudgetItem, Category } from "@/core/types";
-import { replaceAll, getAllData } from "@/db/backup";
+import { restoreAllData, getAllData } from "@/db/backup";
 
 interface BackupDataV1 {
   metadata: {
@@ -153,7 +153,7 @@ export async function restoreBackupToDb(backup: AnyBackupData): Promise<void> {
     expenseCategories = backupV2.data?.expenseCategories ?? [];
   }
 
-  await replaceAll({
+  await restoreAllData({
     incomeItems,
     expenseItems,
     incomeCategories,

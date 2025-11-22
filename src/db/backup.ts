@@ -1,49 +1,42 @@
+import { Table } from "dexie";
 import { db } from "./db";
-import { Category, BudgetItem } from "@/core/types";
+import { DbBudgetItem, DbCategory } from "./types";
 
-interface ReplaceAllProps {
-  incomeItems: BudgetItem[];
-  incomeCategories: Category[];
-  expenseItems: BudgetItem[];
-  expenseCategories: Category[];
+interface DbData {
+  incomeItems: DbBudgetItem[];
+  incomeCategories: DbCategory[];
+  expenseItems: DbBudgetItem[];
+  expenseCategories: DbCategory[];
 }
 
-export async function replaceAll({
+export async function restoreAllData({
   incomeItems,
   incomeCategories,
   expenseItems,
   expenseCategories,
-}: ReplaceAllProps): Promise<void> {
+}: DbData): Promise<void> {
   await db.transaction("rw", db.tables, async () =>
     Promise.all([
-      replaceAllInTable("incomeItems", incomeItems),
-      replaceAllInTable("incomeCategories", incomeCategories),
-      replaceAllInTable("expenseItems", expenseItems),
-      replaceAllInTable("expenseCategories", expenseCategories),
+      replaceAllInTable(db.incomeItems, incomeItems),
+      replaceAllInTable(db.incomeCategories, incomeCategories),
+      replaceAllInTable(db.expenseItems, expenseItems),
+      replaceAllInTable(db.expenseCategories, expenseCategories),
     ]),
   );
 }
 
-async function replaceAllInTable(
-  table: string,
-  data: unknown[],
-): Promise<void> {
-  await db.table(table).clear();
-  await db.table(table).bulkAdd(data);
+async function replaceAllInTable(table: Table, data: unknown[]): Promise<void> {
+  await table.clear();
+  await table.bulkAdd(data);
 }
 
-export async function getAllData(): Promise<{
-  incomeItems: BudgetItem[];
-  incomeCategories: Category[];
-  expenseItems: BudgetItem[];
-  expenseCategories: Category[];
-}> {
+export async function getAllData(): Promise<DbData> {
   const [incomeItems, incomeCategories, expenseItems, expenseCategories] =
     await Promise.all([
-      db.table("incomeItems").toArray(),
-      db.table("incomeCategories").toArray(),
-      db.table("expenseItems").toArray(),
-      db.table("expenseCategories").toArray(),
+      db.incomeItems.toArray(),
+      db.incomeCategories.toArray(),
+      db.expenseItems.toArray(),
+      db.expenseCategories.toArray(),
     ]);
 
   return {
