@@ -1,11 +1,4 @@
 export {
-  useTableItems,
-  addItem,
-  updateItem,
-  deleteItem,
-  addItems,
-} from "./items";
-export {
   useTableCategories,
   addCategory,
   updateCategory,

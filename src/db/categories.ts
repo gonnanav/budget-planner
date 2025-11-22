@@ -101,9 +101,9 @@ export async function deleteIncomeCategory(id: string) {
 }
 
 export function useIncomeCategories() {
-  const { items } = useIncomeItems();
+  const items = useIncomeItems();
 
-  return useTableCategories("incomeCategories", items);
+  return useTableCategories("incomeCategories", items ?? []);
 }
 
 export async function addExpenseCategory(name: string) {
@@ -123,7 +123,7 @@ export async function deleteExpenseCategory(id: string) {
 }
 
 export function useExpenseCategories() {
-  const { items } = useExpenseItems();
+  const items = useExpenseItems();
 
-  return useTableCategories("expenseCategories", items);
+  return useTableCategories("expenseCategories", items ?? []);
 }
