@@ -1,12 +1,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { createCategory } from "@/core/categories";
-import { Category } from "@/core/types";
 import { db } from "../db";
-import { BudgetItem } from "@/core/types";
-import { EntityTable } from "dexie";
-
-type ItemsTable = EntityTable<BudgetItem, "id">;
-type CategoriesTable = EntityTable<Category, "id">;
+import { ItemsTable, CategoriesTable } from "../types";
 
 export function createCategoryApi(
   categoriesTable: CategoriesTable,

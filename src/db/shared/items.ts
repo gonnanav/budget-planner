@@ -1,9 +1,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { createItem } from "@/core/budget-items";
 import { BudgetItem, BudgetItemInput } from "@/core/types";
-import { EntityTable } from "dexie";
-
-type ItemsTable = EntityTable<BudgetItem, "id">;
+import { ItemsTable } from "../types";
 
 export interface ItemApi {
   useItems: () => BudgetItem[] | undefined;

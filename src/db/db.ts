@@ -1,11 +1,11 @@
-import Dexie, { type EntityTable } from "dexie";
-import { BudgetItem, Category } from "@/core/types";
+import Dexie from "dexie";
+import { ItemsTable, CategoriesTable } from "./types";
 
 const db = new Dexie("BudgetDatabase") as Dexie & {
-  incomeItems: EntityTable<BudgetItem, "id">;
-  expenseItems: EntityTable<BudgetItem, "id">;
-  incomeCategories: EntityTable<Category, "id">;
-  expenseCategories: EntityTable<Category, "id">;
+  incomeItems: ItemsTable;
+  expenseItems: ItemsTable;
+  incomeCategories: CategoriesTable;
+  expenseCategories: CategoriesTable;
 };
 
 db.version(4).stores({
