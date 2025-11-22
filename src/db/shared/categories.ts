@@ -3,25 +3,11 @@ import { createCategory } from "@/core/categories";
 import { db } from "../db";
 import { ItemsTable, CategoriesTable } from "../types";
 
-export function createCategoryApi(
-  categoriesTable: CategoriesTable,
-  itemsTable: ItemsTable,
-) {
-  return {
-    useCategories: () => useCategories(categoriesTable),
-    addCategory: (name: string) => addCategory(categoriesTable, name),
-    updateCategory: (id: string, name: string) =>
-      updateCategory(categoriesTable, id, name),
-    deleteCategory: (id: string) =>
-      deleteCategory(id, categoriesTable, itemsTable),
-  };
-}
-
 function useCategories(categoriesTable: CategoriesTable) {
   return useLiveQuery(() => categoriesTable.toArray());
 }
 
-function addCategory(categoriesTable: CategoriesTable, name: string) {
+async function addCategory(categoriesTable: CategoriesTable, name: string) {
   return categoriesTable.add(createCategory(crypto.randomUUID(), name));
 }
 
@@ -30,11 +16,10 @@ async function updateCategory(
   id: string,
   name: string,
 ) {
-  const result = await categoriesTable.update(id, createCategory(id, name));
-  return result === 1;
+  return categoriesTable.update(id, createCategory(id, name)).then(Boolean);
 }
 
-function deleteCategory(
+async function deleteCategory(
   id: string,
   categoriesTable: CategoriesTable,
   itemsTable: ItemsTable,
@@ -49,4 +34,18 @@ function deleteCategory(
 
     await categoriesTable.delete(id);
   });
+}
+
+export function createCategoryApi(
+  categoriesTable: CategoriesTable,
+  itemsTable: ItemsTable,
+) {
+  return {
+    useCategories: () => useCategories(categoriesTable),
+    addCategory: (name: string) => addCategory(categoriesTable, name),
+    updateCategory: (id: string, name: string) =>
+      updateCategory(categoriesTable, id, name),
+    deleteCategory: (id: string) =>
+      deleteCategory(id, categoriesTable, itemsTable),
+  };
 }

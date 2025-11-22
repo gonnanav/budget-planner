@@ -1,20 +1,13 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { createItem } from "@/core/budget-items";
-import { BudgetItem, BudgetItemInput } from "@/core/types";
+import { BudgetItemInput } from "@/core/types";
 import { ItemsTable } from "../types";
-
-export interface ItemApi {
-  useItems: () => BudgetItem[] | undefined;
-  addItem: (input: BudgetItemInput) => Promise<string>;
-  updateItem: (id: string, input: BudgetItemInput) => Promise<boolean>;
-  deleteItem: (id: string) => Promise<void>;
-}
 
 function useItems(itemsTable: ItemsTable) {
   return useLiveQuery(() => itemsTable.toArray());
 }
 
-function addItem(itemsTable: ItemsTable, input: BudgetItemInput) {
+async function addItem(itemsTable: ItemsTable, input: BudgetItemInput) {
   return itemsTable.add(createItem({ id: crypto.randomUUID(), ...input }));
 }
 
@@ -23,18 +16,14 @@ async function updateItem(
   id: string,
   input: BudgetItemInput,
 ) {
-  const updatedCount = await itemsTable.update(
-    id,
-    createItem({ id, ...input }),
-  );
-  return updatedCount === 1;
+  return itemsTable.update(id, createItem({ id, ...input })).then(Boolean);
 }
 
-function deleteItem(itemsTable: ItemsTable, id: string) {
+async function deleteItem(itemsTable: ItemsTable, id: string) {
   return itemsTable.delete(id);
 }
 
-export function createItemApi(itemsTable: ItemsTable): ItemApi {
+export function createItemApi(itemsTable: ItemsTable) {
   return {
     useItems: () => useItems(itemsTable),
     addItem: (input: BudgetItemInput) => addItem(itemsTable, input),
