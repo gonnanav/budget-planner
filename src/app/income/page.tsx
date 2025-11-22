@@ -16,12 +16,14 @@ import {
   deleteIncomeCategory,
 } from "@/db/categories";
 import { enrichItem } from "@/core/budget-items";
+import { enrichCategory } from "@/core/categories";
 
 export default function Page() {
   const backupActions = useContext(BackupContext);
-  const items = useIncomeItems();
-  const { categories } = useIncomeCategories();
-  const enrichedItems = items?.map(enrichItem) ?? [];
+  const items = useIncomeItems() ?? [];
+  const categories = useIncomeCategories() ?? [];
+  const enrichedItems = items?.map(enrichItem);
+  const enrichedCategories = categories?.map((c) => enrichCategory(c, items));
 
   return (
     <SectionScreen
@@ -31,7 +33,7 @@ export default function Page() {
         addItem: "Add income item",
         addCategory: "Add income category",
       }}
-      data={{ items: enrichedItems, categories }}
+      data={{ items: enrichedItems, categories: enrichedCategories }}
       backupActions={backupActions}
       itemActions={{
         add: addIncomeItem,

@@ -1,5 +1,5 @@
 import type { BudgetItem, Category } from "@/core/types";
-import { replaceAll, getAllData } from "@/db";
+import { replaceAll, getAllData } from "@/db/backup";
 
 interface BackupDataV1 {
   metadata: {
