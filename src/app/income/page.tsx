@@ -8,13 +8,13 @@ import {
   addIncomeItem,
   updateIncomeItem,
   deleteIncomeItem,
-} from "@/db/items";
+} from "@/db/income/items";
 import {
   useIncomeCategories,
   addIncomeCategory,
   updateIncomeCategory,
   deleteIncomeCategory,
-} from "@/db/categories";
+} from "@/db/income/categories";
 import { enrichItem } from "@/core/budget-items";
 import { enrichCategory } from "@/core/categories";
 

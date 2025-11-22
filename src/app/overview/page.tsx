@@ -2,7 +2,8 @@
 
 import { useContext } from "react";
 import { OverviewScreen } from "@/components/overview";
-import { useIncomeItems, useExpenseItems } from "@/db/items";
+import { useIncomeItems } from "@/db/income/items";
+import { useExpenseItems } from "@/db/expenses/items";
 import { BackupContext } from "@/contexts/BackupContext";
 
 export default function Page() {

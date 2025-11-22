@@ -8,13 +8,13 @@ import {
   addExpenseItem,
   updateExpenseItem,
   deleteExpenseItem,
-} from "@/db/items";
+} from "@/db/expenses/items";
 import {
   useExpenseCategories,
   addExpenseCategory,
   updateExpenseCategory,
   deleteExpenseCategory,
-} from "@/db/categories";
+} from "@/db/expenses/categories";
 import { enrichItem } from "@/core/budget-items";
 import { enrichCategory } from "@/core/categories";
 
