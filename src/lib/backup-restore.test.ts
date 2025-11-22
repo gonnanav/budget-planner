@@ -18,7 +18,7 @@ test("metadata contains correct version number and timestamp", () => {
   });
 
   expect(metadata).toMatchObject({
-    version: "0.1.0",
+    version: "0.2.0",
     exportedAt: expect.any(String),
   });
 });
