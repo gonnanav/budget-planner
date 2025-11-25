@@ -1,32 +1,27 @@
-import type { BudgetItem, BudgetEvaluation, BudgetStatus } from "./types";
+import type { BudgetItem, BalanceStatus } from "./types";
 
-export function budgetBalance(
+export function calculateBalance(
   incomes: BudgetItem[],
   expenses: BudgetItem[],
-): BudgetEvaluation {
+) {
   const incomeSum = budgetItemsSum(incomes);
   const expenseSum = budgetItemsSum(expenses);
   const balance = incomeSum - expenseSum;
+  const status = getStatus(balance);
 
-  let status: BudgetStatus = "balanced";
-  if (balance > 0) {
-    status = "positive";
-  } else if (balance < 0) {
-    status = "negative";
-  }
-
-  return {
-    incomeSum,
-    expenseSum,
-    balance,
-    status,
-  };
+  return { incomeSum, expenseSum, balance, status };
 }
 
 function budgetItemsSum(items: BudgetItem[]): number {
   return items
     .map(normalizeAmount)
     .reduce((sum: number, item) => sum + item, 0);
+}
+
+function getStatus(balance: number): BalanceStatus {
+  if (balance > 0) return "surplus";
+  else if (balance < 0) return "deficit";
+  else return "balanced";
 }
 
 export function normalizeAmount(item: BudgetItem): number {

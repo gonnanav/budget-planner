@@ -9,7 +9,7 @@ import {
   diningOut,
   hobbies,
 } from "@/fixtures/expenses";
-import { calculateCategoryTotal } from "@/core/budget-balance";
+import { calculateCategoryTotal } from "@/core/balance";
 
 const meta = {
   component: CategoryListItem,

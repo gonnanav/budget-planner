@@ -1,5 +1,5 @@
 import type { BudgetItem, ItemAmount, CreateBudgetItemInput } from "./types";
-import { normalizeAmount } from "./budget-balance";
+import { normalizeAmount } from "./balance";
 import { CHARACTER_LIMITS } from "../lib/limits";
 
 export function createItem(input: CreateBudgetItemInput): BudgetItem {

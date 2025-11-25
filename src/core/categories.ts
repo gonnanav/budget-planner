@@ -1,5 +1,5 @@
 import type { BudgetItem, Category } from "./types";
-import { calculateCategoryTotal } from "./budget-balance";
+import { calculateCategoryTotal } from "./balance";
 import { CHARACTER_LIMITS } from "../lib/limits";
 
 export function createCategory(id: string, name: string): Category {

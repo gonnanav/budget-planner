@@ -21,14 +21,7 @@ export interface BudgetItem {
   notes?: string;
 }
 
-export type BudgetStatus = "balanced" | "positive" | "negative";
-
-export interface BudgetEvaluation {
-  incomeSum: number;
-  expenseSum: number;
-  balance: number;
-  status: BudgetStatus;
-}
+export type BalanceStatus = "balanced" | "surplus" | "deficit";
 
 export interface Category {
   id: string;

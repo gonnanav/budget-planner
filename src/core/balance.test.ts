@@ -1,13 +1,13 @@
 import { test, expect } from "vitest";
 import {
-  budgetBalance,
+  calculateBalance,
   normalizeAmount,
   calculateCategoryTotal,
-} from "./budget-balance";
+} from "./balance";
 import { createTestItems, createTestItem } from "@/fixtures/test-utils";
 
-test("balance is balanced when incomes and expenses are equal", () => {
-  const { balance, status } = budgetBalance(
+test("budget is balanced when incomes and expenses are equal", () => {
+  const { balance, status } = calculateBalance(
     createTestItems([{ amount: 1000 }]),
     createTestItems([{ amount: 1000 }]),
   );
@@ -16,34 +16,34 @@ test("balance is balanced when incomes and expenses are equal", () => {
   expect(status).toBe("balanced");
 });
 
-test("balance is positive when incomes are greater than expenses", () => {
-  const { balance, status } = budgetBalance(
+test("budget is in surplus when incomes are greater than expenses", () => {
+  const { balance, status } = calculateBalance(
     createTestItems([{ amount: 1000 }]),
     createTestItems([{ amount: 500 }]),
   );
 
   expect(balance).toBe(500);
-  expect(status).toBe("positive");
+  expect(status).toBe("surplus");
 });
 
-test("balance is negative when expenses are greater than incomes", () => {
-  const { balance, status } = budgetBalance(
+test("budget is in deficit when expenses are greater than incomes", () => {
+  const { balance, status } = calculateBalance(
     createTestItems([{ amount: 500 }]),
     createTestItems([{ amount: 1000 }]),
   );
 
   expect(balance).toBe(-500);
-  expect(status).toBe("negative");
+  expect(status).toBe("deficit");
 });
 
 test("no income is counted as zero", () => {
-  const { balance } = budgetBalance([], createTestItems([{ amount: 1000 }]));
+  const { balance } = calculateBalance([], createTestItems([{ amount: 1000 }]));
 
   expect(balance).toBe(-1000);
 });
 
 test("multiple incomes are summed up", () => {
-  const { balance } = budgetBalance(
+  const { balance } = calculateBalance(
     createTestItems([{ amount: 400 }, { amount: 600 }]),
     createTestItems([{ amount: 500 }]),
   );
@@ -52,13 +52,13 @@ test("multiple incomes are summed up", () => {
 });
 
 test("no expense is counted as zero", () => {
-  const { balance } = budgetBalance(createTestItems([{ amount: 1000 }]), []);
+  const { balance } = calculateBalance(createTestItems([{ amount: 1000 }]), []);
 
   expect(balance).toBe(1000);
 });
 
 test("multiple expenses are summed up", () => {
-  const { balance } = budgetBalance(
+  const { balance } = calculateBalance(
     createTestItems([{ amount: 1000 }]),
     createTestItems([{ amount: 300 }, { amount: 200 }]),
   );

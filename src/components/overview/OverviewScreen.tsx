@@ -4,7 +4,7 @@ import { BalanceBanner } from "./BalanceBanner";
 import { BudgetCard } from "./BudgetCard";
 import { OverviewLayout } from "./OverviewLayout";
 import { Heading } from "@/components/shared/Heading";
-import { budgetBalance } from "@/core/budget-balance";
+import { calculateBalance } from "@/core/balance";
 import { formatAmount } from "@/lib/format";
 import { BudgetItem } from "@/core/types";
 
@@ -21,7 +21,7 @@ export function OverviewScreen({
   backup,
   restore,
 }: OverviewScreenProps) {
-  const { incomeSum, expenseSum, balance, status } = budgetBalance(
+  const { incomeSum, expenseSum, balance, status } = calculateBalance(
     incomeItems,
     expenseItems,
   );
@@ -29,13 +29,6 @@ export function OverviewScreen({
   const formattedIncome = formatAmount(incomeSum);
   const formattedExpense = formatAmount(expenseSum);
   const formattedBalance = formatAmount(Math.abs(balance));
-
-  const balanceStatus =
-    status === "balanced"
-      ? "balanced"
-      : status === "positive"
-        ? "surplus"
-        : "deficit";
 
   const uniqueIncomeCategories = new Set(
     incomeItems.map((item) => item.categoryId).filter(Boolean),
@@ -50,9 +43,7 @@ export function OverviewScreen({
       heading={<Heading>Overview</Heading>}
       onBackup={backup}
       onRestore={restore}
-      banner={
-        <BalanceBanner status={balanceStatus} amount={formattedBalance} />
-      }
+      banner={<BalanceBanner status={status} amount={formattedBalance} />}
       cards={
         <>
           <Link href="/income">
