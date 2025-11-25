@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { fn } from "storybook/test";
 import { OverviewScreen } from "./OverviewScreen";
-import { createTestItems } from "@/fixtures/test-utils";
 
 const meta = {
   title: "Overview/OverviewScreen",
@@ -10,8 +9,24 @@ const meta = {
     layout: "fullscreen",
   },
   args: {
-    backup: fn(),
-    restore: fn(),
+    income: {
+      itemCount: 0,
+      categoryCount: 0,
+      sum: "0",
+    },
+    expense: {
+      itemCount: 0,
+      categoryCount: 0,
+      sum: "0",
+    },
+    balance: {
+      amount: "0",
+      status: "balanced",
+    },
+    backupActions: {
+      backup: fn(),
+      restore: fn(),
+    },
   },
 } satisfies Meta<typeof OverviewScreen>;
 
@@ -19,30 +34,78 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const PositiveBalance: Story = {
+export const Surplus: Story = {
   args: {
-    incomeItems: createTestItems([{ amount: 1500 }]),
-    expenseItems: createTestItems([{ amount: 1000 }]),
+    income: {
+      itemCount: 1,
+      categoryCount: 2,
+      sum: "1500",
+    },
+    expense: {
+      itemCount: 1,
+      categoryCount: 3,
+      sum: "1000",
+    },
+    balance: {
+      amount: "500",
+      status: "surplus",
+    },
   },
 };
 
-export const NegativeBalance: Story = {
+export const Deficit: Story = {
   args: {
-    incomeItems: createTestItems([{ amount: 1000 }]),
-    expenseItems: createTestItems([{ amount: 1500 }]),
+    income: {
+      itemCount: 1,
+      categoryCount: 2,
+      sum: "1000",
+    },
+    expense: {
+      itemCount: 1,
+      categoryCount: 3,
+      sum: "1500",
+    },
+    balance: {
+      amount: "500",
+      status: "deficit",
+    },
   },
 };
 
 export const Balanced: Story = {
   args: {
-    incomeItems: createTestItems([{ amount: 1000 }]),
-    expenseItems: createTestItems([{ amount: 1000 }]),
+    income: {
+      itemCount: 1,
+      categoryCount: 1,
+      sum: "1000",
+    },
+    expense: {
+      itemCount: 1,
+      categoryCount: 1,
+      sum: "1000",
+    },
+    balance: {
+      amount: "0",
+      status: "balanced",
+    },
   },
 };
 
 export const Empty: Story = {
   args: {
-    incomeItems: [],
-    expenseItems: [],
+    income: {
+      itemCount: 0,
+      categoryCount: 0,
+      sum: "0",
+    },
+    expense: {
+      itemCount: 0,
+      categoryCount: 0,
+      sum: "0",
+    },
+    balance: {
+      amount: "0",
+      status: "balanced",
+    },
   },
 };

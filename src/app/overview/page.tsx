@@ -4,19 +4,51 @@ import { useContext } from "react";
 import { OverviewScreen } from "@/components/overview";
 import { useIncomeItems } from "@/db/income/items";
 import { useExpenseItems } from "@/db/expenses/items";
+import { useIncomeCategories } from "@/db/income/categories";
+import { useExpenseCategories } from "@/db/expenses/categories";
 import { BackupContext } from "@/contexts/BackupContext";
+import { calculateBalance } from "@/core/balance";
+import { formatAmount } from "@/lib/format";
 
 export default function Page() {
+  const backupActions = useContext(BackupContext);
   const incomeItems = useIncomeItems();
   const expenseItems = useExpenseItems();
-  const { backup, restore } = useContext(BackupContext);
+  const incomeCategories = useIncomeCategories();
+  const expenseCategories = useExpenseCategories();
+
+  const { incomeSum, expenseSum, balance, status } = calculateBalance(
+    incomeItems ?? [],
+    expenseItems ?? [],
+  );
+
+  const formattedIncomeSum = formatAmount(incomeSum);
+  const formattedExpenseSum = formatAmount(expenseSum);
+  const formattedBalance = formatAmount(Math.abs(balance));
+
+  const incomeItemCount = incomeItems?.length ?? 0;
+  const expenseItemCount = expenseItems?.length ?? 0;
+
+  const incomeCategoryCount = incomeCategories?.length ?? 0;
+  const expenseCategoryCount = expenseCategories?.length ?? 0;
 
   return (
     <OverviewScreen
-      incomeItems={incomeItems ?? []}
-      expenseItems={expenseItems ?? []}
-      backup={backup}
-      restore={restore}
+      income={{
+        itemCount: incomeItemCount,
+        categoryCount: incomeCategoryCount,
+        sum: formattedIncomeSum,
+      }}
+      expense={{
+        itemCount: expenseItemCount,
+        categoryCount: expenseCategoryCount,
+        sum: formattedExpenseSum,
+      }}
+      balance={{
+        amount: formattedBalance,
+        status,
+      }}
+      backupActions={backupActions}
     />
   );
 }

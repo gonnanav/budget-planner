@@ -4,54 +4,49 @@ import { BalanceBanner } from "./BalanceBanner";
 import { BudgetCard } from "./BudgetCard";
 import { OverviewLayout } from "./OverviewLayout";
 import { Heading } from "@/components/shared/Heading";
-import { calculateBalance } from "@/core/balance";
-import { formatAmount } from "@/lib/format";
-import { BudgetItem } from "@/core/types";
+import { BalanceStatus } from "@/core/types";
 
 interface OverviewScreenProps {
-  incomeItems: BudgetItem[];
-  expenseItems: BudgetItem[];
-  backup: () => Promise<void>;
-  restore: (data: BackupData) => Promise<void>;
+  income: {
+    itemCount: number;
+    categoryCount: number;
+    sum: string;
+  };
+  expense: {
+    itemCount: number;
+    categoryCount: number;
+    sum: string;
+  };
+  balance: {
+    amount: string;
+    status: BalanceStatus;
+  };
+  backupActions: {
+    backup: () => Promise<void>;
+    restore: (data: BackupData) => Promise<void>;
+  };
 }
 
 export function OverviewScreen({
-  incomeItems,
-  expenseItems,
-  backup,
-  restore,
+  income,
+  expense,
+  balance,
+  backupActions,
 }: OverviewScreenProps) {
-  const { incomeSum, expenseSum, balance, status } = calculateBalance(
-    incomeItems,
-    expenseItems,
-  );
-
-  const formattedIncome = formatAmount(incomeSum);
-  const formattedExpense = formatAmount(expenseSum);
-  const formattedBalance = formatAmount(Math.abs(balance));
-
-  const uniqueIncomeCategories = new Set(
-    incomeItems.map((item) => item.categoryId).filter(Boolean),
-  ).size;
-
-  const uniqueExpenseCategories = new Set(
-    expenseItems.map((item) => item.categoryId).filter(Boolean),
-  ).size;
-
   return (
     <OverviewLayout
       heading={<Heading>Overview</Heading>}
-      onBackup={backup}
-      onRestore={restore}
-      banner={<BalanceBanner status={status} amount={formattedBalance} />}
+      onBackup={backupActions.backup}
+      onRestore={backupActions.restore}
+      banner={<BalanceBanner status={balance.status} amount={balance.amount} />}
       cards={
         <>
           <Link href="/income">
             <BudgetCard
               title="Income"
-              amount={formattedIncome}
-              itemCount={incomeItems.length}
-              categoryCount={uniqueIncomeCategories}
+              amount={income.sum}
+              itemCount={income.itemCount}
+              categoryCount={income.categoryCount}
               variant="income"
             />
           </Link>
@@ -59,9 +54,9 @@ export function OverviewScreen({
           <Link href="/expenses">
             <BudgetCard
               title="Expenses"
-              amount={formattedExpense}
-              itemCount={expenseItems.length}
-              categoryCount={uniqueExpenseCategories}
+              amount={expense.sum}
+              itemCount={expense.itemCount}
+              categoryCount={expense.categoryCount}
               variant="expense"
             />
           </Link>
