@@ -1,5 +1,4 @@
 import type { Item, ItemAmount, CreateItemInput } from "./types";
-import { normalizeAmount } from "./balance";
 import { CHARACTER_LIMITS } from "../lib/limits";
 
 export function createItem(input: CreateItemInput): Item {
@@ -34,4 +33,14 @@ export function enrichItem(item: Item): Item & { normalizedAmount: number } {
     ...item,
     normalizedAmount: normalizeAmount(item),
   };
+}
+
+export function sumItems(items: Item[]): number {
+  return items
+    .map(normalizeAmount)
+    .reduce((sum: number, item) => sum + item, 0);
+}
+
+function normalizeAmount(item: Item): number {
+  return (item.amount ?? 0) / (item.frequency === "biMonthly" ? 2 : 1);
 }

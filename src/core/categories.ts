@@ -1,5 +1,5 @@
 import type { Item, Category } from "./types";
-import { calculateCategoryTotal } from "./balance";
+import { sumItems } from "./items";
 import { CHARACTER_LIMITS } from "../lib/limits";
 
 export function createCategory(id: string, name: string): Category {
@@ -40,12 +40,16 @@ function validateNonEmptyString(value: string, name: string): void {
   }
 }
 
+export function sumCategoryItems(categoryId: string, items: Item[]): number {
+  return sumItems(items.filter((item) => item.categoryId === categoryId));
+}
+
 export function enrichCategory(
   category: Category,
   items: Item[],
 ): Category & { amount: number } {
   return {
     ...category,
-    amount: calculateCategoryTotal(category.id, items),
+    amount: sumCategoryItems(category.id, items),
   };
 }
