@@ -1,4 +1,4 @@
-import type { BudgetItem, Category } from "@/core/types";
+import type { Item, Category } from "@/core/types";
 import { restoreAllData, getAllData } from "@/db/backup";
 
 interface BackupDataV1 {
@@ -7,8 +7,8 @@ interface BackupDataV1 {
     exportedAt: string;
   };
   data: {
-    incomes: BudgetItem[];
-    expenses: BudgetItem[];
+    incomes: Item[];
+    expenses: Item[];
     incomeCategories: Category[];
     expenseCategories: Category[];
   };
@@ -20,9 +20,9 @@ export interface BackupData {
     exportedAt: string;
   };
   data: {
-    incomeItems: BudgetItem[];
+    incomeItems: Item[];
     incomeCategories: Category[];
-    expenseItems: BudgetItem[];
+    expenseItems: Item[];
     expenseCategories: Category[];
   };
 }
@@ -30,8 +30,8 @@ export interface BackupData {
 export type AnyBackupData = BackupData | BackupDataV1;
 
 interface BackupDataInput {
-  incomeItems: BudgetItem[];
-  expenseItems: BudgetItem[];
+  incomeItems: Item[];
+  expenseItems: Item[];
   incomeCategories: Category[];
   expenseCategories: Category[];
 }
@@ -133,8 +133,8 @@ export function pickBackupFile(): Promise<AnyBackupData | null> {
 
 export async function restoreBackupToDb(backup: AnyBackupData): Promise<void> {
   const version = backup?.metadata?.version;
-  let incomeItems: BudgetItem[] = [];
-  let expenseItems: BudgetItem[] = [];
+  let incomeItems: Item[] = [];
+  let expenseItems: Item[] = [];
   let incomeCategories: Category[] = [];
   let expenseCategories: Category[] = [];
 

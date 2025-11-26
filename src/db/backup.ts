@@ -1,11 +1,11 @@
 import { Table } from "dexie";
 import { db } from "./db";
-import { DbBudgetItem, DbCategory } from "./types";
+import { DbItem, DbCategory } from "./types";
 
 interface DbData {
-  incomeItems: DbBudgetItem[];
+  incomeItems: DbItem[];
   incomeCategories: DbCategory[];
-  expenseItems: DbBudgetItem[];
+  expenseItems: DbItem[];
   expenseCategories: DbCategory[];
 }
 

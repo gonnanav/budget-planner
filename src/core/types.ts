@@ -2,7 +2,7 @@ export type ItemAmount = number | null;
 
 export type Frequency = "monthly" | "biMonthly";
 
-export interface BudgetItemInput {
+export interface ItemInput {
   name: string;
   amount?: ItemAmount;
   frequency?: Frequency;
@@ -10,9 +10,9 @@ export interface BudgetItemInput {
   notes?: string;
 }
 
-export type CreateBudgetItemInput = BudgetItemInput & { id: string };
+export type CreateItemInput = ItemInput & { id: string };
 
-export interface BudgetItem {
+export interface Item {
   id: string;
   name: string;
   amount: ItemAmount;

@@ -1,8 +1,8 @@
-import type { BudgetItem, ItemAmount, CreateBudgetItemInput } from "./types";
+import type { Item, ItemAmount, CreateItemInput } from "./types";
 import { normalizeAmount } from "./balance";
 import { CHARACTER_LIMITS } from "../lib/limits";
 
-export function createItem(input: CreateBudgetItemInput): BudgetItem {
+export function createItem(input: CreateItemInput): Item {
   validateName(input.name);
   validateNotes(input.notes);
   validateAmount(input.amount);
@@ -29,9 +29,7 @@ function validateAmount(amount?: ItemAmount) {
   if (amount && amount < 0) throw new Error("Amount must be greater than 0");
 }
 
-export function enrichItem(
-  item: BudgetItem,
-): BudgetItem & { normalizedAmount: number } {
+export function enrichItem(item: Item): Item & { normalizedAmount: number } {
   return {
     ...item,
     normalizedAmount: normalizeAmount(item),

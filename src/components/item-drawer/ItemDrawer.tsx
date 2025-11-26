@@ -6,7 +6,7 @@ import {
   DrawerBody,
   DrawerFooter,
 } from "@heroui/drawer";
-import { BudgetItem, BudgetItemInput, Frequency, Category } from "@/core/types";
+import { Item, ItemInput, Frequency, Category } from "@/core/types";
 import { ActionButtons } from "@/components/action-buttons";
 import { AmountInput } from "./AmountInput";
 import { NameInput } from "./NameInput";
@@ -16,10 +16,10 @@ import { NotesInput } from "./NotesInput";
 
 export interface ItemDrawerProps {
   isOpen: boolean;
-  item?: BudgetItem | null;
+  item?: Item | null;
   categories: Category[];
   onCancel: () => void;
-  onSave: (input: BudgetItemInput) => void;
+  onSave: (input: ItemInput) => void;
   onClose: () => void;
   onDelete: () => void;
 }

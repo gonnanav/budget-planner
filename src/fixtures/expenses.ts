@@ -1,4 +1,4 @@
-import { createItem } from "@/core/budget-items";
+import { createItem } from "@/core/items";
 import { bills, personal } from "./expense-categories";
 
 export const electricity = createItem({

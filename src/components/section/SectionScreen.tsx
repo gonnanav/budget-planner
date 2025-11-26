@@ -1,4 +1,4 @@
-import { BudgetItem, BudgetItemInput, Category } from "@/core/types";
+import { Item, ItemInput, Category } from "@/core/types";
 import { SectionLayout } from "./SectionLayout";
 import { SectionTabs } from "./SectionTabs";
 import { ItemListItem } from "@/components/item-list-item";
@@ -22,7 +22,7 @@ interface SectionScreenProps {
     addCategory: string;
   };
   data: {
-    items: (BudgetItem & { normalizedAmount: number })[];
+    items: (Item & { normalizedAmount: number })[];
     categories: (Category & { amount: number })[];
   };
   backupActions: {
@@ -30,8 +30,8 @@ interface SectionScreenProps {
     restore: (data: BackupData) => Promise<void>;
   };
   itemActions: {
-    add: (input: BudgetItemInput) => Promise<string>;
-    update: (id: string, input: BudgetItemInput) => Promise<boolean>;
+    add: (input: ItemInput) => Promise<string>;
+    update: (id: string, input: ItemInput) => Promise<boolean>;
     delete: (id: string) => Promise<void>;
   };
   categoryActions: {

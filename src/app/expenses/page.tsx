@@ -15,7 +15,7 @@ import {
   updateExpenseCategory,
   deleteExpenseCategory,
 } from "@/db/expenses/categories";
-import { enrichItem } from "@/core/budget-items";
+import { enrichItem } from "@/core/items";
 import { enrichCategory } from "@/core/categories";
 
 export default function Page() {

@@ -1,18 +1,15 @@
-import type { BudgetItem, BalanceStatus } from "./types";
+import type { Item, BalanceStatus } from "./types";
 
-export function calculateBalance(
-  incomes: BudgetItem[],
-  expenses: BudgetItem[],
-) {
-  const incomeSum = budgetItemsSum(incomes);
-  const expenseSum = budgetItemsSum(expenses);
+export function calculateBalance(incomes: Item[], expenses: Item[]) {
+  const incomeSum = sumItems(incomes);
+  const expenseSum = sumItems(expenses);
   const balance = incomeSum - expenseSum;
   const status = getStatus(balance);
 
   return { incomeSum, expenseSum, balance, status };
 }
 
-function budgetItemsSum(items: BudgetItem[]): number {
+function sumItems(items: Item[]): number {
   return items
     .map(normalizeAmount)
     .reduce((sum: number, item) => sum + item, 0);
@@ -24,13 +21,13 @@ function getStatus(balance: number): BalanceStatus {
   else return "balanced";
 }
 
-export function normalizeAmount(item: BudgetItem): number {
+export function normalizeAmount(item: Item): number {
   return (item.amount ?? 0) / (item.frequency === "biMonthly" ? 2 : 1);
 }
 
 export function calculateCategoryTotal(
   categoryId: string,
-  items: BudgetItem[],
+  items: Item[],
 ): number {
   return items
     .filter((item) => item.categoryId === categoryId)

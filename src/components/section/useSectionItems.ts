@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useDisclosure } from "@heroui/react";
-import { BudgetItem, BudgetItemInput } from "@/core/types";
+import { Item, ItemInput } from "@/core/types";
 
 interface UseSectionItemsProps {
-  onAddItem: (input: BudgetItemInput) => Promise<string>;
-  onUpdateItem: (id: string, input: BudgetItemInput) => Promise<boolean>;
+  onAddItem: (input: ItemInput) => Promise<string>;
+  onUpdateItem: (id: string, input: ItemInput) => Promise<boolean>;
   onDeleteItem: (id: string) => Promise<void>;
 }
 
@@ -14,26 +14,26 @@ export function useSectionItems({
   onDeleteItem,
 }: UseSectionItemsProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedItem, setSelectedItem] = useState<BudgetItem | null>(null);
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
   const handleAddItemClick = () => {
     setSelectedItem(null);
     onOpen();
   };
 
-  const handleItemClick = (item: BudgetItem) => {
+  const handleItemClick = (item: Item) => {
     setSelectedItem(item);
     onOpen();
   };
 
-  const handleUpdateItem = async (input: BudgetItemInput) => {
+  const handleUpdateItem = async (input: ItemInput) => {
     if (!selectedItem) return;
 
     await onUpdateItem(selectedItem.id, input);
     onClose();
   };
 
-  const handleAddItem = async (input: BudgetItemInput) => {
+  const handleAddItem = async (input: ItemInput) => {
     await onAddItem(input);
     onClose();
   };

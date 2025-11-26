@@ -6,7 +6,7 @@ import {
 } from "./balance";
 import { createTestItems, createTestItem } from "@/fixtures/test-utils";
 
-test("budget is balanced when incomes and expenses are equal", () => {
+test("balanced when incomes and expenses are equal", () => {
   const { balance, status } = calculateBalance(
     createTestItems([{ amount: 1000 }]),
     createTestItems([{ amount: 1000 }]),
@@ -16,7 +16,7 @@ test("budget is balanced when incomes and expenses are equal", () => {
   expect(status).toBe("balanced");
 });
 
-test("budget is in surplus when incomes are greater than expenses", () => {
+test("in surplus when incomes are greater than expenses", () => {
   const { balance, status } = calculateBalance(
     createTestItems([{ amount: 1000 }]),
     createTestItems([{ amount: 500 }]),
@@ -26,7 +26,7 @@ test("budget is in surplus when incomes are greater than expenses", () => {
   expect(status).toBe("surplus");
 });
 
-test("budget is in deficit when expenses are greater than incomes", () => {
+test("in deficit when expenses are greater than incomes", () => {
   const { balance, status } = calculateBalance(
     createTestItems([{ amount: 500 }]),
     createTestItems([{ amount: 1000 }]),
