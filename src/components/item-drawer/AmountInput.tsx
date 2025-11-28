@@ -1,14 +1,15 @@
 import { NumberInput } from "@heroui/number-input";
-import { ItemAmount } from "@/core/types";
 
 interface AmountInputProps {
   amount: number | null;
-  onChange: (amount: ItemAmount | null) => void;
+  onAmountChange: (amount: number | null) => void;
 }
 
-export function AmountInput({ amount, onChange }: AmountInputProps) {
+export function AmountInput({ amount, onAmountChange }: AmountInputProps) {
+  const value = toValue(amount);
+
   const handleChange = (value: number) => {
-    onChange(fromValue(value));
+    onAmountChange(fromValue(value));
   };
 
   return (
@@ -16,16 +17,16 @@ export function AmountInput({ amount, onChange }: AmountInputProps) {
       label="Amount"
       formatOptions={{ style: "currency", currency: "ILS" }}
       minValue={0}
-      value={toValue(amount)}
+      value={value}
       onValueChange={handleChange}
     />
   );
 }
 
-function toValue(amount: ItemAmount): number {
+function toValue(amount: number | null): number {
   return amount ?? NaN;
 }
 
-function fromValue(value: number): ItemAmount {
+function fromValue(value: number): number | null {
   return Number.isNaN(value) ? null : value;
 }

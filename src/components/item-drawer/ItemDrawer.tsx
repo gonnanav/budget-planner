@@ -64,7 +64,7 @@ export const ItemDrawer = ({
           <DrawerHeader>{heading}</DrawerHeader>
           <DrawerBody>
             <NameInput name={name} onChange={onNameChange} />
-            <AmountInput amount={amount} onChange={onAmountChange} />
+            <AmountInput amount={amount} onAmountChange={onAmountChange} />
             <FrequencyInput
               frequency={frequency}
               onChange={onFrequencyChange}
