@@ -63,7 +63,7 @@ export const ItemDrawer = ({
         <form onSubmit={handleSubmit}>
           <DrawerHeader>{heading}</DrawerHeader>
           <DrawerBody>
-            <NameInput name={name} onChange={onNameChange} />
+            <NameInput name={name} onNameChange={onNameChange} />
             <AmountInput amount={amount} onAmountChange={onAmountChange} />
             <FrequencyInput
               frequency={frequency}
