@@ -13,6 +13,7 @@ import { BackupData } from "@/lib/backup-restore";
 import { useSectionCategories } from "@/components/section/useSectionCategories";
 import { useSectionItems } from "@/components/section/useSectionItems";
 import { useSectionView } from "@/components/section/useSectionView";
+import { useItemInputs } from "@/components/section/useItemInputs";
 
 interface SectionScreenProps {
   selectedTab: string;
@@ -54,8 +55,23 @@ export function SectionScreen({
   const { backup, restore } = backupActions;
 
   const {
+    name,
+    amount,
+    frequency,
+    categoryId,
+    notes,
+    onNameChange,
+    onAmountChange,
+    onFrequencyChange,
+    onCategoryIdChange,
+    onNotesChange,
+    onReset,
+    onCopy,
+  } = useItemInputs();
+
+  const {
     isItemDrawerOpen,
-    selectedItem,
+    drawerHeading,
     handleAddItemClick,
     handleItemClick,
     handleSaveItemClick,
@@ -65,6 +81,8 @@ export function SectionScreen({
     onAddItem: itemActions.add,
     onUpdateItem: itemActions.update,
     onDeleteItem: itemActions.delete,
+    onChangeItemInput: onCopy,
+    onResetItemInput: onReset,
   });
 
   const {
@@ -132,8 +150,18 @@ export function SectionScreen({
       </SectionLayout>
       <ItemDrawer
         isOpen={isItemDrawerOpen}
-        item={selectedItem}
+        heading={drawerHeading}
         categories={categories}
+        name={name}
+        amount={amount}
+        frequency={frequency}
+        categoryId={categoryId}
+        notes={notes}
+        onNameChange={onNameChange}
+        onAmountChange={onAmountChange}
+        onFrequencyChange={onFrequencyChange}
+        onCategoryIdChange={onCategoryIdChange}
+        onNotesChange={onNotesChange}
         onCancel={handleCloseItemDrawer}
         onSave={handleSaveItemClick}
         onClose={handleCloseItemDrawer}

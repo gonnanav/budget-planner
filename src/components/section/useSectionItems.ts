@@ -6,23 +6,29 @@ interface UseSectionItemsProps {
   onAddItem: (input: ItemInput) => Promise<string>;
   onUpdateItem: (id: string, input: ItemInput) => Promise<boolean>;
   onDeleteItem: (id: string) => Promise<void>;
+  onChangeItemInput: (item: Item) => void;
+  onResetItemInput: () => void;
 }
 
 export function useSectionItems({
   onAddItem,
   onUpdateItem,
   onDeleteItem,
+  onChangeItemInput,
+  onResetItemInput,
 }: UseSectionItemsProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
   const handleAddItemClick = () => {
     setSelectedItem(null);
+    onResetItemInput();
     onOpen();
   };
 
   const handleItemClick = (item: Item) => {
     setSelectedItem(item);
+    onChangeItemInput(item);
     onOpen();
   };
 
@@ -47,13 +53,17 @@ export function useSectionItems({
     onClose();
   };
 
+  const isEditMode = Boolean(selectedItem);
+  const drawerHeading = isEditMode ? "Edit Item" : "Add Item";
+
   return {
     isItemDrawerOpen: isOpen,
     selectedItem,
+    drawerHeading,
     handleAddItemClick,
     handleItemClick,
     handleSaveItemClick,
-    handleDeleteItemClick,
+    handleDeleteItemClick: isEditMode ? handleDeleteItemClick : undefined,
     handleCloseItemDrawer: onClose,
   };
 }
