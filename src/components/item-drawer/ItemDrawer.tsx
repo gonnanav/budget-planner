@@ -70,9 +70,9 @@ export const ItemDrawer = ({
               onChange={onFrequencyChange}
             />
             <CategoryInput
-              categoryId={categoryId}
-              categories={categories}
-              onChange={onCategoryIdChange}
+              selectedCategoryId={categoryId}
+              categoryOptions={categories}
+              onCategoryChange={onCategoryIdChange}
             />
             <NotesInput notes={notes} onChange={onNotesChange} />
           </DrawerBody>

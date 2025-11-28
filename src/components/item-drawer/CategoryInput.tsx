@@ -1,31 +1,33 @@
 import { Select, SelectItem } from "@heroui/select";
-import { Category } from "@/core/types";
+import type { Selection } from "@heroui/react";
 
 interface CategoryInputProps {
-  categoryId?: string;
-  categories: Category[];
-  onChange: (categoryId: string | undefined) => void;
+  selectedCategoryId?: string;
+  categoryOptions: { id: string; name: string }[];
+  onCategoryChange: (categoryId?: string) => void;
 }
 
 export const CategoryInput = ({
-  categoryId,
-  categories,
-  onChange,
+  selectedCategoryId,
+  categoryOptions,
+  onCategoryChange,
 }: CategoryInputProps) => {
-  const selectedKeys = categoryId ? [categoryId] : [];
+  const selectedKeys = selectedCategoryId ? [selectedCategoryId] : [];
+
+  const handleSelectionChange = (keys: Selection) => {
+    const selectedKey = Array.from(keys)[0];
+    onCategoryChange(selectedKey?.toString());
+  };
 
   return (
     <Select
       label="Category"
       placeholder="Select a category"
       selectedKeys={selectedKeys}
-      onSelectionChange={(keys) => {
-        const selectedKey = Array.from(keys)[0];
-        onChange(selectedKey as string | undefined);
-      }}
+      onSelectionChange={handleSelectionChange}
     >
-      {categories.map((category) => (
-        <SelectItem key={category.id}>{category.name}</SelectItem>
+      {categoryOptions.map(({ id, name }) => (
+        <SelectItem key={id}>{name}</SelectItem>
       ))}
     </Select>
   );
