@@ -67,7 +67,7 @@ export const ItemDrawer = ({
             <AmountInput amount={amount} onAmountChange={onAmountChange} />
             <FrequencyInput
               frequency={frequency}
-              onChange={onFrequencyChange}
+              onFrequencyChange={onFrequencyChange}
             />
             <CategoryInput
               selectedCategoryId={categoryId}
