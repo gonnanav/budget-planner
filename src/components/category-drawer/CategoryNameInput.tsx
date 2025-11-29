@@ -7,14 +7,17 @@ interface CategoryNameInputProps {
 }
 
 export function CategoryNameInput({ name, onChange }: CategoryNameInputProps) {
+  const handleChange = (value: string) => {
+    onChange(value);
+  };
+
   return (
     <Input
-      label="Category Name"
-      placeholder="Enter category name"
+      label="Name"
       value={name}
-      onChange={(e) => onChange(e.target.value)}
-      isRequired
+      onValueChange={handleChange}
       maxLength={CHARACTER_LIMITS.categoryName}
+      isRequired
     />
   );
 }

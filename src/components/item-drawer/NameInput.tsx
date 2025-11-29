@@ -13,6 +13,7 @@ export function NameInput({ name, onNameChange }: NameInputProps) {
       value={name}
       onValueChange={onNameChange}
       maxLength={CHARACTER_LIMITS.itemName}
+      isRequired
     />
   );
 }
