@@ -1,9 +1,10 @@
 import { Header } from "@/components/header";
 import { NavTabs } from "./NavTabs";
 import type { BackupData } from "@/lib/backup-restore";
+import type { TabKey } from "./types";
 
 interface AppShellProps {
-  selectedTab: string;
+  selectedTab: TabKey;
   onBackup: () => void;
   onRestore: (backup: BackupData) => Promise<void>;
   children: React.ReactNode;
