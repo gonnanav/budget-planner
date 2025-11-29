@@ -15,6 +15,7 @@ export const FrequencyInput = ({
 
   const handleSelectionChange = (keys: Selection) => {
     const selectedKey = Array.from(keys)[0];
+    if (!selectedKey) return;
     onFrequencyChange(selectedKey as Frequency);
   };
 
