@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { fn } from "storybook/test";
 import { OverviewScreen } from "./OverviewScreen";
 
 const meta = {
@@ -22,10 +21,6 @@ const meta = {
     balance: {
       amount: "0",
       status: "balanced",
-    },
-    backupActions: {
-      backup: fn(),
-      restore: fn(),
     },
   },
 } satisfies Meta<typeof OverviewScreen>;

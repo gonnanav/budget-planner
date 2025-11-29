@@ -1,17 +1,14 @@
 "use client";
 
-import { useContext } from "react";
 import { OverviewScreen } from "@/components/overview";
 import { useIncomeItems } from "@/db/income/items";
 import { useExpenseItems } from "@/db/expenses/items";
 import { useIncomeCategories } from "@/db/income/categories";
 import { useExpenseCategories } from "@/db/expenses/categories";
-import { BackupContext } from "@/contexts/BackupContext";
 import { calculateBalance } from "@/core/balance";
 import { formatAmount } from "@/lib/format";
 
 export default function Page() {
-  const backupActions = useContext(BackupContext);
   const incomeItems = useIncomeItems();
   const expenseItems = useExpenseItems();
   const incomeCategories = useIncomeCategories();
@@ -48,7 +45,6 @@ export default function Page() {
         amount: formattedBalance,
         status,
       }}
-      backupActions={backupActions}
     />
   );
 }

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { BackupData } from "@/lib/backup-restore";
 import { BalanceBanner } from "./BalanceBanner";
 import { BudgetCard } from "./BudgetCard";
 import { OverviewLayout } from "./OverviewLayout";
@@ -21,23 +20,16 @@ interface OverviewScreenProps {
     amount: string;
     status: BalanceStatus;
   };
-  backupActions: {
-    backup: () => Promise<void>;
-    restore: (data: BackupData) => Promise<void>;
-  };
 }
 
 export function OverviewScreen({
   income,
   expense,
   balance,
-  backupActions,
 }: OverviewScreenProps) {
   return (
     <OverviewLayout
       heading={<Heading>Overview</Heading>}
-      onBackup={backupActions.backup}
-      onRestore={backupActions.restore}
       banner={<BalanceBanner status={balance.status} amount={balance.amount} />}
       cards={
         <>

@@ -8,8 +8,6 @@ import { Heading } from "@/components/shared/Heading";
 import { AddButton } from "@/components/shared/AddButton";
 import { ItemDrawer } from "@/components/item-drawer";
 import { CategoryDrawer } from "@/components/category-drawer";
-import { AppShell } from "@/components/app-shell";
-import { BackupData } from "@/lib/backup-restore";
 import { useSectionCategories } from "@/components/section/useSectionCategories";
 import { useSectionItems } from "@/components/section/useSectionItems";
 import { useSectionView } from "@/components/section/useSectionView";
@@ -27,10 +25,6 @@ interface SectionScreenProps {
     items: (Item & { normalizedAmount: number })[];
     categories: (Category & { amount: number })[];
   };
-  backupActions: {
-    backup: () => Promise<void>;
-    restore: (data: BackupData) => Promise<void>;
-  };
   itemActions: {
     add: (input: ItemInput) => Promise<string>;
     update: (id: string, input: ItemInput) => Promise<boolean>;
@@ -44,17 +38,13 @@ interface SectionScreenProps {
 }
 
 export function SectionScreen({
-  selectedTab,
   headingText,
   labels,
   data,
-  backupActions,
   itemActions,
   categoryActions,
 }: SectionScreenProps) {
   const { items, categories } = data;
-  const { backup, restore } = backupActions;
-
   const { itemDraft, updateItemDraft, resetItemDraft } = useItemDraft();
 
   const {
@@ -101,7 +91,7 @@ export function SectionScreen({
     });
 
   return (
-    <AppShell selectedTab={selectedTab} onBackup={backup} onRestore={restore}>
+    <>
       <SectionLayout
         heading={<Heading>{headingText}</Heading>}
         addButton={
@@ -162,6 +152,6 @@ export function SectionScreen({
         onClose={handleCloseCategoryDrawer}
         onDelete={handleDeleteCategoryClick}
       />
-    </AppShell>
+    </>
   );
 }

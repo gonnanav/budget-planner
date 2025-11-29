@@ -1,7 +1,5 @@
 "use client";
 
-import { useContext } from "react";
-import { BackupContext } from "@/contexts/BackupContext";
 import { SectionScreen } from "@/components/section";
 import {
   useExpenseItems,
@@ -19,7 +17,6 @@ import { enrichItem } from "@/core/items";
 import { enrichCategory } from "@/core/categories";
 
 export default function Page() {
-  const backupActions = useContext(BackupContext);
   const items = useExpenseItems() ?? [];
   const categories = useExpenseCategories() ?? [];
   const enrichedItems = items?.map(enrichItem);
@@ -34,7 +31,6 @@ export default function Page() {
         addCategory: "Add expense category",
       }}
       data={{ items: enrichedItems, categories: enrichedCategories }}
-      backupActions={backupActions}
       itemActions={{
         add: addExpenseItem,
         update: updateExpenseItem,
