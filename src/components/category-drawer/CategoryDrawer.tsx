@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   Drawer,
   DrawerContent,
@@ -6,57 +5,45 @@ import {
   DrawerBody,
   DrawerFooter,
 } from "@heroui/drawer";
-import { Category } from "@/core/types";
 import { ActionButtons } from "@/components/action-buttons";
+import { CategoryDraft } from "@/components/shared/types";
 import { CategoryNameInput } from "./CategoryNameInput";
 
 export interface CategoryDrawerProps {
   isOpen: boolean;
-  category?: Category | null;
-  onCancel: () => void;
-  onSave: (name: string) => void;
+  heading: string;
+  draft: CategoryDraft;
   onClose: () => void;
+  onDraftChange: (changes: Partial<CategoryDraft>) => void;
+  onCancel: () => void;
+  onSave: (draft: CategoryDraft) => void;
   onDelete?: () => void;
 }
 
 export const CategoryDrawer = ({
   isOpen,
-  category,
+  heading,
+  draft,
+  onClose,
+  onDraftChange,
   onCancel,
   onSave,
-  onClose,
   onDelete,
 }: CategoryDrawerProps) => {
-  const [name, setName] = useState("");
-
-  const isEditMode = Boolean(category);
-  const title = isEditMode ? "Edit Category" : "Add Category";
-
-  useEffect(() => {
-    if (!category) {
-      reset();
-    } else {
-      setName(category.name);
-    }
-  }, [category]);
-
-  const reset = () => {
-    setName("");
-  };
+  const handleNameChange = (name: string) => onDraftChange({ name });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSave(name);
-    reset();
+    onSave(draft);
   };
 
   return (
     <Drawer isOpen={isOpen} onOpenChange={onClose}>
       <DrawerContent>
         <form onSubmit={handleSubmit}>
-          <DrawerHeader>{title}</DrawerHeader>
+          <DrawerHeader>{heading}</DrawerHeader>
           <DrawerBody>
-            <CategoryNameInput name={name} onChange={setName} />
+            <CategoryNameInput name={draft.name} onChange={handleNameChange} />
           </DrawerBody>
           <DrawerFooter>
             <ActionButtons onCancel={onCancel} onDelete={onDelete} />

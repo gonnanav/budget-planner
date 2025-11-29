@@ -7,3 +7,7 @@ export interface ItemDraft {
   categoryId?: string;
   notes?: string;
 }
+
+export interface CategoryDraft {
+  name: string;
+}

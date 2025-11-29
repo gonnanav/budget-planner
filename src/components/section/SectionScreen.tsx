@@ -14,6 +14,7 @@ import { useSectionCategories } from "@/components/section/useSectionCategories"
 import { useSectionItems } from "@/components/section/useSectionItems";
 import { useSectionView } from "@/components/section/useSectionView";
 import { useItemDraft } from "@/components/section/useItemDraft";
+import { useCategoryDraft } from "@/components/section/useCategoryDraft";
 
 interface SectionScreenProps {
   selectedTab: string;
@@ -72,9 +73,12 @@ export function SectionScreen({
     onResetItemInput: resetItemDraft,
   });
 
+  const { categoryDraft, updateCategoryDraft, resetCategoryDraft } =
+    useCategoryDraft();
+
   const {
     isCategoryDrawerOpen,
-    selectedCategory,
+    categoryDrawerHeading,
     handleAddCategoryClick,
     handleCategoryClick,
     handleSaveCategoryClick,
@@ -84,6 +88,8 @@ export function SectionScreen({
     onAddCategory: categoryActions.add,
     onUpdateCategory: categoryActions.update,
     onDeleteCategory: categoryActions.delete,
+    onChangeCategoryInput: updateCategoryDraft,
+    onResetCategoryInput: resetCategoryDraft,
   });
 
   const { view, handleViewChange, addButtonLabel, handleAddButtonClick } =
@@ -148,7 +154,9 @@ export function SectionScreen({
       />
       <CategoryDrawer
         isOpen={isCategoryDrawerOpen}
-        category={selectedCategory}
+        heading={categoryDrawerHeading}
+        draft={categoryDraft}
+        onDraftChange={updateCategoryDraft}
         onCancel={handleCloseCategoryDrawer}
         onSave={handleSaveCategoryClick}
         onClose={handleCloseCategoryDrawer}
