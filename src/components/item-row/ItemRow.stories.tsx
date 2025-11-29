@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { fn } from "storybook/test";
-import { ItemListItem } from "@/components/item-list-item";
+import { ItemRow } from "@/components/item-row";
 
 const meta = {
-  component: ItemListItem,
+  component: ItemRow,
   args: {
     onClick: fn(),
   },
-} satisfies Meta<typeof ItemListItem>;
+} satisfies Meta<typeof ItemRow>;
 
 export default meta;
 

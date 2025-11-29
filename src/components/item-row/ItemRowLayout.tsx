@@ -1,12 +1,12 @@
 import { cn } from "@/lib/utils";
 
-interface ItemLayoutProps {
+interface ItemRowLayoutProps {
   name: string;
   onClick: () => void;
   children: React.ReactNode;
 }
 
-export function ItemLayout({ name, onClick, children }: ItemLayoutProps) {
+export function ItemRowLayout({ name, onClick, children }: ItemRowLayoutProps) {
   return (
     <article
       aria-label={name}

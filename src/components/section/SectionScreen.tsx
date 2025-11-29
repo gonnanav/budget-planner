@@ -1,7 +1,7 @@
 import { Item, ItemInput, Category } from "@/core/types";
 import { SectionLayout } from "./SectionLayout";
 import { SectionTabs } from "./SectionTabs";
-import { ItemListItem } from "@/components/item-list-item";
+import { ItemRow } from "@/components/item-row";
 import { CategoryListItem } from "@/components/category-list-item";
 import { EmptyStateText, SectionList } from "@/components/shared";
 import { Heading } from "@/components/shared/Heading";
@@ -115,7 +115,7 @@ export function SectionScreen({
             empty={<EmptyStateText>No items yet</EmptyStateText>}
           >
             {(item) => (
-              <ItemListItem
+              <ItemRow
                 key={item.id}
                 name={item.name}
                 amount={item.amount}

@@ -1,4 +1,4 @@
-import { ItemLayout } from "./ItemLayout";
+import { ItemRowLayout } from "./ItemRowLayout";
 import { PrimaryLine } from "./PrimaryLine";
 import { NameText } from "./NameText";
 import { AmountText } from "./AmountText";
@@ -7,7 +7,7 @@ import { FrequencyText } from "./FrequencyText";
 import { NormalizedAmountText } from "./NormalizedAmountText";
 import { formatItemDisplay } from "./formatItemDisplay";
 
-interface ItemListItemProps {
+interface ItemRowProps {
   name: string;
   amount: number | null;
   frequency: string;
@@ -15,13 +15,13 @@ interface ItemListItemProps {
   onClick: () => void;
 }
 
-export function ItemListItem({
+export function ItemRow({
   name,
   amount,
   frequency,
   normalizedAmount,
   onClick,
-}: ItemListItemProps) {
+}: ItemRowProps) {
   const {
     formattedAmount,
     frequencyText,
@@ -30,7 +30,7 @@ export function ItemListItem({
   } = formatItemDisplay({ amount, frequency, normalizedAmount });
 
   return (
-    <ItemLayout name={name} onClick={onClick}>
+    <ItemRowLayout name={name} onClick={onClick}>
       <PrimaryLine>
         <NameText>{name}</NameText>
         {formattedAmount && <AmountText>{formattedAmount}</AmountText>}
@@ -43,6 +43,6 @@ export function ItemListItem({
           </NormalizedAmountText>
         )}
       </SecondaryLine>
-    </ItemLayout>
+    </ItemRowLayout>
   );
 }
