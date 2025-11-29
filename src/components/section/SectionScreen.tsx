@@ -13,7 +13,7 @@ import { BackupData } from "@/lib/backup-restore";
 import { useSectionCategories } from "@/components/section/useSectionCategories";
 import { useSectionItems } from "@/components/section/useSectionItems";
 import { useSectionView } from "@/components/section/useSectionView";
-import { useItemInputs } from "@/components/section/useItemInputs";
+import { useItemDraft } from "@/components/section/useItemDraft";
 
 interface SectionScreenProps {
   selectedTab: string;
@@ -54,24 +54,11 @@ export function SectionScreen({
   const { items, categories } = data;
   const { backup, restore } = backupActions;
 
-  const {
-    name,
-    amount,
-    frequency,
-    categoryId,
-    notes,
-    onNameChange,
-    onAmountChange,
-    onFrequencyChange,
-    onCategoryIdChange,
-    onNotesChange,
-    onReset,
-    onCopy,
-  } = useItemInputs();
+  const { itemDraft, updateItemDraft, resetItemDraft } = useItemDraft();
 
   const {
     isItemDrawerOpen,
-    drawerHeading,
+    itemDrawerHeading,
     handleAddItemClick,
     handleItemClick,
     handleSaveItemClick,
@@ -81,8 +68,8 @@ export function SectionScreen({
     onAddItem: itemActions.add,
     onUpdateItem: itemActions.update,
     onDeleteItem: itemActions.delete,
-    onChangeItemInput: onCopy,
-    onResetItemInput: onReset,
+    onChangeItemInput: updateItemDraft,
+    onResetItemInput: resetItemDraft,
   });
 
   const {
@@ -150,18 +137,10 @@ export function SectionScreen({
       </SectionLayout>
       <ItemDrawer
         isOpen={isItemDrawerOpen}
-        heading={drawerHeading}
-        categories={categories}
-        name={name}
-        amount={amount}
-        frequency={frequency}
-        categoryId={categoryId}
-        notes={notes}
-        onNameChange={onNameChange}
-        onAmountChange={onAmountChange}
-        onFrequencyChange={onFrequencyChange}
-        onCategoryIdChange={onCategoryIdChange}
-        onNotesChange={onNotesChange}
+        heading={itemDrawerHeading}
+        categoryOptions={categories}
+        draft={itemDraft}
+        onDraftChange={updateItemDraft}
         onCancel={handleCloseItemDrawer}
         onSave={handleSaveItemClick}
         onClose={handleCloseItemDrawer}

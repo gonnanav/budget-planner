@@ -53,17 +53,16 @@ export function useSectionItems({
     onClose();
   };
 
-  const isEditMode = Boolean(selectedItem);
-  const drawerHeading = isEditMode ? "Edit Item" : "Add Item";
+  const itemDrawerHeading = selectedItem ? "Edit Item" : "Add Item";
 
   return {
     isItemDrawerOpen: isOpen,
     selectedItem,
-    drawerHeading,
+    itemDrawerHeading,
     handleAddItemClick,
     handleItemClick,
     handleSaveItemClick,
-    handleDeleteItemClick: isEditMode ? handleDeleteItemClick : undefined,
+    handleDeleteItemClick: selectedItem ? handleDeleteItemClick : undefined,
     handleCloseItemDrawer: onClose,
   };
 }

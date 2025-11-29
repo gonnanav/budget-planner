@@ -5,7 +5,8 @@ import {
   DrawerBody,
   DrawerFooter,
 } from "@heroui/drawer";
-import { ItemInput, Frequency, Category } from "@/core/types";
+import { Frequency } from "@/core/types";
+import { ItemDraft } from "@/components/shared/types";
 import { ActionButtons } from "@/components/action-buttons";
 import { AmountInput } from "./AmountInput";
 import { NameInput } from "./NameInput";
@@ -15,46 +16,39 @@ import { NotesInput } from "./NotesInput";
 
 export interface ItemDrawerProps {
   isOpen: boolean;
-  categories: Category[];
-  name: string;
-  amount: number | null;
-  frequency: Frequency;
-  categoryId: string | undefined;
-  notes: string | undefined;
   heading: string;
-  onNameChange: (name: string) => void;
-  onAmountChange: (amount: number | null) => void;
-  onFrequencyChange: (frequency: Frequency) => void;
-  onCategoryIdChange: (categoryId: string | undefined) => void;
-  onNotesChange: (notes: string | undefined) => void;
-  onCancel: () => void;
-  onSave: (input: ItemInput) => void;
+  draft: ItemDraft;
+  categoryOptions: { id: string; name: string }[];
   onClose: () => void;
+  onDraftChange: (changes: Partial<ItemDraft>) => void;
+  onCancel: () => void;
+  onSave: (draft: ItemDraft) => void;
   onDelete?: () => void;
 }
 
 export const ItemDrawer = ({
   isOpen,
-  categories,
-  name,
-  amount,
-  frequency,
-  categoryId,
-  notes,
+  categoryOptions,
   heading,
-  onNameChange,
-  onAmountChange,
-  onFrequencyChange,
-  onCategoryIdChange,
-  onNotesChange,
+  draft,
+  onDraftChange,
   onCancel,
   onSave,
   onClose,
   onDelete,
 }: ItemDrawerProps) => {
+  const handleNameChange = (name: string) => onDraftChange({ name });
+  const handleAmountChange = (amount: number | null) =>
+    onDraftChange({ amount });
+  const handleFrequencyChange = (frequency: Frequency) =>
+    onDraftChange({ frequency });
+  const handleCategoryIdChange = (categoryId?: string) =>
+    onDraftChange({ categoryId });
+  const handleNotesChange = (notes: string) => onDraftChange({ notes });
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSave({ name, amount, frequency, categoryId, notes });
+    onSave(draft);
   };
 
   return (
@@ -63,18 +57,21 @@ export const ItemDrawer = ({
         <form onSubmit={handleSubmit}>
           <DrawerHeader>{heading}</DrawerHeader>
           <DrawerBody>
-            <NameInput name={name} onNameChange={onNameChange} />
-            <AmountInput amount={amount} onAmountChange={onAmountChange} />
+            <NameInput name={draft.name} onNameChange={handleNameChange} />
+            <AmountInput
+              amount={draft.amount ?? null}
+              onAmountChange={handleAmountChange}
+            />
             <FrequencyInput
-              frequency={frequency}
-              onFrequencyChange={onFrequencyChange}
+              frequency={draft.frequency ?? "monthly"}
+              onFrequencyChange={handleFrequencyChange}
             />
             <CategoryInput
-              selectedCategoryId={categoryId}
-              categoryOptions={categories}
-              onCategoryChange={onCategoryIdChange}
+              selectedCategoryId={draft.categoryId}
+              categoryOptions={categoryOptions}
+              onCategoryChange={handleCategoryIdChange}
             />
-            <NotesInput notes={notes} onNotesChange={onNotesChange} />
+            <NotesInput notes={draft.notes} onNotesChange={handleNotesChange} />
           </DrawerBody>
           <DrawerFooter>
             <ActionButtons onCancel={onCancel} onDelete={onDelete} />
