@@ -46,37 +46,38 @@ export const ItemDrawer = ({
     onDraftChange({ categoryId });
   const handleNotesChange = (notes: string) => onDraftChange({ notes });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSave = () => {
     onSave(draft);
   };
 
   return (
     <Drawer isOpen={isOpen} onOpenChange={onClose}>
       <DrawerContent>
-        <form onSubmit={handleSubmit}>
-          <DrawerHeader>{heading}</DrawerHeader>
-          <DrawerBody>
-            <NameInput name={draft.name} onNameChange={handleNameChange} />
-            <AmountInput
-              amount={draft.amount ?? null}
-              onAmountChange={handleAmountChange}
-            />
-            <FrequencyInput
-              frequency={draft.frequency ?? "monthly"}
-              onFrequencyChange={handleFrequencyChange}
-            />
-            <CategoryInput
-              selectedCategoryId={draft.categoryId}
-              categoryOptions={categoryOptions}
-              onCategoryChange={handleCategoryIdChange}
-            />
-            <NotesInput notes={draft.notes} onNotesChange={handleNotesChange} />
-          </DrawerBody>
-          <DrawerFooter>
-            <ActionButtons onCancel={onCancel} onDelete={onDelete} />
-          </DrawerFooter>
-        </form>
+        <DrawerHeader>{heading}</DrawerHeader>
+        <DrawerBody>
+          <NameInput name={draft.name} onNameChange={handleNameChange} />
+          <AmountInput
+            amount={draft.amount ?? null}
+            onAmountChange={handleAmountChange}
+          />
+          <FrequencyInput
+            frequency={draft.frequency ?? "monthly"}
+            onFrequencyChange={handleFrequencyChange}
+          />
+          <CategoryInput
+            selectedCategoryId={draft.categoryId}
+            categoryOptions={categoryOptions}
+            onCategoryChange={handleCategoryIdChange}
+          />
+          <NotesInput notes={draft.notes} onNotesChange={handleNotesChange} />
+        </DrawerBody>
+        <DrawerFooter>
+          <ActionButtons
+            onCancel={onCancel}
+            onSave={handleSave}
+            onDelete={onDelete}
+          />
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );

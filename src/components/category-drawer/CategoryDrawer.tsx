@@ -32,23 +32,24 @@ export const CategoryDrawer = ({
 }: CategoryDrawerProps) => {
   const handleNameChange = (name: string) => onDraftChange({ name });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSave = () => {
     onSave(draft);
   };
 
   return (
     <Drawer isOpen={isOpen} onOpenChange={onClose}>
       <DrawerContent>
-        <form onSubmit={handleSubmit}>
-          <DrawerHeader>{heading}</DrawerHeader>
-          <DrawerBody>
-            <CategoryNameInput name={draft.name} onChange={handleNameChange} />
-          </DrawerBody>
-          <DrawerFooter>
-            <ActionButtons onCancel={onCancel} onDelete={onDelete} />
-          </DrawerFooter>
-        </form>
+        <DrawerHeader>{heading}</DrawerHeader>
+        <DrawerBody>
+          <CategoryNameInput name={draft.name} onChange={handleNameChange} />
+        </DrawerBody>
+        <DrawerFooter>
+          <ActionButtons
+            onCancel={onCancel}
+            onSave={handleSave}
+            onDelete={onDelete}
+          />
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );

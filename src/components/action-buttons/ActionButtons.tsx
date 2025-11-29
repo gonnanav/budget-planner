@@ -3,17 +3,22 @@ import { Trash2 } from "lucide-react";
 
 interface ActionButtonsProps {
   onCancel: () => void;
+  onSave: () => void;
   onDelete?: () => void;
 }
 
-export const ActionButtons = ({ onCancel, onDelete }: ActionButtonsProps) => {
+export const ActionButtons = ({
+  onCancel,
+  onSave,
+  onDelete,
+}: ActionButtonsProps) => {
   return (
     <div className="flex justify-between items-center w-full">
       <div className="flex items-center gap-2">
         <Button color="danger" variant="light" onPress={onCancel}>
           Cancel
         </Button>
-        <Button color="primary" type="submit">
+        <Button color="primary" type="submit" onPress={onSave}>
           Save
         </Button>
       </div>
