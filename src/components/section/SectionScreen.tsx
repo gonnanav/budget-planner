@@ -2,7 +2,7 @@ import { Item, ItemInput, Category } from "@/core/types";
 import { SectionLayout } from "./SectionLayout";
 import { SectionTabs } from "./SectionTabs";
 import { ItemRow } from "@/components/item-row";
-import { CategoryListItem } from "@/components/category-list-item";
+import { CategoryRow } from "@/components/category-row";
 import { EmptyStateText, SectionList } from "@/components/shared";
 import { Heading } from "@/components/shared/Heading";
 import { AddButton } from "@/components/shared/AddButton";
@@ -131,7 +131,7 @@ export function SectionScreen({
             empty={<EmptyStateText>No categories yet</EmptyStateText>}
           >
             {(category) => (
-              <CategoryListItem
+              <CategoryRow
                 key={category.id}
                 name={category.name}
                 amount={category.amount}

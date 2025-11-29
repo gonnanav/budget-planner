@@ -1,16 +1,12 @@
 import { cn } from "@/lib/utils";
 
-interface CategoryListItemProps {
+interface CategoryRowProps {
   name: string;
   amount: number;
   onClick: () => void;
 }
 
-export function CategoryListItem({
-  name,
-  amount,
-  onClick,
-}: CategoryListItemProps) {
+export function CategoryRow({ name, amount, onClick }: CategoryRowProps) {
   return (
     <li
       className={cn(
