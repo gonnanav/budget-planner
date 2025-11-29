@@ -8,7 +8,7 @@ import { Heading } from "@/components/shared/Heading";
 import { AddButton } from "@/components/shared/AddButton";
 import { ItemDrawer } from "@/components/item-drawer";
 import { CategoryDrawer } from "@/components/category-drawer";
-import { AppLayout } from "@/components/app-layout";
+import { AppShell } from "@/components/app-shell";
 import { BackupData } from "@/lib/backup-restore";
 import { useSectionCategories } from "@/components/section/useSectionCategories";
 import { useSectionItems } from "@/components/section/useSectionItems";
@@ -101,7 +101,7 @@ export function SectionScreen({
     });
 
   return (
-    <AppLayout selectedTab={selectedTab} onBackup={backup} onRestore={restore}>
+    <AppShell selectedTab={selectedTab} onBackup={backup} onRestore={restore}>
       <SectionLayout
         heading={<Heading>{headingText}</Heading>}
         addButton={
@@ -162,6 +162,6 @@ export function SectionScreen({
         onClose={handleCloseCategoryDrawer}
         onDelete={handleDeleteCategoryClick}
       />
-    </AppLayout>
+    </AppShell>
   );
 }

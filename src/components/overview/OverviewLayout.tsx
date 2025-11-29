@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { AppLayout } from "@/components/app-layout";
+import { AppShell } from "@/components/app-shell";
 import { BackupData } from "@/lib/backup-restore";
 
 interface OverviewLayoutProps {
@@ -18,12 +18,12 @@ export function OverviewLayout({
   onRestore,
 }: OverviewLayoutProps) {
   return (
-    <AppLayout selectedTab="overview" onBackup={onBackup} onRestore={onRestore}>
+    <AppShell selectedTab="overview" onBackup={onBackup} onRestore={onRestore}>
       <div className="space-y-4">
         {heading}
         {banner}
         <div className="grid grid-cols-2 gap-3">{cards}</div>
       </div>
-    </AppLayout>
+    </AppShell>
   );
 }
