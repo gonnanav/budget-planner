@@ -3,16 +3,15 @@ import { CHARACTER_LIMITS } from "@/lib/limits";
 
 interface NotesInputProps {
   notes?: string;
-  onChange: (notes: string) => void;
+  onNotesChange: (notes: string) => void;
 }
 
-export function NotesInput({ notes = "", onChange }: NotesInputProps) {
+export function NotesInput({ notes = "", onNotesChange }: NotesInputProps) {
   return (
     <Textarea
       label="Notes"
       value={notes}
-      onValueChange={onChange}
-      placeholder="Add notes or details..."
+      onValueChange={onNotesChange}
       maxLength={CHARACTER_LIMITS.itemNotes}
     />
   );

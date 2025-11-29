@@ -22,7 +22,6 @@ export const CategoryInput = ({
   return (
     <Select
       label="Category"
-      placeholder="Select a category"
       selectedKeys={selectedKeys}
       onSelectionChange={handleSelectionChange}
     >

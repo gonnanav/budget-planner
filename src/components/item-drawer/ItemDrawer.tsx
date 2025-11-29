@@ -74,7 +74,7 @@ export const ItemDrawer = ({
               categoryOptions={categories}
               onCategoryChange={onCategoryIdChange}
             />
-            <NotesInput notes={notes} onChange={onNotesChange} />
+            <NotesInput notes={notes} onNotesChange={onNotesChange} />
           </DrawerBody>
           <DrawerFooter>
             <ActionButtons onCancel={onCancel} onDelete={onDelete} />
