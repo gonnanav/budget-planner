@@ -24,12 +24,7 @@ export default function Page() {
 
   return (
     <SectionScreen
-      selectedTab="expenses"
       headingText="Expenses"
-      labels={{
-        addItem: "Add expense item",
-        addCategory: "Add expense category",
-      }}
       data={{ items: enrichedItems, categories: enrichedCategories }}
       itemActions={{
         add: addExpenseItem,
