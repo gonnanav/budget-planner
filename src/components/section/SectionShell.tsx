@@ -2,7 +2,7 @@ import { SectionLayout } from "./SectionLayout";
 import { Heading } from "@/components/shared/Heading";
 import { AddButton } from "@/components/shared/AddButton";
 import { SectionTabs } from "./SectionTabs";
-import { SectionList } from "@/components/shared/SectionList";
+import { SectionList } from "./SectionList";
 import { EmptyStateText } from "@/components/shared/EmptyStateText";
 
 interface SectionShellProps<T> {
@@ -38,7 +38,7 @@ export function SectionShell<T>({
         items={items}
         empty={<EmptyStateText>{emptyText}</EmptyStateText>}
       >
-        {(item) => children(item)}
+        {children}
       </SectionList>
     </SectionLayout>
   );
