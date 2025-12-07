@@ -1,10 +1,9 @@
-import { SectionShell } from "./SectionShell";
+import { SectionShell } from "@/components/section/SectionShell";
 import { ItemRow } from "@/components/item-row";
 import { ItemDrawer } from "@/components/item-drawer";
 import { useItemDraft } from "./useItemDraft";
 import { useSectionItems } from "./useSectionItems";
-import { ItemInput } from "@/core/types";
-import { Item } from "@/core/types";
+import { Item, ItemInput } from "@/core/types";
 
 interface ItemsScreenProps {
   headingText: string;

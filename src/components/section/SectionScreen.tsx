@@ -1,6 +1,6 @@
 import { Item, ItemInput, Category } from "@/core/types";
 import { useSectionView } from "@/components/section/useSectionView";
-import { ItemsScreen } from "./ItemsScreen";
+import { ItemsScreen } from "@/components/items-screen";
 import { CategoriesScreen } from "@/components/categories-screen";
 
 interface SectionScreenProps {
