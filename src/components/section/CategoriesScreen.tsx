@@ -5,7 +5,7 @@ import { useCategoryDraft } from "./useCategoryDraft";
 import { useSectionCategories } from "./useSectionCategories";
 import { CategoryDrawer } from "@/components/category-drawer";
 
-interface CategoriesSectionProps {
+interface CategoriesScreenProps {
   headingText: string;
   categories: (Category & { amount: number })[];
   addCategory: (name: string) => Promise<string>;
@@ -14,14 +14,14 @@ interface CategoriesSectionProps {
   onViewChange: (view: "items" | "categories") => void;
 }
 
-export function CategoriesSection({
+export function CategoriesScreen({
   headingText,
   categories,
   addCategory,
   updateCategory,
   deleteCategory,
   onViewChange,
-}: CategoriesSectionProps) {
+}: CategoriesScreenProps) {
   const { categoryDraft, updateCategoryDraft, resetCategoryDraft } =
     useCategoryDraft();
 

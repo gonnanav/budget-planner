@@ -6,7 +6,7 @@ import { useSectionItems } from "./useSectionItems";
 import { ItemInput } from "@/core/types";
 import { Item } from "@/core/types";
 
-interface ItemsSectionProps {
+interface ItemsScreenProps {
   headingText: string;
   items: (Item & { normalizedAmount: number })[];
   categoryOptions: { id: string; name: string }[];
@@ -16,7 +16,7 @@ interface ItemsSectionProps {
   onViewChange: (view: "items" | "categories") => void;
 }
 
-export function ItemsSection({
+export function ItemsScreen({
   headingText,
   items,
   categoryOptions,
@@ -24,7 +24,7 @@ export function ItemsSection({
   updateItem,
   deleteItem,
   onViewChange,
-}: ItemsSectionProps) {
+}: ItemsScreenProps) {
   const { itemDraft, updateItemDraft, resetItemDraft } = useItemDraft();
 
   const {

@@ -1,7 +1,7 @@
 import { Item, ItemInput, Category } from "@/core/types";
 import { useSectionView } from "@/components/section/useSectionView";
-import { ItemsSection } from "./ItemsSection";
-import { CategoriesSection } from "./CategoriesSection";
+import { ItemsScreen } from "./ItemsScreen";
+import { CategoriesScreen } from "./CategoriesScreen";
 
 interface SectionScreenProps {
   headingText: string;
@@ -31,7 +31,7 @@ export function SectionScreen({
   const { view, handleViewChange } = useSectionView();
 
   return view === "items" ? (
-    <ItemsSection
+    <ItemsScreen
       headingText={headingText}
       items={items}
       categoryOptions={categories}
@@ -41,7 +41,7 @@ export function SectionScreen({
       onViewChange={handleViewChange}
     />
   ) : (
-    <CategoriesSection
+    <CategoriesScreen
       headingText={headingText}
       categories={categories}
       addCategory={categoryActions.add}
