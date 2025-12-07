@@ -1,7 +1,7 @@
 import { Item, ItemInput, Category } from "@/core/types";
 import { useSectionView } from "@/components/section/useSectionView";
 import { ItemsScreen } from "./ItemsScreen";
-import { CategoriesScreen } from "./CategoriesScreen";
+import { CategoriesScreen } from "@/components/categories-screen";
 
 interface SectionScreenProps {
   headingText: string;

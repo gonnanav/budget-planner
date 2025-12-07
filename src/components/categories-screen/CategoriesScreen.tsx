@@ -1,5 +1,5 @@
 import { Category } from "@/core/types";
-import { SectionShell } from "./SectionShell";
+import { SectionShell } from "@/components/section/SectionShell";
 import { CategoryRow } from "@/components/category-row";
 import { useCategoryDraft } from "./useCategoryDraft";
 import { useSectionCategories } from "./useSectionCategories";
