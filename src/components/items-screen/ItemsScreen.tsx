@@ -35,6 +35,7 @@ export function ItemsScreen({
     handleDeleteItemClick,
     handleCloseItemDrawer,
   } = useSectionItems({
+    selectedItemId: itemDraft.id,
     onAddItem: addItem,
     onUpdateItem: updateItem,
     onDeleteItem: deleteItem,

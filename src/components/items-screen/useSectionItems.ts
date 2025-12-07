@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { useDisclosure } from "@heroui/react";
 import { Item, ItemInput } from "@/core/types";
 
 interface UseSectionItemsProps {
+  selectedItemId?: string;
   onAddItem: (input: ItemInput) => Promise<string>;
   onUpdateItem: (id: string, input: ItemInput) => Promise<boolean>;
   onDeleteItem: (id: string) => Promise<void>;
@@ -11,6 +11,7 @@ interface UseSectionItemsProps {
 }
 
 export function useSectionItems({
+  selectedItemId,
   onAddItem,
   onUpdateItem,
   onDeleteItem,
@@ -18,24 +19,21 @@ export function useSectionItems({
   onResetItemInput,
 }: UseSectionItemsProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
   const handleAddItemClick = () => {
-    setSelectedItem(null);
     onResetItemInput();
     onOpen();
   };
 
   const handleItemClick = (item: Item) => {
-    setSelectedItem(item);
     onChangeItemInput(item);
     onOpen();
   };
 
   const handleUpdateItem = async (input: ItemInput) => {
-    if (!selectedItem) return;
+    if (!selectedItemId) return;
 
-    await onUpdateItem(selectedItem.id, input);
+    await onUpdateItem(selectedItemId, input);
     onClose();
   };
 
@@ -44,25 +42,24 @@ export function useSectionItems({
     onClose();
   };
 
-  const handleSaveItemClick = selectedItem ? handleUpdateItem : handleAddItem;
+  const handleSaveItemClick = selectedItemId ? handleUpdateItem : handleAddItem;
 
   const handleDeleteItemClick = async () => {
-    if (!selectedItem) return;
+    if (!selectedItemId) return;
 
-    await onDeleteItem(selectedItem.id);
+    await onDeleteItem(selectedItemId);
     onClose();
   };
 
-  const itemDrawerHeading = selectedItem ? "Edit Item" : "Add Item";
+  const itemDrawerHeading = selectedItemId ? "Edit Item" : "Add Item";
 
   return {
     isItemDrawerOpen: isOpen,
-    selectedItem,
     itemDrawerHeading,
     handleAddItemClick,
     handleItemClick,
     handleSaveItemClick,
-    handleDeleteItemClick: selectedItem ? handleDeleteItemClick : undefined,
+    handleDeleteItemClick: selectedItemId ? handleDeleteItemClick : undefined,
     handleCloseItemDrawer: onClose,
   };
 }
