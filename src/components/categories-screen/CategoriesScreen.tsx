@@ -22,8 +22,7 @@ export function CategoriesScreen({
   deleteCategory,
   onViewChange,
 }: CategoriesScreenProps) {
-  const { categoryDraft, updateCategoryDraft, resetCategoryDraft } =
-    useCategoryDraft();
+  const { draft, updateDraft, resetDraft } = useCategoryDraft();
 
   const {
     isCategoryDrawerOpen,
@@ -37,8 +36,8 @@ export function CategoriesScreen({
     onAddCategory: addCategory,
     onUpdateCategory: updateCategory,
     onDeleteCategory: deleteCategory,
-    onChangeCategoryInput: updateCategoryDraft,
-    onResetCategoryInput: resetCategoryDraft,
+    onChangeCategoryInput: updateDraft,
+    onResetCategoryInput: resetDraft,
   });
 
   return (
@@ -48,8 +47,8 @@ export function CategoriesScreen({
         addButtonLabel="Add category"
         selectedTab="categories"
         items={categories}
-        emptyText="No categories yet"
-        onAddButtonClick={handleAddCategoryClick}
+        emptyItemsText="No categories yet"
+        onAddClick={handleAddCategoryClick}
         onTabChange={onViewChange}
       >
         {(category) => (
@@ -64,8 +63,8 @@ export function CategoriesScreen({
       <CategoryDrawer
         isOpen={isCategoryDrawerOpen}
         heading={categoryDrawerHeading}
-        draft={categoryDraft}
-        onDraftChange={updateCategoryDraft}
+        draft={draft}
+        onDraftChange={updateDraft}
         onCancel={handleCloseCategoryDrawer}
         onSave={handleSaveCategoryClick}
         onClose={handleCloseCategoryDrawer}

@@ -1,1 +1,1 @@
-export { EmptyStateText } from "./EmptyStateText";
+export { EmptyStateText } from "../section/EmptyStateText";

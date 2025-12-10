@@ -24,7 +24,7 @@ export function ItemsScreen({
   deleteItem,
   onViewChange,
 }: ItemsScreenProps) {
-  const { itemDraft, updateItemDraft, resetItemDraft } = useItemDraft();
+  const { draft, updateDraft, resetDraft } = useItemDraft();
 
   const {
     isItemDrawerOpen,
@@ -35,12 +35,12 @@ export function ItemsScreen({
     handleDeleteItemClick,
     handleCloseItemDrawer,
   } = useSectionItems({
-    selectedItemId: itemDraft.id,
+    selectedItemId: draft.id,
     onAddItem: addItem,
     onUpdateItem: updateItem,
     onDeleteItem: deleteItem,
-    onChangeItemInput: updateItemDraft,
-    onResetItemInput: resetItemDraft,
+    onChangeItemInput: updateDraft,
+    onResetItemInput: resetDraft,
   });
 
   return (
@@ -50,8 +50,8 @@ export function ItemsScreen({
         addButtonLabel="Add item"
         selectedTab="items"
         items={items}
-        emptyText="No items yet"
-        onAddButtonClick={handleAddItemClick}
+        emptyItemsText="No items yet"
+        onAddClick={handleAddItemClick}
         onTabChange={onViewChange}
       >
         {(item) => (
@@ -69,8 +69,8 @@ export function ItemsScreen({
         isOpen={isItemDrawerOpen}
         heading={itemDrawerHeading}
         categoryOptions={categoryOptions}
-        draft={itemDraft}
-        onDraftChange={updateItemDraft}
+        draft={draft}
+        onDraftChange={updateDraft}
         onCancel={handleCloseItemDrawer}
         onSave={handleSaveItemClick}
         onClose={handleCloseItemDrawer}

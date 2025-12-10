@@ -26,8 +26,8 @@ export function RootLayoutClient({ children }: RootLayoutClientProps) {
 function useSelectedTab(): TabKey {
   const path = usePathname();
 
-  if (path === "/income") return "income";
-  else if (path === "/expenses") return "expenses";
+  if (path.startsWith("/income")) return "income";
+  else if (path.startsWith("/expenses")) return "expenses";
 
   return "overview";
 }

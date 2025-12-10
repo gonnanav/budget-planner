@@ -20,8 +20,8 @@ export function useItemDraft() {
   };
 
   return {
-    itemDraft: draft,
-    updateItemDraft: updateDraft,
-    resetItemDraft: resetDraft,
+    draft,
+    updateDraft,
+    resetDraft,
   };
 }

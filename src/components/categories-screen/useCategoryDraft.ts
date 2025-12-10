@@ -15,8 +15,8 @@ export function useCategoryDraft() {
   };
 
   return {
-    categoryDraft: draft,
-    updateCategoryDraft: updateDraft,
-    resetCategoryDraft: resetDraft,
+    draft,
+    updateDraft,
+    resetDraft,
   };
 }

@@ -33,7 +33,7 @@ export function OverviewScreen({
       banner={<BalanceBanner status={balance.status} amount={balance.amount} />}
       cards={
         <>
-          <Link href="/income">
+          <Link href="/income/items">
             <BudgetCard
               title="Income"
               amount={income.sum}
@@ -43,7 +43,7 @@ export function OverviewScreen({
             />
           </Link>
 
-          <Link href="/expenses">
+          <Link href="/expenses/items">
             <BudgetCard
               title="Expenses"
               amount={expense.sum}
