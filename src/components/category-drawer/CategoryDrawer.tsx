@@ -11,7 +11,7 @@ import { CategoryNameInput } from "./CategoryNameInput";
 
 export interface CategoryDrawerProps {
   isOpen: boolean;
-  heading: string;
+  headingText: string;
   draft: CategoryDraft;
   onClose: () => void;
   onDraftChange: (changes: Partial<CategoryDraft>) => void;
@@ -22,7 +22,7 @@ export interface CategoryDrawerProps {
 
 export const CategoryDrawer = ({
   isOpen,
-  heading,
+  headingText,
   draft,
   onClose,
   onDraftChange,
@@ -47,7 +47,7 @@ export const CategoryDrawer = ({
   return (
     <Drawer isOpen={isOpen} onOpenChange={onClose}>
       <DrawerContent>
-        <DrawerHeader>{heading}</DrawerHeader>
+        <DrawerHeader>{headingText}</DrawerHeader>
         <DrawerBody>
           <CategoryNameInput name={draft.name} onChange={handleNameChange} />
         </DrawerBody>

@@ -2,8 +2,9 @@ import { Category } from "@/core/types";
 import { SectionShell } from "@/components/section/SectionShell";
 import { CategoryRow } from "@/components/category-row";
 import { useCategoryDraft } from "./useCategoryDraft";
-import { useSectionCategories } from "./useSectionCategories";
 import { CategoryDrawer } from "@/components/category-drawer";
+import { useDisclosure } from "@heroui/react";
+import { CategoryDraft } from "@/components/shared/types";
 
 interface CategoriesScreenProps {
   headingText: string;
@@ -23,23 +24,39 @@ export function CategoriesScreen({
   onViewChange,
 }: CategoriesScreenProps) {
   const { draft, updateDraft, resetDraft } = useCategoryDraft();
-
   const {
-    isCategoryDrawerOpen,
-    handleAddCategoryClick,
-    handleCategoryClick,
-    handleSaveCategoryClick,
-    handleDeleteCategoryClick,
-    handleCloseCategoryDrawer,
-  } = useSectionCategories({
-    onAddCategory: addCategory,
-    onUpdateCategory: updateCategory,
-    onDeleteCategory: deleteCategory,
-    onChangeCategoryInput: updateDraft,
-    onResetCategoryInput: resetDraft,
-  });
+    isOpen: isDrawerOpen,
+    onOpen: openDrawer,
+    onClose: closeDrawer,
+  } = useDisclosure();
 
-  const categoryDrawerHeading = draft.id ? "Edit Category" : "Add Category";
+  const handleAddCategoryClick = () => {
+    resetDraft();
+    openDrawer();
+  };
+
+  const handleCategoryClick = (category: Category) => {
+    updateDraft(category);
+    openDrawer();
+  };
+
+  const handleSaveCategoryClick = async ({ id, name }: CategoryDraft) => {
+    if (id) {
+      await updateCategory(id, name);
+    } else {
+      await addCategory(name);
+    }
+    closeDrawer();
+  };
+
+  const handleDeleteCategoryClick = async (id?: string) => {
+    if (!id) return;
+
+    await deleteCategory(id);
+    closeDrawer();
+  };
+
+  const drawerHeadingText = draft.id ? "Edit Category" : "Add Category";
 
   return (
     <>
@@ -62,13 +79,13 @@ export function CategoriesScreen({
         )}
       </SectionShell>
       <CategoryDrawer
-        isOpen={isCategoryDrawerOpen}
-        heading={categoryDrawerHeading}
+        isOpen={isDrawerOpen}
+        headingText={drawerHeadingText}
         draft={draft}
         onDraftChange={updateDraft}
-        onCancel={handleCloseCategoryDrawer}
+        onCancel={closeDrawer}
         onSave={handleSaveCategoryClick}
-        onClose={handleCloseCategoryDrawer}
+        onClose={closeDrawer}
         onDelete={handleDeleteCategoryClick}
       />
     </>
