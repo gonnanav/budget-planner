@@ -16,7 +16,7 @@ import { NotesInput } from "./NotesInput";
 
 export interface ItemDrawerProps {
   isOpen: boolean;
-  heading: string;
+  headingText: string;
   draft: ItemDraft;
   categoryOptions: { id: string; name: string }[];
   onClose: () => void;
@@ -29,7 +29,7 @@ export interface ItemDrawerProps {
 export const ItemDrawer = ({
   isOpen,
   categoryOptions,
-  heading,
+  headingText,
   draft,
   onDraftChange,
   onCancel,
@@ -59,7 +59,7 @@ export const ItemDrawer = ({
   return (
     <Drawer isOpen={isOpen} onOpenChange={onClose}>
       <DrawerContent>
-        <DrawerHeader>{heading}</DrawerHeader>
+        <DrawerHeader>{headingText}</DrawerHeader>
         <DrawerBody>
           <NameInput name={draft.name} onNameChange={handleNameChange} />
           <AmountInput

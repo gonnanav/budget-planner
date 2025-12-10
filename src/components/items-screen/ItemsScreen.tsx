@@ -2,8 +2,9 @@ import { SectionShell } from "@/components/section/SectionShell";
 import { ItemRow } from "@/components/item-row";
 import { ItemDrawer } from "@/components/item-drawer";
 import { useItemDraft } from "./useItemDraft";
-import { useSectionItems } from "./useSectionItems";
 import { Item, ItemInput } from "@/core/types";
+import { useDisclosure } from "@heroui/react";
+import { ItemDraft } from "@/components/shared/types";
 
 interface ItemsScreenProps {
   headingText: string;
@@ -27,21 +28,39 @@ export function ItemsScreen({
   const { draft, updateDraft, resetDraft } = useItemDraft();
 
   const {
-    isItemDrawerOpen,
-    handleAddItemClick,
-    handleItemClick,
-    handleSaveItemClick,
-    handleDeleteItemClick,
-    handleCloseItemDrawer,
-  } = useSectionItems({
-    onAddItem: addItem,
-    onUpdateItem: updateItem,
-    onDeleteItem: deleteItem,
-    onChangeItemInput: updateDraft,
-    onResetItemInput: resetDraft,
-  });
+    isOpen: isDrawerOpen,
+    onOpen: openDrawer,
+    onClose: closeDrawer,
+  } = useDisclosure();
 
-  const itemDrawerHeading = draft.id ? "Edit Item" : "Add Item";
+  const handleAddClick = () => {
+    resetDraft();
+    openDrawer();
+  };
+
+  const handleItemClick = (item: Item) => {
+    updateDraft(item);
+    openDrawer();
+  };
+
+  const handleSaveClick = async (draft: ItemDraft) => {
+    if (draft.id) {
+      await updateItem(draft.id, draft);
+    } else {
+      await addItem(draft);
+    }
+
+    closeDrawer();
+  };
+
+  const handleDeleteClick = async (id?: string) => {
+    if (!id) return;
+
+    await deleteItem(id);
+    closeDrawer();
+  };
+
+  const drawerHeadingText = draft.id ? "Edit Item" : "Add Item";
 
   return (
     <>
@@ -51,7 +70,7 @@ export function ItemsScreen({
         selectedTab="items"
         items={items}
         emptyItemsText="No items yet"
-        onAddClick={handleAddItemClick}
+        onAddClick={handleAddClick}
         onTabChange={onViewChange}
       >
         {(item) => (
@@ -66,15 +85,15 @@ export function ItemsScreen({
         )}
       </SectionShell>
       <ItemDrawer
-        isOpen={isItemDrawerOpen}
-        heading={itemDrawerHeading}
+        isOpen={isDrawerOpen}
+        headingText={drawerHeadingText}
         categoryOptions={categoryOptions}
         draft={draft}
         onDraftChange={updateDraft}
-        onCancel={handleCloseItemDrawer}
-        onSave={handleSaveItemClick}
-        onClose={handleCloseItemDrawer}
-        onDelete={handleDeleteItemClick}
+        onCancel={closeDrawer}
+        onSave={handleSaveClick}
+        onClose={closeDrawer}
+        onDelete={handleDeleteClick}
       />
     </>
   );
