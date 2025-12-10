@@ -1,8 +1,8 @@
 import { useDisclosure } from "@heroui/react";
 import { Item, ItemInput } from "@/core/types";
+import { ItemDraft } from "@/components/shared/types";
 
 interface UseSectionItemsProps {
-  selectedItemId?: string;
   onAddItem: (input: ItemInput) => Promise<string>;
   onUpdateItem: (id: string, input: ItemInput) => Promise<boolean>;
   onDeleteItem: (id: string) => Promise<void>;
@@ -11,7 +11,6 @@ interface UseSectionItemsProps {
 }
 
 export function useSectionItems({
-  selectedItemId,
   onAddItem,
   onUpdateItem,
   onDeleteItem,
@@ -30,36 +29,29 @@ export function useSectionItems({
     onOpen();
   };
 
-  const handleUpdateItem = async (input: ItemInput) => {
-    if (!selectedItemId) return;
+  const handleSaveItemClick = async (draft: ItemDraft) => {
+    if (draft.id) {
+      await onUpdateItem(draft.id, draft);
+    } else {
+      await onAddItem(draft);
+    }
 
-    await onUpdateItem(selectedItemId, input);
     onClose();
   };
 
-  const handleAddItem = async (input: ItemInput) => {
-    await onAddItem(input);
+  const handleDeleteItemClick = async (id?: string) => {
+    if (!id) return;
+
+    await onDeleteItem(id);
     onClose();
   };
-
-  const handleSaveItemClick = selectedItemId ? handleUpdateItem : handleAddItem;
-
-  const handleDeleteItemClick = async () => {
-    if (!selectedItemId) return;
-
-    await onDeleteItem(selectedItemId);
-    onClose();
-  };
-
-  const itemDrawerHeading = selectedItemId ? "Edit Item" : "Add Item";
 
   return {
     isItemDrawerOpen: isOpen,
-    itemDrawerHeading,
     handleAddItemClick,
     handleItemClick,
     handleSaveItemClick,
-    handleDeleteItemClick: selectedItemId ? handleDeleteItemClick : undefined,
+    handleDeleteItemClick,
     handleCloseItemDrawer: onClose,
   };
 }

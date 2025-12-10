@@ -3,7 +3,6 @@ import { Category } from "@/core/types";
 import { CategoryDraft } from "@/components/shared/types";
 
 interface UseSectionCategoriesProps {
-  selectedCategoryId?: string;
   onAddCategory: (name: string) => Promise<string>;
   onUpdateCategory: (id: string, name: string) => Promise<boolean>;
   onDeleteCategory: (id: string) => Promise<void>;
@@ -12,7 +11,6 @@ interface UseSectionCategoriesProps {
 }
 
 export function useSectionCategories({
-  selectedCategoryId,
   onAddCategory,
   onUpdateCategory,
   onDeleteCategory,
@@ -31,36 +29,25 @@ export function useSectionCategories({
     onOpen();
   };
 
-  const handleUpdateCategory = async ({ name }: CategoryDraft) => {
-    if (!selectedCategoryId) return;
+  const handleSaveCategoryClick = async ({ id, name }: CategoryDraft) => {
+    if (id) {
+      await onUpdateCategory(id, name);
+    } else {
+      await onAddCategory(name);
+    }
 
-    await onUpdateCategory(selectedCategoryId, name);
     onClose();
   };
 
-  const handleAddCategory = async ({ name }: CategoryDraft) => {
-    await onAddCategory(name);
+  const handleDeleteCategoryClick = async (id?: string) => {
+    if (!id) return;
+
+    await onDeleteCategory(id);
     onClose();
   };
-
-  const handleSaveCategoryClick = selectedCategoryId
-    ? handleUpdateCategory
-    : handleAddCategory;
-
-  const handleDeleteCategoryClick = selectedCategoryId
-    ? async () => {
-        await onDeleteCategory(selectedCategoryId);
-        onClose();
-      }
-    : undefined;
-
-  const categoryDrawerHeading = selectedCategoryId
-    ? "Edit Category"
-    : "Add Category";
 
   return {
     isCategoryDrawerOpen: isOpen,
-    categoryDrawerHeading,
     handleAddCategoryClick,
     handleCategoryClick,
     handleSaveCategoryClick,

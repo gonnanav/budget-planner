@@ -26,20 +26,20 @@ export function CategoriesScreen({
 
   const {
     isCategoryDrawerOpen,
-    categoryDrawerHeading,
     handleAddCategoryClick,
     handleCategoryClick,
     handleSaveCategoryClick,
     handleDeleteCategoryClick,
     handleCloseCategoryDrawer,
   } = useSectionCategories({
-    selectedCategoryId: draft.id,
     onAddCategory: addCategory,
     onUpdateCategory: updateCategory,
     onDeleteCategory: deleteCategory,
     onChangeCategoryInput: updateDraft,
     onResetCategoryInput: resetDraft,
   });
+
+  const categoryDrawerHeading = draft.id ? "Edit Category" : "Add Category";
 
   return (
     <>

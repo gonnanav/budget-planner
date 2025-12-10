@@ -28,20 +28,20 @@ export function ItemsScreen({
 
   const {
     isItemDrawerOpen,
-    itemDrawerHeading,
     handleAddItemClick,
     handleItemClick,
     handleSaveItemClick,
     handleDeleteItemClick,
     handleCloseItemDrawer,
   } = useSectionItems({
-    selectedItemId: draft.id,
     onAddItem: addItem,
     onUpdateItem: updateItem,
     onDeleteItem: deleteItem,
     onChangeItemInput: updateDraft,
     onResetItemInput: resetDraft,
   });
+
+  const itemDrawerHeading = draft.id ? "Edit Item" : "Add Item";
 
   return (
     <>

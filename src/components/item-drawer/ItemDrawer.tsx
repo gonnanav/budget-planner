@@ -23,7 +23,7 @@ export interface ItemDrawerProps {
   onDraftChange: (changes: Partial<ItemDraft>) => void;
   onCancel: () => void;
   onSave: (draft: ItemDraft) => void;
-  onDelete?: () => void;
+  onDelete: (id?: string) => void;
 }
 
 export const ItemDrawer = ({
@@ -37,6 +37,8 @@ export const ItemDrawer = ({
   onClose,
   onDelete,
 }: ItemDrawerProps) => {
+  const hasDelete = Boolean(draft.id);
+
   const handleNameChange = (name: string) => onDraftChange({ name });
   const handleAmountChange = (amount: number | null) =>
     onDraftChange({ amount });
@@ -48,6 +50,10 @@ export const ItemDrawer = ({
 
   const handleSave = () => {
     onSave(draft);
+  };
+
+  const handleDelete = () => {
+    onDelete(draft.id);
   };
 
   return (
@@ -73,9 +79,10 @@ export const ItemDrawer = ({
         </DrawerBody>
         <DrawerFooter>
           <ActionButtons
+            hasDelete={hasDelete}
             onCancel={onCancel}
             onSave={handleSave}
-            onDelete={onDelete}
+            onDelete={handleDelete}
           />
         </DrawerFooter>
       </DrawerContent>

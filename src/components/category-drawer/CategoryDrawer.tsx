@@ -17,7 +17,7 @@ export interface CategoryDrawerProps {
   onDraftChange: (changes: Partial<CategoryDraft>) => void;
   onCancel: () => void;
   onSave: (draft: CategoryDraft) => void;
-  onDelete?: () => void;
+  onDelete: (id?: string) => void;
 }
 
 export const CategoryDrawer = ({
@@ -30,10 +30,18 @@ export const CategoryDrawer = ({
   onSave,
   onDelete,
 }: CategoryDrawerProps) => {
-  const handleNameChange = (name: string) => onDraftChange({ name });
+  const hasDelete = Boolean(draft.id);
+
+  const handleNameChange = (name: string) => {
+    onDraftChange({ name });
+  };
 
   const handleSave = () => {
     onSave(draft);
+  };
+
+  const handleDelete = () => {
+    onDelete(draft.id);
   };
 
   return (
@@ -45,9 +53,10 @@ export const CategoryDrawer = ({
         </DrawerBody>
         <DrawerFooter>
           <ActionButtons
+            hasDelete={hasDelete}
             onCancel={onCancel}
             onSave={handleSave}
-            onDelete={onDelete}
+            onDelete={handleDelete}
           />
         </DrawerFooter>
       </DrawerContent>

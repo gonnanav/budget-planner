@@ -2,12 +2,14 @@ import { Button } from "@heroui/button";
 import { Trash2 } from "lucide-react";
 
 interface ActionButtonsProps {
+  hasDelete: boolean;
   onCancel: () => void;
   onSave: () => void;
-  onDelete?: () => void;
+  onDelete: () => void;
 }
 
 export const ActionButtons = ({
+  hasDelete,
   onCancel,
   onSave,
   onDelete,
@@ -23,7 +25,7 @@ export const ActionButtons = ({
         </Button>
       </div>
 
-      {onDelete && (
+      {hasDelete && (
         <div>
           <Button
             color="danger"
