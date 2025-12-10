@@ -10,5 +10,6 @@ export interface ItemDraft {
 }
 
 export interface CategoryDraft {
+  id?: string;
   name: string;
 }

@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { useDisclosure } from "@heroui/react";
 import { Category } from "@/core/types";
 import { CategoryDraft } from "@/components/shared/types";
 
 interface UseSectionCategoriesProps {
+  selectedCategoryId?: string;
   onAddCategory: (name: string) => Promise<string>;
   onUpdateCategory: (id: string, name: string) => Promise<boolean>;
   onDeleteCategory: (id: string) => Promise<void>;
@@ -12,6 +12,7 @@ interface UseSectionCategoriesProps {
 }
 
 export function useSectionCategories({
+  selectedCategoryId,
   onAddCategory,
   onUpdateCategory,
   onDeleteCategory,
@@ -19,26 +20,21 @@ export function useSectionCategories({
   onResetCategoryInput,
 }: UseSectionCategoriesProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    null,
-  );
 
   const handleAddCategoryClick = () => {
-    setSelectedCategory(null);
     onResetCategoryInput();
     onOpen();
   };
 
   const handleCategoryClick = (category: Category) => {
-    setSelectedCategory(category);
     onChangeCategoryInput(category);
     onOpen();
   };
 
   const handleUpdateCategory = async ({ name }: CategoryDraft) => {
-    if (!selectedCategory) return;
+    if (!selectedCategoryId) return;
 
-    await onUpdateCategory(selectedCategory.id, name);
+    await onUpdateCategory(selectedCategoryId, name);
     onClose();
   };
 
@@ -47,24 +43,23 @@ export function useSectionCategories({
     onClose();
   };
 
-  const handleSaveCategoryClick = selectedCategory
+  const handleSaveCategoryClick = selectedCategoryId
     ? handleUpdateCategory
     : handleAddCategory;
 
-  const handleDeleteCategoryClick = selectedCategory
+  const handleDeleteCategoryClick = selectedCategoryId
     ? async () => {
-        await onDeleteCategory(selectedCategory.id);
+        await onDeleteCategory(selectedCategoryId);
         onClose();
       }
     : undefined;
 
-  const categoryDrawerHeading = selectedCategory
+  const categoryDrawerHeading = selectedCategoryId
     ? "Edit Category"
     : "Add Category";
 
   return {
     isCategoryDrawerOpen: isOpen,
-    selectedCategory,
     categoryDrawerHeading,
     handleAddCategoryClick,
     handleCategoryClick,

@@ -33,6 +33,7 @@ export function CategoriesScreen({
     handleDeleteCategoryClick,
     handleCloseCategoryDrawer,
   } = useSectionCategories({
+    selectedCategoryId: draft.id,
     onAddCategory: addCategory,
     onUpdateCategory: updateCategory,
     onDeleteCategory: deleteCategory,
