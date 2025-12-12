@@ -1,10 +1,17 @@
 import { SectionShell } from "@/components/section/SectionShell";
 import { ItemRow } from "@/components/item-row";
 import { ItemDrawer } from "@/components/item-drawer";
-import { useItemDraft } from "./useItemDraft";
 import { Item, ItemInput } from "@/core/types";
 import { useDisclosure } from "@heroui/react";
 import { ItemDraft } from "@/components/shared/types";
+import { useDraft } from "@/components/shared";
+
+const DEFAULT_ITEM_DRAFT: ItemDraft = {
+  name: "",
+  amount: null,
+  frequency: "monthly",
+  notes: "",
+};
 
 interface ItemsScreenProps {
   headingText: string;
@@ -25,7 +32,8 @@ export function ItemsScreen({
   deleteItem,
   onViewChange,
 }: ItemsScreenProps) {
-  const { draft, updateDraft, resetDraft } = useItemDraft();
+  const { draft, updateDraft, resetDraft } =
+    useDraft<ItemDraft>(DEFAULT_ITEM_DRAFT);
 
   const {
     isOpen: isDrawerOpen,

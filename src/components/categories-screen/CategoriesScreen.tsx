@@ -1,10 +1,12 @@
 import { Category } from "@/core/types";
 import { SectionShell } from "@/components/section/SectionShell";
 import { CategoryRow } from "@/components/category-row";
-import { useCategoryDraft } from "./useCategoryDraft";
 import { CategoryDrawer } from "@/components/category-drawer";
 import { useDisclosure } from "@heroui/react";
 import { CategoryDraft } from "@/components/shared/types";
+import { useDraft } from "@/components/shared";
+
+const DEFAULT_CATEGORY_DRAFT: CategoryDraft = { name: "" };
 
 interface CategoriesScreenProps {
   headingText: string;
@@ -23,7 +25,9 @@ export function CategoriesScreen({
   deleteCategory,
   onViewChange,
 }: CategoriesScreenProps) {
-  const { draft, updateDraft, resetDraft } = useCategoryDraft();
+  const { draft, updateDraft, resetDraft } = useDraft<CategoryDraft>(
+    DEFAULT_CATEGORY_DRAFT,
+  );
   const {
     isOpen: isDrawerOpen,
     onOpen: openDrawer,
