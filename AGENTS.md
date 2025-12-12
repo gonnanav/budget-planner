@@ -73,6 +73,11 @@ Include technical details like validation, error handling, UI elements added.
 - `npm run dev` - Start development server
 - `npm run lint` - Run linter
 
+## Formatting
+
+- Agents should run `npm run format` after making code changes, or explicitly tell the user if they cannot run it.
+- Prettier is the source of truth for code style; do not hand-format code in a way that fights Prettier.
+
 ## Code Style
 
 - **No comments** unless code is complex or requires context
