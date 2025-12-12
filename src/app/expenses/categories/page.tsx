@@ -2,19 +2,20 @@
 
 import { useRouter } from "next/navigation";
 import { CategoriesScreen } from "@/components/categories-screen";
-import { useExpenseItems } from "@/db/expenses/items";
+import { getExpenseItems } from "@/db/expenses/items";
 import {
-  useExpenseCategories,
+  getExpenseCategories,
   addExpenseCategory,
   updateExpenseCategory,
   deleteExpenseCategory,
 } from "@/db/expenses/categories";
 import { enrichCategory } from "@/core/categories";
+import { useLiveQuery } from "dexie-react-hooks";
 
 export default function Page() {
   const router = useRouter();
-  const items = useExpenseItems() ?? [];
-  const categories = useExpenseCategories() ?? [];
+  const items = useLiveQuery(getExpenseItems) ?? [];
+  const categories = useLiveQuery(getExpenseCategories) ?? [];
   const enrichedCategories = categories.map((category) =>
     enrichCategory(category, items),
   );

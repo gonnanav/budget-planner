@@ -2,7 +2,7 @@ import { db } from "../db";
 import { createCategoryApi } from "../shared/categories";
 
 export const {
-  useCategories: useIncomeCategories,
+  getCategories: getIncomeCategories,
   addCategory: addIncomeCategory,
   updateCategory: updateIncomeCategory,
   deleteCategory: deleteIncomeCategory,

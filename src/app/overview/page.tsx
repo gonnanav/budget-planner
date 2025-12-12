@@ -1,18 +1,19 @@
 "use client";
 
 import { OverviewScreen } from "@/components/overview";
-import { useIncomeItems } from "@/db/income/items";
-import { useExpenseItems } from "@/db/expenses/items";
-import { useIncomeCategories } from "@/db/income/categories";
-import { useExpenseCategories } from "@/db/expenses/categories";
+import { getIncomeItems } from "@/db/income/items";
+import { getExpenseItems } from "@/db/expenses/items";
+import { getIncomeCategories } from "@/db/income/categories";
+import { getExpenseCategories } from "@/db/expenses/categories";
 import { calculateBalance } from "@/core/balance";
 import { formatAmount } from "@/lib/format";
+import { useLiveQuery } from "dexie-react-hooks";
 
 export default function Page() {
-  const incomeItems = useIncomeItems();
-  const expenseItems = useExpenseItems();
-  const incomeCategories = useIncomeCategories();
-  const expenseCategories = useExpenseCategories();
+  const incomeItems = useLiveQuery(getIncomeItems);
+  const expenseItems = useLiveQuery(getExpenseItems);
+  const incomeCategories = useLiveQuery(getIncomeCategories);
+  const expenseCategories = useLiveQuery(getExpenseCategories);
 
   const { incomeSum, expenseSum, balance, status } = calculateBalance(
     incomeItems ?? [],

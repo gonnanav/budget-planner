@@ -2,20 +2,22 @@
 
 import { useRouter } from "next/navigation";
 import { CategoriesScreen } from "@/components/categories-screen";
-import { useIncomeItems } from "@/db/income/items";
+import { getIncomeItems } from "@/db/income/items";
 import {
-  useIncomeCategories,
+  getIncomeCategories,
   addIncomeCategory,
   updateIncomeCategory,
   deleteIncomeCategory,
 } from "@/db/income/categories";
 import { enrichCategory } from "@/core/categories";
+import { Category } from "@/core/types";
+import { useLiveQuery } from "dexie-react-hooks";
 
 export default function Page() {
   const router = useRouter();
-  const items = useIncomeItems() ?? [];
-  const categories = useIncomeCategories() ?? [];
-  const enrichedCategories = categories.map((category) =>
+  const items = useLiveQuery(getIncomeItems) ?? [];
+  const categories = useLiveQuery(getIncomeCategories) ?? [];
+  const enrichedCategories = categories.map((category: Category) =>
     enrichCategory(category, items),
   );
 

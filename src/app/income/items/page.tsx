@@ -1,31 +1,54 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { ItemsScreen } from "@/components/items-screen";
+import { ItemsScreen, useItemsScreen } from "@/components/items-screen";
 import {
-  useIncomeItems,
+  getIncomeItems,
   addIncomeItem,
   updateIncomeItem,
   deleteIncomeItem,
 } from "@/db/income/items";
-import { useIncomeCategories } from "@/db/income/categories";
-import { enrichItem } from "@/core/items";
+import { getIncomeCategories } from "@/db/income/categories";
 
 export default function Page() {
-  const router = useRouter();
-  const items = useIncomeItems() ?? [];
-  const categories = useIncomeCategories() ?? [];
-  const enrichedItems = items.map(enrichItem);
+  const {
+    items,
+    categoryOptions,
+    isDrawerOpen,
+    drawerHeadingText,
+    draft,
+    startEditingItem,
+    startCreatingItem,
+    updateDraft,
+    closeDrawer,
+    saveItem,
+    deleteItem,
+    changeView,
+  } = useItemsScreen({
+    basePath: "/income",
+    db: {
+      getItems: getIncomeItems,
+      addItem: addIncomeItem,
+      updateItem: updateIncomeItem,
+      deleteItem: deleteIncomeItem,
+      getCategories: getIncomeCategories,
+    },
+  });
 
   return (
     <ItemsScreen
       headingText="Income"
-      items={enrichedItems}
-      categoryOptions={categories}
-      addItem={addIncomeItem}
-      updateItem={updateIncomeItem}
-      deleteItem={deleteIncomeItem}
-      onViewChange={(view) => router.push(`/income/${view}`)}
+      items={items}
+      categoryOptions={categoryOptions}
+      isDrawerOpen={isDrawerOpen}
+      drawerHeadingText={drawerHeadingText}
+      draft={draft}
+      onItemClick={startEditingItem}
+      onAddClick={startCreatingItem}
+      onDraftChange={updateDraft}
+      onDrawerClose={closeDrawer}
+      onSaveClick={saveItem}
+      onDeleteClick={deleteItem}
+      onViewChange={changeView}
     />
   );
 }

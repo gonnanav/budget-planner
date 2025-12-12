@@ -1,10 +1,9 @@
-import { useLiveQuery } from "dexie-react-hooks";
 import { createCategory } from "@/core/categories";
 import { db } from "../db";
 import { ItemsTable, CategoriesTable } from "../types";
 
-function useCategories(categoriesTable: CategoriesTable) {
-  return useLiveQuery(() => categoriesTable.toArray());
+async function getCategories(categoriesTable: CategoriesTable) {
+  return categoriesTable.toArray();
 }
 
 async function addCategory(categoriesTable: CategoriesTable, name: string) {
@@ -41,7 +40,7 @@ export function createCategoryApi(
   itemsTable: ItemsTable,
 ) {
   return {
-    useCategories: () => useCategories(categoriesTable),
+    getCategories: () => getCategories(categoriesTable),
     addCategory: (name: string) => addCategory(categoriesTable, name),
     updateCategory: (id: string, name: string) =>
       updateCategory(categoriesTable, id, name),

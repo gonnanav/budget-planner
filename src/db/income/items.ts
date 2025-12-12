@@ -2,7 +2,7 @@ import { db } from "../db";
 import { createItemApi } from "../shared/items";
 
 export const {
-  useItems: useIncomeItems,
+  getItems: getIncomeItems,
   addItem: addIncomeItem,
   updateItem: updateIncomeItem,
   deleteItem: deleteIncomeItem,

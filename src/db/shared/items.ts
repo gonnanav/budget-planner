@@ -1,10 +1,9 @@
-import { useLiveQuery } from "dexie-react-hooks";
 import { createItem } from "@/core/items";
 import { ItemInput } from "@/core/types";
 import { ItemsTable } from "../types";
 
-function useItems(itemsTable: ItemsTable) {
-  return useLiveQuery(() => itemsTable.toArray());
+async function getItems(itemsTable: ItemsTable) {
+  return itemsTable.toArray();
 }
 
 async function addItem(itemsTable: ItemsTable, input: ItemInput) {
@@ -25,7 +24,7 @@ async function deleteItem(itemsTable: ItemsTable, id: string) {
 
 export function createItemApi(itemsTable: ItemsTable) {
   return {
-    useItems: () => useItems(itemsTable),
+    getItems: () => getItems(itemsTable),
     addItem: (input: ItemInput) => addItem(itemsTable, input),
     updateItem: (id: string, input: ItemInput) =>
       updateItem(itemsTable, id, input),

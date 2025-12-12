@@ -1,31 +1,54 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { ItemsScreen } from "@/components/items-screen";
+import { ItemsScreen, useItemsScreen } from "@/components/items-screen";
 import {
-  useExpenseItems,
+  getExpenseItems,
   addExpenseItem,
   updateExpenseItem,
   deleteExpenseItem,
 } from "@/db/expenses/items";
-import { useExpenseCategories } from "@/db/expenses/categories";
-import { enrichItem } from "@/core/items";
+import { getExpenseCategories } from "@/db/expenses/categories";
 
 export default function Page() {
-  const router = useRouter();
-  const items = useExpenseItems() ?? [];
-  const categories = useExpenseCategories() ?? [];
-  const enrichedItems = items.map(enrichItem);
+  const {
+    items,
+    categoryOptions,
+    isDrawerOpen,
+    drawerHeadingText,
+    draft,
+    startEditingItem,
+    startCreatingItem,
+    updateDraft,
+    closeDrawer,
+    saveItem,
+    deleteItem,
+    changeView,
+  } = useItemsScreen({
+    basePath: "/expenses",
+    db: {
+      getItems: getExpenseItems,
+      addItem: addExpenseItem,
+      updateItem: updateExpenseItem,
+      deleteItem: deleteExpenseItem,
+      getCategories: getExpenseCategories,
+    },
+  });
 
   return (
     <ItemsScreen
       headingText="Expenses"
-      items={enrichedItems}
-      categoryOptions={categories}
-      addItem={addExpenseItem}
-      updateItem={updateExpenseItem}
-      deleteItem={deleteExpenseItem}
-      onViewChange={(view) => router.push(`/expenses/${view}`)}
+      items={items}
+      categoryOptions={categoryOptions}
+      isDrawerOpen={isDrawerOpen}
+      drawerHeadingText={drawerHeadingText}
+      draft={draft}
+      onItemClick={startEditingItem}
+      onAddClick={startCreatingItem}
+      onDraftChange={updateDraft}
+      onDrawerClose={closeDrawer}
+      onSaveClick={saveItem}
+      onDeleteClick={deleteItem}
+      onViewChange={changeView}
     />
   );
 }
