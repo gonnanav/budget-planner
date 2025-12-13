@@ -1,7 +1,7 @@
 import { ItemDraft } from "@/components/shared/types";
 import { Item } from "@/core/types";
 
-interface ItemActionsParams {
+interface GetItemActionsParams {
   db: {
     addItem: (draft: ItemDraft) => Promise<string>;
     updateItem: (id: string, draft: ItemDraft) => Promise<boolean>;
@@ -17,7 +17,7 @@ interface ItemActionsParams {
   };
 }
 
-export function getItemActions({ db, drawer, draft }: ItemActionsParams) {
+export function getItemActions({ db, drawer, draft }: GetItemActionsParams) {
   const startCreatingItem = () => {
     draft.reset();
     drawer.open();

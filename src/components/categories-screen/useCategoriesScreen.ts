@@ -4,6 +4,7 @@ import { Category, Item } from "@/core/types";
 import { enrichCategory } from "@/core/categories";
 import { useCategoryDrawer } from "./useCategoryDrawer";
 import { useChangeSectionView } from "@/hooks/useChangeSectionView";
+import { useCategoriesData } from "./useCategoriesData";
 
 export type CategoriesView = "items" | "categories";
 
@@ -25,12 +26,10 @@ export function useCategoriesScreen({
   db,
 }: UseCategoriesScreenParams) {
   const { changeView } = useChangeSectionView(basePath);
-  const items = useLiveQuery(db.getItems) ?? [];
-  const categories = useLiveQuery(db.getCategories) ?? [];
-  const enrichedCategories = categories.map((category) =>
-    enrichCategory(category, items),
-  );
-
+  const { items, categories } = useCategoriesData({
+    getItems: db.getItems,
+    getCategories: db.getCategories,
+  });
   const { drawer, draft } = useCategoryDrawer(drawerHeadingTexts);
 
   const startCreatingCategory = () => {
@@ -61,7 +60,7 @@ export function useCategoriesScreen({
   };
 
   return {
-    categories: enrichedCategories,
+    categories,
     draft: draft.value,
     isDrawerOpen: drawer.isOpen,
     drawerHeadingText: drawer.headingText,
