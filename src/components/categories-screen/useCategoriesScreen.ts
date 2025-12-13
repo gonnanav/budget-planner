@@ -1,13 +1,9 @@
-import { useRouter } from "next/navigation";
 import { useLiveQuery } from "dexie-react-hooks";
-import { useDisclosure } from "@heroui/react";
-import { useDraft } from "@/components/shared";
 import { CategoryDraft } from "@/components/shared/types";
 import { Category, Item } from "@/core/types";
 import { enrichCategory } from "@/core/categories";
 import { useCategoryDrawer } from "./useCategoryDrawer";
-
-const DEFAULT_CATEGORY_DRAFT: CategoryDraft = { name: "" };
+import { useChangeSectionView } from "@/hooks/useChangeSectionView";
 
 export type CategoriesView = "items" | "categories";
 
@@ -28,7 +24,7 @@ export function useCategoriesScreen({
   drawerHeadingTexts,
   db,
 }: UseCategoriesScreenParams) {
-  const router = useRouter();
+  const { changeView } = useChangeSectionView(basePath);
   const items = useLiveQuery(db.getItems) ?? [];
   const categories = useLiveQuery(db.getCategories) ?? [];
   const enrichedCategories = categories.map((category) =>
@@ -62,10 +58,6 @@ export function useCategoriesScreen({
 
     await db.deleteCategory(id);
     drawer.close();
-  };
-
-  const changeView = (view: CategoriesView) => {
-    router.push(`${basePath}/${view}`);
   };
 
   return {

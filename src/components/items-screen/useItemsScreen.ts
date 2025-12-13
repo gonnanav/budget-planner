@@ -1,15 +1,8 @@
-import { useRouter } from "next/navigation";
 import { ItemDraft } from "@/components/shared/types";
 import { Category, Item } from "@/core/types";
 import { useItemDrawer } from "./useItemDrawer";
 import { useItemsData } from "./useItemsData";
-
-const DEFAULT_ITEM_DRAFT: ItemDraft = {
-  name: "",
-  amount: null,
-  frequency: "monthly",
-  notes: "",
-};
+import { useChangeSectionView } from "@/hooks/useChangeSectionView";
 
 interface UseItemsScreenParams {
   basePath: string;
@@ -28,12 +21,11 @@ export function useItemsScreen({
   drawerHeadingTexts,
   db,
 }: UseItemsScreenParams) {
-  const router = useRouter();
+  const { changeView } = useChangeSectionView(basePath);
   const { items, categories } = useItemsData({
     getItems: db.getItems,
     getCategories: db.getCategories,
   });
-
   const { drawer, draft } = useItemDrawer(drawerHeadingTexts);
 
   const startCreatingItem = () => {
@@ -61,10 +53,6 @@ export function useItemsScreen({
 
     await db.deleteItem(id);
     drawer.close();
-  };
-
-  const changeView = (view: string) => {
-    router.push(`${basePath}/${view}`);
   };
 
   return {
