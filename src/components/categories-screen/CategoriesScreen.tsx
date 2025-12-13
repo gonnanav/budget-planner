@@ -6,6 +6,8 @@ import { CategoryDraft } from "@/components/shared/types";
 
 interface CategoriesScreenProps {
   headingText: string;
+  addButtonLabel: string;
+  emptyItemsText: string;
   categories: (Category & { amount: number })[];
   isDrawerOpen: boolean;
   drawerHeadingText: string;
@@ -21,6 +23,8 @@ interface CategoriesScreenProps {
 
 export function CategoriesScreen({
   headingText,
+  addButtonLabel,
+  emptyItemsText,
   categories,
   draft,
   isDrawerOpen,
@@ -37,10 +41,10 @@ export function CategoriesScreen({
     <>
       <SectionShell
         headingText={headingText}
-        addButtonLabel="Add category"
+        addButtonLabel={addButtonLabel}
         selectedTab="categories"
         items={categories}
-        emptyItemsText="No categories yet"
+        emptyItemsText={emptyItemsText}
         onAddClick={onAddClick}
         onTabChange={onViewChange}
       >

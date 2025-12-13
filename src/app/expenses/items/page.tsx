@@ -25,6 +25,10 @@ export default function Page() {
     changeView,
   } = useItemsScreen({
     basePath: "/expenses",
+    drawerHeadingTexts: {
+      create: "Add Expense Item",
+      edit: "Edit Expense Item",
+    },
     db: {
       getItems: getExpenseItems,
       addItem: addExpenseItem,
@@ -36,7 +40,9 @@ export default function Page() {
 
   return (
     <ItemsScreen
-      headingText="Expenses"
+      headingText="Expense Items"
+      addButtonLabel="Add expense item"
+      emptyItemsText="No expense items yet"
       items={items}
       categoryOptions={categoryOptions}
       isDrawerOpen={isDrawerOpen}

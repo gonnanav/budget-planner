@@ -18,15 +18,19 @@ export default function Page() {
     draft,
     isDrawerOpen,
     drawerHeadingText,
-    startCreatingCategory: handleAddCategoryClick,
-    startEditingCategory: handleCategoryClick,
-    saveCategory: handleSaveCategoryClick,
-    deleteCategory: handleDeleteCategoryClick,
-    changeView: handleViewChange,
+    startCreatingCategory,
+    startEditingCategory,
+    saveCategory,
+    deleteCategory,
+    changeView,
     updateDraft,
     closeDrawer,
   } = useCategoriesScreen({
     basePath: "/income",
+    drawerHeadingTexts: {
+      create: "Add Income Category",
+      edit: "Edit Income Category",
+    },
     db: {
       getItems: getIncomeItems,
       getCategories: getIncomeCategories,
@@ -38,18 +42,20 @@ export default function Page() {
 
   return (
     <CategoriesScreen
-      headingText="Income"
+      headingText="Income Categories"
+      addButtonLabel="Add income category"
+      emptyItemsText="No income categories yet"
       categories={categories}
       draft={draft}
       isDrawerOpen={isDrawerOpen}
       drawerHeadingText={drawerHeadingText}
       onDraftChange={updateDraft}
       onDrawerClose={closeDrawer}
-      onAddClick={handleAddCategoryClick}
-      onCategoryClick={handleCategoryClick}
-      onSaveClick={handleSaveCategoryClick}
-      onDeleteClick={handleDeleteCategoryClick}
-      onViewChange={handleViewChange}
+      onAddClick={startCreatingCategory}
+      onCategoryClick={startEditingCategory}
+      onSaveClick={saveCategory}
+      onDeleteClick={deleteCategory}
+      onViewChange={changeView}
     />
   );
 }

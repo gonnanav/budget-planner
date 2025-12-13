@@ -6,6 +6,8 @@ import { ItemDraft } from "@/components/shared/types";
 
 interface ItemsScreenProps {
   headingText: string;
+  addButtonLabel: string;
+  emptyItemsText: string;
   items: (Item & { normalizedAmount: number })[];
   categoryOptions: { id: string; name: string }[];
   isDrawerOpen: boolean;
@@ -22,6 +24,8 @@ interface ItemsScreenProps {
 
 export function ItemsScreen({
   headingText,
+  addButtonLabel,
+  emptyItemsText,
   items,
   categoryOptions,
   isDrawerOpen,
@@ -39,10 +43,10 @@ export function ItemsScreen({
     <>
       <SectionShell
         headingText={headingText}
-        addButtonLabel="Add item"
+        addButtonLabel={addButtonLabel}
         selectedTab="items"
         items={items}
-        emptyItemsText="No items yet"
+        emptyItemsText={emptyItemsText}
         onAddClick={onAddClick}
         onTabChange={onViewChange}
       >

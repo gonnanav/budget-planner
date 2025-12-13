@@ -15,6 +15,7 @@ const DEFAULT_ITEM_DRAFT: ItemDraft = {
 
 interface UseItemsScreenParams {
   basePath: string;
+  drawerHeadingTexts: { create: string; edit: string };
   db: {
     getItems: () => Promise<Item[]>;
     addItem: (draft: ItemDraft) => Promise<string>;
@@ -24,7 +25,11 @@ interface UseItemsScreenParams {
   };
 }
 
-export function useItemsScreen({ basePath, db }: UseItemsScreenParams) {
+export function useItemsScreen({
+  basePath,
+  drawerHeadingTexts,
+  db,
+}: UseItemsScreenParams) {
   const router = useRouter();
   const items = useLiveQuery(db.getItems) || [];
   const enrichedItems = items.map(enrichItem);
@@ -34,7 +39,9 @@ export function useItemsScreen({ basePath, db }: UseItemsScreenParams) {
   const { draft, updateDraft, resetDraft } =
     useDraft<ItemDraft>(DEFAULT_ITEM_DRAFT);
 
-  const drawerHeadingText = draft.id ? "Edit Item" : "Add Item";
+  const drawerHeadingText = draft.id
+    ? drawerHeadingTexts.edit
+    : drawerHeadingTexts.create;
 
   const {
     isOpen: isDrawerOpen,

@@ -25,6 +25,10 @@ export default function Page() {
     changeView,
   } = useItemsScreen({
     basePath: "/income",
+    drawerHeadingTexts: {
+      create: "Add Income Item",
+      edit: "Edit Income Item",
+    },
     db: {
       getItems: getIncomeItems,
       addItem: addIncomeItem,
@@ -36,7 +40,9 @@ export default function Page() {
 
   return (
     <ItemsScreen
-      headingText="Income"
+      headingText="Income Items"
+      addButtonLabel="Add income item"
+      emptyItemsText="No income items yet"
       items={items}
       categoryOptions={categoryOptions}
       isDrawerOpen={isDrawerOpen}

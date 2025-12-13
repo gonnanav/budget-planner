@@ -27,6 +27,10 @@ export default function Page() {
     closeDrawer,
   } = useCategoriesScreen({
     basePath: "/expenses",
+    drawerHeadingTexts: {
+      create: "Add Expense Category",
+      edit: "Edit Expense Category",
+    },
     db: {
       getItems: getExpenseItems,
       getCategories: getExpenseCategories,
@@ -38,7 +42,9 @@ export default function Page() {
 
   return (
     <CategoriesScreen
-      headingText="Expenses"
+      headingText="Expense Categories"
+      addButtonLabel="Add expense category"
+      emptyItemsText="No expense categories yet"
       categories={categories}
       draft={draft}
       isDrawerOpen={isDrawerOpen}

@@ -12,6 +12,7 @@ export type CategoriesView = "items" | "categories";
 
 interface UseCategoriesScreenParams {
   basePath: "/income" | "/expenses";
+  drawerHeadingTexts: { create: string; edit: string };
   db: {
     getItems: () => Promise<Item[]>;
     getCategories: () => Promise<Category[]>;
@@ -23,6 +24,7 @@ interface UseCategoriesScreenParams {
 
 export function useCategoriesScreen({
   basePath,
+  drawerHeadingTexts,
   db,
 }: UseCategoriesScreenParams) {
   const router = useRouter();
@@ -35,6 +37,10 @@ export function useCategoriesScreen({
   const { draft, updateDraft, resetDraft } = useDraft<CategoryDraft>(
     DEFAULT_CATEGORY_DRAFT,
   );
+
+  const drawerHeadingText = draft.id
+    ? drawerHeadingTexts.edit
+    : drawerHeadingTexts.create;
 
   const {
     isOpen: isDrawerOpen,
@@ -72,8 +78,6 @@ export function useCategoriesScreen({
   const changeView = (view: CategoriesView) => {
     router.push(`${basePath}/${view}`);
   };
-
-  const drawerHeadingText = draft.id ? "Edit Category" : "Add Category";
 
   return {
     categories: enrichedCategories,
