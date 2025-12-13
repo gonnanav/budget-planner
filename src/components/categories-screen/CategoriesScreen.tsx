@@ -1,67 +1,38 @@
-import { Category } from "@/core/types";
 import { SectionShell } from "@/components/section/SectionShell";
 import { CategoryRow } from "@/components/category-row";
 import { CategoryDrawer } from "@/components/category-drawer";
-import { useDisclosure } from "@heroui/react";
+import { Category } from "@/core/types";
 import { CategoryDraft } from "@/components/shared/types";
-import { useDraft } from "@/components/shared";
-
-const DEFAULT_CATEGORY_DRAFT: CategoryDraft = { name: "" };
 
 interface CategoriesScreenProps {
   headingText: string;
   categories: (Category & { amount: number })[];
-  addCategory: (name: string) => Promise<string>;
-  updateCategory: (id: string, name: string) => Promise<boolean>;
-  deleteCategory: (id: string) => Promise<void>;
+  isDrawerOpen: boolean;
+  drawerHeadingText: string;
+  draft: CategoryDraft;
+  onAddClick: () => void;
+  onCategoryClick: (category: Category) => void;
+  onDraftChange: (draft: Partial<CategoryDraft>) => void;
+  onDrawerClose: () => void;
+  onSaveClick: (draft: CategoryDraft) => Promise<void>;
+  onDeleteClick: (id?: string) => Promise<void>;
   onViewChange: (view: "items" | "categories") => void;
 }
 
 export function CategoriesScreen({
   headingText,
   categories,
-  addCategory,
-  updateCategory,
-  deleteCategory,
+  draft,
+  isDrawerOpen,
+  drawerHeadingText,
+  onDraftChange,
+  onDrawerClose,
+  onAddClick,
+  onCategoryClick,
+  onSaveClick,
+  onDeleteClick,
   onViewChange,
 }: CategoriesScreenProps) {
-  const { draft, updateDraft, resetDraft } = useDraft<CategoryDraft>(
-    DEFAULT_CATEGORY_DRAFT,
-  );
-  const {
-    isOpen: isDrawerOpen,
-    onOpen: openDrawer,
-    onClose: closeDrawer,
-  } = useDisclosure();
-
-  const handleAddCategoryClick = () => {
-    resetDraft();
-    openDrawer();
-  };
-
-  const handleCategoryClick = (category: Category) => {
-    updateDraft(category);
-    openDrawer();
-  };
-
-  const handleSaveCategoryClick = async ({ id, name }: CategoryDraft) => {
-    if (id) {
-      await updateCategory(id, name);
-    } else {
-      await addCategory(name);
-    }
-    closeDrawer();
-  };
-
-  const handleDeleteCategoryClick = async (id?: string) => {
-    if (!id) return;
-
-    await deleteCategory(id);
-    closeDrawer();
-  };
-
-  const drawerHeadingText = draft.id ? "Edit Category" : "Add Category";
-
   return (
     <>
       <SectionShell
@@ -70,7 +41,7 @@ export function CategoriesScreen({
         selectedTab="categories"
         items={categories}
         emptyItemsText="No categories yet"
-        onAddClick={handleAddCategoryClick}
+        onAddClick={onAddClick}
         onTabChange={onViewChange}
       >
         {(category) => (
@@ -78,7 +49,7 @@ export function CategoriesScreen({
             key={category.id}
             name={category.name}
             amount={category.amount}
-            onClick={() => handleCategoryClick(category)}
+            onClick={() => onCategoryClick(category)}
           />
         )}
       </SectionShell>
@@ -86,11 +57,11 @@ export function CategoriesScreen({
         isOpen={isDrawerOpen}
         headingText={drawerHeadingText}
         draft={draft}
-        onDraftChange={updateDraft}
-        onCancel={closeDrawer}
-        onSave={handleSaveCategoryClick}
-        onClose={closeDrawer}
-        onDelete={handleDeleteCategoryClick}
+        onDraftChange={onDraftChange}
+        onCancel={onDrawerClose}
+        onSave={onSaveClick}
+        onClose={onDrawerClose}
+        onDelete={onDeleteClick}
       />
     </>
   );

@@ -1,7 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { CategoriesScreen } from "@/components/categories-screen";
+import {
+  CategoriesScreen,
+  useCategoriesScreen,
+} from "@/components/categories-screen";
 import { getExpenseItems } from "@/db/expenses/items";
 import {
   getExpenseCategories,
@@ -9,25 +11,45 @@ import {
   updateExpenseCategory,
   deleteExpenseCategory,
 } from "@/db/expenses/categories";
-import { enrichCategory } from "@/core/categories";
-import { useLiveQuery } from "dexie-react-hooks";
 
 export default function Page() {
-  const router = useRouter();
-  const items = useLiveQuery(getExpenseItems) ?? [];
-  const categories = useLiveQuery(getExpenseCategories) ?? [];
-  const enrichedCategories = categories.map((category) =>
-    enrichCategory(category, items),
-  );
+  const {
+    categories,
+    draft,
+    isDrawerOpen,
+    drawerHeadingText,
+    startCreatingCategory,
+    startEditingCategory,
+    saveCategory,
+    deleteCategory,
+    changeView,
+    updateDraft,
+    closeDrawer,
+  } = useCategoriesScreen({
+    basePath: "/expenses",
+    db: {
+      getItems: getExpenseItems,
+      getCategories: getExpenseCategories,
+      addCategory: addExpenseCategory,
+      updateCategory: updateExpenseCategory,
+      deleteCategory: deleteExpenseCategory,
+    },
+  });
 
   return (
     <CategoriesScreen
       headingText="Expenses"
-      categories={enrichedCategories}
-      addCategory={addExpenseCategory}
-      updateCategory={updateExpenseCategory}
-      deleteCategory={deleteExpenseCategory}
-      onViewChange={(view) => router.push(`/expenses/${view}`)}
+      categories={categories}
+      draft={draft}
+      isDrawerOpen={isDrawerOpen}
+      drawerHeadingText={drawerHeadingText}
+      onDraftChange={updateDraft}
+      onDrawerClose={closeDrawer}
+      onAddClick={startCreatingCategory}
+      onCategoryClick={startEditingCategory}
+      onSaveClick={saveCategory}
+      onDeleteClick={deleteCategory}
+      onViewChange={changeView}
     />
   );
 }
