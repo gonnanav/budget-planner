@@ -1,10 +1,12 @@
 import { useRouter } from "next/navigation";
 import { useDisclosure } from "@heroui/react";
-import { useDraft } from "@/components/shared";
+import { useDraftDrawer } from "@/components/shared";
 import { ItemDraft } from "@/components/shared/types";
 import { Category, Item } from "@/core/types";
 import { enrichItem } from "@/core/items";
 import { useLiveQuery } from "dexie-react-hooks";
+import { useItemDrawer } from "./useItemDrawer";
+import { use } from "react";
 
 const DEFAULT_ITEM_DRAFT: ItemDraft = {
   name: "",
@@ -36,27 +38,16 @@ export function useItemsScreen({
   const categories = useLiveQuery(db.getCategories) || [];
   const categoryOptions = categories.map(({ id, name }) => ({ id, name }));
 
-  const { draft, updateDraft, resetDraft } =
-    useDraft<ItemDraft>(DEFAULT_ITEM_DRAFT);
-
-  const drawerHeadingText = draft.id
-    ? drawerHeadingTexts.edit
-    : drawerHeadingTexts.create;
-
-  const {
-    isOpen: isDrawerOpen,
-    onOpen: openDrawer,
-    onClose: closeDrawer,
-  } = useDisclosure();
+  const { drawer, draft } = useItemDrawer(drawerHeadingTexts);
 
   const startCreatingItem = () => {
-    resetDraft();
-    openDrawer();
+    draft.reset();
+    drawer.open();
   };
 
   const startEditingItem = (item: Item) => {
-    updateDraft(item);
-    openDrawer();
+    draft.update(item);
+    drawer.open();
   };
 
   const saveItem = async (draftToSave: ItemDraft) => {
@@ -66,14 +57,14 @@ export function useItemsScreen({
       await db.addItem(draftToSave);
     }
 
-    closeDrawer();
+    drawer.close();
   };
 
   const deleteItem = async (id?: string) => {
     if (!id) return;
 
     await db.deleteItem(id);
-    closeDrawer();
+    drawer.close();
   };
 
   const changeView = (view: string) => {
@@ -82,14 +73,14 @@ export function useItemsScreen({
 
   return {
     items: enrichedItems,
-    isDrawerOpen,
-    drawerHeadingText,
-    draft,
+    isDrawerOpen: drawer.isOpen,
+    drawerHeadingText: drawer.headingText,
+    draft: draft.value,
     categoryOptions,
     startCreatingItem,
     startEditingItem,
-    updateDraft,
-    closeDrawer,
+    updateDraft: draft.update,
+    closeDrawer: drawer.close,
     saveItem,
     deleteItem,
     changeView,

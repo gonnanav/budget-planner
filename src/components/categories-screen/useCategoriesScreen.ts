@@ -5,6 +5,7 @@ import { useDraft } from "@/components/shared";
 import { CategoryDraft } from "@/components/shared/types";
 import { Category, Item } from "@/core/types";
 import { enrichCategory } from "@/core/categories";
+import { useCategoryDrawer } from "./useCategoryDrawer";
 
 const DEFAULT_CATEGORY_DRAFT: CategoryDraft = { name: "" };
 
@@ -34,28 +35,16 @@ export function useCategoriesScreen({
     enrichCategory(category, items),
   );
 
-  const { draft, updateDraft, resetDraft } = useDraft<CategoryDraft>(
-    DEFAULT_CATEGORY_DRAFT,
-  );
-
-  const drawerHeadingText = draft.id
-    ? drawerHeadingTexts.edit
-    : drawerHeadingTexts.create;
-
-  const {
-    isOpen: isDrawerOpen,
-    onOpen: openDrawer,
-    onClose: closeDrawer,
-  } = useDisclosure();
+  const { drawer, draft } = useCategoryDrawer(drawerHeadingTexts);
 
   const startCreatingCategory = () => {
-    resetDraft();
-    openDrawer();
+    draft.reset();
+    drawer.open();
   };
 
   const startEditingCategory = (category: Category) => {
-    updateDraft(category);
-    openDrawer();
+    draft.update(category);
+    drawer.open();
   };
 
   const saveCategory = async ({ id, name }: CategoryDraft) => {
@@ -65,14 +54,14 @@ export function useCategoriesScreen({
       await db.addCategory(name ?? "");
     }
 
-    closeDrawer();
+    drawer.close();
   };
 
   const deleteCategory = async (id?: string) => {
     if (!id) return;
 
     await db.deleteCategory(id);
-    closeDrawer();
+    drawer.close();
   };
 
   const changeView = (view: CategoriesView) => {
@@ -81,15 +70,15 @@ export function useCategoriesScreen({
 
   return {
     categories: enrichedCategories,
-    draft,
-    isDrawerOpen,
-    drawerHeadingText,
+    draft: draft.value,
+    isDrawerOpen: drawer.isOpen,
+    drawerHeadingText: drawer.headingText,
     startCreatingCategory,
     startEditingCategory,
     saveCategory,
     deleteCategory,
     changeView,
-    updateDraft,
-    closeDrawer,
+    updateDraft: draft.update,
+    closeDrawer: drawer.close,
   };
 }
