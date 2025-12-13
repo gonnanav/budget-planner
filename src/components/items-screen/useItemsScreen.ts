@@ -1,12 +1,8 @@
 import { useRouter } from "next/navigation";
-import { useDisclosure } from "@heroui/react";
-import { useDraftDrawer } from "@/components/shared";
 import { ItemDraft } from "@/components/shared/types";
 import { Category, Item } from "@/core/types";
-import { enrichItem } from "@/core/items";
-import { useLiveQuery } from "dexie-react-hooks";
 import { useItemDrawer } from "./useItemDrawer";
-import { use } from "react";
+import { useItemsData } from "./useItemsData";
 
 const DEFAULT_ITEM_DRAFT: ItemDraft = {
   name: "",
@@ -33,10 +29,10 @@ export function useItemsScreen({
   db,
 }: UseItemsScreenParams) {
   const router = useRouter();
-  const items = useLiveQuery(db.getItems) || [];
-  const enrichedItems = items.map(enrichItem);
-  const categories = useLiveQuery(db.getCategories) || [];
-  const categoryOptions = categories.map(({ id, name }) => ({ id, name }));
+  const { items, categories } = useItemsData({
+    getItems: db.getItems,
+    getCategories: db.getCategories,
+  });
 
   const { drawer, draft } = useItemDrawer(drawerHeadingTexts);
 
@@ -72,11 +68,11 @@ export function useItemsScreen({
   };
 
   return {
-    items: enrichedItems,
+    items,
     isDrawerOpen: drawer.isOpen,
     drawerHeadingText: drawer.headingText,
     draft: draft.value,
-    categoryOptions,
+    categoryOptions: categories,
     startCreatingItem,
     startEditingItem,
     updateDraft: draft.update,
