@@ -11,34 +11,24 @@ import {
   updateExpenseCategory,
   deleteExpenseCategory,
 } from "@/db/expenses/categories";
+import { drawer } from "@heroui/react";
 
 export default function Page() {
-  const {
-    categories,
-    draft,
-    isDrawerOpen,
-    drawerHeadingText,
-    startCreatingCategory,
-    startEditingCategory,
-    saveCategory,
-    deleteCategory,
-    changeView,
-    updateDraft,
-    closeDrawer,
-  } = useCategoriesScreen({
-    basePath: "/expenses",
-    drawerHeadingTexts: {
-      create: "Add Expense Category",
-      edit: "Edit Expense Category",
-    },
-    db: {
-      getItems: getExpenseItems,
-      getCategories: getExpenseCategories,
-      addCategory: addExpenseCategory,
-      updateCategory: updateExpenseCategory,
-      deleteCategory: deleteExpenseCategory,
-    },
-  });
+  const { categories, drawer, draft, actions, changeView } =
+    useCategoriesScreen({
+      basePath: "/expenses",
+      drawerHeadingTexts: {
+        create: "Add Expense Category",
+        edit: "Edit Expense Category",
+      },
+      db: {
+        getItems: getExpenseItems,
+        getCategories: getExpenseCategories,
+        addCategory: addExpenseCategory,
+        updateCategory: updateExpenseCategory,
+        deleteCategory: deleteExpenseCategory,
+      },
+    });
 
   return (
     <CategoriesScreen
@@ -46,15 +36,15 @@ export default function Page() {
       addButtonLabel="Add expense category"
       emptyItemsText="No expense categories yet"
       categories={categories}
-      draft={draft}
-      isDrawerOpen={isDrawerOpen}
-      drawerHeadingText={drawerHeadingText}
-      onDraftChange={updateDraft}
-      onDrawerClose={closeDrawer}
-      onAddClick={startCreatingCategory}
-      onCategoryClick={startEditingCategory}
-      onSaveClick={saveCategory}
-      onDeleteClick={deleteCategory}
+      draft={draft.value}
+      isDrawerOpen={drawer.isOpen}
+      drawerHeadingText={drawer.headingText}
+      onDraftChange={draft.update}
+      onDrawerClose={drawer.close}
+      onAddClick={actions.startCreatingCategory}
+      onCategoryClick={actions.startEditingCategory}
+      onSaveClick={actions.saveCategory}
+      onDeleteClick={actions.deleteCategory}
       onViewChange={changeView}
     />
   );

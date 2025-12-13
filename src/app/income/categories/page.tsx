@@ -13,32 +13,21 @@ import {
 } from "@/db/income/categories";
 
 export default function Page() {
-  const {
-    categories,
-    draft,
-    isDrawerOpen,
-    drawerHeadingText,
-    startCreatingCategory,
-    startEditingCategory,
-    saveCategory,
-    deleteCategory,
-    changeView,
-    updateDraft,
-    closeDrawer,
-  } = useCategoriesScreen({
-    basePath: "/income",
-    drawerHeadingTexts: {
-      create: "Add Income Category",
-      edit: "Edit Income Category",
-    },
-    db: {
-      getItems: getIncomeItems,
-      getCategories: getIncomeCategories,
-      addCategory: addIncomeCategory,
-      updateCategory: updateIncomeCategory,
-      deleteCategory: deleteIncomeCategory,
-    },
-  });
+  const { categories, drawer, draft, actions, changeView } =
+    useCategoriesScreen({
+      basePath: "/income",
+      drawerHeadingTexts: {
+        create: "Add Income Category",
+        edit: "Edit Income Category",
+      },
+      db: {
+        getItems: getIncomeItems,
+        getCategories: getIncomeCategories,
+        addCategory: addIncomeCategory,
+        updateCategory: updateIncomeCategory,
+        deleteCategory: deleteIncomeCategory,
+      },
+    });
 
   return (
     <CategoriesScreen
@@ -46,15 +35,15 @@ export default function Page() {
       addButtonLabel="Add income category"
       emptyItemsText="No income categories yet"
       categories={categories}
-      draft={draft}
-      isDrawerOpen={isDrawerOpen}
-      drawerHeadingText={drawerHeadingText}
-      onDraftChange={updateDraft}
-      onDrawerClose={closeDrawer}
-      onAddClick={startCreatingCategory}
-      onCategoryClick={startEditingCategory}
-      onSaveClick={saveCategory}
-      onDeleteClick={deleteCategory}
+      draft={draft.value}
+      isDrawerOpen={drawer.isOpen}
+      drawerHeadingText={drawer.headingText}
+      onDraftChange={draft.update}
+      onDrawerClose={drawer.close}
+      onAddClick={actions.startCreatingCategory}
+      onCategoryClick={actions.startEditingCategory}
+      onSaveClick={actions.saveCategory}
+      onDeleteClick={actions.deleteCategory}
       onViewChange={changeView}
     />
   );

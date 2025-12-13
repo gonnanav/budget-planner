@@ -1,10 +1,8 @@
-import { useLiveQuery } from "dexie-react-hooks";
-import { CategoryDraft } from "@/components/shared/types";
 import { Category, Item } from "@/core/types";
-import { enrichCategory } from "@/core/categories";
 import { useCategoryDrawer } from "./useCategoryDrawer";
 import { useChangeSectionView } from "@/hooks/useChangeSectionView";
 import { useCategoriesData } from "./useCategoriesData";
+import { getCategoryActions } from "./category-actions";
 
 export type CategoriesView = "items" | "categories";
 
@@ -31,45 +29,7 @@ export function useCategoriesScreen({
     getCategories: db.getCategories,
   });
   const { drawer, draft } = useCategoryDrawer(drawerHeadingTexts);
+  const actions = getCategoryActions({ db, drawer, draft });
 
-  const startCreatingCategory = () => {
-    draft.reset();
-    drawer.open();
-  };
-
-  const startEditingCategory = (category: Category) => {
-    draft.update(category);
-    drawer.open();
-  };
-
-  const saveCategory = async ({ id, name }: CategoryDraft) => {
-    if (id) {
-      await db.updateCategory(id, name);
-    } else {
-      await db.addCategory(name ?? "");
-    }
-
-    drawer.close();
-  };
-
-  const deleteCategory = async (id?: string) => {
-    if (!id) return;
-
-    await db.deleteCategory(id);
-    drawer.close();
-  };
-
-  return {
-    categories,
-    draft: draft.value,
-    isDrawerOpen: drawer.isOpen,
-    drawerHeadingText: drawer.headingText,
-    startCreatingCategory,
-    startEditingCategory,
-    saveCategory,
-    deleteCategory,
-    changeView,
-    updateDraft: draft.update,
-    closeDrawer: drawer.close,
-  };
+  return { categories, drawer, draft, actions, changeView };
 }
