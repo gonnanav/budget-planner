@@ -10,20 +10,7 @@ import {
 import { getExpenseCategories } from "@/db/expenses/categories";
 
 export default function Page() {
-  const {
-    items,
-    categoryOptions,
-    isDrawerOpen,
-    drawerHeadingText,
-    draft,
-    startEditingItem,
-    startCreatingItem,
-    updateDraft,
-    closeDrawer,
-    saveItem,
-    deleteItem,
-    changeView,
-  } = useItemsScreen({
+  const { data, drawer, draft, actions, changeView } = useItemsScreen({
     basePath: "/expenses",
     drawerHeadingTexts: {
       create: "Add Expense Item",
@@ -43,17 +30,17 @@ export default function Page() {
       headingText="Expense Items"
       addButtonLabel="Add expense item"
       emptyItemsText="No expense items yet"
-      items={items}
-      categoryOptions={categoryOptions}
-      isDrawerOpen={isDrawerOpen}
-      drawerHeadingText={drawerHeadingText}
-      draft={draft}
-      onItemClick={startEditingItem}
-      onAddClick={startCreatingItem}
-      onDraftChange={updateDraft}
-      onDrawerClose={closeDrawer}
-      onSaveClick={saveItem}
-      onDeleteClick={deleteItem}
+      items={data.items}
+      categoryOptions={data.categories}
+      isDrawerOpen={drawer.isOpen}
+      drawerHeadingText={drawer.headingText}
+      draft={draft.value}
+      onItemClick={actions.startEditingItem}
+      onAddClick={actions.startCreatingItem}
+      onDraftChange={draft.update}
+      onDrawerClose={drawer.close}
+      onSaveClick={actions.saveItem}
+      onDeleteClick={actions.deleteItem}
       onViewChange={changeView}
     />
   );
