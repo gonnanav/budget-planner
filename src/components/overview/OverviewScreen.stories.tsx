@@ -8,16 +8,8 @@ const meta = {
     layout: "fullscreen",
   },
   args: {
-    income: {
-      itemCount: 0,
-      categoryCount: 0,
-      sum: "0",
-    },
-    expense: {
-      itemCount: 0,
-      categoryCount: 0,
-      sum: "0",
-    },
+    incomeSum: "0",
+    expenseSum: "0",
     balance: {
       amount: "0",
       status: "balanced",
@@ -31,16 +23,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Surplus: Story = {
   args: {
-    income: {
-      itemCount: 1,
-      categoryCount: 2,
-      sum: "1500",
-    },
-    expense: {
-      itemCount: 1,
-      categoryCount: 3,
-      sum: "1000",
-    },
+    incomeSum: "1500",
+    expenseSum: "1000",
     balance: {
       amount: "500",
       status: "surplus",
@@ -50,16 +34,8 @@ export const Surplus: Story = {
 
 export const Deficit: Story = {
   args: {
-    income: {
-      itemCount: 1,
-      categoryCount: 2,
-      sum: "1000",
-    },
-    expense: {
-      itemCount: 1,
-      categoryCount: 3,
-      sum: "1500",
-    },
+    incomeSum: "1000",
+    expenseSum: "1500",
     balance: {
       amount: "500",
       status: "deficit",
@@ -69,16 +45,8 @@ export const Deficit: Story = {
 
 export const Balanced: Story = {
   args: {
-    income: {
-      itemCount: 1,
-      categoryCount: 1,
-      sum: "1000",
-    },
-    expense: {
-      itemCount: 1,
-      categoryCount: 1,
-      sum: "1000",
-    },
+    incomeSum: "1000",
+    expenseSum: "1000",
     balance: {
       amount: "0",
       status: "balanced",
@@ -88,16 +56,8 @@ export const Balanced: Story = {
 
 export const Empty: Story = {
   args: {
-    income: {
-      itemCount: 0,
-      categoryCount: 0,
-      sum: "0",
-    },
-    expense: {
-      itemCount: 0,
-      categoryCount: 0,
-      sum: "0",
-    },
+    incomeSum: "0",
+    expenseSum: "0",
     balance: {
       amount: "0",
       status: "balanced",

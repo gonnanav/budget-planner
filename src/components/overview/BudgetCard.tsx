@@ -4,18 +4,10 @@ import { cn } from "@/lib/utils";
 interface BudgetCardProps {
   title: string;
   amount: string;
-  itemCount: number;
-  categoryCount: number;
   variant: "income" | "expense";
 }
 
-export function BudgetCard({
-  title,
-  amount,
-  itemCount,
-  categoryCount,
-  variant,
-}: BudgetCardProps) {
+export function BudgetCard({ title, amount, variant }: BudgetCardProps) {
   const variantStyles = {
     income: "bg-emerald-50 border-emerald-200 hover:border-emerald-300",
     expense: "bg-rose-50 border-rose-200 hover:border-rose-300",
@@ -35,15 +27,6 @@ export function BudgetCard({
         <p className="text-xl md:text-2xl font-semibold tracking-tight">
           {amount}
         </p>
-
-        <div className="text-sm text-muted-foreground space-y-0.5">
-          <p>
-            {itemCount} {itemCount === 1 ? "item" : "items"}
-          </p>
-          <p>
-            {categoryCount} {categoryCount === 1 ? "category" : "categories"}
-          </p>
-        </div>
       </CardBody>
     </Card>
   );

@@ -6,16 +6,8 @@ import { Heading } from "@/components/shared/Heading";
 import { BalanceStatus } from "@/core/types";
 
 interface OverviewScreenProps {
-  income: {
-    itemCount: number;
-    categoryCount: number;
-    sum: string;
-  };
-  expense: {
-    itemCount: number;
-    categoryCount: number;
-    sum: string;
-  };
+  incomeSum: string;
+  expenseSum: string;
   balance: {
     amount: string;
     status: BalanceStatus;
@@ -23,8 +15,8 @@ interface OverviewScreenProps {
 }
 
 export function OverviewScreen({
-  income,
-  expense,
+  incomeSum,
+  expenseSum,
   balance,
 }: OverviewScreenProps) {
   return (
@@ -34,21 +26,13 @@ export function OverviewScreen({
       cards={
         <>
           <Link href="/income/items">
-            <BudgetCard
-              title="Income"
-              amount={income.sum}
-              itemCount={income.itemCount}
-              categoryCount={income.categoryCount}
-              variant="income"
-            />
+            <BudgetCard title="Income" amount={incomeSum} variant="income" />
           </Link>
 
           <Link href="/expenses/items">
             <BudgetCard
               title="Expenses"
-              amount={expense.sum}
-              itemCount={expense.itemCount}
-              categoryCount={expense.categoryCount}
+              amount={expenseSum}
               variant="expense"
             />
           </Link>
