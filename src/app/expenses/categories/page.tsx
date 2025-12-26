@@ -32,7 +32,7 @@ export default function Page() {
 
   return (
     <CategoriesScreen
-      headingText="Expense Categories"
+      headingText="Expenses"
       addButtonLabel="Add expense category"
       emptyItemsText="No expense categories yet"
       categories={categories}

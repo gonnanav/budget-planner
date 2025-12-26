@@ -4,6 +4,7 @@ import { AddButton } from "./AddButton";
 import { SectionTabs } from "./SectionTabs";
 import { SectionList } from "./SectionList";
 import { EmptyStateText } from "./EmptyStateText";
+import { BackButton } from "./BackButton";
 
 interface SectionShellProps<T> {
   headingText: string;
@@ -29,6 +30,7 @@ export function SectionShell<T>({
   return (
     <SectionLayout
       heading={<Heading>{headingText}</Heading>}
+      backButton={<BackButton />}
       addButton={<AddButton label={addButtonLabel} onClick={onAddClick} />}
       tabs={<SectionTabs selectedTab={selectedTab} onTabChange={onTabChange} />}
     >

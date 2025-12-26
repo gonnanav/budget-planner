@@ -31,7 +31,7 @@ export default function Page() {
 
   return (
     <CategoriesScreen
-      headingText="Income Categories"
+      headingText="Income"
       addButtonLabel="Add income category"
       emptyItemsText="No income categories yet"
       categories={categories}

@@ -27,7 +27,7 @@ export default function Page() {
 
   return (
     <ItemsScreen
-      headingText="Expense Items"
+      headingText="Expenses"
       addButtonLabel="Add expense item"
       emptyItemsText="No expense items yet"
       items={data.items}
