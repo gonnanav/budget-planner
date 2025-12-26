@@ -1,4 +1,4 @@
 export { OverviewScreen } from "./OverviewScreen";
 export { OverviewLayout } from "./OverviewLayout";
 export { BalanceBanner } from "./BalanceBanner";
-export { BudgetCard } from "./BudgetCard";
+export { SectionSummary } from "./SectionSummary";

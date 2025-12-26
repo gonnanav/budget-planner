@@ -6,8 +6,10 @@ import { getExpenseItems } from "@/db/expenses/items";
 import { calculateBalance } from "@/core/balance";
 import { formatAmount } from "@/lib/format";
 import { useLiveQuery } from "dexie-react-hooks";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   const incomeItems = useLiveQuery(getIncomeItems);
   const expenseItems = useLiveQuery(getExpenseItems);
 
@@ -20,6 +22,14 @@ export default function Page() {
   const formattedExpenseSum = formatAmount(expenseSum);
   const formattedBalance = formatAmount(Math.abs(balance));
 
+  const handleIncomeClick = () => {
+    router.push("/income/items");
+  };
+
+  const handleExpensesClick = () => {
+    router.push("/expenses/items");
+  };
+
   return (
     <OverviewScreen
       incomeSum={formattedIncomeSum}
@@ -28,6 +38,8 @@ export default function Page() {
         amount: formattedBalance,
         status,
       }}
+      onIncomeClick={handleIncomeClick}
+      onExpensesClick={handleExpensesClick}
     />
   );
 }

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { fn } from "storybook/test";
 import { OverviewScreen } from "./OverviewScreen";
 
 const meta = {
@@ -14,6 +15,8 @@ const meta = {
       amount: "0",
       status: "balanced",
     },
+    onIncomeClick: fn(),
+    onExpensesClick: fn(),
   },
 } satisfies Meta<typeof OverviewScreen>;
 

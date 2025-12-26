@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { BalanceBanner } from "./BalanceBanner";
-import { BudgetCard } from "./BudgetCard";
+import { SectionSummary } from "./SectionSummary";
 import { OverviewLayout } from "./OverviewLayout";
 import { BalanceStatus } from "@/core/types";
 
@@ -11,29 +10,34 @@ interface OverviewScreenProps {
     amount: string;
     status: BalanceStatus;
   };
+  onIncomeClick: () => void;
+  onExpensesClick: () => void;
 }
 
 export function OverviewScreen({
   incomeSum,
   expenseSum,
   balance,
+  onIncomeClick,
+  onExpensesClick,
 }: OverviewScreenProps) {
   return (
     <OverviewLayout
       banner={<BalanceBanner status={balance.status} amount={balance.amount} />}
       cards={
         <>
-          <Link href="/income/items">
-            <BudgetCard title="Income" amount={incomeSum} variant="income" />
-          </Link>
-
-          <Link href="/expenses/items">
-            <BudgetCard
-              title="Expenses"
-              amount={expenseSum}
-              variant="expense"
-            />
-          </Link>
+          <SectionSummary
+            title="Income"
+            amount={incomeSum}
+            variant="income"
+            onClick={onIncomeClick}
+          />
+          <SectionSummary
+            title="Expenses"
+            amount={expenseSum}
+            variant="expense"
+            onClick={onExpensesClick}
+          />
         </>
       }
     />
