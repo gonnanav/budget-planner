@@ -22,7 +22,7 @@ export function AppShell({
     <div className="flex flex-col gap-5 p-4">
       <Header onBackup={onBackup} onRestore={onRestore} />
       <NavTabs selectedTab={selectedTab} onTabChange={onTabChange} />
-      <main>{children}</main>
+      <main className="w-full max-w-5xl mx-auto">{children}</main>
     </div>
   );
 }
