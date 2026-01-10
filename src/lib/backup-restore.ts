@@ -1,5 +1,5 @@
-import type { Item, Category } from "@/core/types";
-import { restoreAllData, getAllData } from "@/db/backup";
+import type { Item, Category } from "core/types";
+import { restoreAllData, getAllData } from "db/backup";
 
 interface BackupDataV1 {
   metadata: {
@@ -27,7 +27,7 @@ export interface BackupData {
   };
 }
 
-export type AnyBackupData = BackupData | BackupDataV1;
+type AnyBackupData = BackupData | BackupDataV1;
 
 interface BackupDataInput {
   incomeItems: Item[];
@@ -40,13 +40,6 @@ export async function backupData(): Promise<void> {
   const input = await getAllData();
   const data = createBackupData(input);
   downloadBackupData(data);
-}
-
-export async function restoreData(): Promise<void> {
-  const backup = await pickBackupFile();
-  if (!backup) return;
-
-  await restoreBackupToDb(backup as AnyBackupData);
 }
 
 export function createBackupData({
@@ -94,41 +87,6 @@ function downloadFile(blob: Blob, filename: string): void {
   link.download = filename;
   link.click();
   URL.revokeObjectURL(url);
-}
-
-export function pickBackupFile(): Promise<AnyBackupData | null> {
-  return new Promise((resolve) => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = ".json";
-
-    input.onchange = (event) => {
-      const file = (event.target as HTMLInputElement).files?.[0];
-
-      if (!file) {
-        resolve(null);
-        return;
-      }
-
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        try {
-          const content = e.target?.result as string;
-          const data = JSON.parse(content) as AnyBackupData;
-
-          resolve(data);
-        } catch (error) {
-          console.error("Failed to parse backup file:", error);
-          resolve(null);
-        }
-      };
-
-      reader.readAsText(file);
-    };
-
-    input.click();
-  });
 }
 
 export async function restoreBackupToDb(backup: AnyBackupData): Promise<void> {

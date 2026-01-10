@@ -1,6 +1,8 @@
 export type ItemAmount = number | null;
-
+export type Section = "income" | "expenses";
+export type Unit = "item" | "category";
 export type Frequency = "monthly" | "biMonthly";
+export type BalanceStatus = "balanced" | "surplus" | "deficit";
 
 export interface ItemInput {
   name: string;
@@ -20,8 +22,6 @@ export interface Item {
   categoryId?: string;
   notes?: string;
 }
-
-export type BalanceStatus = "balanced" | "surplus" | "deficit";
 
 export interface Category {
   id: string;

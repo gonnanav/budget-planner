@@ -32,7 +32,9 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <AppHeroUIProvider>
-        <Story />
+        <div style={{ height: "100vh" }}>
+          <Story />
+        </div>
       </AppHeroUIProvider>
     ),
   ],

@@ -1,19 +1,33 @@
 import { useState } from "react";
 
-export function useDraft<T>(defaultDraft: T) {
-  const [draft, setDraft] = useState<T>(defaultDraft);
+export type UseDraftResult<T> = {
+  value: T | null;
+  reset: () => void;
+  set: (nextDraft: T) => void;
+  update: (changes: Partial<T>) => void;
+  clear: () => void;
+};
 
-  const updateDraft = (changes: Partial<T>) => {
-    setDraft((prev) => ({ ...prev, ...changes }));
+export function useDraft<T>(pristineValue: T): UseDraftResult<T> {
+  const [value, setValue] = useState<T | null>(null);
+
+  const reset = () => {
+    setValue(pristineValue);
   };
 
-  const resetDraft = () => {
-    setDraft(defaultDraft);
+  const update = (changes: Partial<T>) => {
+    setValue((prev) => prev && { ...prev, ...changes });
+  };
+
+  const clear = () => {
+    setValue(null);
   };
 
   return {
-    draft,
-    updateDraft,
-    resetDraft,
+    value,
+    reset,
+    set: setValue,
+    update,
+    clear,
   };
 }

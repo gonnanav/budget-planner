@@ -1,7 +1,9 @@
+import styles from "./Heading.module.css";
+
 interface HeadingProps {
   children: string;
 }
 
 export function Heading({ children }: HeadingProps) {
-  return <h1 className="text-lg font-semibold">{children}</h1>;
+  return <h1 className={styles.root}>{children}</h1>;
 }

@@ -1,17 +1,19 @@
 import { ReactNode } from "react";
+import styles from "./SectionList.module.css";
+import { EmptyStateText } from "./EmptyStateText";
 
 interface SectionListProps<T> {
   items: T[];
-  empty: ReactNode;
+  emptyText: string;
   children: (item: T) => ReactNode;
 }
 
 export function SectionList<T>({
   items,
-  empty,
+  emptyText,
   children,
 }: SectionListProps<T>) {
-  if (items.length === 0) return empty;
+  if (items.length === 0) return <EmptyStateText>{emptyText}</EmptyStateText>;
 
-  return <ul className="flex flex-col gap-px">{items.map(children)}</ul>;
+  return <ul className={styles.root}>{items.map(children)}</ul>;
 }

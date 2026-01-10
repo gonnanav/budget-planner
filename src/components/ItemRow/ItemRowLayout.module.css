@@ -1,0 +1,19 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  background-color: #f8fafc;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    background-color: #f1f5f9;
+  }
+}

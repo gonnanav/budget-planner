@@ -1,8 +1,9 @@
 import { Tabs, Tab } from "@heroui/tabs";
+import { Unit } from "core/types";
 
 interface SectionTabsProps {
-  selectedTab: "items" | "categories";
-  onTabChange: (tab: "items" | "categories") => void;
+  selectedTab: Unit;
+  onTabChange: (tab: Unit) => void;
 }
 
 export function SectionTabs({
@@ -14,10 +15,10 @@ export function SectionTabs({
       size="sm"
       radius="full"
       selectedKey={selectedKey}
-      onSelectionChange={(key) => onTabChange(key as "items" | "categories")}
+      onSelectionChange={(key) => onTabChange(key as Unit)}
     >
-      <Tab key="items" title="Items" />
-      <Tab key="categories" title="Categories" />
+      <Tab key="item" title="Items" />
+      <Tab key="category" title="Categories" />
     </Tabs>
   );
 }

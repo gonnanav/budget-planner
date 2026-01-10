@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import styles from "./OverviewLayout.module.css";
 
 interface OverviewLayoutProps {
   banner: ReactNode;
@@ -7,8 +8,8 @@ interface OverviewLayoutProps {
 
 export function OverviewLayout({ banner, cards }: OverviewLayoutProps) {
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-3">{cards}</div>
+    <div className={styles.root}>
+      <div className={styles.cards}>{cards}</div>
       {banner}
     </div>
   );

@@ -9,9 +9,9 @@ import {
 } from "@heroui/react";
 import { Button } from "@heroui/button";
 import { EllipsisVertical, Download, Upload } from "lucide-react";
-import { BackupConfirmModal } from "@/components/modals/BackupConfirmModal";
-import { RestoreConfirmModal } from "@/components/modals/RestoreConfirmModal";
-import type { BackupData } from "@/lib/backup-restore";
+import { BackupConfirmModal, RestoreConfirmModal } from "components/modals";
+import type { BackupData } from "lib/backup-restore";
+import styles from "./DataMenu.module.css";
 
 interface DataMenuProps {
   onBackup: () => void;
@@ -31,7 +31,7 @@ export function DataMenu({ onBackup, onRestore }: DataMenuProps) {
   };
 
   return (
-    <>
+    <div className={styles.root}>
       <Dropdown>
         <DropdownTrigger>
           <Button
@@ -56,7 +56,7 @@ export function DataMenu({ onBackup, onRestore }: DataMenuProps) {
             startContent={<Upload size={16} />}
             description="Replace all data with backup"
             color="danger"
-            className="text-danger"
+            className={styles.danger}
           >
             Restore data
           </DropdownItem>
@@ -73,6 +73,6 @@ export function DataMenu({ onBackup, onRestore }: DataMenuProps) {
         onOpenChange={setIsRestoreModalOpen}
         onConfirm={onRestore}
       />
-    </>
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 import { Card, CardBody } from "@heroui/react";
 import { Check, TrendingUp, TrendingDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "lib/utils";
+import styles from "./BalanceBanner.module.css";
 
 type BalanceStatus = "balanced" | "surplus" | "deficit";
 
@@ -10,54 +11,31 @@ interface BalanceBannerProps {
 }
 
 export function BalanceBanner({ status, amount }: BalanceBannerProps) {
-  const getStatusConfig = () => {
-    switch (status) {
-      case "balanced":
-        return {
-          label: "Balanced",
-          icon: Check,
-          bg: "bg-blue-50",
-          border: "border-blue-200",
-          textColor: "text-blue-900",
-          iconColor: "text-blue-600",
-        };
-      case "surplus":
-        return {
-          label: "Surplus",
-          icon: TrendingUp,
-          bg: "bg-emerald-50",
-          border: "border-emerald-200",
-          textColor: "text-emerald-900",
-          iconColor: "text-emerald-600",
-        };
-      case "deficit":
-        return {
-          label: "Deficit",
-          icon: TrendingDown,
-          bg: "bg-rose-50",
-          border: "border-rose-200",
-          textColor: "text-rose-900",
-          iconColor: "text-rose-600",
-        };
-    }
-  };
-
-  const config = getStatusConfig();
+  const config = {
+    balanced: {
+      label: "Balanced",
+      icon: Check,
+    },
+    surplus: {
+      label: "Surplus",
+      icon: TrendingUp,
+    },
+    deficit: {
+      label: "Deficit",
+      icon: TrendingDown,
+    },
+  }[status];
   const Icon = config.icon;
 
   return (
-    <Card shadow="none" className={cn("border-2", config.bg, config.border)}>
-      <CardBody className="py-3 px-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Icon className={cn("h-5 w-5", config.iconColor)} />
-            <span className={cn("font-medium", config.textColor)}>
-              {config.label}
-            </span>
+    <Card shadow="none" className={cn(styles.root, styles[status])}>
+      <CardBody className={styles.body}>
+        <div className={styles.row}>
+          <div className={styles.left}>
+            <Icon className={styles.icon} />
+            <span className={styles.label}>{config.label}</span>
           </div>
-          <span className={cn("font-semibold text-lg", config.textColor)}>
-            {amount}
-          </span>
+          <span className={styles.amount}>{amount}</span>
         </div>
       </CardBody>
     </Card>

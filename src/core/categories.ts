@@ -12,15 +12,6 @@ export function createCategory(id: string, name: string): Category {
   };
 }
 
-export function updateCategory(category: Category, name: string): Category {
-  validateName(name);
-
-  return {
-    ...category,
-    name,
-  };
-}
-
 function validateId(id: string): void {
   validateNonEmptyString(id, "Id");
 }

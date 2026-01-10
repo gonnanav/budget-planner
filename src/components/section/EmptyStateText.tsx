@@ -1,7 +1,9 @@
+import styles from "./EmptyStateText.module.css";
+
 interface EmptyStateTextProps {
   children: React.ReactNode;
 }
 
 export function EmptyStateText({ children }: EmptyStateTextProps) {
-  return <p className="text-sm text-center text-gray-400">{children}</p>;
+  return <p className={styles.root}>{children}</p>;
 }

@@ -1,0 +1,57 @@
+.root {
+  border: 2px solid transparent;
+
+  &.balanced {
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+    --text-color: #1e3a8a;
+    --icon-color: #2563eb;
+  }
+
+  &.surplus {
+    background-color: #ecfdf5;
+    border-color: #a7f3d0;
+    --text-color: #065f46;
+    --icon-color: #059669;
+  }
+
+  &.deficit {
+    background-color: #fff1f2;
+    border-color: #fecdd3;
+    --text-color: #9f1239;
+    --icon-color: #e11d48;
+  }
+
+  & .body {
+    padding: 12px 16px;
+  }
+
+  & .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  & .left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  & .icon {
+    width: 20px;
+    height: 20px;
+    color: var(--icon-color);
+  }
+
+  & .label {
+    font-weight: 500;
+    color: var(--text-color);
+  }
+
+  & .amount {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+}

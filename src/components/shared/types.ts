@@ -1,4 +1,4 @@
-import { ItemAmount, Frequency } from "@/core/types";
+import { ItemAmount, Frequency } from "core/types";
 
 export interface ItemDraft {
   id?: string;

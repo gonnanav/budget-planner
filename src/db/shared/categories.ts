@@ -1,4 +1,4 @@
-import { createCategory } from "@/core/categories";
+import { createCategory } from "core/categories";
 import { db } from "../db";
 import { ItemsTable, CategoriesTable } from "../types";
 

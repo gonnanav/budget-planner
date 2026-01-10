@@ -1,5 +1,5 @@
-import { createItem } from "@/core/items";
-import { ItemInput } from "@/core/types";
+import { createItem } from "core/items";
+import { ItemInput } from "core/types";
 import { ItemsTable } from "../types";
 
 async function getItems(itemsTable: ItemsTable) {

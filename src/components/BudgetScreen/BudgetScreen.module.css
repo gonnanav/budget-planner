@@ -1,0 +1,14 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 24px;
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 1;
+    gap: 16px;
+    min-height: 0;
+  }
+}

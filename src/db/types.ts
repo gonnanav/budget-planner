@@ -1,4 +1,4 @@
-import { Item, Category } from "@/core/types";
+import { Item, Category } from "core/types";
 import { EntityTable } from "dexie";
 
 export type DbItem = Item;
