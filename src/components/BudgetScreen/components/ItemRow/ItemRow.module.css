@@ -1,0 +1,59 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  background-color: #f8fafc;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    background-color: #f1f5f9;
+  }
+
+  .primaryLine {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+
+    .nameText {
+      font-size: 0.875rem;
+      color: #64748b;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .amountText {
+      font-size: 0.875rem;
+      color: #111827;
+    }
+  }
+
+  .secondaryLine {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+    margin-top: 4px;
+
+    .frequencyText {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .normalizedAmountText {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+  }
+}

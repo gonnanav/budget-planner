@@ -6,7 +6,19 @@ export function createItem(input: CreateItemInput): Item {
   validateNotes(input.notes);
   validateAmount(input.amount);
 
-  return { amount: null, frequency: "monthly", ...input };
+  const item = {
+    id: input.id,
+    name: input.name,
+    amount: input.amount ?? null,
+    frequency: input.frequency ?? "monthly",
+    categoryId: input.categoryId,
+    notes: input.notes,
+  };
+
+  return {
+    ...item,
+    normalizedAmount: normalizeAmount(item),
+  };
 }
 
 function validateName(name?: string) {
@@ -28,7 +40,7 @@ function validateAmount(amount?: ItemAmount) {
   if (amount && amount < 0) throw new Error("Amount must be greater than 0");
 }
 
-export function enrichItem(item: Item): Item & { normalizedAmount: number } {
+export function enrichItem(item: Item): Item {
   return {
     ...item,
     normalizedAmount: normalizeAmount(item),
@@ -36,11 +48,12 @@ export function enrichItem(item: Item): Item & { normalizedAmount: number } {
 }
 
 export function sumItems(items: Item[]): number {
-  return items
-    .map(normalizeAmount)
-    .reduce((sum: number, item) => sum + item, 0);
+  return items.reduce((sum: number, item) => sum + item.normalizedAmount, 0);
 }
 
-function normalizeAmount(item: Item): number {
-  return (item.amount ?? 0) / (item.frequency === "biMonthly" ? 2 : 1);
+function normalizeAmount({
+  amount,
+  frequency,
+}: Pick<Item, "amount" | "frequency">): number {
+  return (amount ?? 0) / (frequency === "biMonthly" ? 2 : 1);
 }

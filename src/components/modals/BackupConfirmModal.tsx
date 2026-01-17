@@ -10,6 +10,7 @@ import {
   Button,
 } from "@heroui/react";
 import { addToast } from "@heroui/toast";
+import styles from "./BackupConfirmModal.module.css";
 
 interface BackupConfirmModalProps {
   isOpen: boolean;
@@ -48,18 +49,16 @@ export function BackupConfirmModal({
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="lg">
-      <ModalContent>
+      <ModalContent className={styles.root}>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">
-              Download backup
-            </ModalHeader>
+            <ModalHeader className={styles.header}>Download backup</ModalHeader>
             <ModalBody>
-              <p className="text-sm">
+              <p className={styles.description}>
                 A JSON file containing all your budget data will be downloaded
                 to your device.
               </p>
-              <div className="mt-2 space-y-1 text-sm text-default-500">
+              <div className={styles.details}>
                 <p>
                   <strong>Includes:</strong> All incomes, expenses, and
                   categories
@@ -72,7 +71,7 @@ export function BackupConfirmModal({
                   your personal financial data
                 </p>
               </div>
-              <p className="mt-4 text-sm text-default-600">
+              <p className={styles.note}>
                 No changes will be made to your current data.
               </p>
             </ModalBody>

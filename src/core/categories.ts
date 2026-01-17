@@ -1,23 +1,19 @@
-import type { Item, Category } from "./types";
+import type {
+  Item,
+  Category,
+  CategoryWithAmount,
+  CreateCategoryInput,
+} from "./types";
 import { sumItems } from "./items";
 import { CHARACTER_LIMITS } from "../lib/limits";
 
-export function createCategory(id: string, name: string): Category {
-  validateId(id);
-  validateName(name);
+export function createCategory(input: CreateCategoryInput): Category {
+  validateId(input.id);
+  validateName(input.name);
 
   return {
-    id,
-    name,
-  };
-}
-
-export function updateCategory(category: Category, name: string): Category {
-  validateName(name);
-
-  return {
-    ...category,
-    name,
+    id: input.id,
+    name: input.name,
   };
 }
 
@@ -47,7 +43,7 @@ export function sumCategoryItems(categoryId: string, items: Item[]): number {
 export function enrichCategory(
   category: Category,
   items: Item[],
-): Category & { amount: number } {
+): CategoryWithAmount {
   return {
     ...category,
     amount: sumCategoryItems(category.id, items),

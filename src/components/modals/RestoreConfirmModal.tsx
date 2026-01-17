@@ -12,7 +12,8 @@ import {
 } from "@heroui/react";
 import { addToast } from "@heroui/toast";
 import { AlertTriangle } from "lucide-react";
-import type { BackupData } from "@/lib/backup-restore";
+import type { BackupData } from "lib/backup-restore";
+import styles from "./RestoreConfirmModal.module.css";
 
 interface BackupSummary {
   version: string;
@@ -142,20 +143,20 @@ export function RestoreConfirmModal({
       isDismissable={!isLoading}
       hideCloseButton={isLoading}
     >
-      <ModalContent>
+      <ModalContent className={styles.root}>
         {() => (
           <>
-            <ModalHeader className="flex flex-col gap-1">
+            <ModalHeader className={styles.header}>
               Restore from backup
             </ModalHeader>
             <ModalBody>
-              <div className="mb-4 flex items-start gap-3 rounded-lg border-2 border-danger bg-danger-50 p-3">
-                <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-danger" />
-                <div className="flex-1 space-y-2 text-sm">
-                  <p className="font-semibold text-danger">
+              <div className={styles.banner}>
+                <AlertTriangle className={styles.icon} />
+                <div className={styles.bannerContent}>
+                  <p className={styles.bannerTitle}>
                     This will completely replace your current data
                   </p>
-                  <p className="text-danger-700">
+                  <p className={styles.bannerText}>
                     All your existing incomes, expenses, and categories will be
                     permanently deleted and replaced with the backup data. This
                     cannot be undone.
@@ -173,12 +174,9 @@ export function RestoreConfirmModal({
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className={styles.content}>
                 <div>
-                  <label
-                    htmlFor="backup-file"
-                    className="mb-2 block text-sm font-medium"
-                  >
+                  <label htmlFor="backup-file" className={styles.label}>
                     Select backup file
                   </label>
                   <input
@@ -187,21 +185,21 @@ export function RestoreConfirmModal({
                     accept=".json,application/json"
                     onChange={handleFileChange}
                     disabled={isLoading}
-                    className="w-full rounded-lg border border-default-300 px-3 py-2 text-sm"
+                    className={styles.fileInput}
                   />
                 </div>
 
                 {error && (
-                  <div className="rounded-lg border border-danger bg-danger-50 p-3 text-sm text-danger">
-                    <p className="font-semibold">Error</p>
+                  <div className={styles.error}>
+                    <p className={styles.errorTitle}>Error</p>
                     <p>{error}</p>
                   </div>
                 )}
 
                 {summary && (
-                  <div className="space-y-2 rounded-lg border border-default-200 bg-default-50 p-3 text-sm">
-                    <p className="font-semibold">Backup information</p>
-                    <div className="grid grid-cols-2 gap-2 text-default-600">
+                  <div className={styles.summary}>
+                    <p className={styles.summaryTitle}>Backup information</p>
+                    <div className={styles.summaryGrid}>
                       <p>Version: {summary.version}</p>
                       <p>
                         Date:{" "}
