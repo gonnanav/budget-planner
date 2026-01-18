@@ -1,0 +1,99 @@
+.root {
+  & .header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  & .banner {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border-radius: 8px;
+    border: 2px solid #fecaca;
+    background-color: #fef2f2;
+    padding: 12px;
+  }
+
+  & .icon {
+    margin-top: 2px;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: #dc2626;
+  }
+
+  & .bannerContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.875rem;
+  }
+
+  & .bannerTitle {
+    font-weight: 600;
+    color: #b91c1c;
+  }
+
+  & .bannerText {
+    color: #991b1b;
+  }
+
+  & .content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  & .label {
+    margin-bottom: 8px;
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  & .fileInput {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    padding: 8px 12px;
+    font-size: 0.875rem;
+  }
+
+  & .error {
+    border-radius: 8px;
+    border: 1px solid #fca5a5;
+    background-color: #fef2f2;
+    padding: 12px;
+    font-size: 0.875rem;
+    color: #b91c1c;
+  }
+
+  & .errorTitle {
+    font-weight: 600;
+  }
+
+  & .summary {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    padding: 12px;
+    font-size: 0.875rem;
+  }
+
+  & .summaryTitle {
+    font-weight: 600;
+  }
+
+  & .summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    color: #64748b;
+  }
+}

@@ -1,0 +1,41 @@
+.root {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  background-color: #f8fafc;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    background-color: #f1f5f9;
+  }
+
+  & .row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+  }
+
+  & .name {
+    font-size: 0.875rem;
+    color: #64748b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  & .amount {
+    font-size: 0.875rem;
+    color: #111827;
+  }
+}

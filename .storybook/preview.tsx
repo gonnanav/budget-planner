@@ -1,7 +1,7 @@
 import React from "react";
 import type { Preview } from "@storybook/nextjs-vite";
 import { INITIAL_VIEWPORTS } from "storybook/viewport";
-import { AppHeroUIProvider } from "../src/providers/AppHeroUIProvider";
+import { AppHeroUIProvider } from "../src/components/providers/AppHeroUIProvider";
 import "../src/app/globals.css";
 
 const preview: Preview = {
@@ -32,7 +32,9 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <AppHeroUIProvider>
-        <Story />
+        <div style={{ height: "100vh" }}>
+          <Story />
+        </div>
       </AppHeroUIProvider>
     ),
   ],

@@ -1,28 +1,39 @@
-import { createCategory } from "@/core/categories";
+import type { Category } from "core/types";
 import { db } from "../db";
-import { ItemsTable, CategoriesTable } from "../types";
+import { categoryToRecord, recordToCategory } from "../mappers";
+import { CategoryApi, ItemsTable, CategoriesTable } from "../types";
 
-async function getCategories(categoriesTable: CategoriesTable) {
-  return categoriesTable.toArray();
+async function getCategories(
+  categoriesTable: CategoriesTable,
+): Promise<Category[]> {
+  const records = await categoriesTable.toArray();
+
+  return records.map(recordToCategory);
 }
 
-async function addCategory(categoriesTable: CategoriesTable, name: string) {
-  return categoriesTable.add(createCategory(crypto.randomUUID(), name));
+async function addCategory(
+  categoriesTable: CategoriesTable,
+  category: Category,
+): Promise<string> {
+  const record = categoryToRecord(category);
+
+  return categoriesTable.add(record);
 }
 
 async function updateCategory(
   categoriesTable: CategoriesTable,
-  id: string,
-  name: string,
-) {
-  return categoriesTable.update(id, createCategory(id, name)).then(Boolean);
+  category: Category,
+): Promise<boolean> {
+  const record = categoryToRecord(category);
+
+  return categoriesTable.update(category.id, record).then(Boolean);
 }
 
 async function deleteCategory(
   id: string,
   categoriesTable: CategoriesTable,
   itemsTable: ItemsTable,
-) {
+): Promise<void> {
   return db.transaction("rw", categoriesTable, itemsTable, async () => {
     await itemsTable
       .where("categoryId")
@@ -38,13 +49,14 @@ async function deleteCategory(
 export function createCategoryApi(
   categoriesTable: CategoriesTable,
   itemsTable: ItemsTable,
-) {
+): CategoryApi {
   return {
-    getCategories: () => getCategories(categoriesTable),
-    addCategory: (name: string) => addCategory(categoriesTable, name),
-    updateCategory: (id: string, name: string) =>
-      updateCategory(categoriesTable, id, name),
-    deleteCategory: (id: string) =>
+    getCategories: (): Promise<Category[]> => getCategories(categoriesTable),
+    addCategory: (category: Category): Promise<string> =>
+      addCategory(categoriesTable, category),
+    updateCategory: (category: Category): Promise<boolean> =>
+      updateCategory(categoriesTable, category),
+    deleteCategory: (id: string): Promise<void> =>
       deleteCategory(id, categoriesTable, itemsTable),
   };
 }

@@ -1,0 +1,7 @@
+.root {
+  display: contents;
+
+  & .danger {
+    color: #b91c1c;
+  }
+}
