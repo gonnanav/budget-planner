@@ -14,6 +14,7 @@ export function createCategory(input: CreateCategoryInput): Category {
   return {
     id: input.id,
     name: input.name,
+    section: input.section,
   };
 }
 

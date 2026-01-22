@@ -6,4 +6,4 @@ export const {
   addItem: addExpenseItem,
   updateItem: updateExpenseItem,
   deleteItem: deleteExpenseItem,
-} = createItemApi(db.expenseItems);
+} = createItemApi(db.expenseItems, "expenses");

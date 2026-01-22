@@ -1,14 +1,19 @@
 import { createItem } from "core/items";
-import type { Item, CreateItemInput } from "core/types";
+import type { Item, CreateItemInput, Section } from "core/types";
 import { electricity } from "./expenses";
 
-type CreateTestItemInput = Omit<CreateItemInput, "id" | "name"> & {
+type CreateTestItemInput = Omit<CreateItemInput, "id" | "name" | "section"> & {
   id?: string;
   name?: string;
+  section?: Section;
 };
 
 export function createTestItem(input: CreateTestItemInput = {}): Item {
-  return createItem({ ...electricity, ...input });
+  return createItem({
+    ...electricity,
+    ...input,
+    section: input.section ?? "expenses",
+  });
 }
 
 export function createTestItems(inputs: Array<CreateTestItemInput>): Item[] {

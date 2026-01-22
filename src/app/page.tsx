@@ -7,7 +7,9 @@ import { createItem, enrichItem, sumItems } from "core/items";
 import type {
   BudgetState,
   CategoryInput,
+  CategoryDraft,
   ItemInput,
+  ItemDraft,
   Section,
 } from "core/types";
 import {
@@ -45,8 +47,8 @@ export default function Page() {
     incomeCategoriesRaw !== undefined && incomeItemsReady;
   const incomeCategories = incomeCategoriesReady
     ? incomeCategoriesRaw.map((category) =>
-        enrichCategory(category, incomeItems),
-      )
+      enrichCategory(category, incomeItems),
+    )
     : [];
 
   const expenseItemsRaw = useLiveQuery(getExpenseItems);
@@ -57,8 +59,8 @@ export default function Page() {
     expenseCategoriesRaw !== undefined && expenseItemsReady;
   const expenseCategories = expenseCategoriesReady
     ? expenseCategoriesRaw.map((category) =>
-        enrichCategory(category, expenseItems),
-      )
+      enrichCategory(category, expenseItems),
+    )
     : [];
 
   const balanceReady = incomeItemsReady && expenseItemsReady;
@@ -105,48 +107,64 @@ export default function Page() {
     },
   };
 
-  const handleAddItem = (section: Section, input: ItemInput) => {
+  const handleAddItem = async (input: ItemInput) => {
+    const { section } = input;
     const item = buildItem(crypto.randomUUID(), input);
 
-    return section === "income" ? addIncomeItem(item) : addExpenseItem(item);
+    if (section === "income") {
+      await addIncomeItem(item);
+    } else {
+      await addExpenseItem(item);
+    }
   };
 
-  const handleUpdateItem = (section: Section, id: string, input: ItemInput) => {
+  const handleUpdateItem = async (id: string, input: ItemInput) => {
+    const { section } = input;
     const item = buildItem(id, input);
 
-    return section === "income"
-      ? updateIncomeItem(item)
-      : updateExpenseItem(item);
+    if (section === "income") {
+      await updateIncomeItem(item);
+    } else {
+      await updateExpenseItem(item);
+    }
   };
 
-  const handleDeleteItem = (section: Section, id: string) => {
-    return section === "income" ? deleteIncomeItem(id) : deleteExpenseItem(id);
+  const handleDeleteItem = async (id: string, section: Section) => {
+    if (section === "income") {
+      await deleteIncomeItem(id);
+    } else {
+      await deleteExpenseItem(id);
+    }
   };
 
-  const handleAddCategory = (section: Section, input: CategoryInput) => {
+  const handleAddCategory = async (input: CategoryInput) => {
+    const { section } = input;
     const category = buildCategory(crypto.randomUUID(), input);
 
-    return section === "income"
-      ? addIncomeCategory(category)
-      : addExpenseCategory(category);
+    if (section === "income") {
+      await addIncomeCategory(category);
+    } else {
+      await addExpenseCategory(category);
+    }
   };
 
-  const handleUpdateCategory = (
-    section: Section,
-    id: string,
-    input: CategoryInput,
-  ) => {
+  const handleUpdateCategory = async (id: string, input: CategoryInput) => {
+    const { section } = input;
     const category = buildCategory(id, input);
 
-    return section === "income"
-      ? updateIncomeCategory(category)
-      : updateExpenseCategory(category);
+    if (section === "income") {
+      await updateIncomeCategory(category);
+    } else {
+      await updateExpenseCategory(category);
+    }
   };
 
-  const handleDeleteCategory = (section: Section, id: string) => {
-    return section === "income"
-      ? deleteIncomeCategory(id)
-      : deleteExpenseCategory(id);
+  const handleDeleteCategory = async (id: string, section: Section) => {
+    if (section === "income") {
+      await deleteIncomeCategory(id);
+    } else {
+      await deleteExpenseCategory(id);
+    }
   };
 
   return (
@@ -154,14 +172,14 @@ export default function Page() {
       state={budgetState}
       actions={{
         item: {
-          add: handleAddItem,
-          update: handleUpdateItem,
-          delete: handleDeleteItem,
+          onAdd: handleAddItem,
+          onUpdate: handleUpdateItem,
+          onDelete: handleDeleteItem,
         },
         category: {
-          add: handleAddCategory,
-          update: handleUpdateCategory,
-          delete: handleDeleteCategory,
+          onAdd: handleAddCategory,
+          onUpdate: handleUpdateCategory,
+          onDelete: handleDeleteCategory,
         },
       }}
     />
@@ -169,13 +187,21 @@ export default function Page() {
 }
 
 function buildItem(id: string, input: ItemInput) {
-  const { name, amount, frequency, categoryId, notes } = input;
+  const { name, amount, frequency, categoryId, notes, section } = input;
 
-  return createItem({ id, name, amount, frequency, categoryId, notes });
+  return createItem({
+    id,
+    name,
+    amount,
+    frequency,
+    categoryId,
+    notes,
+    section,
+  });
 }
 
 function buildCategory(id: string, input: CategoryInput) {
-  const { name } = input;
+  const { name, section } = input;
 
-  return createCategory({ id, name });
+  return createCategory({ id, name, section });
 }

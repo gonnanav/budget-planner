@@ -6,6 +6,7 @@ export const electricity = createItem({
   name: "Electricity",
   amount: 150,
   categoryId: bills.id,
+  section: "expenses",
 });
 
 export const water = createItem({
@@ -13,6 +14,7 @@ export const water = createItem({
   name: "Water",
   amount: 80,
   categoryId: bills.id,
+  section: "expenses",
 });
 
 export const gas = createItem({
@@ -20,6 +22,7 @@ export const gas = createItem({
   name: "Gas",
   amount: 120,
   categoryId: bills.id,
+  section: "expenses",
 });
 
 export const diningOut = createItem({
@@ -27,6 +30,7 @@ export const diningOut = createItem({
   name: "Dining Out",
   amount: 250,
   categoryId: personal.id,
+  section: "expenses",
 });
 
 export const hobbies = createItem({
@@ -34,4 +38,5 @@ export const hobbies = createItem({
   name: "Hobbies",
   amount: 200,
   categoryId: personal.id,
+  section: "expenses",
 });

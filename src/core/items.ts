@@ -13,6 +13,7 @@ export function createItem(input: CreateItemInput): Item {
     frequency: input.frequency ?? "monthly",
     categoryId: input.categoryId,
     notes: input.notes,
+    section: input.section,
   };
 
   return {

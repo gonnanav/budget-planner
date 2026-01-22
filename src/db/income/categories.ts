@@ -6,4 +6,4 @@ export const {
   addCategory: addIncomeCategory,
   updateCategory: updateIncomeCategory,
   deleteCategory: deleteIncomeCategory,
-} = createCategoryApi(db.incomeCategories, db.incomeItems);
+} = createCategoryApi(db.incomeCategories, db.incomeItems, "income");

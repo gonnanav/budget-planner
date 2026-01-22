@@ -1,14 +1,15 @@
-import type { Category } from "core/types";
+import type { Category, Section } from "core/types";
 import { db } from "../db";
 import { categoryToRecord, recordToCategory } from "../mappers";
 import { CategoryApi, ItemsTable, CategoriesTable } from "../types";
 
 async function getCategories(
   categoriesTable: CategoriesTable,
+  section: Section,
 ): Promise<Category[]> {
   const records = await categoriesTable.toArray();
 
-  return records.map(recordToCategory);
+  return records.map((record) => recordToCategory(record, section));
 }
 
 async function addCategory(
@@ -49,9 +50,11 @@ async function deleteCategory(
 export function createCategoryApi(
   categoriesTable: CategoriesTable,
   itemsTable: ItemsTable,
+  section: Section,
 ): CategoryApi {
   return {
-    getCategories: (): Promise<Category[]> => getCategories(categoriesTable),
+    getCategories: (): Promise<Category[]> =>
+      getCategories(categoriesTable, section),
     addCategory: (category: Category): Promise<string> =>
       addCategory(categoriesTable, category),
     updateCategory: (category: Category): Promise<boolean> =>

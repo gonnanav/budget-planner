@@ -1,14 +1,3 @@
-import type {
-  Category,
-  CategoryInput,
-  CategoryDraft,
-  BudgetState,
-  Item,
-  ItemInput,
-  ItemDraft,
-  Section,
-} from "core/types";
-import { useEntityEdit, useActiveSection, useActiveEntity } from "./hooks";
 import {
   BalanceBanner,
   SectionTabs,
@@ -22,27 +11,30 @@ import {
   SectionSummary,
 } from "./components";
 import styles from "./BudgetScreen.module.css";
+import type {
+  Category,
+  CategoryInput,
+  CategoryDraft,
+  BudgetState,
+  Item,
+  ItemInput,
+  ItemDraft,
+  Section,
+} from "core/types";
+import { useEntityEdit, useActiveSection, useActiveEntity } from "./hooks";
 
 export interface BudgetScreenProps {
   state: BudgetState;
   actions: {
     item: {
-      add: (section: Section, input: ItemInput) => Promise<string>;
-      update: (
-        section: Section,
-        id: string,
-        input: ItemInput,
-      ) => Promise<boolean>;
-      delete: (section: Section, id: string) => Promise<void>;
+      onAdd: (input: ItemInput) => Promise<void>;
+      onUpdate: (id: string, input: ItemInput) => Promise<void>;
+      onDelete: (id: string, section: Section) => Promise<void>;
     };
     category: {
-      add: (section: Section, input: CategoryInput) => Promise<string>;
-      update: (
-        section: Section,
-        id: string,
-        input: CategoryInput,
-      ) => Promise<boolean>;
-      delete: (section: Section, id: string) => Promise<void>;
+      onAdd: (input: CategoryInput) => Promise<void>;
+      onUpdate: (id: string, input: CategoryInput) => Promise<void>;
+      onDelete: (id: string, section: Section) => Promise<void>;
     };
   };
 }
@@ -84,7 +76,7 @@ export function BudgetScreen({
   const handleItemEdit = (item: Item) => {
     if (!activeSection) return;
 
-    edit.item.startUpdate(activeSection, item);
+    edit.item.startUpdate({ ...item, section: activeSection });
   };
 
   const handleItemDraftChange = (draft: Partial<ItemDraft>) => {
@@ -94,7 +86,7 @@ export function BudgetScreen({
   const handleCategoryEdit = (category: Category) => {
     if (!activeSection) return;
 
-    edit.category.startUpdate(activeSection, category);
+    edit.category.startUpdate({ ...category, section: activeSection });
   };
 
   const handleCategoryDraftChange = (draft: Partial<CategoryDraft>) => {
@@ -109,7 +101,7 @@ export function BudgetScreen({
     edit.clear();
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     const section = edit.section;
 
     if (!section) {
@@ -118,23 +110,22 @@ export function BudgetScreen({
     }
 
     if (edit.entity === "item" && edit.item.draft.id) {
-      actions.item.update(section, edit.item.draft.id, edit.item.draft);
+      await actions.item.onUpdate(edit.item.draft.id, edit.item.draft);
     } else if (edit.entity === "item") {
-      actions.item.add(section, edit.item.draft);
+      await actions.item.onAdd(edit.item.draft);
     } else if (edit.entity === "category" && edit.category.draft.id) {
-      actions.category.update(
-        section,
+      await actions.category.onUpdate(
         edit.category.draft.id,
         edit.category.draft,
       );
     } else if (edit.entity === "category") {
-      actions.category.add(section, edit.category.draft);
+      await actions.category.onAdd(edit.category.draft);
     }
 
     edit.clear();
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = async () => {
     const section = edit.section;
 
     if (!section) {
@@ -143,9 +134,12 @@ export function BudgetScreen({
     }
 
     if (edit.entity === "item" && edit.item.draft.id) {
-      actions.item.delete(section, edit.item.draft.id);
+      await actions.item.onDelete(edit.item.draft.id, edit.item.draft.section);
     } else if (edit.entity === "category" && edit.category.draft.id) {
-      actions.category.delete(section, edit.category.draft.id);
+      await actions.category.onDelete(
+        edit.category.draft.id,
+        edit.category.draft.section,
+      );
     }
 
     edit.clear();

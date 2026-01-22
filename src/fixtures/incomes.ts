@@ -5,6 +5,7 @@ export const salary = createItem({
   name: "Salary",
   amount: 5000,
   categoryId: "category-transportation", // Assigning to Transportation category
+  section: "income",
 });
 
 export const allowance = createItem({
@@ -12,6 +13,7 @@ export const allowance = createItem({
   name: "Allowance",
   amount: 1200,
   categoryId: "category-shopping", // Assigning to Shopping category
+  section: "income",
 });
 
 export const investment = createItem({
@@ -19,4 +21,5 @@ export const investment = createItem({
   name: "Investment Returns",
   amount: 300,
   categoryId: "category-entertainment", // Assigning to Entertainment category
+  section: "income",
 });

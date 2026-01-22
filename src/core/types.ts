@@ -14,6 +14,7 @@ export interface ItemInput {
   frequency?: Frequency;
   categoryId?: string;
   notes?: string;
+  section: Section;
 }
 
 export type CreateItemInput = ItemInput & { id: string };
@@ -26,6 +27,7 @@ export interface Item {
   categoryId?: string;
   notes?: string;
   normalizedAmount: number;
+  section: Section;
 }
 
 export interface ItemDraft {
@@ -35,15 +37,18 @@ export interface ItemDraft {
   frequency: Frequency;
   categoryId?: string;
   notes?: string;
+  section: Section;
 }
 
 export interface Category {
   id: string;
   name: string;
+  section: Section;
 }
 
 export interface CategoryInput {
   name: string;
+  section: Section;
 }
 
 export type CreateCategoryInput = CategoryInput & { id: string };
@@ -51,6 +56,7 @@ export type CreateCategoryInput = CategoryInput & { id: string };
 export interface CategoryDraft {
   id?: string;
   name: string;
+  section: Section;
 }
 
 export type CategoryWithAmount = Category & { amount: number };
