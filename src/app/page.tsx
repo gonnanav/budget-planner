@@ -47,8 +47,8 @@ export default function Page() {
     incomeCategoriesRaw !== undefined && incomeItemsReady;
   const incomeCategories = incomeCategoriesReady
     ? incomeCategoriesRaw.map((category) =>
-      enrichCategory(category, incomeItems),
-    )
+        enrichCategory(category, incomeItems),
+      )
     : [];
 
   const expenseItemsRaw = useLiveQuery(getExpenseItems);
@@ -59,8 +59,8 @@ export default function Page() {
     expenseCategoriesRaw !== undefined && expenseItemsReady;
   const expenseCategories = expenseCategoriesReady
     ? expenseCategoriesRaw.map((category) =>
-      enrichCategory(category, expenseItems),
-    )
+        enrichCategory(category, expenseItems),
+      )
     : [];
 
   const balanceReady = incomeItemsReady && expenseItemsReady;

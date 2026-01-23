@@ -10,7 +10,6 @@ import {
   EmptyList,
   SectionSummary,
 } from "./components";
-import styles from "./BudgetScreen.module.css";
 import type {
   Category,
   CategoryInput,
@@ -22,26 +21,27 @@ import type {
   Section,
 } from "core/types";
 import { useEntityEdit, useActiveSection, useActiveEntity } from "./hooks";
+import styles from "./BudgetScreen.module.css";
 
-export interface BudgetScreenProps {
+interface BudgetScreenProps {
   state: BudgetState;
   actions: {
     item: {
-      onAdd: (input: ItemInput) => Promise<void>;
-      onUpdate: (id: string, input: ItemInput) => Promise<void>;
-      onDelete: (id: string, section: Section) => Promise<void>;
+      onAdd: (input: ItemInput) => void;
+      onUpdate: (id: string, input: ItemInput) => void;
+      onDelete: (id: string, section: Section) => void;
     };
     category: {
-      onAdd: (input: CategoryInput) => Promise<void>;
-      onUpdate: (id: string, input: CategoryInput) => Promise<void>;
-      onDelete: (id: string, section: Section) => Promise<void>;
+      onAdd: (input: CategoryInput) => void;
+      onUpdate: (id: string, input: CategoryInput) => void;
+      onDelete: (id: string, section: Section) => void;
     };
   };
 }
 
 export function BudgetScreen({
   state: { income, expenses, balance },
-  actions,
+  actions: { item, category },
 }: BudgetScreenProps) {
   const { activeSection, toggleIncome, toggleExpenses } = useActiveSection();
   const { activeEntity, toggleEntity } = useActiveEntity();
@@ -58,91 +58,81 @@ export function BudgetScreen({
   const showCategories = !showItems;
 
   const isDrawerOpen = Boolean(edit.mode);
-  const showItemEdit = edit.entity === "item";
-  const itemDraft = edit.item.draft;
-  const showCategoryEdit = edit.entity === "category";
-  const categoryDraft = edit.category.draft;
+  const showItemEdit = edit.mode && edit.entity === "item";
+  const itemDraft = showItemEdit ? edit.draft : undefined;
+  const showCategoryEdit = edit.mode && edit.entity === "category";
+  const categoryDraft = showCategoryEdit ? edit.draft : undefined;
 
   const handleAddClick = () => {
     if (!activeSection) return;
 
     if (activeEntity === "item") {
-      edit.item.startCreate(activeSection);
+      edit.actions.startCreateItem(activeSection);
     } else if (activeEntity === "category") {
-      edit.category.startCreate(activeSection);
+      edit.actions.startCreateCategory(activeSection);
     }
   };
 
   const handleItemEdit = (item: Item) => {
     if (!activeSection) return;
 
-    edit.item.startUpdate({ ...item, section: activeSection });
+    edit.actions.startUpdateItem({ ...item, section: activeSection });
   };
 
   const handleItemDraftChange = (draft: Partial<ItemDraft>) => {
-    edit.item.updateDraft(draft);
+    edit.actions.updateDraft(draft);
   };
 
   const handleCategoryEdit = (category: Category) => {
     if (!activeSection) return;
 
-    edit.category.startUpdate({ ...category, section: activeSection });
+    edit.actions.startUpdateCategory({ ...category, section: activeSection });
   };
 
   const handleCategoryDraftChange = (draft: Partial<CategoryDraft>) => {
-    edit.category.updateDraft(draft);
+    edit.actions.updateDraft(draft);
   };
 
   const handleCloseClick = () => {
-    edit.clear();
+    edit.actions.clear();
   };
 
   const handleCancelClick = () => {
-    edit.clear();
+    edit.actions.clear();
   };
 
-  const handleSaveClick = async () => {
-    const section = edit.section;
+  const handleSaveClick = () => {
+    if (!edit.mode) return;
 
-    if (!section) {
-      edit.clear();
-      return;
-    }
-
-    if (edit.entity === "item" && edit.item.draft.id) {
-      await actions.item.onUpdate(edit.item.draft.id, edit.item.draft);
-    } else if (edit.entity === "item") {
-      await actions.item.onAdd(edit.item.draft);
-    } else if (edit.entity === "category" && edit.category.draft.id) {
-      await actions.category.onUpdate(
-        edit.category.draft.id,
-        edit.category.draft,
-      );
+    if (edit.entity === "item") {
+      if (edit.draft.id) {
+        item.onUpdate(edit.draft.id, edit.draft);
+      } else {
+        item.onAdd(edit.draft);
+      }
     } else if (edit.entity === "category") {
-      await actions.category.onAdd(edit.category.draft);
+      if (edit.draft.id) {
+        category.onUpdate(edit.draft.id, edit.draft);
+      } else {
+        category.onAdd(edit.draft);
+      }
     }
 
-    edit.clear();
+    edit.actions.clear();
   };
 
-  const handleDeleteClick = async () => {
-    const section = edit.section;
+  const handleDeleteClick = () => {
+    if (!edit.mode) return;
 
-    if (!section) {
-      edit.clear();
-      return;
+    const section = edit.draft.section;
+
+    if (edit.entity === "item" && edit.draft.id) {
+      item.onDelete(edit.draft.id, section);
+    } else if (edit.entity === "category" && edit.draft.id) {
+      category.onDelete(edit.draft.id, section);
     }
 
-    if (edit.entity === "item" && edit.item.draft.id) {
-      await actions.item.onDelete(edit.item.draft.id, edit.item.draft.section);
-    } else if (edit.entity === "category" && edit.category.draft.id) {
-      await actions.category.onDelete(
-        edit.category.draft.id,
-        edit.category.draft.section,
-      );
-    }
-
-    edit.clear();
+    edit.actions.clear();
   };
 
   return (
@@ -205,21 +195,21 @@ export function BudgetScreen({
           <EditDrawer
             isOpen={isDrawerOpen}
             mode={edit.mode}
-            entity={edit.entity}
-            section={edit.section}
+            entity={edit.mode ? edit.entity : null}
+            section={edit.mode ? edit.draft.section : null}
             onClose={handleCloseClick}
             onCancel={handleCancelClick}
             onSave={handleSaveClick}
             onDelete={handleDeleteClick}
           >
-            {showItemEdit && (
+            {showItemEdit && itemDraft && (
               <ItemEdit
                 draft={itemDraft}
                 categoryOptions={categories}
                 onDraftChange={handleItemDraftChange}
               />
             )}
-            {showCategoryEdit && (
+            {showCategoryEdit && categoryDraft && (
               <CategoryEdit
                 draft={categoryDraft}
                 onDraftChange={handleCategoryDraftChange}
