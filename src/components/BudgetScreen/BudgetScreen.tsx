@@ -11,13 +11,9 @@ import {
   SectionSummary,
 } from "./components";
 import type {
-  Category,
   CategoryInput,
-  CategoryDraft,
   BudgetState,
-  Item,
   ItemInput,
-  ItemDraft,
   Section,
 } from "core/types";
 import { useEntityEdit, useActiveSection, useActiveEntity } from "./hooks";
@@ -47,6 +43,10 @@ export function BudgetScreen({
   const { activeEntity, toggleEntity } = useActiveEntity();
   const edit = useEntityEdit();
 
+  const { startCreateItem, startUpdateItem, updateItemDraft } = edit.actions;
+  const { startCreateCategory, startUpdateCategory, updateCategoryDraft } = edit.actions;
+  const { stopEdit } = edit.actions;
+
   const sectionState = activeSection === "expenses" ? expenses : income;
   const items = sectionState.items.data;
   const categories = sectionState.categories.data;
@@ -61,76 +61,36 @@ export function BudgetScreen({
   const itemDraft = (edit.state?.entity === "item") ? edit.state.draft : null;
   const categoryDraft = (edit.state?.entity === "category") ? edit.state.draft : null;
 
-  const handleAddClick = () => {
+  const handleStartCreate = () => {
     if (!activeSection) return;
 
     if (activeEntity === "item") {
-      edit.actions.startCreateItem(activeSection);
+      startCreateItem(activeSection);
     } else if (activeEntity === "category") {
-      edit.actions.startCreateCategory(activeSection);
+      startCreateCategory(activeSection);
     }
   };
 
-  const handleItemEdit = (item: Item) => {
-    if (!activeSection) return;
-
-    edit.actions.startUpdateItem({ ...item, section: activeSection });
-  };
-
-  const handleItemDraftChange = (draft: Partial<ItemDraft>) => {
-    edit.actions.updateDraft(draft);
-  };
-
-  const handleCategoryEdit = (category: Category) => {
-    if (!activeSection) return;
-
-    edit.actions.startUpdateCategory({ ...category, section: activeSection });
-  };
-
-  const handleCategoryDraftChange = (draft: Partial<CategoryDraft>) => {
-    edit.actions.updateDraft(draft);
-  };
-
-  const handleCloseClick = () => {
-    edit.actions.clear();
-  };
-
-  const handleCancelClick = () => {
-    edit.actions.clear();
-  };
-
-  const handleSaveClick = () => {
+  const handleSave = () => {
     if (!edit.state) return;
 
-    if (edit.state.entity === "item") {
-      if (edit.state.draft.id) {
-        item.onUpdate(edit.state.draft.id, edit.state.draft);
-      } else {
-        item.onAdd(edit.state.draft);
-      }
-    } else if (edit.state.entity === "category") {
-      if (edit.state.draft.id) {
-        category.onUpdate(edit.state.draft.id, edit.state.draft);
-      } else {
-        category.onAdd(edit.state.draft);
-      }
+    const { onAdd, onUpdate } = edit.state.entity === "item" ? item : category;
+    if (edit.state.mode === "create") {
+      onAdd(edit.state.draft);
+    } else if (edit.state.mode === "update" && edit.state.draft.id) {
+      onUpdate(edit.state.draft.id, edit.state.draft);
     }
 
-    edit.actions.clear();
+    stopEdit();
   };
 
-  const handleDeleteClick = () => {
-    if (!edit.state) return;
+  const handleDelete = () => {
+    if (edit.state?.mode !== "update" || !edit.state.draft.id) return;
 
-    const section = edit.state.draft.section;
+    const onDelete = edit.state.entity === "item" ? item.onDelete : category.onDelete;
+    onDelete(edit.state.draft.id, edit.state.draft.section);
 
-    if (edit.state.entity === "item" && edit.state.draft.id) {
-      item.onDelete(edit.state.draft.id, section);
-    } else if (edit.state.entity === "category" && edit.state.draft.id) {
-      category.onDelete(edit.state.draft.id, section);
-    }
-
-    edit.actions.clear();
+    stopEdit();
   };
 
   return (
@@ -161,7 +121,7 @@ export function BudgetScreen({
               selectedTab={activeEntity}
               onTabChange={toggleEntity}
             />
-            <AddButton entity={activeEntity} onClick={handleAddClick} />
+            <AddButton entity={activeEntity} onClick={handleStartCreate} />
           </div>
           <div className={styles.content}>
             {showEmptyList && <EmptyList entity={activeEntity} />}
@@ -175,7 +135,7 @@ export function BudgetScreen({
                       amount={item.amount}
                       frequency={item.frequency}
                       normalizedAmount={item.normalizedAmount}
-                      onClick={() => handleItemEdit(item)}
+                      onClick={() => startUpdateItem(item)}
                     />
                   ))}
                 {showCategories &&
@@ -184,7 +144,7 @@ export function BudgetScreen({
                       key={category.id}
                       name={category.name}
                       amount={category.amount}
-                      onClick={() => handleCategoryEdit(category)}
+                      onClick={() => startUpdateCategory(category)}
                     />
                   ))}
               </ul>
@@ -195,22 +155,22 @@ export function BudgetScreen({
             mode={edit.state?.mode ?? null}
             entity={edit.state?.entity ?? null}
             section={edit.state?.draft.section ?? null}
-            onClose={handleCloseClick}
-            onCancel={handleCancelClick}
-            onSave={handleSaveClick}
-            onDelete={handleDeleteClick}
+            onClose={stopEdit}
+            onCancel={stopEdit}
+            onSave={handleSave}
+            onDelete={handleDelete}
           >
             {itemDraft && (
               <ItemEdit
                 draft={itemDraft}
                 categoryOptions={categories}
-                onDraftChange={handleItemDraftChange}
+                onDraftChange={updateItemDraft}
               />
             )}
             {categoryDraft && (
               <CategoryEdit
                 draft={categoryDraft}
-                onDraftChange={handleCategoryDraftChange}
+                onDraftChange={updateCategoryDraft}
               />
             )}
           </EditDrawer>

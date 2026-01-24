@@ -30,10 +30,11 @@ export type UseEntityEditResult = {
   actions: {
     startCreateItem: (section: Section) => void;
     startUpdateItem: (draft: ItemDraft) => void;
+    updateItemDraft: (update: Partial<ItemDraft>) => void;
     startCreateCategory: (section: Section) => void;
     startUpdateCategory: (draft: CategoryDraft) => void;
-    updateDraft: (update: Partial<ItemDraft> | Partial<CategoryDraft>) => void;
-    clear: () => void;
+    updateCategoryDraft: (update: Partial<CategoryDraft>) => void;
+    stopEdit: () => void;
   };
 };
 
@@ -56,6 +57,17 @@ export function useEntityEdit(): UseEntityEditResult {
     });
   };
 
+  const updateItemDraft = (update: Partial<ItemDraft>) => {
+    setState((prevState) => {
+      if (prevState?.entity !== "item") return prevState;
+
+      return {
+        ...prevState,
+        draft: { ...prevState.draft, ...update },
+      };
+    });
+  };
+
   const startCreateCategory = (section: Section) => {
     setState({
       mode: "create",
@@ -72,25 +84,18 @@ export function useEntityEdit(): UseEntityEditResult {
     });
   };
 
-  const updateDraft = (update: Partial<ItemDraft> | Partial<CategoryDraft>) => {
+  const updateCategoryDraft = (update: Partial<CategoryDraft>) => {
     setState((prevState) => {
-      if (!prevState) return prevState;
+      if (prevState?.entity !== "category") return prevState;
 
-      if (prevState.entity === "item") {
-        return {
-          ...prevState,
-          draft: { ...prevState.draft, ...update } as ItemDraft,
-        };
-      } else {
-        return {
-          ...prevState,
-          draft: { ...prevState.draft, ...update } as CategoryDraft,
-        };
-      }
+      return {
+        ...prevState,
+        draft: { ...prevState.draft, ...update },
+      };
     });
   };
 
-  const clear = () => {
+  const stopEdit = () => {
     setState(null);
   };
 
@@ -101,8 +106,9 @@ export function useEntityEdit(): UseEntityEditResult {
       startUpdateItem,
       startCreateCategory,
       startUpdateCategory,
-      updateDraft,
-      clear,
+      updateItemDraft,
+      updateCategoryDraft,
+      stopEdit,
     },
   };
 }
