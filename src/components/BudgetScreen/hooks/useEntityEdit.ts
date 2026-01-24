@@ -14,19 +14,19 @@ const DEFAULT_CATEGORY_DRAFT: Partial<CategoryDraft> = { name: "" };
 type Mode = "create" | "update";
 
 export type EditState =
-  | { mode: null }
   | {
-      mode: Mode;
-      entity: "item";
-      draft: ItemDraft;
-    }
+    mode: Mode;
+    entity: "item";
+    draft: ItemDraft;
+  }
   | {
-      mode: Mode;
-      entity: "category";
-      draft: CategoryDraft;
-    };
+    mode: Mode;
+    entity: "category";
+    draft: CategoryDraft;
+  };
 
-export type UseEntityEditResult = EditState & {
+export type UseEntityEditResult = {
+  state: EditState | null;
   actions: {
     startCreateItem: (section: Section) => void;
     startUpdateItem: (draft: ItemDraft) => void;
@@ -38,7 +38,7 @@ export type UseEntityEditResult = EditState & {
 };
 
 export function useEntityEdit(): UseEntityEditResult {
-  const [state, setState] = useState<EditState>({ mode: null });
+  const [state, setState] = useState<EditState | null>(null);
 
   const startCreateItem = (section: Section) => {
     setState({
@@ -74,7 +74,7 @@ export function useEntityEdit(): UseEntityEditResult {
 
   const updateDraft = (update: Partial<ItemDraft> | Partial<CategoryDraft>) => {
     setState((prevState) => {
-      if (!prevState.mode) return prevState;
+      if (!prevState) return prevState;
 
       if (prevState.entity === "item") {
         return {
@@ -91,11 +91,11 @@ export function useEntityEdit(): UseEntityEditResult {
   };
 
   const clear = () => {
-    setState({ mode: null });
+    setState(null);
   };
 
   return {
-    ...state,
+    state,
     actions: {
       startCreateItem,
       startUpdateItem,

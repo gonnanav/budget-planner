@@ -57,11 +57,9 @@ export function BudgetScreen({
   const showItems = activeEntity === "item";
   const showCategories = !showItems;
 
-  const isDrawerOpen = Boolean(edit.mode);
-  const showItemEdit = edit.mode && edit.entity === "item";
-  const itemDraft = showItemEdit ? edit.draft : undefined;
-  const showCategoryEdit = edit.mode && edit.entity === "category";
-  const categoryDraft = showCategoryEdit ? edit.draft : undefined;
+  const isDrawerOpen = Boolean(edit.state);
+  const itemDraft = (edit.state?.entity === "item") ? edit.state.draft : null;
+  const categoryDraft = (edit.state?.entity === "category") ? edit.state.draft : null;
 
   const handleAddClick = () => {
     if (!activeSection) return;
@@ -102,19 +100,19 @@ export function BudgetScreen({
   };
 
   const handleSaveClick = () => {
-    if (!edit.mode) return;
+    if (!edit.state) return;
 
-    if (edit.entity === "item") {
-      if (edit.draft.id) {
-        item.onUpdate(edit.draft.id, edit.draft);
+    if (edit.state.entity === "item") {
+      if (edit.state.draft.id) {
+        item.onUpdate(edit.state.draft.id, edit.state.draft);
       } else {
-        item.onAdd(edit.draft);
+        item.onAdd(edit.state.draft);
       }
-    } else if (edit.entity === "category") {
-      if (edit.draft.id) {
-        category.onUpdate(edit.draft.id, edit.draft);
+    } else if (edit.state.entity === "category") {
+      if (edit.state.draft.id) {
+        category.onUpdate(edit.state.draft.id, edit.state.draft);
       } else {
-        category.onAdd(edit.draft);
+        category.onAdd(edit.state.draft);
       }
     }
 
@@ -122,14 +120,14 @@ export function BudgetScreen({
   };
 
   const handleDeleteClick = () => {
-    if (!edit.mode) return;
+    if (!edit.state) return;
 
-    const section = edit.draft.section;
+    const section = edit.state.draft.section;
 
-    if (edit.entity === "item" && edit.draft.id) {
-      item.onDelete(edit.draft.id, section);
-    } else if (edit.entity === "category" && edit.draft.id) {
-      category.onDelete(edit.draft.id, section);
+    if (edit.state.entity === "item" && edit.state.draft.id) {
+      item.onDelete(edit.state.draft.id, section);
+    } else if (edit.state.entity === "category" && edit.state.draft.id) {
+      category.onDelete(edit.state.draft.id, section);
     }
 
     edit.actions.clear();
@@ -194,22 +192,22 @@ export function BudgetScreen({
           </div>
           <EditDrawer
             isOpen={isDrawerOpen}
-            mode={edit.mode}
-            entity={edit.mode ? edit.entity : null}
-            section={edit.mode ? edit.draft.section : null}
+            mode={edit.state?.mode ?? null}
+            entity={edit.state?.entity ?? null}
+            section={edit.state?.draft.section ?? null}
             onClose={handleCloseClick}
             onCancel={handleCancelClick}
             onSave={handleSaveClick}
             onDelete={handleDeleteClick}
           >
-            {showItemEdit && itemDraft && (
+            {itemDraft && (
               <ItemEdit
                 draft={itemDraft}
                 categoryOptions={categories}
                 onDraftChange={handleItemDraftChange}
               />
             )}
-            {showCategoryEdit && categoryDraft && (
+            {categoryDraft && (
               <CategoryEdit
                 draft={categoryDraft}
                 onDraftChange={handleCategoryDraftChange}
