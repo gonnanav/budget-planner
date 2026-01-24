@@ -8,7 +8,8 @@ import {
   CategoryRow,
   ItemRow,
   EmptyList,
-  SectionSummary,
+  IncomeSummary,
+  ExpenseSummary,
 } from "./components";
 import type {
   CategoryInput,
@@ -44,7 +45,8 @@ export function BudgetScreen({
   const edit = useEntityEdit();
 
   const { startCreateItem, startUpdateItem, updateItemDraft } = edit.actions;
-  const { startCreateCategory, startUpdateCategory, updateCategoryDraft } = edit.actions;
+  const { startCreateCategory, startUpdateCategory, updateCategoryDraft } =
+    edit.actions;
   const { stopEdit } = edit.actions;
 
   const sectionState = activeSection === "expenses" ? expenses : income;
@@ -58,8 +60,9 @@ export function BudgetScreen({
   const showCategories = !showItems;
 
   const isDrawerOpen = Boolean(edit.state);
-  const itemDraft = (edit.state?.entity === "item") ? edit.state.draft : null;
-  const categoryDraft = (edit.state?.entity === "category") ? edit.state.draft : null;
+  const itemDraft = edit.state?.entity === "item" ? edit.state.draft : null;
+  const categoryDraft =
+    edit.state?.entity === "category" ? edit.state.draft : null;
 
   const handleStartCreate = () => {
     if (!activeSection) return;
@@ -87,7 +90,8 @@ export function BudgetScreen({
   const handleDelete = () => {
     if (edit.state?.mode !== "update" || !edit.state.draft.id) return;
 
-    const onDelete = edit.state.entity === "item" ? item.onDelete : category.onDelete;
+    const onDelete =
+      edit.state.entity === "item" ? item.onDelete : category.onDelete;
     onDelete(edit.state.draft.id, edit.state.draft.section);
 
     stopEdit();
@@ -97,17 +101,13 @@ export function BudgetScreen({
     <div className={styles.root}>
       <div className={styles.overview}>
         <div className={styles.summaries}>
-          <SectionSummary
-            title="Income"
+          <IncomeSummary
             amount={income.sum.data}
-            variant="income"
             isActive={activeSection === "income"}
             onClick={toggleIncome}
           />
-          <SectionSummary
-            title="Expenses"
+          <ExpenseSummary
             amount={expenses.sum.data}
-            variant="expense"
             isActive={activeSection === "expenses"}
             onClick={toggleExpenses}
           />

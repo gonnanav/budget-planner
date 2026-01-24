@@ -15,15 +15,15 @@ type Mode = "create" | "update";
 
 export type EditState =
   | {
-    mode: Mode;
-    entity: "item";
-    draft: ItemDraft;
-  }
+      mode: Mode;
+      entity: "item";
+      draft: ItemDraft;
+    }
   | {
-    mode: Mode;
-    entity: "category";
-    draft: CategoryDraft;
-  };
+      mode: Mode;
+      entity: "category";
+      draft: CategoryDraft;
+    };
 
 export type UseEntityEditResult = {
   state: EditState | null;
