@@ -5,9 +5,8 @@ import {
   EditDrawer,
   CategoryEdit,
   ItemEdit,
-  CategoryRow,
-  ItemRow,
-  EmptyList,
+  CategoryList,
+  ItemList,
   IncomeSummary,
   ExpenseSummary,
 } from "./components";
@@ -53,9 +52,6 @@ export function BudgetScreen({
   const items = sectionState.items.data;
   const categories = sectionState.categories.data;
 
-  const listItems = activeEntity === "item" ? items : categories;
-  const showList = Boolean(listItems.length);
-  const showEmptyList = !showList;
   const showItems = activeEntity === "item";
   const showCategories = !showItems;
 
@@ -124,30 +120,14 @@ export function BudgetScreen({
             <AddButton entity={activeEntity} onClick={handleStartCreate} />
           </div>
           <div className={styles.content}>
-            {showEmptyList && <EmptyList entity={activeEntity} />}
-            {showList && (
-              <ul>
-                {showItems &&
-                  items.map((item) => (
-                    <ItemRow
-                      key={item.id}
-                      name={item.name}
-                      amount={item.amount}
-                      frequency={item.frequency}
-                      normalizedAmount={item.normalizedAmount}
-                      onClick={() => startUpdateItem(item)}
-                    />
-                  ))}
-                {showCategories &&
-                  categories.map((summary) => (
-                    <CategoryRow
-                      key={summary.category.id}
-                      name={summary.category.name}
-                      amount={summary.total}
-                      onClick={() => startUpdateCategory(summary.category)}
-                    />
-                  ))}
-              </ul>
+            {showItems && (
+              <ItemList items={items} onItemClick={startUpdateItem} />
+            )}
+            {showCategories && (
+              <CategoryList
+                categories={categories}
+                onCategoryClick={startUpdateCategory}
+              />
             )}
           </div>
           <EditDrawer
