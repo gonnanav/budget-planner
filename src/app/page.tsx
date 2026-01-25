@@ -1,7 +1,7 @@
 "use client";
 
 import { BudgetScreen } from "components/BudgetScreen";
-import { createCategory, enrichCategory } from "core/categories";
+import { createCategory, createCategorySummary } from "core/categories";
 import { calculateBalance } from "core/balance";
 import { createItem, enrichItem, sumItems } from "core/items";
 import type {
@@ -47,7 +47,7 @@ export default function Page() {
     incomeCategoriesRaw !== undefined && incomeItemsReady;
   const incomeCategories = incomeCategoriesReady
     ? incomeCategoriesRaw.map((category) =>
-        enrichCategory(category, incomeItems),
+        createCategorySummary(category, incomeItems),
       )
     : [];
 
@@ -59,7 +59,7 @@ export default function Page() {
     expenseCategoriesRaw !== undefined && expenseItemsReady;
   const expenseCategories = expenseCategoriesReady
     ? expenseCategoriesRaw.map((category) =>
-        enrichCategory(category, expenseItems),
+        createCategorySummary(category, expenseItems),
       )
     : [];
 

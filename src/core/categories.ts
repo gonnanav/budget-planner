@@ -1,7 +1,7 @@
 import type {
   Item,
   Category,
-  CategoryWithAmount,
+  CategorySummary,
   CreateCategoryInput,
 } from "./types";
 import { sumItems } from "./items";
@@ -41,12 +41,12 @@ export function sumCategoryItems(categoryId: string, items: Item[]): number {
   return sumItems(items.filter((item) => item.categoryId === categoryId));
 }
 
-export function enrichCategory(
+export function createCategorySummary(
   category: Category,
   items: Item[],
-): CategoryWithAmount {
+): CategorySummary {
   return {
-    ...category,
-    amount: sumCategoryItems(category.id, items),
+    category,
+    total: sumCategoryItems(category.id, items),
   };
 }

@@ -139,12 +139,12 @@ export function BudgetScreen({
                     />
                   ))}
                 {showCategories &&
-                  categories.map((category) => (
+                  categories.map((summary) => (
                     <CategoryRow
-                      key={category.id}
-                      name={category.name}
-                      amount={category.amount}
-                      onClick={() => startUpdateCategory(category)}
+                      key={summary.category.id}
+                      name={summary.category.name}
+                      amount={summary.total}
+                      onClick={() => startUpdateCategory(summary.category)}
                     />
                   ))}
               </ul>
@@ -163,7 +163,7 @@ export function BudgetScreen({
             {itemDraft && (
               <ItemEdit
                 draft={itemDraft}
-                categoryOptions={categories}
+                categoryOptions={categories.map((s) => s.category)}
                 onDraftChange={updateItemDraft}
               />
             )}

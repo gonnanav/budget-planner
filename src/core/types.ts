@@ -59,11 +59,14 @@ export interface CategoryDraft {
   section: Section;
 }
 
-export type CategoryWithAmount = Category & { amount: number };
+export interface CategorySummary {
+  category: Category;
+  total: number;
+}
 
 export interface SectionState {
   items: Loadable<Item[]>;
-  categories: Loadable<CategoryWithAmount[]>;
+  categories: Loadable<CategorySummary[]>;
   sum: Loadable<number>;
 }
 
