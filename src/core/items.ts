@@ -1,4 +1,4 @@
-import type { Item, ItemAmount, CreateItemInput } from "./types";
+import type { Item, CreateItemInput } from "./types";
 import { CHARACTER_LIMITS } from "../lib/limits";
 
 export function createItem(input: CreateItemInput): Item {
@@ -37,7 +37,7 @@ function validateNotes(notes?: string) {
     );
 }
 
-function validateAmount(amount?: ItemAmount) {
+function validateAmount(amount?: number | null) {
   if (amount && amount < 0) throw new Error("Amount must be greater than 0");
 }
 
