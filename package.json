@@ -12,9 +12,7 @@
     "build-storybook": "storybook build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:ui": "vitest --ui",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@heroui/react": "^2.8.2",
@@ -46,7 +44,6 @@
     "eslint-config-next": "16.0.10",
     "eslint-plugin-storybook": "^10.1.7",
     "playwright": "^1.54.2",
-    "prettier": "3.6.2",
     "storybook": "^10.1.7",
     "tailwindcss": "^4",
     "typescript": "^5.9.3",

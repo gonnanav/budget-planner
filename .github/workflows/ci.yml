@@ -26,9 +26,6 @@ jobs:
       - name: Install Playwright browsers and OS deps
         run: npx playwright install --with-deps chromium
 
-      - name: Check Prettier formatting
-        run: npm run format:check
-
       - name: Run ESLint
         run: npm run lint
 
