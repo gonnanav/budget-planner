@@ -4,43 +4,20 @@ import { BudgetScreen } from "components/BudgetScreen";
 import { createCategory, createCategorySummary } from "core/categories";
 import { calculateBalance } from "core/balance";
 import { createItem, enrichItem, sumItems } from "core/items";
-import type {
-  BudgetState,
-  CategoryInput,
-  ItemInput,
-  Section,
-} from "core/types";
+import type { BudgetState, CategoryInput, ItemInput } from "core/types";
+import { useItems, addItem, updateItem, deleteItem } from "db/items";
 import {
-  addIncomeItem,
-  deleteIncomeItem,
-  getIncomeItems,
-  updateIncomeItem,
-} from "db/income/items";
-import {
-  addIncomeCategory,
-  deleteIncomeCategory,
-  getIncomeCategories,
-  updateIncomeCategory,
-} from "db/income/categories";
-import {
-  addExpenseItem,
-  deleteExpenseItem,
-  getExpenseItems,
-  updateExpenseItem,
-} from "db/expenses/items";
-import {
-  addExpenseCategory,
-  deleteExpenseCategory,
-  getExpenseCategories,
-  updateExpenseCategory,
-} from "db/expenses/categories";
-import { useLiveQuery } from "dexie-react-hooks";
+  useCategories,
+  addCategory,
+  updateCategory,
+  deleteCategory,
+} from "db/categories";
 
 export default function Page() {
-  const incomeItemsRaw = useLiveQuery(getIncomeItems);
+  const incomeItemsRaw = useItems("income");
   const incomeItemsReady = incomeItemsRaw !== undefined;
   const incomeItems = incomeItemsReady ? incomeItemsRaw.map(enrichItem) : [];
-  const incomeCategoriesRaw = useLiveQuery(getIncomeCategories);
+  const incomeCategoriesRaw = useCategories("income");
   const incomeCategoriesReady =
     incomeCategoriesRaw !== undefined && incomeItemsReady;
   const incomeCategories = incomeCategoriesReady
@@ -49,10 +26,10 @@ export default function Page() {
       )
     : [];
 
-  const expenseItemsRaw = useLiveQuery(getExpenseItems);
+  const expenseItemsRaw = useItems("expenses");
   const expenseItemsReady = expenseItemsRaw !== undefined;
   const expenseItems = expenseItemsReady ? expenseItemsRaw.map(enrichItem) : [];
-  const expenseCategoriesRaw = useLiveQuery(getExpenseCategories);
+  const expenseCategoriesRaw = useCategories("expenses");
   const expenseCategoriesReady =
     expenseCategoriesRaw !== undefined && expenseItemsReady;
   const expenseCategories = expenseCategoriesReady
@@ -106,63 +83,23 @@ export default function Page() {
   };
 
   const handleAddItem = async (input: ItemInput) => {
-    const { section } = input;
     const item = buildItem(crypto.randomUUID(), input);
-
-    if (section === "income") {
-      await addIncomeItem(item);
-    } else {
-      await addExpenseItem(item);
-    }
+    await addItem(item);
   };
 
   const handleUpdateItem = async (id: string, input: ItemInput) => {
-    const { section } = input;
     const item = buildItem(id, input);
-
-    if (section === "income") {
-      await updateIncomeItem(item);
-    } else {
-      await updateExpenseItem(item);
-    }
-  };
-
-  const handleDeleteItem = async (id: string, section: Section) => {
-    if (section === "income") {
-      await deleteIncomeItem(id);
-    } else {
-      await deleteExpenseItem(id);
-    }
+    await updateItem(item);
   };
 
   const handleAddCategory = async (input: CategoryInput) => {
-    const { section } = input;
     const category = buildCategory(crypto.randomUUID(), input);
-
-    if (section === "income") {
-      await addIncomeCategory(category);
-    } else {
-      await addExpenseCategory(category);
-    }
+    await addCategory(category);
   };
 
   const handleUpdateCategory = async (id: string, input: CategoryInput) => {
-    const { section } = input;
     const category = buildCategory(id, input);
-
-    if (section === "income") {
-      await updateIncomeCategory(category);
-    } else {
-      await updateExpenseCategory(category);
-    }
-  };
-
-  const handleDeleteCategory = async (id: string, section: Section) => {
-    if (section === "income") {
-      await deleteIncomeCategory(id);
-    } else {
-      await deleteExpenseCategory(id);
-    }
+    await updateCategory(category);
   };
 
   return (
@@ -172,12 +109,12 @@ export default function Page() {
         item: {
           onAdd: handleAddItem,
           onUpdate: handleUpdateItem,
-          onDelete: handleDeleteItem,
+          onDelete: deleteItem,
         },
         category: {
           onAdd: handleAddCategory,
           onUpdate: handleUpdateCategory,
-          onDelete: handleDeleteCategory,
+          onDelete: deleteCategory,
         },
       }}
     />
