@@ -1,104 +1,51 @@
 "use client";
 
 import { BudgetScreen } from "components/BudgetScreen";
-import { createCategory, createCategorySummary } from "core/categories";
+import { createCategory } from "core/categories";
 import { calculateBalance } from "core/balance";
-import { createItem, enrichItem, sumItems } from "core/items";
+import { createItem } from "core/items";
 import type { BudgetState, CategoryInput, ItemInput } from "core/types";
-import { useItems, addItem, updateItem, deleteItem } from "db/items";
-import {
-  useCategories,
-  addCategory,
-  updateCategory,
-  deleteCategory,
-} from "db/categories";
+import { addItem, updateItem, deleteItem } from "db/items";
+import { addCategory, updateCategory, deleteCategory } from "db/categories";
+import { useSectionData } from "./useSectionData";
 
 export default function Page() {
-  const incomeItemsRaw = useItems("income");
-  const incomeItemsReady = incomeItemsRaw !== undefined;
-  const incomeItems = incomeItemsReady ? incomeItemsRaw.map(enrichItem) : [];
-  const incomeCategoriesRaw = useCategories("income");
-  const incomeCategoriesReady =
-    incomeCategoriesRaw !== undefined && incomeItemsReady;
-  const incomeCategories = incomeCategoriesReady
-    ? incomeCategoriesRaw.map((category) =>
-        createCategorySummary(category, incomeItems),
-      )
-    : [];
+  const income = useSectionData("income");
+  const expenses = useSectionData("expenses");
 
-  const expenseItemsRaw = useItems("expenses");
-  const expenseItemsReady = expenseItemsRaw !== undefined;
-  const expenseItems = expenseItemsReady ? expenseItemsRaw.map(enrichItem) : [];
-  const expenseCategoriesRaw = useCategories("expenses");
-  const expenseCategoriesReady =
-    expenseCategoriesRaw !== undefined && expenseItemsReady;
-  const expenseCategories = expenseCategoriesReady
-    ? expenseCategoriesRaw.map((category) =>
-        createCategorySummary(category, expenseItems),
-      )
-    : [];
-
-  const balanceReady = incomeItemsReady && expenseItemsReady;
-  const balanceData = balanceReady
-    ? calculateBalance(incomeItems, expenseItems)
+  const balanceLoading = income.items.isLoading || expenses.items.isLoading;
+  const balanceData = !balanceLoading
+    ? calculateBalance(income.items.data, expenses.items.data)
     : null;
-  const incomeSum = incomeItemsReady ? sumItems(incomeItems) : 0;
-  const expenseSum = expenseItemsReady ? sumItems(expenseItems) : 0;
 
   const budgetState: BudgetState = {
-    income: {
-      items: {
-        data: incomeItems,
-        isLoading: !incomeItemsReady,
-      },
-      categories: {
-        data: incomeCategories,
-        isLoading: !incomeCategoriesReady,
-      },
-      sum: {
-        data: incomeSum,
-        isLoading: !incomeItemsReady,
-      },
-    },
-    expenses: {
-      items: {
-        data: expenseItems,
-        isLoading: !expenseItemsReady,
-      },
-      categories: {
-        data: expenseCategories,
-        isLoading: !expenseCategoriesReady,
-      },
-      sum: {
-        data: expenseSum,
-        isLoading: !expenseItemsReady,
-      },
-    },
+    income,
+    expenses,
     balance: {
       data: balanceData
         ? { status: balanceData.status, delta: balanceData.balance }
         : { status: "balanced", delta: 0 },
-      isLoading: !balanceReady,
+      isLoading: balanceLoading,
     },
   };
 
   const handleAddItem = async (input: ItemInput) => {
-    const item = buildItem(crypto.randomUUID(), input);
+    const item = createItem({ id: crypto.randomUUID(), ...input });
     await addItem(item);
   };
 
   const handleUpdateItem = async (id: string, input: ItemInput) => {
-    const item = buildItem(id, input);
+    const item = createItem({ id, ...input });
     await updateItem(item);
   };
 
   const handleAddCategory = async (input: CategoryInput) => {
-    const category = buildCategory(crypto.randomUUID(), input);
+    const category = createCategory({ id: crypto.randomUUID(), ...input });
     await addCategory(category);
   };
 
   const handleUpdateCategory = async (id: string, input: CategoryInput) => {
-    const category = buildCategory(id, input);
+    const category = createCategory({ id, ...input });
     await updateCategory(category);
   };
 
@@ -119,24 +66,4 @@ export default function Page() {
       }}
     />
   );
-}
-
-function buildItem(id: string, input: ItemInput) {
-  const { name, amount, frequency, categoryId, notes, section } = input;
-
-  return createItem({
-    id,
-    name,
-    amount,
-    frequency,
-    categoryId,
-    notes,
-    section,
-  });
-}
-
-function buildCategory(id: string, input: CategoryInput) {
-  const { name, section } = input;
-
-  return createCategory({ id, name, section });
 }
