@@ -48,9 +48,16 @@ export function BudgetScreen({
     edit.actions;
   const { stopEdit } = edit.actions;
 
-  const sectionState = activeSection === "expenses" ? expenses : income;
-  const items = sectionState.items.data;
-  const categories = sectionState.categories.data;
+  const activeSectionLoadable =
+    activeSection === "expenses" ? expenses : income;
+  const items =
+    activeSectionLoadable.status === "ready"
+      ? activeSectionLoadable.data.items
+      : [];
+  const categories =
+    activeSectionLoadable.status === "ready"
+      ? activeSectionLoadable.data.categories
+      : [];
 
   const showItems = activeEntity === "item";
   const showCategories = !showItems;
@@ -98,17 +105,23 @@ export function BudgetScreen({
       <div className={styles.overview}>
         <div className={styles.summaries}>
           <IncomeSummary
-            amount={income.sum.data}
+            amount={income.status === "ready" ? income.data.sum : 0}
             isActive={activeSection === "income"}
             onClick={toggleIncome}
           />
           <ExpenseSummary
-            amount={expenses.sum.data}
+            amount={expenses.status === "ready" ? expenses.data.sum : 0}
             isActive={activeSection === "expenses"}
             onClick={toggleExpenses}
           />
         </div>
-        <BalanceBanner balance={balance.data} />
+        <BalanceBanner
+          balance={
+            balance.status === "ready"
+              ? balance.data
+              : { status: "balanced", delta: 0 }
+          }
+        />
       </div>
       {activeSection && (
         <div className={styles.section}>

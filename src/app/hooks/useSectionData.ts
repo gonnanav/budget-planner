@@ -1,27 +1,30 @@
 import { createCategorySummary } from "core/categories";
 import { sumItems } from "core/items";
-import type { Section, SectionState } from "core/types";
+import type { Section, Loadable, SectionState } from "core/types";
 import { useItems } from "db/items";
 import { useCategories } from "db/categories";
 
-export function useSectionData(section: Section): SectionState {
+export function useSectionData(section: Section): Loadable<SectionState> {
   const items = useItems(section);
-  const itemsLoading = !items;
-
   const categoryRecords = useCategories(section);
-  const categories =
-    categoryRecords && items
-      ? categoryRecords.map((category) =>
-          createCategorySummary(category, items),
-        )
-      : [];
-  const categoriesLoading = !categoryRecords || !items;
 
-  const sum = items ? sumItems(items) : 0;
+  const isLoading = !items || !categoryRecords;
+
+  if (isLoading) {
+    return { status: "loading" };
+  }
+
+  const categories = categoryRecords.map((category) =>
+    createCategorySummary(category, items),
+  );
+  const sum = sumItems(items);
 
   return {
-    items: { data: items ?? [], isLoading: itemsLoading },
-    categories: { data: categories, isLoading: categoriesLoading },
-    sum: { data: sum, isLoading: itemsLoading },
+    status: "ready",
+    data: {
+      items,
+      categories,
+      sum,
+    },
   };
 }
