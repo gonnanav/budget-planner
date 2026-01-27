@@ -2,32 +2,14 @@
 
 import { BudgetScreen } from "components/BudgetScreen";
 import { createCategory } from "core/categories";
-import { calculateBalance } from "core/balance";
 import { createItem } from "core/items";
-import type { BudgetState, CategoryInput, ItemInput } from "core/types";
+import type { CategoryInput, ItemInput } from "core/types";
 import { addItem, updateItem, deleteItem } from "db/items";
 import { addCategory, updateCategory, deleteCategory } from "db/categories";
-import { useSectionData } from "./useSectionData";
+import { useBudgetState } from "./hooks/useBudgetState";
 
 export default function Page() {
-  const income = useSectionData("income");
-  const expenses = useSectionData("expenses");
-
-  const balanceLoading = income.items.isLoading || expenses.items.isLoading;
-  const balanceData = !balanceLoading
-    ? calculateBalance(income.items.data, expenses.items.data)
-    : null;
-
-  const budgetState: BudgetState = {
-    income,
-    expenses,
-    balance: {
-      data: balanceData
-        ? { status: balanceData.status, delta: balanceData.balance }
-        : { status: "balanced", delta: 0 },
-      isLoading: balanceLoading,
-    },
-  };
+  const budgetState = useBudgetState();
 
   const handleAddItem = async (input: ItemInput) => {
     const item = createItem({ id: crypto.randomUUID(), ...input });

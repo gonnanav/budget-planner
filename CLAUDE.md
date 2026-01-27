@@ -37,7 +37,7 @@ This is a client-side React budget planning app with offline-first local storage
 ### Data Flow
 
 ```
-Dexie DB → useLiveQuery hooks → enrichItem/createCategorySummary → BudgetState → BudgetScreen
+Dexie DB → useLiveQuery hooks → createCategorySummary → BudgetState → BudgetScreen
 ```
 
 - **Data state**: Reactive queries via Dexie's `useLiveQuery` (auto re-render on DB changes)
@@ -47,7 +47,7 @@ Dexie DB → useLiveQuery hooks → enrichItem/createCategorySummary → BudgetS
 ### Key Patterns
 
 - `Item` and `Category` are domain objects; `ItemRecord` and `CategoryRecord` are DB shapes (no computed fields)
-- `enrichItem()` calculates `normalizedAmount` based on frequency
+- `createItem()` calculates `normalizedAmount` when converting from `ItemRecord` to `Item`
 - `ItemDraft`/`CategoryDraft` manage in-flight edits before save
 - Section-based routing ("income"/"expenses") handled at db layer via unified items/categories modules
 
