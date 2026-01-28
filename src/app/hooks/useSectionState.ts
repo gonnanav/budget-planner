@@ -5,14 +5,18 @@ import { useItems } from "db/items";
 import { useCategories } from "db/categories";
 
 export function useSectionState(section: Section): Loadable<SectionState> {
-  const items = useItems(section);
-  const categories = useCategories(section);
+  const itemsLoadable = useItems(section);
+  const categoriesLoadable = useCategories(section);
 
-  const isLoading = !items || !categories;
-
-  if (isLoading) {
+  if (
+    itemsLoadable.status !== "ready" ||
+    categoriesLoadable.status !== "ready"
+  ) {
     return { status: "loading" };
   }
+
+  const items = itemsLoadable.data;
+  const categories = categoriesLoadable.data;
 
   const categorySummaries = categories.map((category) =>
     createCategorySummary(category, items),
