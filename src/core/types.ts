@@ -3,10 +3,10 @@ export type Entity = "item" | "category";
 export type Frequency = "monthly" | "biMonthly";
 export type BalanceStatus = "balanced" | "surplus" | "deficit";
 
-export type Loadable<T> = {
-  data: T;
-  isLoading: boolean;
-};
+export type Loadable<T> =
+  | { status: "loading" }
+  | { status: "ready"; data: T }
+  | { status: "error"; error: Error };
 
 export interface ItemInput {
   section: Section;
@@ -65,9 +65,9 @@ export interface CategorySummary {
 }
 
 export interface SectionState {
-  items: Loadable<Item[]>;
-  categories: Loadable<CategorySummary[]>;
-  sum: Loadable<number>;
+  items: Item[];
+  categories: CategorySummary[];
+  sum: number;
 }
 
 export interface Balance {
@@ -76,7 +76,7 @@ export interface Balance {
 }
 
 export interface BudgetState {
-  income: SectionState;
-  expenses: SectionState;
+  income: Loadable<SectionState>;
+  expenses: Loadable<SectionState>;
   balance: Loadable<Balance>;
 }

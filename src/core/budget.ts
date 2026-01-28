@@ -1,23 +1,35 @@
-import type { BudgetState, SectionState } from "./types";
+import type { BudgetState, Loadable, SectionState, Balance } from "./types";
 import { calculateBalance } from "./balance";
 
 export function createBudgetState(
-  income: SectionState,
-  expenses: SectionState
+  income: Loadable<SectionState>,
+  expenses: Loadable<SectionState>,
 ): BudgetState {
-  const isLoading = income.items.isLoading || expenses.items.isLoading;
-  const balanceData = !isLoading
-    ? calculateBalance(income.items.data, expenses.items.data)
-    : null;
+  const balance: Loadable<Balance> =
+    income.status === "ready" && expenses.status === "ready"
+      ? (() => {
+          const balanceData = calculateBalance(
+            income.data.items,
+            expenses.data.items,
+          );
+
+          return {
+            status: "ready",
+            data: {
+              status: balanceData.status,
+              delta: balanceData.balance,
+            },
+          };
+        })()
+      : income.status === "error"
+        ? income
+        : expenses.status === "error"
+          ? expenses
+          : { status: "loading" };
 
   return {
     income,
     expenses,
-    balance: {
-      data: balanceData
-        ? { status: balanceData.status, delta: balanceData.balance }
-        : { status: "balanced", delta: 0 },
-      isLoading,
-    },
+    balance,
   };
 }

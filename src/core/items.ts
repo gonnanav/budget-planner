@@ -41,13 +41,6 @@ function validateAmount(amount?: number | null) {
   if (amount && amount < 0) throw new Error("Amount must be greater than 0");
 }
 
-export function enrichItem(item: Item): Item {
-  return {
-    ...item,
-    normalizedAmount: normalizeAmount(item),
-  };
-}
-
 export function sumItems(items: Item[]): number {
   return items.reduce((sum: number, item) => sum + item.normalizedAmount, 0);
 }
