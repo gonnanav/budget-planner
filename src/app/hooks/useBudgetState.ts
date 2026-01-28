@@ -1,9 +1,9 @@
 import { createBudgetState } from "core/budget";
 import type { BudgetState } from "core/types";
-import { useSectionData } from "./useSectionData";
+import { useSectionState } from "./useSectionState";
 
 export function useBudgetState(): BudgetState {
-  const income = useSectionData("income");
-  const expenses = useSectionData("expenses");
+  const income = useSectionState("income");
+  const expenses = useSectionState("expenses");
   return createBudgetState(income, expenses);
 }

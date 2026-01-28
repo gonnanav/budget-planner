@@ -4,7 +4,7 @@ import type { Section, SectionState } from "core/types";
 import { useItems } from "db/items";
 import { useCategories } from "db/categories";
 
-export function useSectionData(section: Section): SectionState {
+export function useSectionState(section: Section): SectionState {
   const itemRecords = useItems(section);
   const items = itemRecords ? itemRecords.map(enrichItem) : [];
   const itemsLoading = !itemRecords;
