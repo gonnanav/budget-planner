@@ -4,13 +4,11 @@ import { db } from "./db";
 import type { CategoryRecord, CategoriesTable, ItemsTable } from "./types";
 
 export function useCategories(section: Section): Loadable<Category[]> {
-  const data = useLiveQuery(() => getCategories(section), [section]);
-
-  if (data === undefined) {
-    return { status: "loading" };
-  }
-
-  return { status: "ready", data };
+  return useLiveQuery(
+    async () => ({ status: "ready", data: await getCategories(section) }),
+    [section],
+    { status: "loading" }
+  );
 }
 
 export async function getCategories(section: Section): Promise<Category[]> {
