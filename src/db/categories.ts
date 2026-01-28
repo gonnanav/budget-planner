@@ -1,10 +1,14 @@
-import type { Category, Section } from "core/types";
+import type { Category, Loadable, Section } from "core/types";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "./db";
 import type { CategoryRecord, CategoriesTable, ItemsTable } from "./types";
 
-export function useCategories(section: Section): Category[] | undefined {
-  return useLiveQuery(() => getCategories(section), [section]);
+export function useCategories(section: Section): Loadable<Category[]> {
+  return useLiveQuery(
+    async () => ({ status: "ready", data: await getCategories(section) }),
+    [section],
+    { status: "loading" }
+  );
 }
 
 export async function getCategories(section: Section): Promise<Category[]> {
