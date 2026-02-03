@@ -1,10 +1,10 @@
-import type { BudgetState, Loadable, SectionState, Balance } from "./types";
+import type { Budget, Loadable, SectionState, Balance } from "./types";
 import { calculateBalance } from "./balance";
 
-export function createBudgetState(
+export function createBudget(
   income: Loadable<SectionState>,
   expenses: Loadable<SectionState>,
-): BudgetState {
+): Budget {
   const balance: Loadable<Balance> =
     income.status === "ready" && expenses.status === "ready"
       ? (() => {

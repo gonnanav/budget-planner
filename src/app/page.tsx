@@ -6,10 +6,10 @@ import { createItem } from "core/items";
 import type { CategoryInput, ItemInput } from "core/types";
 import { addItem, updateItem, deleteItem } from "db/items";
 import { addCategory, updateCategory, deleteCategory } from "db/categories";
-import { useBudgetState } from "./hooks/useBudgetState";
+import { useBudget } from "./hooks/useBudget";
 
 export default function Page() {
-  const budgetState = useBudgetState();
+  const budget = useBudget();
 
   const handleAddItem = async (input: ItemInput) => {
     const item = createItem({ id: crypto.randomUUID(), ...input });
@@ -33,7 +33,7 @@ export default function Page() {
 
   return (
     <BudgetScreen
-      state={budgetState}
+      budget={budget}
       actions={{
         item: {
           onAdd: handleAddItem,

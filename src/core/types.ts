@@ -75,7 +75,7 @@ export interface Balance {
   delta: number;
 }
 
-export interface BudgetState {
+export interface Budget {
   income: Loadable<SectionState>;
   expenses: Loadable<SectionState>;
   balance: Loadable<Balance>;

@@ -12,7 +12,7 @@ import {
 } from "./components";
 import type {
   CategoryInput,
-  BudgetState,
+  Budget,
   ItemInput,
   Section,
 } from "core/types";
@@ -20,7 +20,7 @@ import { useEntityEdit, useActiveSection, useActiveEntity } from "./hooks";
 import styles from "./BudgetScreen.module.css";
 
 interface BudgetScreenProps {
-  state: BudgetState;
+  budget: Budget;
   actions: {
     item: {
       onAdd: (input: ItemInput) => void;
@@ -36,7 +36,7 @@ interface BudgetScreenProps {
 }
 
 export function BudgetScreen({
-  state: { income, expenses, balance },
+  budget: { income, expenses, balance },
   actions: { item, category },
 }: BudgetScreenProps) {
   const { activeSection, toggleIncome, toggleExpenses } = useActiveSection();
