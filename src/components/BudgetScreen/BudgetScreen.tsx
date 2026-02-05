@@ -10,35 +10,13 @@ import {
   IncomeSummary,
   ExpenseSummary,
 } from "./components";
-import type {
-  CategoryInput,
-  Budget,
-  ItemInput,
-  Section,
-} from "core/types";
-import { useEntityEdit, useActiveSection, useActiveEntity } from "./hooks";
+import { useEntityEdit, useActiveSection, useActiveEntity, useBudget } from "./hooks";
+import { addItem, updateItem, deleteItem } from "./services/items";
+import { addCategory, updateCategory, deleteCategory } from "./services/categories";
 import styles from "./BudgetScreen.module.css";
 
-interface BudgetScreenProps {
-  budget: Budget;
-  actions: {
-    item: {
-      onAdd: (input: ItemInput) => void;
-      onUpdate: (id: string, input: ItemInput) => void;
-      onDelete: (id: string, section: Section) => void;
-    };
-    category: {
-      onAdd: (input: CategoryInput) => void;
-      onUpdate: (id: string, input: CategoryInput) => void;
-      onDelete: (id: string, section: Section) => void;
-    };
-  };
-}
-
-export function BudgetScreen({
-  budget: { income, expenses, balance },
-  actions: { item, category },
-}: BudgetScreenProps) {
+export function BudgetScreen() {
+  const { income, expenses, balance } = useBudget();
   const { activeSection, toggleIncome, toggleExpenses } = useActiveSection();
   const { activeEntity, toggleEntity } = useActiveEntity();
   const edit = useEntityEdit();
@@ -80,11 +58,18 @@ export function BudgetScreen({
   const handleSave = () => {
     if (!edit.state) return;
 
-    const { onAdd, onUpdate } = edit.state.entity === "item" ? item : category;
     if (edit.state.mode === "create") {
-      onAdd(edit.state.draft);
+      if (edit.state.entity === "item") {
+        addItem(edit.state.draft);
+      } else {
+        addCategory(edit.state.draft);
+      }
     } else if (edit.state.mode === "update" && edit.state.draft.id) {
-      onUpdate(edit.state.draft.id, edit.state.draft);
+      if (edit.state.entity === "item") {
+        updateItem(edit.state.draft.id, edit.state.draft);
+      } else {
+        updateCategory(edit.state.draft.id, edit.state.draft);
+      }
     }
 
     stopEdit();
@@ -93,9 +78,11 @@ export function BudgetScreen({
   const handleDelete = () => {
     if (edit.state?.mode !== "update" || !edit.state.draft.id) return;
 
-    const onDelete =
-      edit.state.entity === "item" ? item.onDelete : category.onDelete;
-    onDelete(edit.state.draft.id, edit.state.draft.section);
+    if (edit.state.entity === "item") {
+      deleteItem(edit.state.draft.id, edit.state.draft.section);
+    } else {
+      deleteCategory(edit.state.draft.id, edit.state.draft.section);
+    }
 
     stopEdit();
   };
