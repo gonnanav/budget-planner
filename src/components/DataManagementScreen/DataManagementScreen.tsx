@@ -1,4 +1,4 @@
-"use client";
+
 
 import { BackupSection } from "./components/BackupSection";
 import { RestoreSection } from "./components/RestoreSection";

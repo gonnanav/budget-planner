@@ -1,25 +1,22 @@
-"use client";
-
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, useLocation } from "react-router-dom";
 import { ActionIcon } from "@mantine/core";
 import { Database } from "lucide-react";
 import styles from "./Header.module.css";
 
 export function Header() {
-  const pathname = usePathname();
+  const { pathname } = useLocation();
   const isDataPage = pathname === "/data";
 
   return (
     <header className={styles.root}>
       <div className={styles.row}>
-        <Link href="/" className={styles.title}>
+        <Link to="/" className={styles.title}>
           Budget Planner
         </Link>
         {!isDataPage && (
           <ActionIcon
             component={Link}
-            href="/data"
+            to="/data"
             aria-label="Data management"
             size="sm"
             variant="subtle"

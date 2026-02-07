@@ -1,4 +1,4 @@
-"use client";
+
 
 import { useState, useRef, useContext } from "react";
 import { Button } from "@mantine/core";

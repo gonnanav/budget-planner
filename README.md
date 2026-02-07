@@ -27,7 +27,7 @@ A personal monthly budget planning application that stores data locally in the b
 
 4. **Open your browser**
 
-   Navigate to [http://localhost:3000](http://localhost:3000)
+   Navigate to [http://localhost:5173](http://localhost:5173)
 
 ## CI/CD Pipeline
 
@@ -41,14 +41,14 @@ Every push to the `main` branch triggers:
 - ESLint code quality checks
 - TypeScript type checking
 - Unit test execution
-- Next.js build validation
+- Vite build validation
 
 ### Vercel Deployment
 
 1. **Connect your GitHub repository to Vercel**
    - Go to [vercel.com](https://vercel.com)
    - Import your GitHub repository
-   - Vercel will automatically detect Next.js
+   - Vercel will automatically detect Vite
 
 2. **Automatic deployments**
    - Every successful CI run triggers a production deployment

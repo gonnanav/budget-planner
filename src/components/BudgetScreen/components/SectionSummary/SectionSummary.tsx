@@ -1,4 +1,4 @@
-"use client";
+
 
 import { clsx } from "clsx";
 import { formatAmount } from "lib/format";
