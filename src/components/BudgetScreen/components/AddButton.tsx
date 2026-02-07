@@ -1,4 +1,4 @@
-import { Button } from "@heroui/button";
+import { ActionIcon } from "@mantine/core";
 import { Plus } from "lucide-react";
 import type { Entity } from "core/types";
 
@@ -11,14 +11,12 @@ export function AddButton({ entity, onClick }: AddButtonProps) {
   const label = entity === "item" ? "Add Item" : "Add Category";
 
   return (
-    <Button
+    <ActionIcon
       size="sm"
-      color="primary"
-      onPress={onClick}
       aria-label={label}
-      isIconOnly
+      onClick={onClick}
     >
       <Plus size={16} />
-    </Button>
+    </ActionIcon>
   );
 }

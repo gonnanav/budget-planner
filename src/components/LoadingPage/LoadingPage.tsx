@@ -1,4 +1,4 @@
-import { Skeleton } from "@heroui/skeleton";
+import { Skeleton } from "@mantine/core";
 import styles from "./LoadingPage.module.css";
 
 export function LoadingPage() {

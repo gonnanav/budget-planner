@@ -1,6 +1,6 @@
-import { Card, CardBody } from "@heroui/react";
+import { Paper } from "@mantine/core";
 import { Check, TrendingUp, TrendingDown } from "lucide-react";
-import { cn } from "lib/utils";
+import { clsx } from "clsx";
 import { formatAmount } from "lib/format";
 import styles from "./BalanceBanner.module.css";
 import { Balance } from "core/types";
@@ -30,8 +30,8 @@ export function BalanceBanner({
   const Icon = config.icon;
 
   return (
-    <Card shadow="none" className={cn(styles.root, styles[status])}>
-      <CardBody className={styles.body}>
+    <Paper shadow="none" className={clsx(styles.root, styles[status])}>
+      <div className={styles.body}>
         <div className={styles.row}>
           <div className={styles.left}>
             <Icon className={styles.icon} />
@@ -39,7 +39,7 @@ export function BalanceBanner({
           </div>
           <span className={styles.amount}>{formattedAmount}</span>
         </div>
-      </CardBody>
-    </Card>
+      </div>
+    </Paper>
   );
 }

@@ -1,10 +1,4 @@
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerBody,
-  DrawerFooter,
-} from "@heroui/drawer";
+import { Drawer } from "@mantine/core";
 import { ActionButtons } from "./ActionButtons";
 import type { ReactNode } from "react";
 import type { Section, Entity } from "core/types";
@@ -52,19 +46,14 @@ export const EditDrawer = ({
   const hasDelete = mode === "update";
 
   return (
-    <Drawer isOpen={isOpen} onOpenChange={onClose}>
-      <DrawerContent>
-        <DrawerHeader>{headingText}</DrawerHeader>
-        <DrawerBody>{children}</DrawerBody>
-        <DrawerFooter>
-          <ActionButtons
-            hasDelete={hasDelete}
-            onCancel={onCancel}
-            onSave={onSave}
-            onDelete={onDelete}
-          />
-        </DrawerFooter>
-      </DrawerContent>
+    <Drawer opened={isOpen} onClose={onClose} title={headingText} position="right">
+      {children}
+      <ActionButtons
+        hasDelete={hasDelete}
+        onCancel={onCancel}
+        onSave={onSave}
+        onDelete={onDelete}
+      />
     </Drawer>
   );
 };

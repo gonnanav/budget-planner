@@ -15,17 +15,17 @@
     "test:ui": "vitest --ui"
   },
   "dependencies": {
-    "@heroui/react": "^2.8.2",
+    "@mantine/core": "^8.3.14",
+    "@mantine/hooks": "^8.3.14",
+    "@mantine/notifications": "^8.3.14",
     "clsx": "^2.1.1",
     "dexie": "^4.2.0",
     "dexie-react-hooks": "^4.2.0",
-    "framer-motion": "^12.23.12",
     "lucide": "^0.541.0",
     "lucide-react": "^0.539.0",
     "next": "16.0.10",
     "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "tailwind-merge": "^3.3.1"
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -33,7 +33,6 @@
     "@storybook/addon-docs": "^10.1.7",
     "@storybook/addon-vitest": "^10.1.7",
     "@storybook/nextjs-vite": "^10.1.7",
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
@@ -44,8 +43,9 @@
     "eslint-config-next": "16.0.10",
     "eslint-plugin-storybook": "^10.1.7",
     "playwright": "^1.54.2",
+    "postcss-preset-mantine": "^1.18.0",
+    "postcss-simple-vars": "^7.0.1",
     "storybook": "^10.1.7",
-    "tailwindcss": "^4",
     "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"

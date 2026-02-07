@@ -1,7 +1,9 @@
 import React from "react";
 import type { Preview } from "@storybook/nextjs-vite";
 import { INITIAL_VIEWPORTS } from "storybook/viewport";
-import { AppHeroUIProvider } from "../src/components/providers/AppHeroUIProvider";
+import { MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
 import "../src/app/globals.css";
 
 const preview: Preview = {
@@ -31,11 +33,11 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <AppHeroUIProvider>
+      <MantineProvider>
         <div style={{ height: "100vh" }}>
           <Story />
         </div>
-      </AppHeroUIProvider>
+      </MantineProvider>
     ),
   ],
 };

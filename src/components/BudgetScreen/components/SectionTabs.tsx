@@ -1,4 +1,4 @@
-import { Tabs, Tab } from "@heroui/tabs";
+import { Tabs } from "@mantine/core";
 import { Entity } from "core/types";
 
 interface SectionTabsProps {
@@ -7,18 +7,19 @@ interface SectionTabsProps {
 }
 
 export function SectionTabs({
-  selectedTab: selectedKey,
-  onTabChange: onTabChange,
+  selectedTab,
+  onTabChange,
 }: SectionTabsProps) {
+  const handleChange = (value: string | null) => {
+    if (value) onTabChange(value as Entity);
+  };
+
   return (
-    <Tabs
-      size="sm"
-      radius="full"
-      selectedKey={selectedKey}
-      onSelectionChange={(key) => onTabChange(key as Entity)}
-    >
-      <Tab key="item" title="Items" />
-      <Tab key="category" title="Categories" />
+    <Tabs value={selectedTab} onChange={handleChange}>
+      <Tabs.List>
+        <Tabs.Tab value="item">Items</Tabs.Tab>
+        <Tabs.Tab value="category">Categories</Tabs.Tab>
+      </Tabs.List>
     </Tabs>
   );
 }

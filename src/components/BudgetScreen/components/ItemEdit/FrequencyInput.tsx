@@ -1,5 +1,4 @@
-import { Select, SelectItem } from "@heroui/select";
-import { Selection } from "@heroui/react";
+import { Select } from "@mantine/core";
 import { Frequency } from "core/types";
 
 interface FrequencyInputProps {
@@ -7,26 +6,26 @@ interface FrequencyInputProps {
   onFrequencyChange: (frequency: Frequency) => void;
 }
 
+const data = [
+  { value: "monthly", label: "Monthly" },
+  { value: "biMonthly", label: "Bi-Monthly" },
+];
+
 export const FrequencyInput = ({
   frequency,
   onFrequencyChange,
 }: FrequencyInputProps) => {
-  const selectedKeys = [frequency];
-
-  const handleSelectionChange = (keys: Selection) => {
-    const selectedKey = Array.from(keys)[0];
-    if (!selectedKey) return;
-    onFrequencyChange(selectedKey as Frequency);
+  const handleChange = (value: string | null) => {
+    if (!value) return;
+    onFrequencyChange(value as Frequency);
   };
 
   return (
     <Select
       label="Frequency"
-      selectedKeys={selectedKeys}
-      onSelectionChange={handleSelectionChange}
-    >
-      <SelectItem key="monthly">Monthly</SelectItem>
-      <SelectItem key="biMonthly">Bi-Monthly</SelectItem>
-    </Select>
+      data={data}
+      value={frequency}
+      onChange={handleChange}
+    />
   );
 };

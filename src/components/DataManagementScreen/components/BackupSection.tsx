@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useContext } from "react";
-import { Button } from "@heroui/react";
-import { addToast } from "@heroui/toast";
+import { Button } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { Download } from "lucide-react";
 import { DataServiceContext } from "contexts/DataServiceContext";
 import styles from "./BackupSection.module.css";
@@ -15,17 +15,17 @@ export function BackupSection() {
     setIsLoading(true);
     try {
       await backupData();
-      addToast({
+      notifications.show({
         title: "Backup downloaded",
-        description: "Your budget data has been saved to a file.",
-        color: "success",
+        message: "Your budget data has been saved to a file.",
+        color: "green",
       });
     } catch (error) {
-      addToast({
+      notifications.show({
         title: "Backup failed",
-        description:
+        message:
           error instanceof Error ? error.message : "Failed to create backup",
-        color: "danger",
+        color: "red",
       });
     } finally {
       setIsLoading(false);
@@ -41,10 +41,9 @@ export function BackupSection() {
       </p>
       <div>
         <Button
-          color="primary"
-          startContent={<Download size={16} />}
-          onPress={handleBackup}
-          isLoading={isLoading}
+          leftSection={<Download size={16} />}
+          onClick={handleBackup}
+          loading={isLoading}
         >
           Download backup
         </Button>

@@ -1,4 +1,4 @@
-import { Input } from "@heroui/input";
+import { TextInput } from "@mantine/core";
 import { CHARACTER_LIMITS } from "lib/limits";
 
 interface NameInputProps {
@@ -8,12 +8,12 @@ interface NameInputProps {
 
 export function NameInput({ name, onNameChange }: NameInputProps) {
   return (
-    <Input
+    <TextInput
       label="Name"
       value={name}
-      onValueChange={onNameChange}
+      onChange={(e) => onNameChange(e.currentTarget.value)}
       maxLength={CHARACTER_LIMITS.itemName}
-      isRequired
+      required
     />
   );
 }

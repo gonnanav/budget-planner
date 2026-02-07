@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useContext } from "react";
-import { Button } from "@heroui/react";
-import { addToast } from "@heroui/toast";
+import { Button } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { Upload } from "lucide-react";
 import { DataServiceContext } from "contexts/DataServiceContext";
 import type { BackupData } from "core/types";
@@ -83,18 +83,18 @@ export function RestoreSection() {
     setIsLoading(true);
     try {
       await restoreData(backup);
-      addToast({
+      notifications.show({
         title: "Data restored",
-        description: "Your budget data has been restored from the backup.",
-        color: "success",
+        message: "Your budget data has been restored from the backup.",
+        color: "green",
       });
       setIsConfirmModalOpen(false);
       resetState();
     } catch (err) {
-      addToast({
+      notifications.show({
         title: "Restore failed",
-        description: "Failed to restore backup",
-        color: "danger",
+        message: "Failed to restore backup",
+        color: "red",
       });
       console.error(err);
     } finally {
@@ -156,9 +156,9 @@ export function RestoreSection() {
       {backup && (
         <div>
           <Button
-            color="danger"
-            startContent={<Upload size={16} />}
-            onPress={() => setIsConfirmModalOpen(true)}
+            color="red"
+            leftSection={<Upload size={16} />}
+            onClick={() => setIsConfirmModalOpen(true)}
           >
             Restore from backup
           </Button>

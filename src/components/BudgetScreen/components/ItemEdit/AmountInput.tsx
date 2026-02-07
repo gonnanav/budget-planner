@@ -1,4 +1,4 @@
-import { NumberInput } from "@heroui/number-input";
+import { NumberInput } from "@mantine/core";
 
 interface AmountInputProps {
   amount: number | null;
@@ -8,25 +8,28 @@ interface AmountInputProps {
 export function AmountInput({ amount, onAmountChange }: AmountInputProps) {
   const value = toValue(amount);
 
-  const handleChange = (value: number) => {
+  const handleChange = (value: string | number) => {
     onAmountChange(fromValue(value));
   };
 
   return (
     <NumberInput
       label="Amount"
-      formatOptions={{ style: "currency", currency: "ILS" }}
-      minValue={0}
+      prefix="₪ "
+      thousandSeparator=","
+      min={0}
       value={value}
-      onValueChange={handleChange}
+      onChange={handleChange}
     />
   );
 }
 
-function toValue(amount: number | null): number {
-  return amount ?? NaN;
+function toValue(amount: number | null): number | string {
+  return amount ?? "";
 }
 
-function fromValue(value: number): number | null {
-  return Number.isNaN(value) ? null : value;
+function fromValue(value: string | number): number | null {
+  if (typeof value === "string") return null;
+
+  return value;
 }

@@ -1,5 +1,4 @@
-import { Select, SelectItem } from "@heroui/select";
-import type { Selection } from "@heroui/react";
+import { Select } from "@mantine/core";
 
 interface CategoryInputProps {
   selectedCategoryId?: string;
@@ -12,22 +11,18 @@ export const CategoryInput = ({
   categoryOptions,
   onCategoryChange,
 }: CategoryInputProps) => {
-  const selectedKeys = selectedCategoryId ? [selectedCategoryId] : [];
+  const data = categoryOptions.map(({ id, name }) => ({ value: id, label: name }));
 
-  const handleSelectionChange = (keys: Selection) => {
-    const selectedKey = Array.from(keys)[0];
-    onCategoryChange(selectedKey?.toString());
+  const handleChange = (value: string | null) => {
+    onCategoryChange(value ?? undefined);
   };
 
   return (
     <Select
       label="Category"
-      selectedKeys={selectedKeys}
-      onSelectionChange={handleSelectionChange}
-    >
-      {categoryOptions.map(({ id, name }) => (
-        <SelectItem key={id}>{name}</SelectItem>
-      ))}
-    </Select>
+      data={data}
+      value={selectedCategoryId ?? null}
+      onChange={handleChange}
+    />
   );
 };

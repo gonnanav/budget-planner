@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "lib/utils";
+import { clsx } from "clsx";
 import { formatAmount } from "lib/format";
 import styles from "./SectionSummary.module.css";
 
@@ -25,7 +25,7 @@ export function SectionSummary({
     <button
       type="button"
       onClick={onClick}
-      className={cn(styles.root, {
+      className={clsx(styles.root, {
         [styles.income]: variant === "income",
         [styles.expense]: variant === "expense",
         [styles.active]: isActive,

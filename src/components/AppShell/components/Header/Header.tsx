@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "@heroui/react";
+import { ActionIcon } from "@mantine/core";
 import { Database } from "lucide-react";
 import styles from "./Header.module.css";
 
@@ -17,16 +17,15 @@ export function Header() {
           Budget Planner
         </Link>
         {!isDataPage && (
-          <Button
-            as={Link}
+          <ActionIcon
+            component={Link}
             href="/data"
             aria-label="Data management"
             size="sm"
-            isIconOnly
-            variant="light"
+            variant="subtle"
           >
             <Database size={16} />
-          </Button>
+          </ActionIcon>
         )}
       </div>
     </header>

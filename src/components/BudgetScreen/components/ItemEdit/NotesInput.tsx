@@ -1,4 +1,4 @@
-import { Textarea } from "@heroui/input";
+import { Textarea } from "@mantine/core";
 import { CHARACTER_LIMITS } from "lib/limits";
 
 interface NotesInputProps {
@@ -11,7 +11,7 @@ export function NotesInput({ notes = "", onNotesChange }: NotesInputProps) {
     <Textarea
       label="Notes"
       value={notes}
-      onValueChange={onNotesChange}
+      onChange={(e) => onNotesChange(e.currentTarget.value)}
       maxLength={CHARACTER_LIMITS.itemNotes}
     />
   );
