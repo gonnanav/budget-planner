@@ -10,12 +10,15 @@ import {
   IncomeSummary,
   ExpenseSummary,
 } from "./components";
+import { useContext } from "react";
 import { useEntityEdit, useActiveSection, useActiveEntity, useBudget } from "./hooks";
-import { addItem, updateItem, deleteItem } from "./services/items";
-import { addCategory, updateCategory, deleteCategory } from "./services/categories";
+import { ItemServiceContext } from "contexts/ItemServiceContext";
+import { CategoryServiceContext } from "contexts/CategoryServiceContext";
 import styles from "./BudgetScreen.module.css";
 
 export function BudgetScreen() {
+  const itemService = useContext(ItemServiceContext);
+  const categoryService = useContext(CategoryServiceContext);
   const { income, expenses, balance } = useBudget();
   const { activeSection, toggleIncome, toggleExpenses } = useActiveSection();
   const { activeEntity, toggleEntity } = useActiveEntity();
@@ -60,15 +63,15 @@ export function BudgetScreen() {
 
     if (edit.state.mode === "create") {
       if (edit.state.entity === "item") {
-        addItem(edit.state.draft);
+        itemService.addItem(edit.state.draft);
       } else {
-        addCategory(edit.state.draft);
+        categoryService.addCategory(edit.state.draft);
       }
     } else if (edit.state.mode === "update" && edit.state.draft.id) {
       if (edit.state.entity === "item") {
-        updateItem(edit.state.draft.id, edit.state.draft);
+        itemService.updateItem(edit.state.draft.id, edit.state.draft);
       } else {
-        updateCategory(edit.state.draft.id, edit.state.draft);
+        categoryService.updateCategory(edit.state.draft.id, edit.state.draft);
       }
     }
 
@@ -79,9 +82,9 @@ export function BudgetScreen() {
     if (edit.state?.mode !== "update" || !edit.state.draft.id) return;
 
     if (edit.state.entity === "item") {
-      deleteItem(edit.state.draft.id, edit.state.draft.section);
+      itemService.deleteItem(edit.state.draft.id, edit.state.draft.section);
     } else {
-      deleteCategory(edit.state.draft.id, edit.state.draft.section);
+      categoryService.deleteCategory(edit.state.draft.id, edit.state.draft.section);
     }
 
     stopEdit();

@@ -1,8 +1,8 @@
 import { createCategorySummary } from "core/categories";
 import { sumItems } from "core/items";
 import type { Section, Loadable, SectionState } from "core/types";
-import { useItems } from "db/items";
-import { useCategories } from "db/categories";
+import { useItems } from "./useItems";
+import { useCategories } from "./useCategories";
 
 export function useSectionState(section: Section): Loadable<SectionState> {
   const itemsLoadable = useItems(section);

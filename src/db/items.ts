@@ -1,16 +1,7 @@
-import type { Item, Loadable, Section } from "core/types";
+import type { Item, Section } from "core/types";
 import { createItem } from "core/items";
-import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "./db";
 import type { ItemRecord, ItemsTable } from "./types";
-
-export function useItems(section: Section): Loadable<Item[]> {
-  return useLiveQuery(
-    async () => ({ status: "ready", data: await getItems(section) }),
-    [section],
-    { status: "loading" }
-  );
-}
 
 export async function getItems(section: Section): Promise<Item[]> {
   const table = getTable(section);
