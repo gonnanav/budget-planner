@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Button } from "@heroui/react";
 import { addToast } from "@heroui/toast";
 import { Download } from "lucide-react";
-import { backupData } from "lib/backup-restore";
+import { DataServiceContext } from "contexts/DataServiceContext";
 import styles from "./BackupSection.module.css";
 
 export function BackupSection() {
+  const { backupData } = useContext(DataServiceContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleBackup = async () => {

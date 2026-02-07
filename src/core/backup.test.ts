@@ -1,8 +1,9 @@
 import { test, expect } from "vitest";
-import { createBackupData } from "./backup-restore";
+import { createBackupData } from "./backup";
 import { salary, allowance } from "fixtures/incomes";
 import { electricity, water, gas } from "fixtures/expenses";
-import { transportation, bills, personal } from "fixtures/expense-categories";
+import { transportation } from "fixtures/expense-categories";
+import { bills, personal } from "fixtures/expense-categories";
 
 const incomeItems = [salary, allowance];
 const expenseItems = [electricity, water, gas];

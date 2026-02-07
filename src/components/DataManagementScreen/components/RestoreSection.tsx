@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { Button } from "@heroui/react";
 import { addToast } from "@heroui/toast";
 import { Upload } from "lucide-react";
-import { restoreBackupToDb } from "lib/backup-restore";
-import type { BackupData } from "lib/backup-restore";
+import { DataServiceContext } from "contexts/DataServiceContext";
+import type { BackupData } from "core/types";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
 import styles from "./RestoreSection.module.css";
 
@@ -19,6 +19,7 @@ interface BackupSummary {
 }
 
 export function RestoreSection() {
+  const { restoreData } = useContext(DataServiceContext);
   const [backup, setBackup] = useState<BackupData | null>(null);
   const [summary, setSummary] = useState<BackupSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -81,7 +82,7 @@ export function RestoreSection() {
 
     setIsLoading(true);
     try {
-      await restoreBackupToDb(backup);
+      await restoreData(backup);
       addToast({
         title: "Data restored",
         description: "Your budget data has been restored from the backup.",

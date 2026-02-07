@@ -80,3 +80,16 @@ export interface Budget {
   expenses: Loadable<SectionState>;
   balance: Loadable<Balance>;
 }
+
+export interface BackupData {
+  metadata: {
+    version: string;
+    exportedAt: string;
+  };
+  data: {
+    incomeItems: Omit<Item, "normalizedAmount" | "section">[];
+    incomeCategories: Omit<Category, "section">[];
+    expenseItems: Omit<Item, "normalizedAmount" | "section">[];
+    expenseCategories: Omit<Category, "section">[];
+  };
+}
