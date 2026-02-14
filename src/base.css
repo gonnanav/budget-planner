@@ -1,0 +1,56 @@
+/* Box-sizing reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Body defaults */
+body {
+  margin: 0;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Form element font inheritance */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Text overflow protection */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+/* List reset */
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Stacking context for root */
+#root {
+  isolation: isolate;
+}

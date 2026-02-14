@@ -27,7 +27,7 @@ A personal monthly budget planning application that stores data locally in the b
 
 4. **Open your browser**
 
-   Navigate to [http://localhost:3000](http://localhost:3000)
+   Navigate to [http://localhost:5173](http://localhost:5173)
 
 ## CI/CD Pipeline
 
@@ -41,27 +41,4 @@ Every push to the `main` branch triggers:
 - ESLint code quality checks
 - TypeScript type checking
 - Unit test execution
-- Next.js build validation
-
-### Vercel Deployment
-
-1. **Connect your GitHub repository to Vercel**
-   - Go to [vercel.com](https://vercel.com)
-   - Import your GitHub repository
-   - Vercel will automatically detect Next.js
-
-2. **Automatic deployments**
-   - Every successful CI run triggers a production deployment
-   - Failed CI runs prevent deployment
-
-## Storybook
-
-This project includes Storybook for component development and documentation.
-
-### Running Storybook Development Server
-
-```bash
-npm run storybook
-```
-
-This will start the Storybook development server on [http://localhost:6006](http://localhost:6006)
+- Vite build validation

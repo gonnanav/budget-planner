@@ -1,5 +1,3 @@
-"use client";
-
 import { MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { ItemServiceContext } from "contexts/ItemServiceContext";

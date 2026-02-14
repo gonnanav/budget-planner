@@ -1,6 +1,6 @@
-import { Table } from "dexie";
+import type { Table } from "dexie";
 import { db } from "./db";
-import { ItemRecord, CategoryRecord } from "./types";
+import type { ItemRecord, CategoryRecord } from "./types";
 
 interface DbData {
   incomeItems: ItemRecord[];

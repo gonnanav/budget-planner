@@ -1,5 +1,5 @@
 import type { Category, Item } from "core/types";
-import { EntityTable } from "dexie";
+import type { EntityTable } from "dexie";
 
 export type ItemRecord = Omit<Item, "normalizedAmount" | "section">;
 export type CategoryRecord = Omit<Category, "section">;

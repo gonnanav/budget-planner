@@ -1,5 +1,5 @@
 import Dexie from "dexie";
-import { ItemsTable, CategoriesTable } from "./types";
+import type { ItemsTable, CategoriesTable } from "./types";
 
 const db = new Dexie("BudgetDatabase") as Dexie & {
   incomeItems: ItemsTable;
