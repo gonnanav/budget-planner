@@ -8,13 +8,13 @@ import { ServicesContext } from "contexts/ServicesContext";
 import styles from "./BackupSection.module.css";
 
 export function BackupSection() {
-  const { dataService } = useContext(ServicesContext);
+  const { backupService } = useContext(ServicesContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleBackup = async () => {
     setIsLoading(true);
     try {
-      await dataService.backupData();
+      await backupService.backupData();
       notifications.show({
         title: "Backup downloaded",
         message: "Your budget data has been saved to a file.",

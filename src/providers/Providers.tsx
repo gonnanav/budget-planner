@@ -5,7 +5,7 @@ import { getItems } from "db/items";
 import { getCategories } from "db/categories";
 import { addItem, updateItem, deleteItem } from "services/items";
 import { addCategory, updateCategory, deleteCategory } from "services/categories";
-import { backupData, restoreData } from "services/data";
+import { backupData, restoreData } from "services/backup";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ export function Providers({ children }: Readonly<ProvidersProps>) {
         value={{
           itemService: { getItems, addItem, updateItem, deleteItem },
           categoryService: { getCategories, addCategory, updateCategory, deleteCategory },
-          dataService: { backupData, restoreData },
+          backupService: { backupData, restoreData },
         }}
       >
         {children}

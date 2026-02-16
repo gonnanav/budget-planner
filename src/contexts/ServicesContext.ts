@@ -22,7 +22,7 @@ type CategoryService = {
   deleteCategory: (id: string, section: Section) => Promise<void>;
 };
 
-type DataService = {
+type BackupService = {
   backupData: () => Promise<void>;
   restoreData: (backup: BackupData) => Promise<void>;
 };
@@ -30,7 +30,7 @@ type DataService = {
 type Services = {
   itemService: ItemService;
   categoryService: CategoryService;
-  dataService: DataService;
+  backupService: BackupService;
 };
 
 function notProvided(): never {
@@ -50,7 +50,7 @@ export const ServicesContext = createContext<Services>({
     updateCategory: notProvided,
     deleteCategory: notProvided,
   },
-  dataService: {
+  backupService: {
     backupData: notProvided,
     restoreData: notProvided,
   },

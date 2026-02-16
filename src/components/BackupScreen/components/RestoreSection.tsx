@@ -12,14 +12,14 @@ import styles from "./RestoreSection.module.css";
 interface BackupSummary {
   version: string;
   exportedAt: string;
-  incomesCount: number;
-  expensesCount: number;
+  incomeItemsCount: number;
+  expenseItemsCount: number;
   incomeCategoriesCount: number;
   expenseCategoriesCount: number;
 }
 
 export function RestoreSection() {
-  const { dataService } = useContext(ServicesContext);
+  const { backupService } = useContext(ServicesContext);
   const [backup, setBackup] = useState<BackupData | null>(null);
   const [summary, setSummary] = useState<BackupSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -58,8 +58,8 @@ export function RestoreSection() {
         setSummary({
           version: data.metadata.version,
           exportedAt: data.metadata.exportedAt,
-          incomesCount: data.data.incomeItems.length,
-          expensesCount: data.data.expenseItems.length,
+          incomeItemsCount: data.data.incomeItems.length,
+          expenseItemsCount: data.data.expenseItems.length,
           incomeCategoriesCount: data.data.incomeCategories.length,
           expenseCategoriesCount: data.data.expenseCategories.length,
         });
@@ -82,7 +82,7 @@ export function RestoreSection() {
 
     setIsLoading(true);
     try {
-      await dataService.restoreData(backup);
+      await backupService.restoreData(backup);
       notifications.show({
         title: "Data restored",
         message: "Your budget data has been restored from the backup.",
@@ -145,8 +145,8 @@ export function RestoreSection() {
           <div className={styles.summaryGrid}>
             <p>Version: {summary.version}</p>
             <p>Date: {new Date(summary.exportedAt).toLocaleDateString()}</p>
-            <p>Incomes: {summary.incomesCount}</p>
-            <p>Expenses: {summary.expensesCount}</p>
+            <p>Incomes: {summary.incomeItemsCount}</p>
+            <p>Expenses: {summary.expenseItemsCount}</p>
             <p>Income categories: {summary.incomeCategoriesCount}</p>
             <p>Expense categories: {summary.expenseCategoriesCount}</p>
           </div>

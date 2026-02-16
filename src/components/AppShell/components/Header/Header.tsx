@@ -5,7 +5,7 @@ import styles from "./Header.module.css";
 
 export function Header() {
   const { pathname } = useLocation();
-  const isDataPage = pathname === "/data";
+  const isBackupPage = pathname === "/backup";
 
   return (
     <header className={styles.root}>
@@ -13,11 +13,11 @@ export function Header() {
         <Link to="/" className={styles.title}>
           Budget Planner
         </Link>
-        {!isDataPage && (
+        {!isBackupPage && (
           <ActionIcon
             component={Link}
-            to="/data"
-            aria-label="Data management"
+            to="/backup"
+            aria-label="Backup"
             size="sm"
             variant="subtle"
           >

@@ -1,1 +1,0 @@
-export { DataManagementScreen } from "./DataManagementScreen";
