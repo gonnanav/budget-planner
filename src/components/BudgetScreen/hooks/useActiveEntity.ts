@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Entity } from "core/types";
+import type { Entity } from "domain/types";
 
 export type UseActiveEntityResult = {
   activeEntity: Entity;

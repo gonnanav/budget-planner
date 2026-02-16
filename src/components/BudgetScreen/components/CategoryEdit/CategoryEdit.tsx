@@ -1,4 +1,4 @@
-import type { CategoryDraft } from "core/types";
+import type { CategoryDraft } from "domain/types";
 import { CategoryNameInput } from "./CategoryNameInput";
 
 export interface CategoryEditProps {

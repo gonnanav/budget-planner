@@ -1,5 +1,5 @@
-import { createItem } from "core/items";
-import type { Item, CreateItemInput, Section } from "core/types";
+import { createItem } from "domain/items";
+import type { Item, CreateItemInput, Section } from "domain/types";
 import { electricity } from "./expenses";
 
 type CreateTestItemInput = Omit<CreateItemInput, "id" | "name" | "section"> & {

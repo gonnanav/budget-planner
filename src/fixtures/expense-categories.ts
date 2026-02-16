@@ -1,4 +1,4 @@
-import { createCategory } from "core/categories";
+import { createCategory } from "domain/categories";
 
 export const bills = createCategory({
   id: "bills",

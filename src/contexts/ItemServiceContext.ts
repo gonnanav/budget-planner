@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { Item, ItemInput, Section } from "core/types";
+import type { Item, ItemInput, Section } from "domain/types";
 
 interface ItemService {
   getItems: (section: Section) => Promise<Item[]>;

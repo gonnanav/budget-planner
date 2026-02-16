@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
-import type { Category, Loadable, Section } from "core/types";
+import type { Category, Loadable, Section } from "domain/types";
 import { CategoryServiceContext } from "contexts/CategoryServiceContext";
 
 export function useCategories(section: Section): Loadable<Category[]> {

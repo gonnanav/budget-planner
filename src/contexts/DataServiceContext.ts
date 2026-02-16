@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { BackupData } from "core/types";
+import type { BackupData } from "domain/types";
 
 interface DataService {
   backupData: () => Promise<void>;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Section } from "core/types";
+import type { Section } from "domain/types";
 
 export type ActiveSection = Section | null;
 

@@ -1,6 +1,6 @@
 import { CategoryRow } from "../CategoryRow/CategoryRow";
 import { EmptyList } from "../EmptyList/EmptyList";
-import type { Category, CategorySummary } from "core/types";
+import type { Category, CategorySummary } from "domain/types";
 
 interface CategoryListProps {
   categories: CategorySummary[];

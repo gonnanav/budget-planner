@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { Category, CategoryInput, Section } from "core/types";
+import type { Category, CategoryInput, Section } from "domain/types";
 
 interface CategoryService {
   getCategories: (section: Section) => Promise<Category[]>;

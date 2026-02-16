@@ -5,7 +5,7 @@ import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Upload } from "lucide-react";
 import { DataServiceContext } from "contexts/DataServiceContext";
-import type { BackupData } from "core/types";
+import type { BackupData } from "domain/types";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
 import styles from "./RestoreSection.module.css";
 

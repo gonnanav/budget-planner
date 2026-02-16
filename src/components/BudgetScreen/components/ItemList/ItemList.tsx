@@ -1,6 +1,6 @@
 import { ItemRow } from "../ItemRow/ItemRow";
 import { EmptyList } from "../EmptyList/EmptyList";
-import type { Item } from "core/types";
+import type { Item } from "domain/types";
 
 interface ItemListProps {
   items: Item[];

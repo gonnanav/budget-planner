@@ -1,5 +1,5 @@
-import { createItem } from "core/items";
-import type { ItemInput, Section } from "core/types";
+import { createItem } from "domain/items";
+import type { ItemInput, Section } from "domain/types";
 import * as db from "db/items";
 
 export async function addItem(input: ItemInput): Promise<string> {

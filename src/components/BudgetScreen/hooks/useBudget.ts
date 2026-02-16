@@ -1,5 +1,5 @@
-import { createBudget } from "core/budget";
-import type { Budget } from "core/types";
+import { createBudget } from "domain/budget";
+import type { Budget } from "domain/types";
 import { useSectionState } from "./useSectionState";
 
 export function useBudget(): Budget {

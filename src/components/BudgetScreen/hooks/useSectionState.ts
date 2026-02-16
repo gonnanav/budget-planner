@@ -1,6 +1,6 @@
-import { createCategorySummary } from "core/categories";
-import { sumItems } from "core/items";
-import type { Section, Loadable, SectionState } from "core/types";
+import { createCategorySummary } from "domain/categories";
+import { sumItems } from "domain/items";
+import type { Section, Loadable, SectionState } from "domain/types";
 import { useItems } from "./useItems";
 import { useCategories } from "./useCategories";
 

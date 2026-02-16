@@ -1,5 +1,5 @@
-import type { Item, Section } from "core/types";
-import { createItem } from "core/items";
+import type { Item, Section } from "domain/types";
+import { createItem } from "domain/items";
 import { db } from "./db";
 import type { ItemRecord, ItemsTable } from "./types";
 

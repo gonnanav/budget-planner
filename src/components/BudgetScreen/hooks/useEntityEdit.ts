@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { ItemDraft, CategoryDraft } from "core/types";
-import type { Section } from "core/types";
+import type { ItemDraft, CategoryDraft } from "domain/types";
+import type { Section } from "domain/types";
 
 const DEFAULT_ITEM_DRAFT: Partial<ItemDraft> = {
   name: "",

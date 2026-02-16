@@ -1,7 +1,7 @@
 import { Drawer } from "@mantine/core";
 import { ActionButtons } from "./ActionButtons";
 import type { ReactNode } from "react";
-import type { Section, Entity } from "core/types";
+import type { Section, Entity } from "domain/types";
 
 type Mode = "create" | "update";
 

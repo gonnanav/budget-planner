@@ -1,4 +1,4 @@
-import type { Category, Item } from "core/types";
+import type { Category, Item } from "domain/types";
 import type { EntityTable } from "dexie";
 
 export type ItemRecord = Omit<Item, "normalizedAmount" | "section">;

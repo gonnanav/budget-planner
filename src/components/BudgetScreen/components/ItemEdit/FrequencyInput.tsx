@@ -1,5 +1,5 @@
 import { Select } from "@mantine/core";
-import type { Frequency } from "core/types";
+import type { Frequency } from "domain/types";
 
 interface FrequencyInputProps {
   frequency: Frequency;

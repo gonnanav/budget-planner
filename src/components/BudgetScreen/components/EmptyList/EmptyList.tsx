@@ -1,4 +1,4 @@
-import type { Entity } from "core/types";
+import type { Entity } from "domain/types";
 import styles from "./EmptyList.module.css";
 
 interface EmptyListProps {

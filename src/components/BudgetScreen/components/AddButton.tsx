@@ -1,6 +1,6 @@
 import { ActionIcon } from "@mantine/core";
 import { Plus } from "lucide-react";
-import type { Entity } from "core/types";
+import type { Entity } from "domain/types";
 
 interface AddButtonProps {
   entity: Entity;

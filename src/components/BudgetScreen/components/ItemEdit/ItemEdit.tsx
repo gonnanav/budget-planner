@@ -1,5 +1,5 @@
-import type { Frequency } from "core/types";
-import type { ItemDraft } from "core/types";
+import type { Frequency } from "domain/types";
+import type { ItemDraft } from "domain/types";
 import { AmountInput } from "./AmountInput";
 import { NameInput } from "./NameInput";
 import { FrequencyInput } from "./FrequencyInput";

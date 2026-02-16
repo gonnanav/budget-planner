@@ -1,5 +1,5 @@
-import { createCategory } from "core/categories";
-import type { CategoryInput, Section } from "core/types";
+import { createCategory } from "domain/categories";
+import type { CategoryInput, Section } from "domain/types";
 import * as db from "db/categories";
 
 export async function addCategory(input: CategoryInput): Promise<string> {

@@ -3,7 +3,7 @@ import { Check, TrendingUp, TrendingDown } from "lucide-react";
 import { clsx } from "clsx";
 import { formatAmount } from "lib/format";
 import styles from "./BalanceBanner.module.css";
-import type { Balance } from "core/types";
+import type { Balance } from "domain/types";
 
 interface BalanceBannerProps {
   balance: Balance;

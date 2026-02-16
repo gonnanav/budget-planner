@@ -1,4 +1,4 @@
-import { createItem } from "core/items";
+import { createItem } from "domain/items";
 
 export const salary = createItem({
   id: "income-salary",

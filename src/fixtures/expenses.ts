@@ -1,4 +1,4 @@
-import { createItem } from "core/items";
+import { createItem } from "domain/items";
 import { bills, personal } from "./expense-categories";
 
 export const electricity = createItem({

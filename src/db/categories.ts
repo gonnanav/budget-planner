@@ -1,4 +1,4 @@
-import type { Category, Section } from "core/types";
+import type { Category, Section } from "domain/types";
 import { db } from "./db";
 import type { CategoryRecord, CategoriesTable, ItemsTable } from "./types";
 
