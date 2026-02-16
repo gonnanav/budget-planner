@@ -4,17 +4,17 @@ import { useState, useContext } from "react";
 import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Download } from "lucide-react";
-import { DataServiceContext } from "contexts/DataServiceContext";
+import { ServicesContext } from "contexts/ServicesContext";
 import styles from "./BackupSection.module.css";
 
 export function BackupSection() {
-  const { backupData } = useContext(DataServiceContext);
+  const { dataService } = useContext(ServicesContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleBackup = async () => {
     setIsLoading(true);
     try {
-      await backupData();
+      await dataService.backupData();
       notifications.show({
         title: "Backup downloaded",
         message: "Your budget data has been saved to a file.",

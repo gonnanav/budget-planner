@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import type { Category, Loadable, Section } from "domain/types";
-import { CategoryServiceContext } from "contexts/CategoryServiceContext";
+import { ServicesContext } from "contexts/ServicesContext";
 
 export function useCategories(section: Section): Loadable<Category[]> {
-  const { getCategories } = useContext(CategoryServiceContext);
+  const { categoryService } = useContext(ServicesContext);
 
   return useLiveQuery(
-    async () => ({ status: "ready", data: await getCategories(section) }),
+    async () => ({ status: "ready", data: await categoryService.getCategories(section) }),
     [section],
     { status: "loading" }
   );

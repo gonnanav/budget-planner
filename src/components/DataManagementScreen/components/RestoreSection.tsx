@@ -4,7 +4,7 @@ import { useState, useRef, useContext } from "react";
 import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Upload } from "lucide-react";
-import { DataServiceContext } from "contexts/DataServiceContext";
+import { ServicesContext } from "contexts/ServicesContext";
 import type { BackupData } from "domain/types";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
 import styles from "./RestoreSection.module.css";
@@ -19,7 +19,7 @@ interface BackupSummary {
 }
 
 export function RestoreSection() {
-  const { restoreData } = useContext(DataServiceContext);
+  const { dataService } = useContext(ServicesContext);
   const [backup, setBackup] = useState<BackupData | null>(null);
   const [summary, setSummary] = useState<BackupSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -82,7 +82,7 @@ export function RestoreSection() {
 
     setIsLoading(true);
     try {
-      await restoreData(backup);
+      await dataService.restoreData(backup);
       notifications.show({
         title: "Data restored",
         message: "Your budget data has been restored from the backup.",
