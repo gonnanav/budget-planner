@@ -1,5 +1,5 @@
-import type { Budget, Loadable, SectionState, Balance } from "./types";
-import { calculateBalance } from "./balance";
+import type { Budget, Loadable, SectionState, Balance } from "../types";
+import { calculateBalance } from "../balance";
 
 export function createBudget(
   income: Loadable<SectionState>,

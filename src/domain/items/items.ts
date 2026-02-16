@@ -1,5 +1,5 @@
-import type { Item, CreateItemInput } from "./types";
-import { CHARACTER_LIMITS } from "../lib/limits";
+import type { Item, CreateItemInput } from "../types";
+import { CHARACTER_LIMITS } from "../../lib/limits";
 
 export function createItem(input: CreateItemInput): Item {
   validateName(input.name);

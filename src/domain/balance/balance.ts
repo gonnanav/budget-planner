@@ -1,5 +1,5 @@
-import type { Item, BalanceStatus } from "./types";
-import { sumItems } from "./items";
+import type { Item, BalanceStatus } from "../types";
+import { sumItems } from "../items";
 
 export function calculateBalance(incomes: Item[], expenses: Item[]) {
   const incomeSum = sumItems(incomes);

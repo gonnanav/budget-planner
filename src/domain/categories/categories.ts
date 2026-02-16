@@ -3,9 +3,9 @@ import type {
   Category,
   CategorySummary,
   CreateCategoryInput,
-} from "./types";
-import { sumItems } from "./items";
-import { CHARACTER_LIMITS } from "../lib/limits";
+} from "../types";
+import { sumItems } from "../items";
+import { CHARACTER_LIMITS } from "../../lib/limits";
 
 export function createCategory(input: CreateCategoryInput): Category {
   validateId(input.id);
