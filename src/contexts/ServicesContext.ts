@@ -8,14 +8,11 @@ import type {
   Section,
 } from "domain/types";
 
-type ItemService = {
+type BudgetService = {
   getItems: (section: Section) => Promise<Item[]>;
   addItem: (input: ItemInput) => Promise<string>;
   updateItem: (id: string, input: ItemInput) => Promise<boolean>;
   deleteItem: (id: string, section: Section) => Promise<void>;
-};
-
-type CategoryService = {
   getCategories: (section: Section) => Promise<Category[]>;
   addCategory: (input: CategoryInput) => Promise<string>;
   updateCategory: (id: string, input: CategoryInput) => Promise<boolean>;
@@ -28,8 +25,7 @@ type BackupService = {
 };
 
 type Services = {
-  itemService: ItemService;
-  categoryService: CategoryService;
+  budgetService: BudgetService;
   backupService: BackupService;
 };
 
@@ -38,13 +34,11 @@ function notProvided(): never {
 }
 
 export const ServicesContext = createContext<Services>({
-  itemService: {
+  budgetService: {
     getItems: notProvided,
     addItem: notProvided,
     updateItem: notProvided,
     deleteItem: notProvided,
-  },
-  categoryService: {
     getCategories: notProvided,
     addCategory: notProvided,
     updateCategory: notProvided,

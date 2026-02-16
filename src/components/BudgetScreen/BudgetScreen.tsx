@@ -16,7 +16,7 @@ import { ServicesContext } from "contexts/ServicesContext";
 import styles from "./BudgetScreen.module.css";
 
 export function BudgetScreen() {
-  const { itemService, categoryService } = useContext(ServicesContext);
+  const { budgetService } = useContext(ServicesContext);
   const { income, expenses, balance } = useBudget();
   const { activeSection, toggleIncome, toggleExpenses } = useActiveSection();
   const { activeEntity, toggleEntity } = useActiveEntity();
@@ -61,15 +61,15 @@ export function BudgetScreen() {
 
     if (edit.state.mode === "create") {
       if (edit.state.entity === "item") {
-        itemService.addItem(edit.state.draft);
+        budgetService.addItem(edit.state.draft);
       } else {
-        categoryService.addCategory(edit.state.draft);
+        budgetService.addCategory(edit.state.draft);
       }
     } else if (edit.state.mode === "update" && edit.state.draft.id) {
       if (edit.state.entity === "item") {
-        itemService.updateItem(edit.state.draft.id, edit.state.draft);
+        budgetService.updateItem(edit.state.draft.id, edit.state.draft);
       } else {
-        categoryService.updateCategory(edit.state.draft.id, edit.state.draft);
+        budgetService.updateCategory(edit.state.draft.id, edit.state.draft);
       }
     }
 
@@ -80,9 +80,9 @@ export function BudgetScreen() {
     if (edit.state?.mode !== "update" || !edit.state.draft.id) return;
 
     if (edit.state.entity === "item") {
-      itemService.deleteItem(edit.state.draft.id, edit.state.draft.section);
+      budgetService.deleteItem(edit.state.draft.id, edit.state.draft.section);
     } else {
-      categoryService.deleteCategory(edit.state.draft.id, edit.state.draft.section);
+      budgetService.deleteCategory(edit.state.draft.id, edit.state.draft.section);
     }
 
     stopEdit();

@@ -1,10 +1,8 @@
 import { MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { ServicesContext } from "contexts/ServicesContext";
-import { getItems } from "db/items";
-import { getCategories } from "db/categories";
-import { addItem, updateItem, deleteItem } from "services/items";
-import { addCategory, updateCategory, deleteCategory } from "services/categories";
+import { getItems, getCategories } from "db/budget";
+import { addItem, updateItem, deleteItem, addCategory, updateCategory, deleteCategory } from "services/budget";
 import { backupData, restoreData } from "services/backup";
 
 interface ProvidersProps {
@@ -17,8 +15,10 @@ export function Providers({ children }: Readonly<ProvidersProps>) {
       <Notifications />
       <ServicesContext
         value={{
-          itemService: { getItems, addItem, updateItem, deleteItem },
-          categoryService: { getCategories, addCategory, updateCategory, deleteCategory },
+          budgetService: {
+            getItems, addItem, updateItem, deleteItem,
+            getCategories, addCategory, updateCategory, deleteCategory,
+          },
           backupService: { backupData, restoreData },
         }}
       >
