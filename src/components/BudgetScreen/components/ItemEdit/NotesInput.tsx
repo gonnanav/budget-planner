@@ -1,5 +1,5 @@
 import { Textarea } from "@mantine/core";
-import { CHARACTER_LIMITS } from "lib/limits";
+import { CHARACTER_LIMITS } from "domain/limits";
 
 interface NotesInputProps {
   notes?: string;

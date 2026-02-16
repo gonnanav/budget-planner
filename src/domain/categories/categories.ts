@@ -5,7 +5,7 @@ import type {
   CreateCategoryInput,
 } from "../types";
 import { sumItems } from "../items";
-import { CHARACTER_LIMITS } from "../../lib/limits";
+import { CHARACTER_LIMITS } from "../limits";
 
 export function createCategory(input: CreateCategoryInput): Category {
   validateId(input.id);

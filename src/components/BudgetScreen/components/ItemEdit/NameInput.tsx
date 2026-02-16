@@ -1,5 +1,5 @@
 import { TextInput } from "@mantine/core";
-import { CHARACTER_LIMITS } from "lib/limits";
+import { CHARACTER_LIMITS } from "domain/limits";
 
 interface NameInputProps {
   name: string;
