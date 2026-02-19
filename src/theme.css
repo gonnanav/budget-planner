@@ -1,4 +1,8 @@
 :root {
   --font-size-h1: 1.25rem;
   --font-size-h2: 1.125rem;
+
+  --color-primary: #228be6;
+  --color-primary-hover: #1c7ed6;
+  --color-primary-active: #1971c2;
 }
