@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { ServicesContext } from "contexts/ServicesContext";
+import { BudgetServiceContext } from "contexts/BudgetServiceContext";
 import { emptyBudget, populatedBudget } from "fixtures/budget";
 import { BudgetScreen } from "./BudgetScreen";
 
@@ -24,11 +24,6 @@ const emptyBudgetService = {
   deleteCategory: async () => {},
 };
 
-const noopBackupService = {
-  backupData: async () => {},
-  restoreData: async () => {},
-};
-
 const populatedBudgetService = {
   ...emptyBudgetService,
   getBudget: async () => populatedBudget,
@@ -37,11 +32,9 @@ const populatedBudgetService = {
 export const Empty: Story = {
   decorators: [
     (Story) => (
-      <ServicesContext
-        value={{ budgetService: emptyBudgetService, backupService: noopBackupService }}
-      >
+      <BudgetServiceContext value={emptyBudgetService}>
         <Story />
-      </ServicesContext>
+      </BudgetServiceContext>
     ),
   ],
 };
@@ -49,11 +42,9 @@ export const Empty: Story = {
 export const WithData: Story = {
   decorators: [
     (Story) => (
-      <ServicesContext
-        value={{ budgetService: populatedBudgetService, backupService: noopBackupService }}
-      >
+      <BudgetServiceContext value={populatedBudgetService}>
         <Story />
-      </ServicesContext>
+      </BudgetServiceContext>
     ),
   ],
 };

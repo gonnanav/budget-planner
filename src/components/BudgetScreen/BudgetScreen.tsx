@@ -12,11 +12,11 @@ import {
 } from "./components";
 import { useContext } from "react";
 import { useEntityEdit, useActiveSection, useActiveEntity, useBudget } from "./hooks";
-import { ServicesContext } from "contexts/ServicesContext";
+import { BudgetServiceContext } from "contexts/BudgetServiceContext";
 import styles from "./BudgetScreen.module.css";
 
 export function BudgetScreen() {
-  const { budgetService } = useContext(ServicesContext);
+  const budgetService = useContext(BudgetServiceContext);
   const budgetLoadable = useBudget();
   const { activeSection, toggleIncome, toggleExpenses } = useActiveSection();
   const { activeEntity, toggleEntity } = useActiveEntity();

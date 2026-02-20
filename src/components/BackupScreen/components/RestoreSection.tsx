@@ -4,7 +4,7 @@ import { useState, useRef, useContext } from "react";
 import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Upload } from "lucide-react";
-import { ServicesContext } from "contexts/ServicesContext";
+import { BackupServiceContext } from "contexts/BackupServiceContext";
 import type { BackupData } from "domain/types";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
 import styles from "./RestoreSection.module.css";
@@ -19,7 +19,7 @@ interface BackupSummary {
 }
 
 export function RestoreSection() {
-  const { backupService } = useContext(ServicesContext);
+  const backupService = useContext(BackupServiceContext);
   const [backup, setBackup] = useState<BackupData | null>(null);
   const [summary, setSummary] = useState<BackupSummary | null>(null);
   const [error, setError] = useState<string | null>(null);

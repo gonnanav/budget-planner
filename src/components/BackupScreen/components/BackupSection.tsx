@@ -4,11 +4,11 @@ import { useState, useContext } from "react";
 import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Download } from "lucide-react";
-import { ServicesContext } from "contexts/ServicesContext";
+import { BackupServiceContext } from "contexts/BackupServiceContext";
 import styles from "./BackupSection.module.css";
 
 export function BackupSection() {
-  const { backupService } = useContext(ServicesContext);
+  const backupService = useContext(BackupServiceContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleBackup = async () => {
