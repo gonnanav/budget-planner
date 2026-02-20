@@ -1,9 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ServicesContext } from "contexts/ServicesContext";
-import { expenseCategories } from "fixtures/expense-categories";
-import { expenseItems } from "fixtures/expenses";
-import { incomeCategories } from "fixtures/income-categories";
-import { incomeItems } from "fixtures/incomes";
+import { emptyBudget, populatedBudget } from "fixtures/budget";
 import { BudgetScreen } from "./BudgetScreen";
 
 const meta: Meta<typeof BudgetScreen> = {
@@ -18,8 +15,7 @@ export default meta;
 type Story = StoryObj<typeof BudgetScreen>;
 
 const emptyBudgetService = {
-  getItems: async () => [],
-  getCategories: async () => [],
+  getBudget: async () => emptyBudget,
   addItem: async () => "",
   updateItem: async () => false,
   deleteItem: async () => {},
@@ -35,10 +31,7 @@ const noopBackupService = {
 
 const populatedBudgetService = {
   ...emptyBudgetService,
-  getItems: async (section: "income" | "expenses") =>
-    section === "expenses" ? expenseItems : incomeItems,
-  getCategories: async (section: "income" | "expenses") =>
-    section === "expenses" ? expenseCategories : incomeCategories,
+  getBudget: async () => populatedBudget,
 };
 
 export const Empty: Story = {

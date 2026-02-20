@@ -17,7 +17,7 @@ import styles from "./BudgetScreen.module.css";
 
 export function BudgetScreen() {
   const { budgetService } = useContext(ServicesContext);
-  const { income, expenses, balance } = useBudget();
+  const budgetLoadable = useBudget();
   const { activeSection, toggleIncome, toggleExpenses } = useActiveSection();
   const { activeEntity, toggleEntity } = useActiveEntity();
   const edit = useEntityEdit();
@@ -27,16 +27,15 @@ export function BudgetScreen() {
     edit.actions;
   const { stopEdit } = edit.actions;
 
-  const activeSectionLoadable =
-    activeSection === "expenses" ? expenses : income;
-  const items =
-    activeSectionLoadable.status === "ready"
-      ? activeSectionLoadable.data.items
-      : [];
-  const categories =
-    activeSectionLoadable.status === "ready"
-      ? activeSectionLoadable.data.categories
-      : [];
+  const budget = budgetLoadable.status === "ready" ? budgetLoadable.data : null;
+  const activeState =
+    budget && activeSection
+      ? activeSection === "expenses"
+        ? budget.expenses
+        : budget.income
+      : null;
+  const items = activeState?.items ?? [];
+  const categories = activeState?.categories ?? [];
 
   const showItems = activeEntity === "item";
   const showCategories = !showItems;
@@ -93,22 +92,18 @@ export function BudgetScreen() {
       <div className={styles.overview}>
         <div className={styles.summaries}>
           <IncomeSummary
-            amount={income.status === "ready" ? income.data.sum : 0}
+            amount={budget?.income.sum ?? 0}
             isActive={activeSection === "income"}
             onClick={toggleIncome}
           />
           <ExpenseSummary
-            amount={expenses.status === "ready" ? expenses.data.sum : 0}
+            amount={budget?.expenses.sum ?? 0}
             isActive={activeSection === "expenses"}
             onClick={toggleExpenses}
           />
         </div>
         <BalanceBanner
-          balance={
-            balance.status === "ready"
-              ? balance.data
-              : { status: "balanced", delta: 0 }
-          }
+          balance={budget?.balance ?? { status: "balanced", delta: 0 }}
         />
       </div>
       {activeSection && (

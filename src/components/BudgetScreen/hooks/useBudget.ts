@@ -1,10 +1,14 @@
-import { createBudget } from "domain/budget";
-import type { Budget } from "domain/types";
-import { useSectionState } from "./useSectionState";
+import { useContext } from "react";
+import { useLiveQuery } from "dexie-react-hooks";
+import type { Budget, Loadable } from "domain/types";
+import { ServicesContext } from "contexts/ServicesContext";
 
-export function useBudget(): Budget {
-  const income = useSectionState("income");
-  const expenses = useSectionState("expenses");
+export function useBudget(): Loadable<Budget> {
+  const { budgetService } = useContext(ServicesContext);
 
-  return createBudget(income, expenses);
+  return useLiveQuery(
+    async () => ({ status: "ready" as const, data: await budgetService.getBudget() }),
+    [],
+    { status: "loading" as const },
+  );
 }

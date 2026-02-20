@@ -76,9 +76,9 @@ export interface Balance {
 }
 
 export interface Budget {
-  income: Loadable<SectionState>;
-  expenses: Loadable<SectionState>;
-  balance: Loadable<Balance>;
+  income: SectionState;
+  expenses: SectionState;
+  balance: Balance;
 }
 
 export interface BackupData {

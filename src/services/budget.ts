@@ -1,7 +1,28 @@
-import { createItem } from "domain/items";
-import { createCategory } from "domain/categories";
-import type { ItemInput, CategoryInput, Section } from "domain/types";
+import { createItem, sumItems } from "domain/items";
+import { createCategory, createCategorySummary } from "domain/categories";
+import { createBudget } from "domain/budget";
+import type { Budget, ItemInput, CategoryInput, Section, SectionState } from "domain/types";
 import * as db from "db/budget";
+
+export async function getBudget(): Promise<Budget> {
+  const [incomeItems, expenseItems, incomeCats, expenseCats] = await Promise.all(
+    [db.getItems("income"), db.getItems("expenses"), db.getCategories("income"), db.getCategories("expenses")],
+  );
+
+  const income: SectionState = {
+    items: incomeItems,
+    categories: incomeCats.map((c) => createCategorySummary(c, incomeItems)),
+    sum: sumItems(incomeItems),
+  };
+
+  const expenses: SectionState = {
+    items: expenseItems,
+    categories: expenseCats.map((c) => createCategorySummary(c, expenseItems)),
+    sum: sumItems(expenseItems),
+  };
+
+  return createBudget(income, expenses);
+}
 
 export async function addItem(input: ItemInput): Promise<string> {
   const item = createItem({ id: crypto.randomUUID(), ...input });
