@@ -15,3 +15,5 @@ export const transportation = createCategory({
   name: "Transportation",
   section: "expenses",
 });
+
+export const expenseCategories = [bills, personal, transportation];

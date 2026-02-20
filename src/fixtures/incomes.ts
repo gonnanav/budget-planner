@@ -23,3 +23,5 @@ export const investment = createItem({
   categoryId: "category-entertainment", // Assigning to Entertainment category
   section: "income",
 });
+
+export const incomeItems = [salary, allowance, investment];

@@ -40,3 +40,5 @@ export const hobbies = createItem({
   categoryId: personal.id,
   section: "expenses",
 });
+
+export const expenseItems = [electricity, water, gas, diningOut, hobbies];
