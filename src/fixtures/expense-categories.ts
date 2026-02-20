@@ -1,13 +1,8 @@
 import { createCategory } from "domain/categories";
 
-export const bills = createCategory({
-  id: "bills",
-  name: "Bills",
-  section: "expenses",
-});
-export const personal = createCategory({
-  id: "personal",
-  name: "Personal",
+export const housing = createCategory({
+  id: "housing",
+  name: "Housing",
   section: "expenses",
 });
 export const transportation = createCategory({
@@ -15,5 +10,15 @@ export const transportation = createCategory({
   name: "Transportation",
   section: "expenses",
 });
+export const food = createCategory({
+  id: "food",
+  name: "Food",
+  section: "expenses",
+});
+export const personal = createCategory({
+  id: "personal",
+  name: "Personal",
+  section: "expenses",
+});
 
-export const expenseCategories = [bills, personal, transportation];
+export const expenseCategories = [housing, transportation, food, personal];

@@ -1,14 +1,9 @@
 import { test, expect } from "vitest";
 import { createBackupData } from "./backup";
-import { salary, allowance } from "fixtures/incomes";
-import { electricity, water, gas } from "fixtures/expenses";
-import { transportation } from "fixtures/expense-categories";
-import { bills, personal } from "fixtures/expense-categories";
-
-const incomeItems = [salary, allowance];
-const expenseItems = [electricity, water, gas];
-const incomeCategories = [transportation];
-const expenseCategories = [bills, personal];
+import { incomeItems } from "fixtures/incomes";
+import { expenseItems } from "fixtures/expenses";
+import { incomeCategories } from "fixtures/income-categories";
+import { expenseCategories } from "fixtures/expense-categories";
 
 test("metadata contains correct version number and timestamp", () => {
   const { metadata } = createBackupData({

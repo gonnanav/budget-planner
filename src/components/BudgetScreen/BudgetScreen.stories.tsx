@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ServicesContext } from "contexts/ServicesContext";
 import { expenseCategories } from "fixtures/expense-categories";
 import { expenseItems } from "fixtures/expenses";
+import { incomeCategories } from "fixtures/income-categories";
 import { incomeItems } from "fixtures/incomes";
 import { BudgetScreen } from "./BudgetScreen";
 
@@ -37,7 +38,7 @@ const populatedBudgetService = {
   getItems: async (section: "income" | "expenses") =>
     section === "expenses" ? expenseItems : incomeItems,
   getCategories: async (section: "income" | "expenses") =>
-    section === "expenses" ? expenseCategories : [],
+    section === "expenses" ? expenseCategories : incomeCategories,
 };
 
 export const Empty: Story = {

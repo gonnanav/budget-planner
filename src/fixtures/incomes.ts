@@ -1,18 +1,19 @@
 import { createItem } from "domain/items";
+import { employment, passive } from "./income-categories";
 
 export const salary = createItem({
   id: "income-salary",
   name: "Salary",
   amount: 5000,
-  categoryId: "category-transportation", // Assigning to Transportation category
+  categoryId: employment.id,
   section: "income",
 });
 
-export const allowance = createItem({
-  id: "income-allowance",
-  name: "Allowance",
-  amount: 1200,
-  categoryId: "category-shopping", // Assigning to Shopping category
+export const freelance = createItem({
+  id: "income-freelance",
+  name: "Freelance",
+  amount: 800,
+  categoryId: employment.id,
   section: "income",
 });
 
@@ -20,8 +21,8 @@ export const investment = createItem({
   id: "income-investment",
   name: "Investment Returns",
   amount: 300,
-  categoryId: "category-entertainment", // Assigning to Entertainment category
+  categoryId: passive.id,
   section: "income",
 });
 
-export const incomeItems = [salary, allowance, investment];
+export const incomeItems = [salary, freelance, investment];
