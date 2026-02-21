@@ -5,16 +5,19 @@ export const housing = createCategory({
   name: "Housing",
   section: "expenses",
 });
+
 export const transportation = createCategory({
   id: "transportation",
   name: "Transportation",
   section: "expenses",
 });
+
 export const food = createCategory({
   id: "food",
   name: "Food",
   section: "expenses",
 });
+
 export const personal = createCategory({
   id: "personal",
   name: "Personal",

@@ -1,5 +1,5 @@
 import { createItem } from "domain/items";
-import { employment, passive } from "./income-categories";
+import { employment, passive } from "./incomeCategories";
 
 export const salary = createItem({
   id: "income-salary",

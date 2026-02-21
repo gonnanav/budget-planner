@@ -1,5 +1,5 @@
 import { createItem } from "domain/items";
-import { housing, transportation, food, personal } from "./expense-categories";
+import { housing, transportation, food, personal } from "./expenseCategories";
 
 export const rent = createItem({
   id: "rent",

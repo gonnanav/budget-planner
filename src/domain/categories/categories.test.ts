@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import { createCategory, sumCategoryItems } from "./categories";
-import { createTestItems } from "fixtures/test-utils";
+import { createTestItems } from "fixtures/utils";
 
 test("creates a category with the given id and name", () => {
   const category = createCategory({

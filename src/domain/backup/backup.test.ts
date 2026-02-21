@@ -1,6 +1,6 @@
 import { test, expect } from "vitest";
 import { createBackupData } from "./backup";
-import { salary, freelance, investment } from "fixtures/incomes";
+import { salary, freelance, investment } from "fixtures/incomeItems";
 import {
   rent,
   electricity,
@@ -13,9 +13,9 @@ import {
   gymMembership,
   streamingServices,
   hobbies,
-} from "fixtures/expenses";
-import { employment, passive } from "fixtures/income-categories";
-import { housing, transportation, food, personal } from "fixtures/expense-categories";
+} from "fixtures/expenseItems";
+import { employment, passive } from "fixtures/incomeCategories";
+import { housing, transportation, food, personal } from "fixtures/expenseCategories";
 
 const incomeItems = [salary, freelance, investment];
 const expenseItems = [

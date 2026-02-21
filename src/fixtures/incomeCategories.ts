@@ -5,6 +5,7 @@ export const employment = createCategory({
   name: "Employment",
   section: "income",
 });
+
 export const passive = createCategory({
   id: "passive",
   name: "Passive",
