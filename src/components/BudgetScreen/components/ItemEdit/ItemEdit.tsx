@@ -5,6 +5,7 @@ import { NameInput } from "./NameInput";
 import { FrequencyInput } from "./FrequencyInput";
 import { CategoryInput } from "./CategoryInput";
 import { NotesInput } from "./NotesInput";
+import styles from "./ItemEdit.module.css";
 
 export interface ItemEditProps {
   draft: ItemDraft;
@@ -27,7 +28,7 @@ export const ItemEdit = ({
   const handleNotesChange = (notes: string) => onDraftChange({ notes });
 
   return (
-    <>
+    <div className={styles.root}>
       <NameInput name={draft.name} onNameChange={handleNameChange} />
       <AmountInput
         amount={draft.amount ?? null}
@@ -43,6 +44,6 @@ export const ItemEdit = ({
         onCategoryChange={handleCategoryIdChange}
       />
       <NotesInput notes={draft.notes} onNotesChange={handleNotesChange} />
-    </>
+    </div>
   );
 };

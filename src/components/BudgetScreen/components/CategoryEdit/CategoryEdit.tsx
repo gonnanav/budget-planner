@@ -1,5 +1,6 @@
 import type { CategoryDraft } from "domain/types";
 import { CategoryNameInput } from "./CategoryNameInput";
+import styles from "./CategoryEdit.module.css";
 
 export interface CategoryEditProps {
   draft: CategoryDraft;
@@ -11,5 +12,9 @@ export const CategoryEdit = ({ draft, onDraftChange }: CategoryEditProps) => {
     onDraftChange({ name });
   };
 
-  return <CategoryNameInput name={draft.name} onChange={handleNameChange} />;
+  return (
+    <div className={styles.root}>
+      <CategoryNameInput name={draft.name} onChange={handleNameChange} />
+    </div>
+  );
 };

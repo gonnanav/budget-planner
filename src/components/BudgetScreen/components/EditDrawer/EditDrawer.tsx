@@ -1,5 +1,6 @@
 import { Drawer } from "@mantine/core";
 import { ActionButtons } from "./ActionButtons";
+import styles from "./EditDrawer.module.css";
 import type { ReactNode } from "react";
 import type { Section, Entity } from "domain/types";
 
@@ -47,13 +48,15 @@ export const EditDrawer = ({
 
   return (
     <Drawer opened={isOpen} onClose={onClose} title={headingText} position="right">
-      {children}
-      <ActionButtons
-        hasDelete={hasDelete}
-        onCancel={onCancel}
-        onSave={onSave}
-        onDelete={onDelete}
-      />
+      <div className={styles.content}>
+        {children}
+        <ActionButtons
+          hasDelete={hasDelete}
+          onCancel={onCancel}
+          onSave={onSave}
+          onDelete={onDelete}
+        />
+      </div>
     </Drawer>
   );
 };

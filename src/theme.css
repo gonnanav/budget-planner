@@ -5,4 +5,8 @@
   --color-primary: #228be6;
   --color-primary-hover: #1c7ed6;
   --color-primary-active: #1971c2;
+
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
 }
