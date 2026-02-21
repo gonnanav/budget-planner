@@ -12,15 +12,24 @@ import {
 } from "./components";
 import { useContext } from "react";
 import { useEntityEdit, useActiveSection, useActiveEntity, useBudget } from "./hooks";
+import type { EditState } from "domain/types";
 import { BudgetServiceContext } from "contexts/BudgetServiceContext";
 import styles from "./BudgetScreen.module.css";
 
-export function BudgetScreen() {
+type BudgetScreenProps = {
+  initialEditState?: EditState | null;
+};
+
+export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
   const budgetService = useContext(BudgetServiceContext);
   const budgetLoadable = useBudget();
-  const { activeSection, toggleIncome, toggleExpenses } = useActiveSection();
-  const { activeEntity, toggleEntity } = useActiveEntity();
-  const edit = useEntityEdit();
+  const { activeSection, toggleIncome, toggleExpenses } = useActiveSection(
+    initialEditState?.draft.section ?? null,
+  );
+  const { activeEntity, toggleEntity } = useActiveEntity(
+    initialEditState?.entity ?? "item",
+  );
+  const edit = useEntityEdit(initialEditState);
 
   const { startCreateItem, startUpdateItem, updateItemDraft } = edit.actions;
   const { startCreateCategory, startUpdateCategory, updateCategoryDraft } =

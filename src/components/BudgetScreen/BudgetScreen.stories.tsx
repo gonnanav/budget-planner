@@ -9,6 +9,7 @@ import {
 import { BudgetScreen } from "./BudgetScreen";
 
 const meta: Meta<typeof BudgetScreen> = {
+  title: "Budget Screen",
   component: BudgetScreen,
   parameters: {
     layout: "fullscreen",

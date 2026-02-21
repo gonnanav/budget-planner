@@ -59,6 +59,12 @@ export interface CategoryDraft {
   name: string;
 }
 
+export type EditMode = "create" | "update";
+
+export type EditState =
+  | { mode: EditMode; entity: "item"; draft: ItemDraft }
+  | { mode: EditMode; entity: "category"; draft: CategoryDraft };
+
 export interface CategorySummary {
   category: Category;
   total: number;

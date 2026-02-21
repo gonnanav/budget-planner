@@ -1,6 +1,5 @@
 import { useState } from "react";
-import type { ItemDraft, CategoryDraft } from "domain/types";
-import type { Section } from "domain/types";
+import type { ItemDraft, CategoryDraft, EditState, Section } from "domain/types";
 
 const DEFAULT_ITEM_DRAFT: Partial<ItemDraft> = {
   name: "",
@@ -10,20 +9,6 @@ const DEFAULT_ITEM_DRAFT: Partial<ItemDraft> = {
 };
 
 const DEFAULT_CATEGORY_DRAFT: Partial<CategoryDraft> = { name: "" };
-
-type Mode = "create" | "update";
-
-export type EditState =
-  | {
-      mode: Mode;
-      entity: "item";
-      draft: ItemDraft;
-    }
-  | {
-      mode: Mode;
-      entity: "category";
-      draft: CategoryDraft;
-    };
 
 export type UseEntityEditResult = {
   state: EditState | null;
@@ -38,8 +23,8 @@ export type UseEntityEditResult = {
   };
 };
 
-export function useEntityEdit(): UseEntityEditResult {
-  const [state, setState] = useState<EditState | null>(null);
+export function useEntityEdit(initialState?: EditState | null): UseEntityEditResult {
+  const [state, setState] = useState<EditState | null>(initialState ?? null);
 
   const startCreateItem = (section: Section) => {
     setState({
