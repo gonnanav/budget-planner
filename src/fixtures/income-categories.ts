@@ -10,5 +10,3 @@ export const passive = createCategory({
   name: "Passive",
   section: "income",
 });
-
-export const incomeCategories = [employment, passive];

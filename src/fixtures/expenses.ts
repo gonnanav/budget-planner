@@ -89,16 +89,3 @@ export const hobbies = createItem({
   section: "expenses",
 });
 
-export const expenseItems = [
-  rent,
-  electricity,
-  water,
-  internet,
-  gas,
-  carInsurance,
-  groceries,
-  diningOut,
-  gymMembership,
-  streamingServices,
-  hobbies,
-];

@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { BudgetServiceContext } from "contexts/BudgetServiceContext";
-import { emptyBudget, populatedBudget } from "fixtures/budget";
+import {
+  surplusBudget,
+  deficitBudget,
+  balancedBudget,
+  emptyBudget,
+} from "fixtures/budget";
 import { BudgetScreen } from "./BudgetScreen";
 
 const meta: Meta<typeof BudgetScreen> = {
@@ -14,8 +19,7 @@ export default meta;
 
 type Story = StoryObj<typeof BudgetScreen>;
 
-const emptyBudgetService = {
-  getBudget: async () => emptyBudget,
+const baseBudgetService = {
   addItem: async () => "",
   updateItem: async () => false,
   deleteItem: async () => {},
@@ -24,25 +28,60 @@ const emptyBudgetService = {
   deleteCategory: async () => {},
 };
 
-const populatedBudgetService = {
-  ...emptyBudgetService,
-  getBudget: async () => populatedBudget,
+const surplusBudgetService = {
+  ...baseBudgetService,
+  getBudget: async () => surplusBudget,
 };
 
-export const Empty: Story = {
+const deficitBudgetService = {
+  ...baseBudgetService,
+  getBudget: async () => deficitBudget,
+};
+
+const balancedBudgetService = {
+  ...baseBudgetService,
+  getBudget: async () => balancedBudget,
+};
+
+const emptyBudgetService = {
+  ...baseBudgetService,
+  getBudget: async () => emptyBudget,
+};
+
+export const Surplus: Story = {
   decorators: [
     (Story) => (
-      <BudgetServiceContext value={emptyBudgetService}>
+      <BudgetServiceContext value={surplusBudgetService}>
         <Story />
       </BudgetServiceContext>
     ),
   ],
 };
 
-export const WithData: Story = {
+export const Deficit: Story = {
   decorators: [
     (Story) => (
-      <BudgetServiceContext value={populatedBudgetService}>
+      <BudgetServiceContext value={deficitBudgetService}>
+        <Story />
+      </BudgetServiceContext>
+    ),
+  ],
+};
+
+export const Balanced: Story = {
+  decorators: [
+    (Story) => (
+      <BudgetServiceContext value={balancedBudgetService}>
+        <Story />
+      </BudgetServiceContext>
+    ),
+  ],
+};
+
+export const Empty: Story = {
+  decorators: [
+    (Story) => (
+      <BudgetServiceContext value={emptyBudgetService}>
         <Story />
       </BudgetServiceContext>
     ),

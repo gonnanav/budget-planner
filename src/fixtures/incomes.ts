@@ -25,4 +25,3 @@ export const investment = createItem({
   section: "income",
 });
 
-export const incomeItems = [salary, freelance, investment];

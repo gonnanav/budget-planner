@@ -20,5 +20,3 @@ export const personal = createCategory({
   name: "Personal",
   section: "expenses",
 });
-
-export const expenseCategories = [housing, transportation, food, personal];

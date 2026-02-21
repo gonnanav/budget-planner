@@ -1,9 +1,38 @@
 import { test, expect } from "vitest";
 import { createBackupData } from "./backup";
-import { incomeItems } from "fixtures/incomes";
-import { expenseItems } from "fixtures/expenses";
-import { incomeCategories } from "fixtures/income-categories";
-import { expenseCategories } from "fixtures/expense-categories";
+import { salary, freelance, investment } from "fixtures/incomes";
+import {
+  rent,
+  electricity,
+  water,
+  internet,
+  gas,
+  carInsurance,
+  groceries,
+  diningOut,
+  gymMembership,
+  streamingServices,
+  hobbies,
+} from "fixtures/expenses";
+import { employment, passive } from "fixtures/income-categories";
+import { housing, transportation, food, personal } from "fixtures/expense-categories";
+
+const incomeItems = [salary, freelance, investment];
+const expenseItems = [
+  rent,
+  electricity,
+  water,
+  internet,
+  gas,
+  carInsurance,
+  groceries,
+  diningOut,
+  gymMembership,
+  streamingServices,
+  hobbies,
+];
+const incomeCategories = [employment, passive];
+const expenseCategories = [housing, transportation, food, personal];
 
 test("metadata contains correct version number and timestamp", () => {
   const { metadata } = createBackupData({

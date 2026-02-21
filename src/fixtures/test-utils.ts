@@ -1,26 +1,18 @@
 import { createItem } from "domain/items";
-import type { Item, CreateItemInput, Section } from "domain/types";
-import { electricity } from "./expenses";
+import type { Item, CreateItemInput } from "domain/types";
 
-type CreateTestItemInput = Omit<CreateItemInput, "id" | "name" | "section"> & {
-  id?: string;
-  name?: string;
-  section?: Section;
-};
-
-export function createTestItem(input: CreateTestItemInput = {}): Item {
-  return createItem({
-    ...electricity,
-    ...input,
-    section: input.section ?? "expenses",
-  });
+export function createItemVariant(
+  base: Item,
+  overrides: Partial<CreateItemInput>,
+): Item {
+  return createItem({ ...base, ...overrides });
 }
 
-export function createTestItems(inputs: Array<CreateTestItemInput>): Item[] {
+export function createTestItems(inputs: Partial<CreateItemInput>[]): Item[] {
   return inputs.map((input, index) => {
-    const defaultId = String(index + 1);
-    const defaultName = `Test item ${defaultId}`;
-
-    return createTestItem({ id: defaultId, name: defaultName, ...input });
+    const id = input.id ?? String(index + 1);
+    const name = input.name ?? `Test item ${id}`;
+    
+    return createItem({ id, name, section: "expenses", ...input });
   });
 }
