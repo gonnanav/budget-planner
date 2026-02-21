@@ -21,6 +21,9 @@ const preview: Preview = {
       },
     },
   },
+  initialGlobals: {
+    viewport: { value: 'mobile1', isRotated: false }
+  },
 };
 
 export default preview;
