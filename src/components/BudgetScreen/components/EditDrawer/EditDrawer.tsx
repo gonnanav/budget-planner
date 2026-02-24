@@ -1,5 +1,5 @@
 import { Drawer } from "@mantine/core";
-import { ActionButtons } from "./ActionButtons";
+import { Trash2 } from "lucide-react";
 import styles from "./EditDrawer.module.css";
 import type { ReactNode } from "react";
 import type { Section, Entity } from "domain/types";
@@ -50,12 +50,26 @@ export const EditDrawer = ({
     <Drawer opened={isOpen} onClose={onClose} title={headingText} position="right">
       <div className={styles.content}>
         {children}
-        <ActionButtons
-          hasDelete={hasDelete}
-          onCancel={onCancel}
-          onSave={onSave}
-          onDelete={onDelete}
-        />
+        <div className={styles.actions}>
+          <div className={styles.actionsGroup}>
+            <button className={styles.cancelButton} onClick={onCancel}>
+              Cancel
+            </button>
+            <button className={styles.saveButton} type="submit" onClick={onSave}>
+              Save
+            </button>
+          </div>
+
+          {hasDelete && (
+            <button
+              className={styles.deleteButton}
+              onClick={onDelete}
+              aria-label="Delete"
+            >
+              <Trash2 size={20} />
+            </button>
+          )}
+        </div>
       </div>
     </Drawer>
   );
