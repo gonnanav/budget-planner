@@ -48,10 +48,10 @@ export const EditDrawer = ({
 
   return (
     <Drawer opened={isOpen} onClose={onClose} title={headingText} position="right">
-      <div className={classes.content}>
+      <div className={classes.body}>
         {children}
         <div className={classes.actions}>
-          <div className={classes.actionsGroup}>
+          <div className={classes.primaryActions}>
             <button className={classes.cancel} onClick={onCancel}>
               Cancel
             </button>
