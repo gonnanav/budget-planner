@@ -1,5 +1,5 @@
 import { Header } from "./components/Header";
-import styles from "./AppShell.module.css";
+import classes from "./AppShell.module.css";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -7,14 +7,14 @@ interface AppShellProps {
 
 export function AppShell({ children }: AppShellProps) {
   return (
-    <div className={styles.root}>
-      <div className={styles.header}>
-        <div className={styles.headerInner}>
+    <div className={classes.root}>
+      <div className={classes.header}>
+        <div className={classes.headerInner}>
           <Header />
         </div>
       </div>
 
-      <main className={styles.main}>{children}</main>
+      <main className={classes.main}>{children}</main>
     </div>
   );
 }

@@ -14,7 +14,7 @@ import { useContext } from "react";
 import { useEntityEdit, useActiveSection, useActiveEntity, useBudget } from "./hooks";
 import type { EditState } from "domain/types";
 import { BudgetServiceContext } from "contexts/BudgetServiceContext";
-import styles from "./BudgetScreen.module.css";
+import classes from "./BudgetScreen.module.css";
 
 type BudgetScreenProps = {
   initialEditState?: EditState | null;
@@ -97,9 +97,9 @@ export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
   };
 
   return (
-    <div className={styles.root}>
-      <div className={styles.overview}>
-        <div className={styles.summaries}>
+    <div className={classes.root}>
+      <div className={classes.overview}>
+        <div className={classes.summaries}>
           <IncomeSummary
             amount={budget?.income.sum ?? 0}
             isActive={activeSection === "income"}
@@ -116,15 +116,15 @@ export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
         />
       </div>
       {activeSection && (
-        <div className={styles.section}>
-          <div className={styles.header}>
+        <div className={classes.section}>
+          <div className={classes.header}>
             <SectionTabs
               selectedTab={activeEntity}
               onTabChange={toggleEntity}
             />
             <AddButton entity={activeEntity} onClick={handleStartCreate} />
           </div>
-          <div className={styles.content}>
+          <div className={classes.content}>
             {showItems && (
               <ItemList items={items} onItemClick={startUpdateItem} />
             )}

@@ -1,4 +1,4 @@
-import styles from "./ItemRow.module.css";
+import classes from "./ItemRow.module.css";
 
 interface ItemRowProps {
   name: string;
@@ -21,17 +21,17 @@ export function ItemRow({
   const showNormalizedAmount = frequency === "biMonthly";
 
   return (
-    <li className={styles.root} onClick={onClick}>
-      <div className={styles.primaryLine}>
-        <span className={styles.nameText}>{name}</span>
+    <li className={classes.root} onClick={onClick}>
+      <div className={classes.primaryLine}>
+        <span className={classes.nameText}>{name}</span>
         {formattedAmount && (
-          <span className={styles.amountText}>{formattedAmount}</span>
+          <span className={classes.amountText}>{formattedAmount}</span>
         )}
       </div>
-      <div className={styles.secondaryLine}>
-        <span className={styles.frequencyText}>{frequencyText}</span>
+      <div className={classes.secondaryLine}>
+        <span className={classes.frequencyText}>{frequencyText}</span>
         {showNormalizedAmount && (
-          <span className={styles.normalizedAmountText}>
+          <span className={classes.normalizedAmountText}>
             {formattedNormalizedAmount}
           </span>
         )}

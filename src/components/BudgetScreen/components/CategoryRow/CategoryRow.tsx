@@ -1,4 +1,4 @@
-import styles from "./CategoryRow.module.css";
+import classes from "./CategoryRow.module.css";
 
 interface CategoryRowProps {
   name: string;
@@ -8,10 +8,10 @@ interface CategoryRowProps {
 
 export function CategoryRow({ name, amount, onClick }: CategoryRowProps) {
   return (
-    <li className={styles.root} onClick={onClick}>
-      <div className={styles.row}>
-        <span className={styles.name}>{name}</span>
-        <span className={styles.amount}>₪{amount.toLocaleString()}</span>
+    <li className={classes.root} onClick={onClick}>
+      <div className={classes.row}>
+        <span className={classes.name}>{name}</span>
+        <span className={classes.amount}>₪{amount.toLocaleString()}</span>
       </div>
     </li>
   );

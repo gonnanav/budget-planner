@@ -1,13 +1,13 @@
 import { Skeleton } from "@mantine/core";
-import styles from "./LoadingPage.module.css";
+import classes from "./LoadingPage.module.css";
 
 export function LoadingPage() {
   return (
-    <div className={styles.root}>
-      <Skeleton className={styles.title} />
-      <div className={styles.list}>
+    <div className={classes.root}>
+      <Skeleton className={classes.title} />
+      <div className={classes.list}>
         {Array.from({ length: 4 }).map((_, index) => (
-          <Skeleton key={index} className={styles.item} />
+          <Skeleton key={index} className={classes.item} />
         ))}
       </div>
     </div>

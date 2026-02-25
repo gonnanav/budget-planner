@@ -2,7 +2,7 @@ import { Paper } from "@mantine/core";
 import { Check, TrendingUp, TrendingDown } from "lucide-react";
 import { clsx } from "clsx";
 import { formatAmount } from "lib/format";
-import styles from "./BalanceBanner.module.css";
+import classes from "./BalanceBanner.module.css";
 import type { Balance } from "domain/types";
 
 interface BalanceBannerProps {
@@ -30,14 +30,14 @@ export function BalanceBanner({
   const Icon = config.icon;
 
   return (
-    <Paper shadow="none" className={clsx(styles.root, styles[status])}>
-      <div className={styles.body}>
-        <div className={styles.row}>
-          <div className={styles.left}>
-            <Icon className={styles.icon} />
-            <span className={styles.label}>{config.label}</span>
+    <Paper shadow="none" className={clsx(classes.root, classes[status])}>
+      <div className={classes.body}>
+        <div className={classes.row}>
+          <div className={classes.left}>
+            <Icon className={classes.icon} />
+            <span className={classes.label}>{config.label}</span>
           </div>
-          <span className={styles.amount}>{formattedAmount}</span>
+          <span className={classes.amount}>{formattedAmount}</span>
         </div>
       </div>
     </Paper>

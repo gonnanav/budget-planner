@@ -7,7 +7,7 @@ import { Upload } from "lucide-react";
 import { BackupServiceContext } from "contexts/BackupServiceContext";
 import type { BackupData } from "domain/types";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
-import styles from "./RestoreSection.module.css";
+import classes from "./RestoreSection.module.css";
 
 interface BackupSummary {
   version: string;
@@ -112,14 +112,14 @@ export function RestoreSection() {
   };
 
   return (
-    <section className={styles.root}>
-      <h2 className={styles.title}>Restore</h2>
-      <p className={styles.description}>
+    <section className={classes.root}>
+      <h2 className={classes.title}>Restore</h2>
+      <p className={classes.description}>
         Replace all existing data with data from a backup file.
       </p>
 
       <div>
-        <label htmlFor="backup-file" className={styles.label}>
+        <label htmlFor="backup-file" className={classes.label}>
           Select backup file
         </label>
         <input
@@ -128,21 +128,21 @@ export function RestoreSection() {
           type="file"
           accept=".json,application/json"
           onChange={handleFileChange}
-          className={styles.fileInput}
+          className={classes.fileInput}
         />
       </div>
 
       {error && (
-        <div className={styles.error}>
-          <p className={styles.errorTitle}>Error</p>
+        <div className={classes.error}>
+          <p className={classes.errorTitle}>Error</p>
           <p>{error}</p>
         </div>
       )}
 
       {summary && (
-        <div className={styles.summary}>
-          <p className={styles.summaryTitle}>Backup information</p>
-          <div className={styles.summaryGrid}>
+        <div className={classes.summary}>
+          <p className={classes.summaryTitle}>Backup information</p>
+          <div className={classes.summaryGrid}>
             <p>Version: {summary.version}</p>
             <p>Date: {new Date(summary.exportedAt).toLocaleDateString()}</p>
             <p>Incomes: {summary.incomeItemsCount}</p>

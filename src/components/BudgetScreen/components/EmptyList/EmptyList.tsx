@@ -1,5 +1,5 @@
 import type { Entity } from "domain/types";
-import styles from "./EmptyList.module.css";
+import classes from "./EmptyList.module.css";
 
 interface EmptyListProps {
   entity: Entity;
@@ -8,5 +8,5 @@ interface EmptyListProps {
 export function EmptyList({ entity }: EmptyListProps) {
   const text = entity === "item" ? "No items yet." : "No categories yet.";
 
-  return <p className={styles.root}>{text}</p>;
+  return <p className={classes.root}>{text}</p>;
 }

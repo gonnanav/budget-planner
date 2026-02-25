@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Modal, Button, Checkbox } from "@mantine/core";
 import { AlertTriangle } from "lucide-react";
-import styles from "./RestoreConfirmModal.module.css";
+import classes from "./RestoreConfirmModal.module.css";
 
 interface RestoreConfirmModalProps {
   isOpen: boolean;
@@ -36,14 +36,14 @@ export function RestoreConfirmModal({
       withCloseButton={!isLoading}
       title="Confirm restore"
     >
-      <div className={styles.root}>
-        <div className={styles.banner}>
-          <AlertTriangle className={styles.icon} />
-          <div className={styles.bannerContent}>
-            <p className={styles.bannerTitle}>
+      <div className={classes.root}>
+        <div className={classes.banner}>
+          <AlertTriangle className={classes.icon} />
+          <div className={classes.bannerContent}>
+            <p className={classes.bannerTitle}>
               This will completely replace your current data
             </p>
-            <p className={styles.bannerText}>
+            <p className={classes.bannerText}>
               All your existing incomes, expenses, and categories will be
               permanently deleted and replaced with the backup data. This
               cannot be undone.
@@ -59,7 +59,7 @@ export function RestoreConfirmModal({
           label="I understand this will permanently replace all my current data"
         />
 
-        <div className={styles.footer}>
+        <div className={classes.footer}>
           <Button
             variant="subtle"
             onClick={handleClose}

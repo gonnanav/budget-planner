@@ -2,7 +2,7 @@
 
 import { clsx } from "clsx";
 import { formatAmount } from "lib/format";
-import styles from "./SectionSummary.module.css";
+import classes from "./SectionSummary.module.css";
 
 interface SectionSummaryProps {
   title: string;
@@ -25,13 +25,13 @@ export function SectionSummary({
     <button
       type="button"
       onClick={onClick}
-      className={clsx(styles.root, {
-        [styles.income]: variant === "income",
-        [styles.expense]: variant === "expense",
-        [styles.active]: isActive,
+      className={clsx(classes.root, {
+        [classes.income]: variant === "income",
+        [classes.expense]: variant === "expense",
+        [classes.active]: isActive,
       })}
     >
-      <div className={styles.content}>
+      <div className={classes.content}>
         <h3>{title}</h3>
         <p>{formattedAmount}</p>
       </div>
