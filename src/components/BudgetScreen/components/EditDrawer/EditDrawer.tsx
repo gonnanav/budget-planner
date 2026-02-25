@@ -52,17 +52,17 @@ export const EditDrawer = ({
         {children}
         <div className={classes.actions}>
           <div className={classes.actionsGroup}>
-            <button className={classes.cancelButton} onClick={onCancel}>
+            <button className={classes.cancel} onClick={onCancel}>
               Cancel
             </button>
-            <button className={classes.saveButton} type="submit" onClick={onSave}>
+            <button className={classes.save} type="submit" onClick={onSave}>
               Save
             </button>
           </div>
 
           {hasDelete && (
             <button
-              className={classes.deleteButton}
+              className={classes.delete}
               onClick={onDelete}
               aria-label="Delete"
             >
