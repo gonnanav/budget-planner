@@ -38,10 +38,10 @@
 
   /* Interaction */
   cursor: pointer;
-}
 
-.cancel:hover {
-  background: #e9ecef;
+  &:hover {
+    background: #e9ecef;
+  }
 }
 
 .save {
@@ -58,14 +58,14 @@
 
   /* Interaction */
   cursor: pointer;
-}
 
-.save:hover {
-  background: var(--color-primary-hover);
-}
+  &:hover {
+    background: var(--color-primary-hover);
+  }
 
-.save:active {
-  background: var(--color-primary-active);
+  &:active {
+    background: var(--color-primary-active);
+  }
 }
 
 .delete {
@@ -87,8 +87,8 @@
 
   /* Interaction */
   cursor: pointer;
-}
 
-.delete:hover {
-  background: var(--color-danger-light);
+  &:hover {
+    background: var(--color-danger-light);
+  }
 }
