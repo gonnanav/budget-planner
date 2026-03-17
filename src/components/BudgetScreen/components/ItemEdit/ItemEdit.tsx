@@ -23,7 +23,7 @@ export const ItemEdit = ({
     onDraftChange({ amount });
   const handleFrequencyChange = (frequency: Frequency) =>
     onDraftChange({ frequency });
-  const handleCategoryIdChange = (categoryId?: string) =>
+  const handleCategoryIdChange = (categoryId: string | null) =>
     onDraftChange({ categoryId });
   const handleNotesChange = (notes: string) => onDraftChange({ notes });
 

@@ -1,10 +1,7 @@
 import type {
-  Item,
   Category,
-  CategorySummary,
   CreateCategoryInput,
 } from "../types";
-import { sumItems } from "../items";
 import { CHARACTER_LIMITS } from "../limits";
 
 export function createCategory(input: CreateCategoryInput): Category {
@@ -35,18 +32,4 @@ function validateNonEmptyString(value: string, name: string): void {
   if (value.length === 0) {
     throw new Error(`${name} is required`);
   }
-}
-
-export function sumCategoryItems(categoryId: string, items: Item[]): number {
-  return sumItems(items.filter((item) => item.categoryId === categoryId));
-}
-
-export function createCategorySummary(
-  category: Category,
-  items: Item[],
-): CategorySummary {
-  return {
-    category,
-    total: sumCategoryItems(category.id, items),
-  };
 }

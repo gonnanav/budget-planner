@@ -43,6 +43,7 @@ const createItemState: EditState = {
     name: "",
     amount: null,
     frequency: "monthly",
+    categoryId: null,
     notes: "",
   },
 };

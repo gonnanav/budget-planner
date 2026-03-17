@@ -45,6 +45,7 @@ export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
       : null;
   const items = activeState?.items ?? [];
   const categories = activeState?.categories ?? [];
+  const groups = activeState?.groups ?? [];
 
   const showItems = activeEntity === "item";
   const showCategories = !showItems;
@@ -101,12 +102,12 @@ export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
       <div className={classes.overview}>
         <div className={classes.summaries}>
           <IncomeSummary
-            amount={budget?.income.sum ?? 0}
+            amount={budget?.income.total ?? 0}
             isActive={activeSection === "income"}
             onClick={toggleIncome}
           />
           <ExpenseSummary
-            amount={budget?.expenses.sum ?? 0}
+            amount={budget?.expenses.total ?? 0}
             isActive={activeSection === "expenses"}
             onClick={toggleExpenses}
           />
@@ -126,11 +127,11 @@ export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
           </div>
           <div className={classes.content}>
             {showItems && (
-              <ItemList items={items} onItemClick={startUpdateItem} />
+              <ItemList items={items} groups={groups} onItemClick={startUpdateItem} />
             )}
             {showCategories && (
               <CategoryList
-                categories={categories}
+                groups={groups}
                 onCategoryClick={startUpdateCategory}
               />
             )}
@@ -148,7 +149,7 @@ export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
             {itemDraft && (
               <ItemEdit
                 draft={itemDraft}
-                categoryOptions={categories.map((s) => s.category)}
+                categoryOptions={categories}
                 onDraftChange={updateItemDraft}
               />
             )}

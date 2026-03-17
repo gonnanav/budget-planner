@@ -59,3 +59,36 @@ export const emptyBudget = createBudget(
   createSectionState([], []),
   createSectionState([], []),
 );
+
+const uncategorizedSalary = createItemVariant(salary, {
+  categoryId: null,
+});
+const uncategorizedRent = createItemVariant(rent, { categoryId: null });
+const uncategorizedGroceries = createItemVariant(groceries, {
+  categoryId: null,
+});
+
+export const noCategoriesBudget = createBudget(
+  createSectionState([uncategorizedSalary], []),
+  createSectionState([uncategorizedRent, uncategorizedGroceries], []),
+);
+
+export const emptyCategoriesBudget = createBudget(
+  createSectionState([salary], [employment, passive]),
+  createSectionState([rent, groceries], [housing, transportation, food, personal]),
+);
+
+const uncategorizedGym = createItemVariant(gymMembership, {
+  categoryId: null,
+});
+const uncategorizedStreaming = createItemVariant(streamingServices, {
+  categoryId: null,
+});
+
+export const mixedCategoriesBudget = createBudget(
+  createSectionState([salary, freelance], [employment]),
+  createSectionState(
+    [rent, electricity, groceries, diningOut, uncategorizedGym, uncategorizedStreaming],
+    [housing, food],
+  ),
+);

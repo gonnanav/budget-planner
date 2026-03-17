@@ -1,1 +1,1 @@
-export { createCategory, sumCategoryItems, createCategorySummary } from './categories';
+export { createCategory } from './categories';

@@ -1,9 +1,9 @@
 import { Select } from "@mantine/core";
 
 interface CategoryInputProps {
-  selectedCategoryId?: string;
+  selectedCategoryId: string | null;
   categoryOptions: { id: string; name: string }[];
-  onCategoryChange: (categoryId?: string) => void;
+  onCategoryChange: (categoryId: string | null) => void;
 }
 
 export const CategoryInput = ({
@@ -13,16 +13,12 @@ export const CategoryInput = ({
 }: CategoryInputProps) => {
   const data = categoryOptions.map(({ id, name }) => ({ value: id, label: name }));
 
-  const handleChange = (value: string | null) => {
-    onCategoryChange(value ?? undefined);
-  };
-
   return (
     <Select
       label="Category"
       data={data}
-      value={selectedCategoryId ?? null}
-      onChange={handleChange}
+      value={selectedCategoryId}
+      onChange={onCategoryChange}
     />
   );
 };

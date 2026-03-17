@@ -1,5 +1,6 @@
 export { BalanceBanner } from "./BalanceBanner/BalanceBanner";
 export { CategoryEdit } from "./CategoryEdit/CategoryEdit";
+export { CategoryGroup } from "./CategoryGroup/CategoryGroup";
 export { CategoryRow } from "./CategoryRow/CategoryRow";
 export { CategoryList } from "./CategoryList/CategoryList";
 export { ItemEdit } from "./ItemEdit/ItemEdit";

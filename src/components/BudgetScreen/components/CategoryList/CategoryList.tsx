@@ -1,28 +1,30 @@
 import { CategoryRow } from "../CategoryRow/CategoryRow";
 import { EmptyList } from "../EmptyList/EmptyList";
-import type { Category, CategorySummary } from "domain/types";
+import type { Category, CategoryGroup } from "domain/types";
 
-interface CategoryListProps {
-  categories: CategorySummary[];
+type CategoryListProps = {
+  groups: CategoryGroup[];
   onCategoryClick: (category: Category) => void;
-}
+};
 
 export function CategoryList({
-  categories,
+  groups,
   onCategoryClick,
 }: CategoryListProps) {
-  if (categories.length === 0) {
+  const categorized = groups.filter((g) => g.kind === "categorized");
+
+  if (categorized.length === 0) {
     return <EmptyList entity="category" />;
   }
 
   return (
     <ul>
-      {categories.map((summary) => (
+      {categorized.map((group) => (
         <CategoryRow
-          key={summary.category.id}
-          name={summary.category.name}
-          amount={summary.total}
-          onClick={() => onCategoryClick(summary.category)}
+          key={group.category.id}
+          name={group.category.name}
+          amount={group.total}
+          onClick={() => onCategoryClick(group.category)}
         />
       ))}
     </ul>

@@ -24,4 +24,3 @@ export const investment = createItem({
   categoryId: passive.id,
   section: "income",
 });
-

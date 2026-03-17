@@ -71,7 +71,7 @@ export async function deleteCategory(
       .where("categoryId")
       .equals(id)
       .modify((item) => {
-        delete item.categoryId;
+        item.categoryId = null;
       });
 
     await categoriesTable.delete(id);

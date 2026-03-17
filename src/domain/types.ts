@@ -13,7 +13,7 @@ export interface ItemInput {
   name: string;
   amount?: number | null;
   frequency?: Frequency;
-  categoryId?: string;
+  categoryId?: string | null;
   notes?: string;
 }
 
@@ -25,7 +25,7 @@ export interface Item {
   name: string;
   amount: number | null;
   frequency: Frequency;
-  categoryId?: string;
+  categoryId: string | null;
   notes?: string;
   normalizedAmount: number;
 }
@@ -36,7 +36,7 @@ export interface ItemDraft {
   name: string;
   amount: number | null;
   frequency: Frequency;
-  categoryId?: string;
+  categoryId: string | null;
   notes?: string;
 }
 
@@ -65,15 +65,15 @@ export type EditState =
   | { mode: EditMode; entity: "item"; draft: ItemDraft }
   | { mode: EditMode; entity: "category"; draft: CategoryDraft };
 
-export interface CategorySummary {
-  category: Category;
-  total: number;
-}
+export type CategoryGroup =
+  | { kind: "categorized"; category: Category; items: Item[]; total: number }
+  | { kind: "uncategorized"; items: Item[]; total: number };
 
 export interface SectionState {
   items: Item[];
-  categories: CategorySummary[];
-  sum: number;
+  categories: Category[];
+  groups: CategoryGroup[];
+  total: number;
 }
 
 export interface Balance {

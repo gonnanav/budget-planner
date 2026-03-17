@@ -49,6 +49,7 @@ const emptyBudgetService = {
   getBudget: async () => emptyBudget,
 };
 
+
 export const Surplus: Story = {
   decorators: [
     (Story) => (

@@ -11,7 +11,7 @@ export function createItem(input: CreateItemInput): Item {
     name: input.name,
     amount: input.amount ?? null,
     frequency: input.frequency ?? "monthly",
-    categoryId: input.categoryId,
+    categoryId: input.categoryId ?? null,
     notes: input.notes,
     section: input.section,
   };
