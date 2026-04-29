@@ -10,9 +10,9 @@ import {
   IncomeSummary,
   ExpenseSummary,
 } from "./components";
-import { useContext } from "react";
-import { useEntityEdit, useActiveSection, useActiveEntity, useBudget } from "./hooks";
-import type { EditState } from "domain/types";
+import { useContext, useState } from "react";
+import { useEntityEdit, useBudget } from "./hooks";
+import type { EditState, Section, Entity } from "domain/types";
 import { BudgetServiceContext } from "contexts/BudgetServiceContext";
 import classes from "./BudgetScreen.module.css";
 
@@ -23,12 +23,19 @@ type BudgetScreenProps = {
 export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
   const budgetService = useContext(BudgetServiceContext);
   const budgetLoadable = useBudget();
-  const { activeSection, toggleIncome, toggleExpenses } = useActiveSection(
+  const [activeSection, setActiveSection] = useState<Section | null>(
     initialEditState?.draft.section ?? null,
   );
-  const { activeEntity, toggleEntity } = useActiveEntity(
+  const toggleIncome = () =>
+    setActiveSection((prev) => (prev === "income" ? null : "income"));
+  const toggleExpenses = () =>
+    setActiveSection((prev) => (prev === "expenses" ? null : "expenses"));
+
+  const [activeEntity, setActiveEntity] = useState<Entity>(
     initialEditState?.entity ?? "item",
   );
+  const toggleEntity = () =>
+    setActiveEntity((prev) => (prev === "item" ? "category" : "item"));
   const edit = useEntityEdit(initialEditState);
 
   const { startCreateItem, startUpdateItem, updateItemDraft } = edit.actions;
