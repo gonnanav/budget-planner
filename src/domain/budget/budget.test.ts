@@ -1,7 +1,10 @@
 import { expect, test } from "vitest";
 import { createSectionState } from "./budget";
-import { createTestItem, createTestItems } from "fixtures/utils";
-import { employment, passive } from "fixtures/incomeCategories";
+import { createTestItem, createTestItems } from "test-utils";
+import { createCategory } from "domain/categories";
+
+const employment = createCategory({ id: "employment", name: "Employment", section: "income" });
+const passive = createCategory({ id: "passive", name: "Passive", section: "income" });
 
 const employmentItem1 = createTestItem({ id: "e1", categoryId: employment.id });
 const employmentItem2 = createTestItem({ id: "e2", categoryId: employment.id });

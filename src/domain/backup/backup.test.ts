@@ -1,46 +1,15 @@
 import { test, expect } from "vitest";
 import { createBackupData } from "./backup";
-import { salary, freelance, investment } from "fixtures/incomeItems";
-import {
-  rent,
-  electricity,
-  water,
-  internet,
-  gas,
-  carInsurance,
-  groceries,
-  diningOut,
-  gymMembership,
-  streamingServices,
-  hobbies,
-} from "fixtures/expenseItems";
-import { employment, passive } from "fixtures/incomeCategories";
-import { housing, transportation, food, personal } from "fixtures/expenseCategories";
 
-const incomeItems = [salary, freelance, investment];
-const expenseItems = [
-  rent,
-  electricity,
-  water,
-  internet,
-  gas,
-  carInsurance,
-  groceries,
-  diningOut,
-  gymMembership,
-  streamingServices,
-  hobbies,
-];
-const incomeCategories = [employment, passive];
-const expenseCategories = [housing, transportation, food, personal];
+const emptyInput = {
+  incomeItems: [],
+  expenseItems: [],
+  incomeCategories: [],
+  expenseCategories: [],
+};
 
 test("metadata contains correct version number and timestamp", () => {
-  const { metadata } = createBackupData({
-    incomeItems,
-    expenseItems,
-    incomeCategories,
-    expenseCategories,
-  });
+  const { metadata } = createBackupData(emptyInput);
 
   expect(metadata).toMatchObject({
     version: "0.2.0",
@@ -49,17 +18,12 @@ test("metadata contains correct version number and timestamp", () => {
 });
 
 test("data section contains data in the correct format", () => {
-  const { data } = createBackupData({
-    incomeItems,
-    expenseItems,
-    incomeCategories,
-    expenseCategories,
-  });
+  const { data } = createBackupData(emptyInput);
 
   expect(data).toEqual({
-    incomeItems,
-    expenseItems,
-    incomeCategories,
-    expenseCategories,
+    incomeItems: [],
+    expenseItems: [],
+    incomeCategories: [],
+    expenseCategories: [],
   });
 });

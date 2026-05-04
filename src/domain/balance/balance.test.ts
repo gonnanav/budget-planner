@@ -1,6 +1,6 @@
 import { test, expect } from "vitest";
 import { calculateBalance } from "./balance";
-import { createTestItems } from "fixtures/utils";
+import { createTestItems } from "test-utils";
 
 test("balanced when incomes and expenses are equal", () => {
   const { balance, status } = calculateBalance(
