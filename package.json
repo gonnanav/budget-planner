@@ -30,10 +30,11 @@
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@playwright/test": "^1.59.1",
+    "@rolldown/plugin-babel": "^0.2.3",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
+    "@vitejs/plugin-react": "^6.0.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
@@ -45,7 +46,7 @@
     "react-router-dom": "^7.13.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.1",
-    "vite": "^7.2.4",
+    "vite": "^8.0.10",
     "vite-tsconfig-paths": "^6.1.0",
     "vitest": "^4.0.18"
   }
