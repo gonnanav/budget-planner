@@ -1,5 +1,5 @@
 import { Tabs } from "@mantine/core";
-import type { Entity } from "domain/types";
+import type { Entity } from "@/domain/types";
 
 interface SectionTabsProps {
   selectedTab: Entity;

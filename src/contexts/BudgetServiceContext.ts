@@ -4,7 +4,7 @@ import type {
   CategoryInput,
   ItemInput,
   Section,
-} from "domain/types";
+} from "@/domain/types";
 
 export type BudgetService = {
   getBudget: () => Promise<Budget>;

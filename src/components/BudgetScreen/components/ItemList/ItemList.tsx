@@ -1,7 +1,7 @@
 import { ItemRow } from "../ItemRow/ItemRow";
 import { CategoryGroup } from "../CategoryGroup/CategoryGroup";
 import { EmptyList } from "../EmptyList/EmptyList";
-import type { Item, CategoryGroup as CategoryGroupType } from "domain/types";
+import type { Item, CategoryGroup as CategoryGroupType } from "@/domain/types";
 
 type ItemListProps = {
   items: Item[];

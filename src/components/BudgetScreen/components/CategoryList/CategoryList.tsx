@@ -1,6 +1,6 @@
 import { CategoryRow } from "../CategoryRow/CategoryRow";
 import { EmptyList } from "../EmptyList/EmptyList";
-import type { Category, CategoryGroup } from "domain/types";
+import type { Category, CategoryGroup } from "@/domain/types";
 
 type CategoryListProps = {
   groups: CategoryGroup[];

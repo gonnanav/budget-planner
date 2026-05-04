@@ -1,7 +1,7 @@
 
 
 import { clsx } from "clsx";
-import { formatAmount } from "lib/format";
+import { formatAmount } from "@/lib/format";
 import classes from "./SectionSummary.module.css";
 
 interface SectionSummaryProps {

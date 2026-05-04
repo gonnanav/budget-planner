@@ -1,7 +1,7 @@
-import { createBackupData } from "domain/backup";
-import type { BackupData } from "domain/types";
-import { restoreAllData, getAllData } from "db/backup";
-import type { CategoryRecord, ItemRecord } from "db/types";
+import { createBackupData } from "@/domain/backup";
+import type { BackupData } from "@/domain/types";
+import { restoreAllData, getAllData } from "@/db/backup";
+import type { CategoryRecord, ItemRecord } from "@/db/types";
 
 interface BackupDataV1 {
   metadata: {

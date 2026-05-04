@@ -12,8 +12,8 @@ import {
 } from "./components";
 import { useContext, useState } from "react";
 import { useEntityEdit, useBudget } from "./hooks";
-import type { EditState, Section, Entity } from "domain/types";
-import { BudgetServiceContext } from "contexts/BudgetServiceContext";
+import type { EditState, Section, Entity } from "@/domain/types";
+import { BudgetServiceContext } from "@/contexts/BudgetServiceContext";
 import classes from "./BudgetScreen.module.css";
 
 type BudgetScreenProps = {

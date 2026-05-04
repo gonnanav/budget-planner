@@ -2,7 +2,7 @@ import { Drawer } from "@mantine/core";
 import { Trash2 } from "lucide-react";
 import classes from "./EditDrawer.module.css";
 import type { ReactNode } from "react";
-import type { Section, Entity } from "domain/types";
+import type { Section, Entity } from "@/domain/types";
 
 type Mode = "create" | "update";
 

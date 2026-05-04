@@ -1,4 +1,4 @@
-import type { CategoryDraft } from "domain/types";
+import type { CategoryDraft } from "@/domain/types";
 import { CategoryNameInput } from "./CategoryNameInput";
 import classes from "./CategoryEdit.module.css";
 

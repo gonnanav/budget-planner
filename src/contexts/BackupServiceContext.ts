@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { BackupData } from "domain/types";
+import type { BackupData } from "@/domain/types";
 
 export type BackupService = {
   backupData: () => Promise<void>;

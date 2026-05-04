@@ -1,5 +1,5 @@
-import { BudgetServiceContext } from "contexts/BudgetServiceContext";
-import { BackupServiceContext } from "contexts/BackupServiceContext";
+import { BudgetServiceContext } from "@/contexts/BudgetServiceContext";
+import { BackupServiceContext } from "@/contexts/BackupServiceContext";
 import {
   getBudget,
   addItem,
@@ -8,8 +8,8 @@ import {
   addCategory,
   updateCategory,
   deleteCategory,
-} from "services/budget";
-import { backupData, restoreData } from "services/backup";
+} from "@/services/budget";
+import { backupData, restoreData } from "@/services/backup";
 
 interface ServiceProvidersProps {
   children: React.ReactNode;

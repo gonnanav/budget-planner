@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ItemDraft, CategoryDraft, EditState, Section } from "domain/types";
+import type { ItemDraft, CategoryDraft, EditState, Section } from "@/domain/types";
 
 const DEFAULT_ITEM_DRAFT: Partial<ItemDraft> = {
   name: "",

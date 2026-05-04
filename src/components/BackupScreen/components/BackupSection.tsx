@@ -4,7 +4,7 @@ import { useState, useContext } from "react";
 import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Download } from "lucide-react";
-import { BackupServiceContext } from "contexts/BackupServiceContext";
+import { BackupServiceContext } from "@/contexts/BackupServiceContext";
 import classes from "./BackupSection.module.css";
 
 export function BackupSection() {

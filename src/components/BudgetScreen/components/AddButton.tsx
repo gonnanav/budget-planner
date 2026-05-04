@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import type { Entity } from "domain/types";
+import type { Entity } from "@/domain/types";
 import classes from "./AddButton.module.css";
 
 interface AddButtonProps {
