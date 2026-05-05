@@ -17,4 +17,9 @@ export default defineConfig([globalIgnores(['dist']), {
     ecmaVersion: 2020,
     globals: globals.browser,
   },
+}, {
+  files: ['tests/**/*.{ts,tsx}'],
+  rules: {
+    'react-hooks/rules-of-hooks': 'off',
+  },
 }])

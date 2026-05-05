@@ -30,7 +30,7 @@ export function BalanceBanner({
   const Icon = config.icon;
 
   return (
-    <Paper shadow="none" className={clsx(classes.root, classes[status])}>
+    <Paper role="status" aria-label="Balance" shadow="none" className={clsx(classes.root, classes[status])}>
       <div className={classes.body}>
         <div className={classes.row}>
           <div className={classes.left}>
