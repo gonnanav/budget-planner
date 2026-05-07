@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Providers } from './providers/Providers';
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import { AppShell } from './components/AppShell/AppShell';
 import { BudgetScreen } from './components/BudgetScreen/BudgetScreen';
 import { BackupScreen } from './components/BackupScreen/BackupScreen';
@@ -8,7 +9,8 @@ import '@mantine/notifications/styles.css';
 
 function App() {
   return (
-    <Providers>
+    <MantineProvider>
+      <Notifications />
       <BrowserRouter>
         <AppShell>
           <Routes>
@@ -17,7 +19,7 @@ function App() {
           </Routes>
         </AppShell>
       </BrowserRouter>
-    </Providers>
+    </MantineProvider>
   );
 }
 
