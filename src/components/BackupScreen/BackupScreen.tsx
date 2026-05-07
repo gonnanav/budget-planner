@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { BackupSection } from "./components/BackupSection";
-import { RestoreSection } from "./components/RestoreSection";
+import { BackupSection } from "./BackupSection";
+import { RestoreSection } from "./RestoreSection";
 import classes from "./BackupScreen.module.css";
 
 export function BackupScreen() {
