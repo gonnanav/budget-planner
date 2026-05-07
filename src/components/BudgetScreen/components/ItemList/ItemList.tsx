@@ -1,18 +1,26 @@
 import { ItemRow } from "../ItemRow/ItemRow";
 import { CategoryGroup } from "../CategoryGroup/CategoryGroup";
 import { EmptyList } from "../EmptyList/EmptyList";
-import type { Item, CategoryGroup as CategoryGroupType } from "@/domain/types";
+import type { Item, Category, CategoryGroup as CategoryGroupType } from "@/domain/types";
 
 type ItemListProps = {
   items: Item[];
   groups: CategoryGroupType[];
   onItemClick: (item: Item) => void;
+  onCategoryClick: (category: Category) => void;
 };
 
-export function ItemList({ items, groups, onItemClick }: ItemListProps) {
+export function ItemList({ items, groups, onItemClick, onCategoryClick }: ItemListProps) {
   if (items.length === 0) {
     return <EmptyList entity="item" />;
   }
+  
+  function handleHeaderClick(group: CategoryGroupType) {
+    if (group.kind !== "categorized") return;
+
+    onCategoryClick(group.category);
+  }
+  
 
   if (groups.length === 0) {
     return (
@@ -33,22 +41,14 @@ export function ItemList({ items, groups, onItemClick }: ItemListProps) {
 
   return (
     <div>
-      {groups.map((group) => {
-        const key =
-          group.kind === "categorized" ? group.category.id : "uncategorized";
-        const name =
-          group.kind === "categorized" ? group.category.name : "Uncategorized";
-
-        return (
-          <CategoryGroup
-            key={key}
-            name={name}
-            total={group.total}
-            items={group.items}
-            onItemClick={onItemClick}
-          />
-        );
-      })}
+      {groups.map((group) => (
+        <CategoryGroup
+          key={group.kind === "categorized" ? group.category.id : group.kind}
+          group={group}
+          onItemClick={onItemClick}
+          onHeaderClick={() => handleHeaderClick(group)}
+        />
+      ))}
     </div>
   );
 }

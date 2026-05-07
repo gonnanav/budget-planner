@@ -1,36 +1,41 @@
 import { ItemRow } from "../ItemRow/ItemRow";
-import type { Item } from "@/domain/types";
+import type { Item, CategoryGroup as CategoryGroupType } from "@/domain/types";
 import classes from "./CategoryGroup.module.css";
 
 type CategoryGroupProps = {
-  name: string;
-  total: number;
-  items: Item[];
+  group: CategoryGroupType;
   onItemClick: (item: Item) => void;
+  onHeaderClick: () => void;
 };
 
-export function CategoryGroup({
-  name,
-  total,
-  items,
-  onItemClick,
-}: CategoryGroupProps) {
-  const isEmpty = items.length === 0;
-  const totalText = isEmpty
-    ? "No items"
-    : `₪${total.toLocaleString()}/month`;
+export function CategoryGroup({ group, onItemClick, onHeaderClick }: CategoryGroupProps) {
+  const name = group.kind === "categorized" ? group.category.name : "Uncategorized";
+  const isEmpty = group.items.length === 0;
+  const totalText = isEmpty ? "No items" : `₪${group.total.toLocaleString()}/month`;
 
-  return (
-    <div className={classes.root}>
+  const header =
+    group.kind === "categorized" ? (
+      <button className={classes.header} onClick={onHeaderClick}>
+        <span className={classes.name}>{name}</span>
+        <span className={isEmpty ? classes.emptyTotal : classes.total}>
+          {totalText}
+        </span>
+      </button>
+    ) : (
       <div className={classes.header}>
         <span className={classes.name}>{name}</span>
         <span className={isEmpty ? classes.emptyTotal : classes.total}>
           {totalText}
         </span>
       </div>
-      {items.length > 0 && (
+    );
+
+  return (
+    <div className={classes.root}>
+      {header}
+      {group.items.length > 0 && (
         <ul className={classes.items}>
-          {items.map((item) => (
+          {group.items.map((item) => (
             <ItemRow
               key={item.id}
               name={item.name}

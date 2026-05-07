@@ -24,14 +24,6 @@
     min-height: 0;
     height: 100%;
 
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      width: 100%;
-    }
-
     .content {
       overflow-y: auto;
     }
@@ -43,5 +35,14 @@
         gap: 1px;
       }
     }
+
+    .footer {
+      /* Layout */
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+
   }
 }

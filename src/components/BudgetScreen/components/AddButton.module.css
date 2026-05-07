@@ -2,24 +2,46 @@
   /* Layout */
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 6px;
 
   /* Box model */
-  width: 36px;
-  height: 36px;
-  padding: 0;
+  padding: 8px 16px;
   border: none;
   border-radius: 4px;
 
+  /* Visual */
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.primary {
   /* Visual */
   background: var(--color-primary);
   color: white;
 }
 
-.addButton:hover {
+.primary:hover {
+  /* Visual */
   background: var(--color-primary-hover);
 }
 
-.addButton:active {
+.primary:active {
+  /* Visual */
   background: var(--color-primary-active);
+}
+
+.secondary {
+  /* Visual */
+  background: none;
+  color: var(--color-primary);
+}
+
+.secondary:hover {
+  /* Visual */
+  color: var(--color-primary-hover);
+}
+
+.secondary:active {
+  /* Visual */
+  color: var(--color-primary-active);
 }

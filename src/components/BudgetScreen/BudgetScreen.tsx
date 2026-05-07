@@ -1,18 +1,16 @@
 import {
   BalanceBanner,
-  SectionTabs,
   AddButton,
   EditDrawer,
   CategoryEdit,
   ItemEdit,
-  CategoryList,
   ItemList,
   IncomeSummary,
   ExpenseSummary,
 } from "./components";
 import { useContext, useState } from "react";
 import { useEntityEdit, useBudget } from "./hooks";
-import type { EditState, Section, Entity } from "@/domain/types";
+import type { EditState, Section } from "@/domain/types";
 import { BudgetServiceContext } from "@/contexts/BudgetServiceContext";
 import classes from "./BudgetScreen.module.css";
 
@@ -31,11 +29,6 @@ export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
   const toggleExpenses = () =>
     setActiveSection((prev) => (prev === "expenses" ? null : "expenses"));
 
-  const [activeEntity, setActiveEntity] = useState<Entity>(
-    initialEditState?.entity ?? "item",
-  );
-  const toggleEntity = () =>
-    setActiveEntity((prev) => (prev === "item" ? "category" : "item"));
   const edit = useEntityEdit(initialEditState);
 
   const { startCreateItem, startUpdateItem, updateItemDraft } = edit.actions;
@@ -54,22 +47,19 @@ export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
   const categories = activeState?.categories ?? [];
   const groups = activeState?.groups ?? [];
 
-  const showItems = activeEntity === "item";
-  const showCategories = !showItems;
-
   const isDrawerOpen = Boolean(edit.state);
   const itemDraft = edit.state?.entity === "item" ? edit.state.draft : null;
   const categoryDraft =
     edit.state?.entity === "category" ? edit.state.draft : null;
 
-  const handleStartCreate = () => {
+  const handleStartCreateItem = () => {
     if (!activeSection) return;
+    startCreateItem(activeSection);
+  };
 
-    if (activeEntity === "item") {
-      startCreateItem(activeSection);
-    } else if (activeEntity === "category") {
-      startCreateCategory(activeSection);
-    }
+  const handleStartCreateCategory = () => {
+    if (!activeSection) return;
+    startCreateCategory(activeSection);
   };
 
   const handleSave = () => {
@@ -125,23 +115,17 @@ export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
       </div>
       {activeSection && (
         <div className={classes.section}>
-          <div className={classes.header}>
-            <SectionTabs
-              selectedTab={activeEntity}
-              onTabChange={toggleEntity}
-            />
-            <AddButton entity={activeEntity} onClick={handleStartCreate} />
-          </div>
           <div className={classes.content}>
-            {showItems && (
-              <ItemList items={items} groups={groups} onItemClick={startUpdateItem} />
-            )}
-            {showCategories && (
-              <CategoryList
-                groups={groups}
-                onCategoryClick={startUpdateCategory}
-              />
-            )}
+            <ItemList
+              items={items}
+              groups={groups}
+              onItemClick={startUpdateItem}
+              onCategoryClick={startUpdateCategory}
+            />
+          </div>
+          <div className={classes.footer}>
+            <AddButton onClick={handleStartCreateItem}>Add item</AddButton>
+            <AddButton variant="secondary" onClick={handleStartCreateCategory}>Add category</AddButton>
           </div>
           <EditDrawer
             isOpen={isDrawerOpen}

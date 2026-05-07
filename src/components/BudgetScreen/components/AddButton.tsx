@@ -1,18 +1,18 @@
 import { Plus } from "lucide-react";
-import type { Entity } from "@/domain/types";
+import clsx from "clsx";
 import classes from "./AddButton.module.css";
 
-interface AddButtonProps {
-  entity: Entity;
+type AddButtonProps = {
+  variant?: "primary" | "secondary";
   onClick: () => void;
-}
+  children: string;
+};
 
-export function AddButton({ entity, onClick }: AddButtonProps) {
-  const label = entity === "item" ? "Add Item" : "Add Category";
-
+export function AddButton({ variant = "primary", onClick, children }: AddButtonProps) {
   return (
-    <button className={classes.addButton} aria-label={label} onClick={onClick}>
+    <button className={clsx(classes.addButton, classes[variant])} onClick={onClick}>
       <Plus size={16} />
+      {children}
     </button>
   );
 }
