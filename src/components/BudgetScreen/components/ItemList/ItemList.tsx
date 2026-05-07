@@ -2,6 +2,7 @@ import { ItemRow } from "../ItemRow/ItemRow";
 import { CategoryGroup } from "../CategoryGroup/CategoryGroup";
 import { EmptyList } from "../EmptyList/EmptyList";
 import type { Item, Category, CategoryGroup as CategoryGroupType } from "@/domain/types";
+import classes from "./ItemList.module.css";
 
 type ItemListProps = {
   items: Item[];
@@ -24,7 +25,7 @@ export function ItemList({ items, groups, onItemClick, onCategoryClick }: ItemLi
 
   if (groups.length === 0) {
     return (
-      <ul>
+      <ul className={classes.root}>
         {items.map((item) => (
           <ItemRow
             key={item.id}
