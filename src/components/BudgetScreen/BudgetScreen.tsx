@@ -9,26 +9,20 @@ import {
 } from "./components";
 import { useContext, useState } from "react";
 import { useEntityEdit, useBudget } from "./hooks";
-import type { EditState, Section } from "@/domain/types";
+import type { Section } from "@/domain/types";
 import { BudgetServiceContext } from "@/contexts/BudgetServiceContext";
 import classes from "./BudgetScreen.module.css";
 
-type BudgetScreenProps = {
-  initialEditState?: EditState | null;
-};
-
-export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
+export function BudgetScreen() {
   const budgetService = useContext(BudgetServiceContext);
   const budgetLoadable = useBudget();
-  const [selectedSection, setSelectedSection] = useState<Section | null>(
-    initialEditState?.draft.section ?? null,
-  );
+  const [selectedSection, setSelectedSection] = useState<Section | null>(null);
   const toggleIncome = () =>
     setSelectedSection((prev) => (prev === "income" ? null : "income"));
   const toggleExpenses = () =>
     setSelectedSection((prev) => (prev === "expenses" ? null : "expenses"));
 
-  const edit = useEntityEdit(initialEditState);
+  const edit = useEntityEdit();
 
   const { startCreateItem, startUpdateItem, updateItemDraft } = edit.actions;
   const { startCreateCategory, startUpdateCategory, updateCategoryDraft } =

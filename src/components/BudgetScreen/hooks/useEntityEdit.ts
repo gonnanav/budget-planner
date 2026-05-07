@@ -23,8 +23,8 @@ export type UseEntityEditResult = {
   };
 };
 
-export function useEntityEdit(initialState?: EditState | null): UseEntityEditResult {
-  const [state, setState] = useState<EditState | null>(initialState ?? null);
+export function useEntityEdit(): UseEntityEditResult {
+  const [state, setState] = useState<EditState | null>(null);
 
   const startCreateItem = (section: Section) => {
     setState({
