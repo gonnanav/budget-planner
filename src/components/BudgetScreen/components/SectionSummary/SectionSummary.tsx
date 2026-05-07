@@ -2,33 +2,33 @@
 
 import { clsx } from "clsx";
 import { formatAmount } from "@/lib/format";
+import type { Section } from "@/domain/types";
 import classes from "./SectionSummary.module.css";
 
 type SectionSummaryProps = {
-  title: string;
+  section: Section;
   amount: number;
-  variant: "income" | "expense";
-  isActive?: boolean;
-  onClick?: () => void;
+  selected: boolean;
+  onSelect: () => void;
 };
 
 export function SectionSummary({
-  title,
+  section,
   amount,
-  variant,
-  isActive = false,
-  onClick,
+  selected,
+  onSelect,
 }: SectionSummaryProps) {
+  const title = section === "income" ? "Income" : "Expenses";
   const formattedAmount = formatAmount(amount);
 
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={onSelect}
       className={clsx(classes.root, {
-        [classes.income]: variant === "income",
-        [classes.expense]: variant === "expense",
-        [classes.active]: isActive,
+        [classes.income]: section === "income",
+        [classes.expense]: section === "expenses",
+        [classes.active]: selected,
       })}
     >
       <div className={classes.content}>

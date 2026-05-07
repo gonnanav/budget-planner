@@ -5,8 +5,7 @@ import {
   CategoryEdit,
   ItemEdit,
   ItemList,
-  IncomeSummary,
-  ExpenseSummary,
+  SectionSummary,
 } from "./components";
 import { useContext, useState } from "react";
 import { useEntityEdit, useBudget } from "./hooks";
@@ -21,13 +20,13 @@ type BudgetScreenProps = {
 export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
   const budgetService = useContext(BudgetServiceContext);
   const budgetLoadable = useBudget();
-  const [activeSection, setActiveSection] = useState<Section | null>(
+  const [selectedSection, setSelectedSection] = useState<Section | null>(
     initialEditState?.draft.section ?? null,
   );
   const toggleIncome = () =>
-    setActiveSection((prev) => (prev === "income" ? null : "income"));
+    setSelectedSection((prev) => (prev === "income" ? null : "income"));
   const toggleExpenses = () =>
-    setActiveSection((prev) => (prev === "expenses" ? null : "expenses"));
+    setSelectedSection((prev) => (prev === "expenses" ? null : "expenses"));
 
   const edit = useEntityEdit(initialEditState);
 
@@ -37,15 +36,15 @@ export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
   const { stopEdit } = edit.actions;
 
   const budget = budgetLoadable.status === "ready" ? budgetLoadable.data : null;
-  const activeState =
-    budget && activeSection
-      ? activeSection === "expenses"
+  const selectedState =
+    budget && selectedSection
+      ? selectedSection === "expenses"
         ? budget.expenses
         : budget.income
       : null;
-  const items = activeState?.items ?? [];
-  const categories = activeState?.categories ?? [];
-  const groups = activeState?.groups ?? [];
+  const items = selectedState?.items ?? [];
+  const categories = selectedState?.categories ?? [];
+  const groups = selectedState?.groups ?? [];
 
   const isDrawerOpen = Boolean(edit.state);
   const itemDraft = edit.state?.entity === "item" ? edit.state.draft : null;
@@ -53,13 +52,13 @@ export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
     edit.state?.entity === "category" ? edit.state.draft : null;
 
   const handleStartCreateItem = () => {
-    if (!activeSection) return;
-    startCreateItem(activeSection);
+    if (!selectedSection) return;
+    startCreateItem(selectedSection);
   };
 
   const handleStartCreateCategory = () => {
-    if (!activeSection) return;
-    startCreateCategory(activeSection);
+    if (!selectedSection) return;
+    startCreateCategory(selectedSection);
   };
 
   const handleSave = () => {
@@ -98,22 +97,24 @@ export function BudgetScreen({ initialEditState }: BudgetScreenProps = {}) {
     <div className={classes.root}>
       <div className={classes.overview}>
         <div className={classes.summaries}>
-          <IncomeSummary
+          <SectionSummary
+            section="income"
             amount={budget?.income.total ?? 0}
-            isActive={activeSection === "income"}
-            onClick={toggleIncome}
+            selected={selectedSection === "income"}
+            onSelect={toggleIncome}
           />
-          <ExpenseSummary
+          <SectionSummary
+            section="expenses"
             amount={budget?.expenses.total ?? 0}
-            isActive={activeSection === "expenses"}
-            onClick={toggleExpenses}
+            selected={selectedSection === "expenses"}
+            onSelect={toggleExpenses}
           />
         </div>
         <BalanceBanner
           balance={budget?.balance ?? { status: "balanced", delta: 0 }}
         />
       </div>
-      {activeSection && (
+      {selectedSection && (
         <div className={classes.section}>
           <div className={classes.content}>
             <ItemList

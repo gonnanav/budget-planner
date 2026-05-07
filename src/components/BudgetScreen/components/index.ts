@@ -8,5 +8,4 @@ export { ItemList } from "./ItemList/ItemList";
 export { EmptyList } from "./EmptyList/EmptyList";
 export { AddButton } from "./AddButton";
 export { EditDrawer } from "./EditDrawer/EditDrawer";
-export { IncomeSummary } from "./IncomeSummary";
-export { ExpenseSummary } from "./ExpenseSummary";
+export { SectionSummary } from "./SectionSummary/SectionSummary";
