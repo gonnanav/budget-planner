@@ -1,13 +1,10 @@
-import { useContext } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import type { Budget, Loadable } from "@/domain/types";
-import { BudgetServiceContext } from "@/contexts/BudgetServiceContext";
+import { getBudget } from "@/services/budget";
 
 export function useBudget(): Loadable<Budget> {
-  const budgetService = useContext(BudgetServiceContext);
-
   return useLiveQuery(
-    async () => ({ status: "ready" as const, data: await budgetService.getBudget() }),
+    async () => ({ status: "ready" as const, data: await getBudget() }),
     [],
     { status: "loading" as const },
   );
