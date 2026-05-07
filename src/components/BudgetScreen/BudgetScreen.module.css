@@ -26,11 +26,11 @@
   height: 100%;
 }
 
-.content {
+.itemList {
   overflow-y: auto;
 }
 
-.footer {
+.addButtons {
   /* Layout */
   display: flex;
   align-items: center;

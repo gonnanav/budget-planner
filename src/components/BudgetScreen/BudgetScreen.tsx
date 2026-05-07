@@ -110,7 +110,7 @@ export function BudgetScreen() {
       </div>
       {selectedSection && (
         <div className={classes.section}>
-          <div className={classes.content}>
+          <div className={classes.itemList}>
             <ItemList
               items={items}
               groups={groups}
@@ -118,7 +118,7 @@ export function BudgetScreen() {
               onCategoryClick={startUpdateCategory}
             />
           </div>
-          <div className={classes.footer}>
+          <div className={classes.addButtons}>
             <AddButton onClick={handleStartCreateItem}>Add item</AddButton>
             <AddButton variant="secondary" onClick={handleStartCreateCategory}>Add category</AddButton>
           </div>
