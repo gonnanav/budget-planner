@@ -1,6 +1,6 @@
-import { ItemRow } from "@/components/BudgetScreen/components/ItemRow/ItemRow";
-import { CategoryGroup } from "@/components/BudgetScreen/components/CategoryGroup/CategoryGroup";
-import { EmptyList } from "@/components/BudgetScreen/components/EmptyList/EmptyList";
+import { ItemRow } from "./ItemRow";
+import { CategoryGroup } from "./CategoryGroup";
+import { EmptyList } from "./EmptyList";
 import type { Item, Category, CategoryGroup as CategoryGroupType } from "@/domain/types";
 import classes from "./ItemList.module.css";
 
