@@ -1,9 +1,9 @@
 import { NumberInput } from "@mantine/core";
 
-interface AmountInputProps {
+type AmountInputProps = {
   amount: number | null;
   onAmountChange: (amount: number | null) => void;
-}
+};
 
 export function AmountInput({ amount, onAmountChange }: AmountInputProps) {
   const value = toValue(amount);

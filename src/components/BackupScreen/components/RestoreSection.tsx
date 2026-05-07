@@ -9,14 +9,14 @@ import type { BackupData } from "@/domain/types";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
 import classes from "./RestoreSection.module.css";
 
-interface BackupSummary {
+type BackupSummary = {
   version: string;
   exportedAt: string;
   incomeItemsCount: number;
   expenseItemsCount: number;
   incomeCategoriesCount: number;
   expenseCategoriesCount: number;
-}
+};
 
 export function RestoreSection() {
   const backupService = useContext(BackupServiceContext);

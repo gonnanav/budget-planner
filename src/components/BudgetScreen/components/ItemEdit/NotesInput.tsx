@@ -1,10 +1,10 @@
 import { Textarea } from "@mantine/core";
 import { CHARACTER_LIMITS } from "@/domain/limits";
 
-interface NotesInputProps {
+type NotesInputProps = {
   notes?: string;
   onNotesChange: (notes: string) => void;
-}
+};
 
 export function NotesInput({ notes = "", onNotesChange }: NotesInputProps) {
   return (

@@ -6,7 +6,7 @@ import type { Section, Entity } from "@/domain/types";
 
 type Mode = "create" | "update";
 
-export interface EditDrawerProps {
+export type EditDrawerProps = {
   isOpen: boolean;
   mode: Mode | null;
   entity: Entity | null;
@@ -16,7 +16,7 @@ export interface EditDrawerProps {
   onSave: () => void;
   onDelete: () => void;
   children: ReactNode;
-}
+};
 
 const getHeadingText = (
   mode: Mode | null,

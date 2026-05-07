@@ -1,10 +1,10 @@
 import { TextInput } from "@mantine/core";
 import { CHARACTER_LIMITS } from "@/domain/limits";
 
-interface CategoryNameInputProps {
+type CategoryNameInputProps = {
   name: string;
   onChange: (name: string) => void;
-}
+};
 
 export function CategoryNameInput({ name, onChange }: CategoryNameInputProps) {
   return (

@@ -1,12 +1,12 @@
 import classes from "./ItemRow.module.css";
 
-interface ItemRowProps {
+type ItemRowProps = {
   name: string;
   amount: number | null;
   frequency: string;
   normalizedAmount: number;
   onClick: () => void;
-}
+};
 
 export function ItemRow({
   name,

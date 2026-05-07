@@ -5,12 +5,12 @@ import { Modal, Button, Checkbox } from "@mantine/core";
 import { AlertTriangle } from "lucide-react";
 import classes from "./RestoreConfirmModal.module.css";
 
-interface RestoreConfirmModalProps {
+type RestoreConfirmModalProps = {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   onConfirm: () => void;
   isLoading: boolean;
-}
+};
 
 export function RestoreConfirmModal({
   isOpen,

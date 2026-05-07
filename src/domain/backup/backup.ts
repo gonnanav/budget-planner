@@ -1,11 +1,11 @@
 import type { BackupData, Category, Item } from "../types";
 
-interface BackupDataInput {
+type BackupDataInput = {
   incomeItems: Omit<Item, "normalizedAmount" | "section">[];
   expenseItems: Omit<Item, "normalizedAmount" | "section">[];
   incomeCategories: Omit<Category, "section">[];
   expenseCategories: Omit<Category, "section">[];
-}
+};
 
 export function createBackupData({
   incomeItems,

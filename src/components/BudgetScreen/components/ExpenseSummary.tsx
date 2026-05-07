@@ -1,10 +1,10 @@
 import { SectionSummary } from "./SectionSummary/SectionSummary";
 
-interface ExpenseSummaryProps {
+type ExpenseSummaryProps = {
   amount: number;
   isActive?: boolean;
   onClick?: () => void;
-}
+};
 
 export function ExpenseSummary({
   amount,

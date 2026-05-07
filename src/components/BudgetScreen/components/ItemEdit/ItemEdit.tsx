@@ -7,11 +7,11 @@ import { CategoryInput } from "./CategoryInput";
 import { NotesInput } from "./NotesInput";
 import classes from "./ItemEdit.module.css";
 
-export interface ItemEditProps {
+export type ItemEditProps = {
   draft: ItemDraft;
   categoryOptions: { id: string; name: string }[];
   onDraftChange: (changes: Partial<ItemDraft>) => void;
-}
+};
 
 export const ItemEdit = ({
   draft,

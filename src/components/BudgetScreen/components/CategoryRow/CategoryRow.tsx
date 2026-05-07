@@ -1,10 +1,10 @@
 import classes from "./CategoryRow.module.css";
 
-interface CategoryRowProps {
+type CategoryRowProps = {
   name: string;
   amount: number;
   onClick: () => void;
-}
+};
 
 export function CategoryRow({ name, amount, onClick }: CategoryRowProps) {
   return (

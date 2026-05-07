@@ -4,13 +4,13 @@ import { clsx } from "clsx";
 import { formatAmount } from "@/lib/format";
 import classes from "./SectionSummary.module.css";
 
-interface SectionSummaryProps {
+type SectionSummaryProps = {
   title: string;
   amount: number;
   variant: "income" | "expense";
   isActive?: boolean;
   onClick?: () => void;
-}
+};
 
 export function SectionSummary({
   title,

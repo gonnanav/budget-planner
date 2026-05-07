@@ -3,7 +3,7 @@ import type { BackupData } from "@/domain/types";
 import { restoreAllData, getAllData } from "@/db/backup";
 import type { CategoryRecord, ItemRecord } from "@/db/types";
 
-interface BackupDataV1 {
+type BackupDataV1 = {
   metadata: {
     version: string;
     exportedAt: string;
@@ -14,7 +14,7 @@ interface BackupDataV1 {
     incomeCategories: CategoryRecord[];
     expenseCategories: CategoryRecord[];
   };
-}
+};
 
 export async function backupData(): Promise<void> {
   const input = await getAllData();

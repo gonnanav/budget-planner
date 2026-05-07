@@ -1,9 +1,9 @@
 import { Header } from "./components/Header";
 import classes from "./AppShell.module.css";
 
-interface AppShellProps {
+type AppShellProps = {
   children: React.ReactNode;
-}
+};
 
 export function AppShell({ children }: AppShellProps) {
   return (

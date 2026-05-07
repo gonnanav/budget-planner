@@ -8,18 +8,18 @@ export type Loadable<T> =
   | { status: "ready"; data: T }
   | { status: "error"; error: Error };
 
-export interface ItemInput {
+export type ItemInput = {
   section: Section;
   name: string;
   amount?: number | null;
   frequency?: Frequency;
   categoryId?: string | null;
   notes?: string;
-}
+};
 
 export type CreateItemInput = ItemInput & { id: string };
 
-export interface Item {
+export type Item = {
   id: string;
   section: Section;
   name: string;
@@ -28,9 +28,9 @@ export interface Item {
   categoryId: string | null;
   notes?: string;
   normalizedAmount: number;
-}
+};
 
-export interface ItemDraft {
+export type ItemDraft = {
   id?: string;
   section: Section;
   name: string;
@@ -38,26 +38,26 @@ export interface ItemDraft {
   frequency: Frequency;
   categoryId: string | null;
   notes?: string;
-}
+};
 
-export interface Category {
+export type Category = {
   section: Section;
   id: string;
   name: string;
-}
+};
 
-export interface CategoryInput {
+export type CategoryInput = {
   section: Section;
   name: string;
-}
+};
 
 export type CreateCategoryInput = CategoryInput & { id: string };
 
-export interface CategoryDraft {
+export type CategoryDraft = {
   id?: string;
   section: Section;
   name: string;
-}
+};
 
 export type EditMode = "create" | "update";
 
@@ -69,25 +69,25 @@ export type CategoryGroup =
   | { kind: "categorized"; category: Category; items: Item[]; total: number }
   | { kind: "uncategorized"; items: Item[]; total: number };
 
-export interface SectionState {
+export type SectionState = {
   items: Item[];
   categories: Category[];
   groups: CategoryGroup[];
   total: number;
-}
+};
 
-export interface Balance {
+export type Balance = {
   status: BalanceStatus;
   delta: number;
-}
+};
 
-export interface Budget {
+export type Budget = {
   income: SectionState;
   expenses: SectionState;
   balance: Balance;
-}
+};
 
-export interface BackupData {
+export type BackupData = {
   metadata: {
     version: string;
     exportedAt: string;
@@ -98,4 +98,4 @@ export interface BackupData {
     expenseItems: Omit<Item, "normalizedAmount" | "section">[];
     expenseCategories: Omit<Category, "section">[];
   };
-}
+};

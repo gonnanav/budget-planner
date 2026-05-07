@@ -1,10 +1,10 @@
 import { SectionSummary } from "./SectionSummary/SectionSummary";
 
-interface IncomeSummaryProps {
+type IncomeSummaryProps = {
   amount: number;
   isActive?: boolean;
   onClick?: () => void;
-}
+};
 
 export function IncomeSummary({
   amount,

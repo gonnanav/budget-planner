@@ -1,10 +1,10 @@
 import { TextInput } from "@mantine/core";
 import { CHARACTER_LIMITS } from "@/domain/limits";
 
-interface NameInputProps {
+type NameInputProps = {
   name: string;
   onNameChange: (name: string) => void;
-}
+};
 
 export function NameInput({ name, onNameChange }: NameInputProps) {
   return (

@@ -2,12 +2,12 @@ import type { Table } from "dexie";
 import { db } from "./db";
 import type { ItemRecord, CategoryRecord } from "./types";
 
-interface DbData {
+type DbData = {
   incomeItems: ItemRecord[];
   incomeCategories: CategoryRecord[];
   expenseItems: ItemRecord[];
   expenseCategories: CategoryRecord[];
-}
+};
 
 export async function restoreAllData({
   incomeItems,

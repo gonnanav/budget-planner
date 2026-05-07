@@ -1,10 +1,10 @@
 import { Select } from "@mantine/core";
 import type { Frequency } from "@/domain/types";
 
-interface FrequencyInputProps {
+type FrequencyInputProps = {
   frequency: Frequency;
   onFrequencyChange: (frequency: Frequency) => void;
-}
+};
 
 const data = [
   { value: "monthly", label: "Monthly" },

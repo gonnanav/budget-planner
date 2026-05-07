@@ -1,10 +1,10 @@
 import { Select } from "@mantine/core";
 
-interface CategoryInputProps {
+type CategoryInputProps = {
   selectedCategoryId: string | null;
   categoryOptions: { id: string; name: string }[];
   onCategoryChange: (categoryId: string | null) => void;
-}
+};
 
 export const CategoryInput = ({
   selectedCategoryId,

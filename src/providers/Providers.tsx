@@ -2,9 +2,9 @@ import { MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { ServiceProviders } from "./ServiceProviders";
 
-interface ProvidersProps {
+type ProvidersProps = {
   children: React.ReactNode;
-}
+};
 
 export function Providers({ children }: Readonly<ProvidersProps>) {
   return (

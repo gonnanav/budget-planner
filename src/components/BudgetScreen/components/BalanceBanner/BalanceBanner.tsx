@@ -5,9 +5,9 @@ import { formatAmount } from "@/lib/format";
 import classes from "./BalanceBanner.module.css";
 import type { Balance } from "@/domain/types";
 
-interface BalanceBannerProps {
+type BalanceBannerProps = {
   balance: Balance;
-}
+};
 
 export function BalanceBanner({
   balance: { status, delta },

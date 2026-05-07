@@ -11,9 +11,9 @@ import {
 } from "@/services/budget";
 import { backupData, restoreData } from "@/services/backup";
 
-interface ServiceProvidersProps {
+type ServiceProvidersProps = {
   children: React.ReactNode;
-}
+};
 
 const budgetService = {
   getBudget,
