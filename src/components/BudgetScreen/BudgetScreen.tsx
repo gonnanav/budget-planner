@@ -122,32 +122,32 @@ export function BudgetScreen() {
             <AddButton onClick={handleStartCreateItem}>Add item</AddButton>
             <AddButton variant="secondary" onClick={handleStartCreateCategory}>Add category</AddButton>
           </div>
-          <EditDrawer
-            isOpen={isDrawerOpen}
-            mode={edit.state?.mode ?? null}
-            entity={edit.state?.entity ?? null}
-            section={edit.state?.draft.section ?? null}
-            onClose={stopEdit}
-            onCancel={stopEdit}
-            onSave={handleSave}
-            onDelete={handleDelete}
-          >
-            {itemDraft && (
-              <ItemEdit
-                draft={itemDraft}
-                categoryOptions={categories}
-                onDraftChange={updateItemDraft}
-              />
-            )}
-            {categoryDraft && (
-              <CategoryEdit
-                draft={categoryDraft}
-                onDraftChange={updateCategoryDraft}
-              />
-            )}
-          </EditDrawer>
         </div>
       )}
+      <EditDrawer
+        isOpen={isDrawerOpen}
+        mode={edit.state?.mode ?? null}
+        entity={edit.state?.entity ?? null}
+        section={edit.state?.draft.section ?? null}
+        onClose={stopEdit}
+        onCancel={stopEdit}
+        onSave={handleSave}
+        onDelete={handleDelete}
+      >
+        {itemDraft && (
+          <ItemEdit
+            draft={itemDraft}
+            categoryOptions={categories}
+            onDraftChange={updateItemDraft}
+          />
+        )}
+        {categoryDraft && (
+          <CategoryEdit
+            draft={categoryDraft}
+            onDraftChange={updateCategoryDraft}
+          />
+        )}
+      </EditDrawer>
     </div>
   );
 }
