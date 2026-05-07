@@ -1,14 +1,13 @@
-import {
-  BalanceBanner,
-  AddButton,
-  EditDrawer,
-  CategoryEdit,
-  ItemEdit,
-  ItemList,
-  SectionSummary,
-} from "./components";
+import { BalanceBanner } from "./components/BalanceBanner/BalanceBanner";
+import { AddButton } from "./components/AddButton";
+import { EditDrawer } from "./components/EditDrawer/EditDrawer";
+import { CategoryEdit } from "./components/CategoryEdit/CategoryEdit";
+import { ItemEdit } from "./components/ItemEdit/ItemEdit";
+import { ItemList } from "./components/ItemList/ItemList";
+import { SectionSummary } from "./components/SectionSummary/SectionSummary";
 import { useContext, useState } from "react";
-import { useEntityEdit, useBudget } from "./hooks";
+import { useEntityEdit } from "./hooks/useEntityEdit";
+import { useBudget } from "./hooks/useBudget";
 import type { Section } from "@/domain/types";
 import { BudgetServiceContext } from "@/contexts/BudgetServiceContext";
 import classes from "./BudgetScreen.module.css";

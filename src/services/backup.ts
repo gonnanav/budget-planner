@@ -1,4 +1,4 @@
-import { createBackupData } from "@/domain/backup";
+import { createBackupData } from "@/domain/backup/backup";
 import type { BackupData } from "@/domain/types";
 import { restoreAllData, getAllData } from "@/db/backup";
 import type { CategoryRecord, ItemRecord } from "@/db/types";

@@ -1,4 +1,4 @@
-import type { BackupData, Category, Item } from "../types";
+import type { BackupData, Category, Item } from "@/domain/types";
 
 type BackupDataInput = {
   incomeItems: Omit<Item, "normalizedAmount" | "section">[];

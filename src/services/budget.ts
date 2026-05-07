@@ -1,6 +1,6 @@
-import { createItem } from "@/domain/items";
-import { createCategory } from "@/domain/categories";
-import { createBudget, createSectionState } from "@/domain/budget";
+import { createItem } from "@/domain/items/items";
+import { createCategory } from "@/domain/categories/categories";
+import { createBudget, createSectionState } from "@/domain/budget/budget";
 import type { Budget, ItemInput, CategoryInput, Section } from "@/domain/types";
 import * as db from "@/db/budget";
 

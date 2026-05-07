@@ -1,4 +1,4 @@
-import { ItemRow } from "../ItemRow/ItemRow";
+import { ItemRow } from "@/components/BudgetScreen/components/ItemRow/ItemRow";
 import type { Item, CategoryGroup as CategoryGroupType } from "@/domain/types";
 import classes from "./CategoryGroup.module.css";
 

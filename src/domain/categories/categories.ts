@@ -1,8 +1,8 @@
 import type {
   Category,
   CreateCategoryInput,
-} from "../types";
-import { CHARACTER_LIMITS } from "../limits";
+} from "@/domain/types";
+import { CHARACTER_LIMITS } from "@/domain/limits";
 
 export function createCategory(input: CreateCategoryInput): Category {
   validateId(input.id);
