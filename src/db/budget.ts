@@ -1,5 +1,5 @@
 import type { Item, Category, Section } from "@/domain/types";
-import { createItem } from "@/domain/items/items";
+import { createItem } from "@/domain/items";
 import { db } from "./db";
 import type {
   ItemRecord,

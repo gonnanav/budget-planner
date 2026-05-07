@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 import { createSectionState } from "./budget";
 import { createTestItem, createTestItems } from "@/test-utils";
-import { createCategory } from "@/domain/categories/categories";
+import { createCategory } from "@/domain/categories";
 
 const employment = createCategory({ id: "employment", name: "Employment", section: "income" });
 const passive = createCategory({ id: "passive", name: "Passive", section: "income" });

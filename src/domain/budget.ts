@@ -1,6 +1,6 @@
 import type { Budget, Category, CategoryGroup, Item, SectionState } from "@/domain/types";
-import { calculateBalance } from "@/domain/balance/balance";
-import { sumItems } from "@/domain/items/items";
+import { calculateBalance } from "@/domain/balance";
+import { sumItems } from "@/domain/items";
 
 export function createSectionState(
   items: Item[],
