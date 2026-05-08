@@ -1,5 +1,12 @@
 import Dexie from "dexie";
-import type { ItemsTable, CategoriesTable } from "./types";
+import type { EntityTable } from "dexie";
+import type { Item, Category } from "@/domain/types";
+
+export type ItemRecord = Omit<Item, "normalizedAmount" | "section">;
+export type CategoryRecord = Omit<Category, "section">;
+
+export type ItemsTable = EntityTable<ItemRecord, "id">;
+export type CategoriesTable = EntityTable<CategoryRecord, "id">;
 
 const db = new Dexie("BudgetDatabase") as Dexie & {
   incomeItems: ItemsTable;
