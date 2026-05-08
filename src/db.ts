@@ -1,9 +1,19 @@
 import Dexie from "dexie";
 import type { EntityTable } from "dexie";
-import type { Item, Category } from "@/domain/types";
 
-export type ItemRecord = Omit<Item, "normalizedAmount" | "section">;
-export type CategoryRecord = Omit<Category, "section">;
+export type ItemRecord = {
+  id: string;
+  name: string;
+  amount: number | null;
+  frequency: "monthly" | "biMonthly";
+  categoryId: string | null;
+  notes?: string;
+};
+
+export type CategoryRecord = {
+  id: string;
+  name: string;
+};
 
 export type ItemsTable = EntityTable<ItemRecord, "id">;
 export type CategoriesTable = EntityTable<CategoryRecord, "id">;
