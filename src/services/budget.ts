@@ -1,4 +1,4 @@
-import { createItem, createCategory, createBudget, createSectionState } from "@/domain/budget";
+import { createItem, createCategory, createBudget } from "@/domain/budget";
 import type { Budget, Item, Category, ItemInput, CategoryInput, Section } from "@/domain/types";
 import { db, type ItemRecord, type CategoryRecord, type ItemsTable, type CategoriesTable } from "@/db";
 
@@ -10,10 +10,10 @@ export async function getBudget(): Promise<Budget> {
     getCategories("expenses"),
   ]);
 
-  const income = createSectionState(incomeItems, incomeCategories);
-  const expenses = createSectionState(expenseItems, expenseCategories);
-
-  return createBudget(income, expenses);
+  return createBudget(
+    { items: incomeItems, categories: incomeCategories },
+    { items: expenseItems, categories: expenseCategories },
+  );
 }
 
 export async function addItem(input: ItemInput): Promise<string> {

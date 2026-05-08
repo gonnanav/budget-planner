@@ -7,14 +7,16 @@ export const characterLimits = {
 } as const;
 
 export function createBudget(
-  income: SectionState,
-  expenses: SectionState,
+  income: { items: Item[]; categories: Category[] },
+  expenses: { items: Item[]; categories: Category[] },
 ): Budget {
+  const incomeState = createSectionState(income.items, income.categories);
+  const expensesState = createSectionState(expenses.items, expenses.categories);
   const balanceData = calculateBalance(income.items, expenses.items);
 
   return {
-    income,
-    expenses,
+    income: incomeState,
+    expenses: expensesState,
     balance: {
       status: balanceData.status,
       delta: balanceData.balance,
@@ -22,7 +24,7 @@ export function createBudget(
   };
 }
 
-export function createSectionState(
+function createSectionState(
   items: Item[],
   categories: Category[],
 ): SectionState {
