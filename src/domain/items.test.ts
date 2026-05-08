@@ -25,15 +25,3 @@ test("creates an item with defaults for optional input properties", () => {
 
   expect(item).toMatchObject({ amount: null, frequency: "monthly" });
 });
-
-test("throws error for creating an item without a name", () => {
-  expect(() =>
-    createItem({ id: "1", name: "", amount: 100, section: "income" }),
-  ).toThrow();
-});
-
-test("throws error for creating an item with an invalid amount", () => {
-  expect(() =>
-    createItem({ id: "1", name: "Some item", amount: -1, section: "income" }),
-  ).toThrow();
-});

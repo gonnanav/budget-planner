@@ -1,12 +1,5 @@
 import type { BalanceStatus, Budget, Category, CategoryGroup, CreateCategoryInput, CreateItemInput, Item, SectionState } from "@/domain/types";
 
-export const LIMITS = {
-  incomes: 30,
-  expenses: 150,
-  incomeCategories: 10,
-  expenseCategories: 30,
-} as const;
-
 export const CHARACTER_LIMITS = {
   itemName: 100,
   categoryName: 50,
@@ -14,10 +7,6 @@ export const CHARACTER_LIMITS = {
 } as const;
 
 export function createItem(input: CreateItemInput): Item {
-  validateItemName(input.name);
-  validateNotes(input.notes);
-  validateAmount(input.amount);
-
   const item = {
     id: input.id,
     name: input.name,
@@ -34,25 +23,6 @@ export function createItem(input: CreateItemInput): Item {
   };
 }
 
-function validateItemName(name?: string) {
-  if (!name) throw new Error("Name is required");
-  if (name.length > CHARACTER_LIMITS.itemName)
-    throw new Error(
-      `Name must be ${CHARACTER_LIMITS.itemName} characters or less`,
-    );
-}
-
-function validateNotes(notes?: string) {
-  if (notes && notes.length > CHARACTER_LIMITS.itemNotes)
-    throw new Error(
-      `Notes must be ${CHARACTER_LIMITS.itemNotes} characters or less`,
-    );
-}
-
-function validateAmount(amount?: number | null) {
-  if (amount && amount < 0) throw new Error("Amount must be greater than 0");
-}
-
 export function sumItems(items: Item[]): number {
   return items.reduce((sum: number, item) => sum + item.normalizedAmount, 0);
 }
@@ -65,33 +35,11 @@ function normalizeAmount({
 }
 
 export function createCategory(input: CreateCategoryInput): Category {
-  validateCategoryId(input.id);
-  validateCategoryName(input.name);
-
   return {
     id: input.id,
     name: input.name,
     section: input.section,
   };
-}
-
-function validateCategoryId(id: string): void {
-  validateNonEmptyString(id, "Id");
-}
-
-function validateCategoryName(name: string): void {
-  validateNonEmptyString(name, "Name");
-  if (name.length > CHARACTER_LIMITS.categoryName) {
-    throw new Error(
-      `Category name must be ${CHARACTER_LIMITS.categoryName} characters or less`,
-    );
-  }
-}
-
-function validateNonEmptyString(value: string, name: string): void {
-  if (value.length === 0) {
-    throw new Error(`${name} is required`);
-  }
 }
 
 export function calculateBalance(incomes: Item[], expenses: Item[]) {
