@@ -1,5 +1,5 @@
 import { test, expect } from "vitest";
-import { createItem } from "./items";
+import { createItem } from "./budget";
 
 test("creates an item based on the given input", () => {
   const item = createItem({

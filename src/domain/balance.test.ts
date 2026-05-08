@@ -1,5 +1,5 @@
 import { test, expect } from "vitest";
-import { calculateBalance } from "./balance";
+import { calculateBalance } from "./budget";
 import { createTestItems } from "@/test-utils";
 
 test("balanced when incomes and expenses are equal", () => {

@@ -1,4 +1,4 @@
-import { createItem } from "@/domain/items";
+import { createItem } from "@/domain/budget";
 import type { Item, CreateItemInput } from "@/domain/types";
 
 export function createTestItem(input: Partial<CreateItemInput> = {}): Item {

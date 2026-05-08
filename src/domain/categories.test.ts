@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { createCategory } from "./categories";
+import { createCategory } from "./budget";
 
 test("creates a category with the given id and name", () => {
   const category = createCategory({
