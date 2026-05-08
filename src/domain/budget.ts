@@ -36,7 +36,7 @@ function createSectionState(
   };
 }
 
-export function calculateBalance(incomes: Item[], expenses: Item[]) {
+function calculateBalance(incomes: Item[], expenses: Item[]) {
   const incomeSum = sumItems(incomes);
   const expenseSum = sumItems(expenses);
   const balance = incomeSum - expenseSum;
