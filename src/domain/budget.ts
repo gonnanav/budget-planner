@@ -24,27 +24,6 @@ export function createBudget(
   };
 }
 
-function createSectionState(
-  items: Item[],
-  categories: Category[],
-): SectionState {
-  return {
-    items,
-    categories,
-    groups: createCategoryGroups(items, categories),
-    total: sumItems(items),
-  };
-}
-
-function calculateBalance(incomes: Item[], expenses: Item[]) {
-  const incomeSum = sumItems(incomes);
-  const expenseSum = sumItems(expenses);
-  const balance = incomeSum - expenseSum;
-  const status = getStatus(balance);
-
-  return { incomeSum, expenseSum, balance, status };
-}
-
 export function createItem(input: CreateItemInput): Item {
   const item = {
     id: input.id,
@@ -68,6 +47,27 @@ export function createCategory(input: CreateCategoryInput): Category {
     name: input.name,
     section: input.section,
   };
+}
+
+function createSectionState(
+  items: Item[],
+  categories: Category[],
+): SectionState {
+  return {
+    items,
+    categories,
+    groups: createCategoryGroups(items, categories),
+    total: sumItems(items),
+  };
+}
+
+function calculateBalance(incomes: Item[], expenses: Item[]) {
+  const incomeSum = sumItems(incomes);
+  const expenseSum = sumItems(expenses);
+  const balance = incomeSum - expenseSum;
+  const status = getStatus(balance);
+
+  return { incomeSum, expenseSum, balance, status };
 }
 
 function createCategoryGroups(items: Item[], categories: Category[]): CategoryGroup[] {
