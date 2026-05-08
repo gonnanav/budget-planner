@@ -1,7 +1,6 @@
 import { createBackupData } from "@/domain/backup";
 import type { BackupData } from "@/domain/types";
-import { db } from "@/db";
-import type { CategoryRecord, ItemRecord } from "@/db";
+import { db, type CategoryRecord, type ItemRecord } from "@/db";
 import type { Table } from "dexie";
 
 type DbData = {

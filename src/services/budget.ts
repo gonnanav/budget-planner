@@ -2,8 +2,7 @@ import { createItem } from "@/domain/items";
 import { createCategory } from "@/domain/categories";
 import { createBudget, createSectionState } from "@/domain/budget";
 import type { Budget, Item, Category, ItemInput, CategoryInput, Section } from "@/domain/types";
-import { db } from "@/db";
-import type { ItemRecord, CategoryRecord, ItemsTable, CategoriesTable } from "@/db";
+import { db, type ItemRecord, type CategoryRecord, type ItemsTable, type CategoriesTable } from "@/db";
 
 export async function getBudget(): Promise<Budget> {
   const [incomeItems, incomeCategories, expenseItems, expenseCategories] = await Promise.all([

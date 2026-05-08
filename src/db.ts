@@ -1,5 +1,4 @@
-import Dexie from "dexie";
-import type { EntityTable } from "dexie";
+import Dexie, { type EntityTable } from "dexie";
 
 export type ItemRecord = {
   id: string;
