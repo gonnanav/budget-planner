@@ -1,5 +1,5 @@
 import { Textarea } from "@mantine/core";
-import { CHARACTER_LIMITS } from "@/domain/budget";
+import { characterLimits } from "@/domain/budget";
 
 type NotesInputProps = {
   notes?: string;
@@ -12,7 +12,7 @@ export function NotesInput({ notes = "", onNotesChange }: NotesInputProps) {
       label="Notes"
       value={notes}
       onChange={(e) => onNotesChange(e.currentTarget.value)}
-      maxLength={CHARACTER_LIMITS.itemNotes}
+      maxLength={characterLimits.itemNotes}
     />
   );
 }

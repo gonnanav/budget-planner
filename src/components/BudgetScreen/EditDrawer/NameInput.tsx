@@ -1,5 +1,5 @@
 import { TextInput } from "@mantine/core";
-import { CHARACTER_LIMITS } from "@/domain/budget";
+import { characterLimits } from "@/domain/budget";
 
 type NameInputProps = {
   name: string;
@@ -12,7 +12,7 @@ export function NameInput({ name, onNameChange }: NameInputProps) {
       label="Name"
       value={name}
       onChange={(e) => onNameChange(e.currentTarget.value)}
-      maxLength={CHARACTER_LIMITS.itemName}
+      maxLength={characterLimits.itemName}
       required
     />
   );

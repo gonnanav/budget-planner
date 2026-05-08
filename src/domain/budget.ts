@@ -1,10 +1,47 @@
 import type { BalanceStatus, Budget, Category, CategoryGroup, CreateCategoryInput, CreateItemInput, Item, SectionState } from "@/domain/types";
 
-export const CHARACTER_LIMITS = {
+export const characterLimits = {
   itemName: 100,
   categoryName: 50,
   itemNotes: 500,
 } as const;
+
+export function createBudget(
+  income: SectionState,
+  expenses: SectionState,
+): Budget {
+  const balanceData = calculateBalance(income.items, expenses.items);
+
+  return {
+    income,
+    expenses,
+    balance: {
+      status: balanceData.status,
+      delta: balanceData.balance,
+    },
+  };
+}
+
+export function createSectionState(
+  items: Item[],
+  categories: Category[],
+): SectionState {
+  return {
+    items,
+    categories,
+    groups: createCategoryGroups(items, categories),
+    total: sumItems(items),
+  };
+}
+
+export function calculateBalance(incomes: Item[], expenses: Item[]) {
+  const incomeSum = sumItems(incomes);
+  const expenseSum = sumItems(expenses);
+  const balance = incomeSum - expenseSum;
+  const status = getStatus(balance);
+
+  return { incomeSum, expenseSum, balance, status };
+}
 
 export function createItem(input: CreateItemInput): Item {
   const item = {
@@ -23,49 +60,11 @@ export function createItem(input: CreateItemInput): Item {
   };
 }
 
-export function sumItems(items: Item[]): number {
-  return items.reduce((sum: number, item) => sum + item.normalizedAmount, 0);
-}
-
-function normalizeAmount({
-  amount,
-  frequency,
-}: Pick<Item, "amount" | "frequency">): number {
-  return (amount ?? 0) / (frequency === "biMonthly" ? 2 : 1);
-}
-
 export function createCategory(input: CreateCategoryInput): Category {
   return {
     id: input.id,
     name: input.name,
     section: input.section,
-  };
-}
-
-export function calculateBalance(incomes: Item[], expenses: Item[]) {
-  const incomeSum = sumItems(incomes);
-  const expenseSum = sumItems(expenses);
-  const balance = incomeSum - expenseSum;
-  const status = getStatus(balance);
-
-  return { incomeSum, expenseSum, balance, status };
-}
-
-function getStatus(balance: number): BalanceStatus {
-  if (balance > 0) return "surplus";
-  else if (balance < 0) return "deficit";
-  else return "balanced";
-}
-
-export function createSectionState(
-  items: Item[],
-  categories: Category[],
-): SectionState {
-  return {
-    items,
-    categories,
-    groups: createCategoryGroups(items, categories),
-    total: sumItems(items),
   };
 }
 
@@ -113,18 +112,19 @@ function mapItemsByCategory(items: Item[]): Map<string | null, Item[]> {
   return map;
 }
 
-export function createBudget(
-  income: SectionState,
-  expenses: SectionState,
-): Budget {
-  const balanceData = calculateBalance(income.items, expenses.items);
+function sumItems(items: Item[]): number {
+  return items.reduce((sum: number, item) => sum + item.normalizedAmount, 0);
+}
 
-  return {
-    income,
-    expenses,
-    balance: {
-      status: balanceData.status,
-      delta: balanceData.balance,
-    },
-  };
+function getStatus(balance: number): BalanceStatus {
+  if (balance > 0) return "surplus";
+  else if (balance < 0) return "deficit";
+  else return "balanced";
+}
+
+function normalizeAmount({
+  amount,
+  frequency,
+}: Pick<Item, "amount" | "frequency">): number {
+  return (amount ?? 0) / (frequency === "biMonthly" ? 2 : 1);
 }
