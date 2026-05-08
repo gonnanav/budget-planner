@@ -1,7 +1,15 @@
 import { createBackupData } from "@/domain/backup";
 import type { BackupData } from "@/domain/types";
-import { restoreAllData, getAllData } from "@/db/backup";
+import { db } from "@/db/db";
 import type { CategoryRecord, ItemRecord } from "@/db/types";
+import type { Table } from "dexie";
+
+type DbData = {
+  incomeItems: ItemRecord[];
+  incomeCategories: CategoryRecord[];
+  expenseItems: ItemRecord[];
+  expenseCategories: CategoryRecord[];
+};
 
 type BackupDataV1 = {
   metadata: {
@@ -43,12 +51,39 @@ export async function restoreData(backup: BackupData): Promise<void> {
     expenseCategories = backup.data?.expenseCategories ?? [];
   }
 
-  await restoreAllData({
-    incomeItems,
-    expenseItems,
-    incomeCategories,
-    expenseCategories,
-  });
+  await restoreAllData({ incomeItems, expenseItems, incomeCategories, expenseCategories });
+}
+
+async function getAllData(): Promise<DbData> {
+  const [incomeItems, incomeCategories, expenseItems, expenseCategories] = await Promise.all([
+    db.incomeItems.toArray(),
+    db.incomeCategories.toArray(),
+    db.expenseItems.toArray(),
+    db.expenseCategories.toArray(),
+  ]);
+
+  return { incomeItems, incomeCategories, expenseItems, expenseCategories };
+}
+
+async function restoreAllData({
+  incomeItems,
+  incomeCategories,
+  expenseItems,
+  expenseCategories,
+}: DbData): Promise<void> {
+  await db.transaction("rw", db.tables, async () =>
+    Promise.all([
+      replaceAllInTable(db.incomeItems, incomeItems),
+      replaceAllInTable(db.incomeCategories, incomeCategories),
+      replaceAllInTable(db.expenseItems, expenseItems),
+      replaceAllInTable(db.expenseCategories, expenseCategories),
+    ]),
+  );
+}
+
+async function replaceAllInTable(table: Table, data: unknown[]): Promise<void> {
+  await table.clear();
+  await table.bulkAdd(data);
 }
 
 function downloadBackupData(data: BackupData): void {
