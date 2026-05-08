@@ -12,15 +12,13 @@ export function createBudget(
 ): Budget {
   const incomeState = createSectionState(income.items, income.categories);
   const expensesState = createSectionState(expenses.items, expenses.categories);
-  const balanceData = calculateBalance(income.items, expenses.items);
+  const delta = incomeState.total - expensesState.total;
+  const status = getStatus(delta);
 
   return {
     income: incomeState,
     expenses: expensesState,
-    balance: {
-      status: balanceData.status,
-      delta: balanceData.balance,
-    },
+    balance: { status, delta },
   };
 }
 
@@ -59,15 +57,6 @@ function createSectionState(
     groups: createCategoryGroups(items, categories),
     total: sumItems(items),
   };
-}
-
-function calculateBalance(incomes: Item[], expenses: Item[]) {
-  const incomeSum = sumItems(incomes);
-  const expenseSum = sumItems(expenses);
-  const balance = incomeSum - expenseSum;
-  const status = getStatus(balance);
-
-  return { incomeSum, expenseSum, balance, status };
 }
 
 function createCategoryGroups(items: Item[], categories: Category[]): CategoryGroup[] {
