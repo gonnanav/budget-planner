@@ -1,6 +1,5 @@
 import { ItemRow } from "./ItemRow";
 import { CategoryGroup } from "./CategoryGroup";
-import { EmptyList } from "./EmptyList";
 import type { Item, Category, CategoryGroup as CategoryGroupType } from "@/domain/types";
 import classes from "./ItemList.module.css";
 
@@ -13,7 +12,7 @@ type ItemListProps = {
 
 export function ItemList({ items, groups, onItemClick, onCategoryClick }: ItemListProps) {
   if (items.length === 0) {
-    return <EmptyList entity="item" />;
+    return <p className={classes.empty}>No items yet.</p>;
   }
   
   function handleHeaderClick(group: CategoryGroupType) {
