@@ -1,7 +1,7 @@
 import { BalanceBanner } from "./BalanceBanner";
 import { AddButton } from "./AddButton";
 import { EditDrawer } from "./EditDrawer/EditDrawer";
-import { ItemList } from "./ItemList/ItemList";
+import { ItemsView } from "./ItemsView/ItemsView";
 import { SectionSummary } from "./SectionSummary";
 import { useState } from "react";
 import { useEntityEdit } from "./useEntityEdit";
@@ -99,8 +99,8 @@ export function BudgetScreen() {
       </div>
       {selectedSection && (
         <div className={classes.section}>
-          <div className={classes.itemList}>
-            <ItemList
+          <div className={classes.items}>
+            <ItemsView
               items={items}
               groups={groups}
               onItemClick={startUpdateItem}

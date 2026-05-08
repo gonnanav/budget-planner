@@ -1,13 +1,6 @@
 .root {
   /* Layout */
   display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.header {
-  /* Layout */
-  display: flex;
   align-items: baseline;
   justify-content: space-between;
 
@@ -39,7 +32,7 @@
   color: #94a3b8;
 }
 
-button.header {
+button.root {
   /* Box model */
   width: 100%;
   border: none;
@@ -50,14 +43,7 @@ button.header {
   text-align: left;
 }
 
-button.header:hover {
+button.root:hover {
   /* Visual */
   background-color: #dce4ff;
-}
-
-.items {
-  /* Layout */
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
 }
