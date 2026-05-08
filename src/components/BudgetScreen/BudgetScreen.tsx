@@ -1,8 +1,6 @@
 import { BalanceBanner } from "./BalanceBanner";
 import { AddButton } from "./AddButton";
 import { EditDrawer } from "./EditDrawer/EditDrawer";
-import { CategoryEdit } from "./EditDrawer/CategoryEdit";
-import { ItemEdit } from "./EditDrawer/ItemEdit";
 import { ItemList } from "./ItemList/ItemList";
 import { SectionSummary } from "./SectionSummary";
 import { useState } from "react";
@@ -23,9 +21,7 @@ export function BudgetScreen() {
   const edit = useEntityEdit();
 
   const { startCreateItem, startUpdateItem, updateItemDraft } = edit.actions;
-  const { startCreateCategory, startUpdateCategory, updateCategoryDraft } =
-    edit.actions;
-  const { stopEdit } = edit.actions;
+  const { startCreateCategory, startUpdateCategory, updateCategoryDraft, stopEdit } = edit.actions;
 
   const budget = budgetLoadable.status === "ready" ? budgetLoadable.data : null;
   const selectedState =
@@ -37,11 +33,6 @@ export function BudgetScreen() {
   const items = selectedState?.items ?? [];
   const categories = selectedState?.categories ?? [];
   const groups = selectedState?.groups ?? [];
-
-  const isDrawerOpen = Boolean(edit.state);
-  const itemDraft = edit.state?.entity === "item" ? edit.state.draft : null;
-  const categoryDraft =
-    edit.state?.entity === "category" ? edit.state.draft : null;
 
   const handleStartCreateItem = () => {
     if (!selectedSection) return;
@@ -123,29 +114,15 @@ export function BudgetScreen() {
         </div>
       )}
       <EditDrawer
-        isOpen={isDrawerOpen}
-        mode={edit.state?.mode ?? null}
-        entity={edit.state?.entity ?? null}
-        section={edit.state?.draft.section ?? null}
+        editState={edit.state}
+        categoryOptions={categories}
         onClose={stopEdit}
         onCancel={stopEdit}
         onSave={handleSave}
         onDelete={handleDelete}
-      >
-        {itemDraft && (
-          <ItemEdit
-            draft={itemDraft}
-            categoryOptions={categories}
-            onDraftChange={updateItemDraft}
-          />
-        )}
-        {categoryDraft && (
-          <CategoryEdit
-            draft={categoryDraft}
-            onDraftChange={updateCategoryDraft}
-          />
-        )}
-      </EditDrawer>
+        onItemDraftChange={updateItemDraft}
+        onCategoryDraftChange={updateCategoryDraft}
+      />
     </div>
   );
 }

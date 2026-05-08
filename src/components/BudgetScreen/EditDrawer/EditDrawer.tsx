@@ -1,55 +1,61 @@
 import { Drawer } from "@mantine/core";
 import { Trash2 } from "lucide-react";
 import classes from "./EditDrawer.module.css";
-import type { ReactNode } from "react";
-import type { Section, Entity } from "@/domain/types";
-
-type Mode = "create" | "update";
+import { ItemEdit } from "./ItemEdit";
+import { CategoryEdit } from "./CategoryEdit";
+import type { EditState, ItemDraft, CategoryDraft } from "@/domain/types";
 
 export type EditDrawerProps = {
-  isOpen: boolean;
-  mode: Mode | null;
-  entity: Entity | null;
-  section: Section | null;
+  editState: EditState | null;
+  categoryOptions: { id: string; name: string }[];
   onClose: () => void;
   onCancel: () => void;
   onSave: () => void;
   onDelete: () => void;
-  children: ReactNode;
+  onItemDraftChange: (update: Partial<ItemDraft>) => void;
+  onCategoryDraftChange: (update: Partial<CategoryDraft>) => void;
 };
 
-const getHeadingText = (
-  mode: Mode | null,
-  entity: Entity | null,
-  section: Section | null,
-) => {
-  if (!mode || !entity || !section) return "Edit";
+const getHeadingText = (editState: EditState | null) => {
+  if (!editState) return "Edit";
 
-  const modeText = mode === "create" ? "Add" : "Edit";
-  const sectionText = section === "income" ? "Income" : "Expenses";
-  const entityText = entity === "item" ? "Item" : "Category";
+  const modeText = editState.mode === "create" ? "Add" : "Edit";
+  const sectionText = editState.draft.section === "income" ? "Income" : "Expenses";
+  const entityText = editState.entity === "item" ? "Item" : "Category";
 
   return `${modeText} ${sectionText} ${entityText}`;
 };
 
 export const EditDrawer = ({
-  isOpen,
-  mode,
-  entity,
-  section,
+  editState,
+  categoryOptions,
   onClose,
   onCancel,
   onSave,
   onDelete,
-  children,
+  onItemDraftChange,
+  onCategoryDraftChange,
 }: EditDrawerProps) => {
-  const headingText = getHeadingText(mode, entity, section);
-  const hasDelete = mode === "update";
+  const opened = editState !== null;
+  const headingText = getHeadingText(editState);
+  const hasDelete = editState?.mode === "update";
 
   return (
-    <Drawer opened={isOpen} onClose={onClose} title={headingText} position="right">
+    <Drawer opened={opened} onClose={onClose} title={headingText} position="right">
       <div className={classes.body}>
-        {children}
+        {editState?.entity === "item" && (
+          <ItemEdit
+            draft={editState.draft}
+            categoryOptions={categoryOptions}
+            onDraftChange={onItemDraftChange}
+          />
+        )}
+        {editState?.entity === "category" && (
+          <CategoryEdit
+            draft={editState.draft}
+            onDraftChange={onCategoryDraftChange}
+          />
+        )}
         <div className={classes.actions}>
           <div className={classes.primaryActions}>
             <button className={classes.cancel} onClick={onCancel}>
