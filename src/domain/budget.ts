@@ -1,4 +1,4 @@
-import type { BalanceStatus, Budget, Category, CategoryGroup, CreateCategoryInput, CreateItemInput, Item, ItemRecord, SectionState } from "@/domain/types";
+import type { BalanceStatus, Budget, Category, CategoryGroup, CreateItemInput, Item, ItemRecord, SectionState } from "@/domain/types";
 
 export const characterLimits = {
   itemName: 100,
@@ -42,12 +42,6 @@ export function createItem(input: CreateItemInput): Item {
   };
 }
 
-export function createCategory(input: CreateCategoryInput): Category {
-  return {
-    id: input.id,
-    name: input.name,
-  };
-}
 
 function createSectionState(
   items: Item[],

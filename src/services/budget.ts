@@ -1,6 +1,6 @@
-import { createItem, createItemRecord, createCategory, createBudget } from "@/domain/budget";
+import { createItem, createItemRecord, createBudget } from "@/domain/budget";
 import type { Budget, Item, Category, ItemInput, CategoryInput, Section } from "@/domain/types";
-import { db, type DbItem, type DbCategory, type ItemsTable, type CategoriesTable } from "@/db";
+import { db, type DbItem, type ItemsTable, type CategoriesTable } from "@/db";
 
 export async function getBudget(): Promise<Budget> {
   const [incomeItems, incomeCategories, expenseItems, expenseCategories] = await Promise.all([
@@ -31,17 +31,11 @@ export async function deleteItem(id: string, section: Section): Promise<void> {
 }
 
 export async function addCategory(section: Section, input: CategoryInput): Promise<string> {
-  const category = createCategory({ id: crypto.randomUUID(), ...input });
-  const dbCategory = toDbCategory(category);
-
-  return getCategoriesTable(section).add(dbCategory);
+  return getCategoriesTable(section).add({ id: crypto.randomUUID(), ...input });
 }
 
 export async function updateCategory(id: string, section: Section, input: CategoryInput): Promise<boolean> {
-  const category = createCategory({ id, ...input });
-  const dbCategory = toDbCategory(category);
-
-  return getCategoriesTable(section).update(category.id, dbCategory).then(Boolean);
+  return getCategoriesTable(section).update(id, input).then(Boolean);
 }
 
 export async function deleteCategory(id: string, section: Section): Promise<void> {
@@ -67,9 +61,7 @@ async function getItems(section: Section): Promise<Item[]> {
 }
 
 async function getCategories(section: Section): Promise<Category[]> {
-  const records = await getCategoriesTable(section).toArray();
-
-  return records.map(fromDbCategory);
+  return getCategoriesTable(section).toArray();
 }
 
 function getItemsTable(section: Section): ItemsTable {
@@ -84,16 +76,4 @@ function fromDbItem(dbItem: DbItem): Item {
   const { id, name, amount, frequency, categoryId, notes } = dbItem;
 
   return createItem({ id, name, amount, frequency, categoryId, notes });
-}
-
-function toDbCategory(category: Category): DbCategory {
-  const { id, name } = category;
-
-  return { id, name };
-}
-
-function fromDbCategory(dbCategory: DbCategory): Category {
-  const { id, name } = dbCategory;
-
-  return { id, name };
 }

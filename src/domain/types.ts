@@ -49,7 +49,6 @@ export type CategoryInput = {
   name: string;
 };
 
-export type CreateCategoryInput = CategoryInput & { id: string };
 
 export type CategoryDraft = {
   id?: string;
