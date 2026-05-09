@@ -1,6 +1,6 @@
 import { createItem, createCategory, createBudget } from "@/domain/budget";
 import type { Budget, Item, Category, ItemInput, CategoryInput, Section } from "@/domain/types";
-import { db, type ItemRecord, type CategoryRecord, type ItemsTable, type CategoriesTable } from "@/db";
+import { db, type DbItem, type DbCategory, type ItemsTable, type CategoriesTable } from "@/db";
 
 export async function getBudget(): Promise<Budget> {
   const [incomeItems, incomeCategories, expenseItems, expenseCategories] = await Promise.all([
@@ -18,16 +18,16 @@ export async function getBudget(): Promise<Budget> {
 
 export async function addItem(section: Section, input: ItemInput): Promise<string> {
   const item = createItem({ id: crypto.randomUUID(), ...input });
-  const record = itemToRecord(item);
+  const dbItem = toDbItem(item);
 
-  return getItemsTable(section).add(record);
+  return getItemsTable(section).add(dbItem);
 }
 
 export async function updateItem(id: string, section: Section, input: ItemInput): Promise<boolean> {
   const item = createItem({ id, ...input });
-  const record = itemToRecord(item);
+  const dbItem = toDbItem(item);
 
-  return getItemsTable(section).update(item.id, record).then(Boolean);
+  return getItemsTable(section).update(item.id, dbItem).then(Boolean);
 }
 
 export async function deleteItem(id: string, section: Section): Promise<void> {
@@ -36,16 +36,16 @@ export async function deleteItem(id: string, section: Section): Promise<void> {
 
 export async function addCategory(section: Section, input: CategoryInput): Promise<string> {
   const category = createCategory({ id: crypto.randomUUID(), ...input });
-  const record = categoryToRecord(category);
+  const dbCategory = toDbCategory(category);
 
-  return getCategoriesTable(section).add(record);
+  return getCategoriesTable(section).add(dbCategory);
 }
 
 export async function updateCategory(id: string, section: Section, input: CategoryInput): Promise<boolean> {
   const category = createCategory({ id, ...input });
-  const record = categoryToRecord(category);
+  const dbCategory = toDbCategory(category);
 
-  return getCategoriesTable(section).update(category.id, record).then(Boolean);
+  return getCategoriesTable(section).update(category.id, dbCategory).then(Boolean);
 }
 
 export async function deleteCategory(id: string, section: Section): Promise<void> {
@@ -67,13 +67,13 @@ export async function deleteCategory(id: string, section: Section): Promise<void
 async function getItems(section: Section): Promise<Item[]> {
   const records = await getItemsTable(section).toArray();
 
-  return records.map(recordToItem);
+  return records.map(fromDbItem);
 }
 
 async function getCategories(section: Section): Promise<Category[]> {
   const records = await getCategoriesTable(section).toArray();
 
-  return records.map(recordToCategory);
+  return records.map(fromDbCategory);
 }
 
 function getItemsTable(section: Section): ItemsTable {
@@ -84,26 +84,26 @@ function getCategoriesTable(section: Section): CategoriesTable {
   return section === "income" ? db.incomeCategories : db.expenseCategories;
 }
 
-function itemToRecord(item: Item): ItemRecord {
+function toDbItem(item: Item): DbItem {
   const { id, name, amount, frequency, categoryId, notes } = item;
 
   return { id, name, amount, frequency, categoryId, notes };
 }
 
-function recordToItem(record: ItemRecord): Item {
-  const { id, name, amount, frequency, categoryId, notes } = record;
+function fromDbItem(dbItem: DbItem): Item {
+  const { id, name, amount, frequency, categoryId, notes } = dbItem;
 
   return createItem({ id, name, amount, frequency, categoryId, notes });
 }
 
-function categoryToRecord(category: Category): CategoryRecord {
+function toDbCategory(category: Category): DbCategory {
   const { id, name } = category;
 
   return { id, name };
 }
 
-function recordToCategory(record: CategoryRecord): Category {
-  const { id, name } = record;
+function fromDbCategory(dbCategory: DbCategory): Category {
+  const { id, name } = dbCategory;
 
   return { id, name };
 }

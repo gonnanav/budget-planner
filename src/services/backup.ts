@@ -1,13 +1,27 @@
 import { createBackupData } from "@/domain/backup";
 import type { BackupData } from "@/domain/types";
-import { db, type CategoryRecord, type ItemRecord } from "@/db";
+import { db, type DbItem, type DbCategory } from "@/db";
 import type { Table } from "dexie";
 
+export type BackupItem = {
+  id: string;
+  name: string;
+  amount: number | null;
+  frequency: "monthly" | "biMonthly";
+  categoryId: string | null;
+  notes?: string;
+};
+
+export type BackupCategory = {
+  id: string;
+  name: string;
+};
+
 type DbData = {
-  incomeItems: ItemRecord[];
-  incomeCategories: CategoryRecord[];
-  expenseItems: ItemRecord[];
-  expenseCategories: CategoryRecord[];
+  incomeItems: DbItem[];
+  incomeCategories: DbCategory[];
+  expenseItems: DbItem[];
+  expenseCategories: DbCategory[];
 };
 
 type BackupDataV1 = {
@@ -16,10 +30,10 @@ type BackupDataV1 = {
     exportedAt: string;
   };
   data: {
-    incomes: ItemRecord[];
-    expenses: ItemRecord[];
-    incomeCategories: CategoryRecord[];
-    expenseCategories: CategoryRecord[];
+    incomes: BackupItem[];
+    expenses: BackupItem[];
+    incomeCategories: BackupCategory[];
+    expenseCategories: BackupCategory[];
   };
 };
 
@@ -31,10 +45,10 @@ export async function backupData(): Promise<void> {
 
 export async function restoreData(backup: BackupData): Promise<void> {
   const version = backup?.metadata?.version;
-  let incomeItems: ItemRecord[] = [];
-  let expenseItems: ItemRecord[] = [];
-  let incomeCategories: CategoryRecord[] = [];
-  let expenseCategories: CategoryRecord[] = [];
+  let incomeItems: BackupItem[] = [];
+  let expenseItems: BackupItem[] = [];
+  let incomeCategories: BackupCategory[] = [];
+  let expenseCategories: BackupCategory[] = [];
 
   if (version === "0.1.0") {
     const backupV1 = backup as unknown as BackupDataV1;

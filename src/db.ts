@@ -1,6 +1,6 @@
 import Dexie, { type EntityTable } from "dexie";
 
-export type ItemRecord = {
+export type DbItem = {
   id: string;
   name: string;
   amount: number | null;
@@ -9,13 +9,13 @@ export type ItemRecord = {
   notes?: string;
 };
 
-export type CategoryRecord = {
+export type DbCategory = {
   id: string;
   name: string;
 };
 
-export type ItemsTable = EntityTable<ItemRecord, "id">;
-export type CategoriesTable = EntityTable<CategoryRecord, "id">;
+export type ItemsTable = EntityTable<DbItem, "id">;
+export type CategoriesTable = EntityTable<DbCategory, "id">;
 
 const db = new Dexie("BudgetDatabase") as Dexie & {
   incomeItems: ItemsTable;
