@@ -1,7 +1,7 @@
 import { test, expect } from "vitest";
-import { createItem } from "./budget";
+import { createItem, createItemRecord } from "./budget";
 
-test("creates an item based on the given input", () => {
+test("creates an item based on the given record", () => {
   const item = createItem({
     id: "1",
     name: "Some item",
@@ -19,8 +19,8 @@ test("creates an item based on the given input", () => {
   });
 });
 
-test("creates an item with defaults for optional input properties", () => {
-  const item = createItem({ id: "1", name: "Some item" });
+test("creates an item record with defaults for optional input properties", () => {
+  const record = createItemRecord({ id: "1", name: "Some item" });
 
-  expect(item).toMatchObject({ amount: null, frequency: "monthly" });
+  expect(record).toMatchObject({ amount: null, frequency: "monthly" });
 });

@@ -1,6 +1,6 @@
 import { createItem, createItemRecord, createBudget } from "@/domain/budget";
 import type { Budget, Item, Category, ItemInput, CategoryInput, Section } from "@/domain/types";
-import { db, type DbItem, type ItemsTable, type CategoriesTable } from "@/db";
+import { db, type ItemsTable, type CategoriesTable } from "@/db";
 
 export async function getBudget(): Promise<Budget> {
   const [incomeItems, incomeCategories, expenseItems, expenseCategories] = await Promise.all([
@@ -57,7 +57,7 @@ export async function deleteCategory(id: string, section: Section): Promise<void
 async function getItems(section: Section): Promise<Item[]> {
   const records = await getItemsTable(section).toArray();
 
-  return records.map(fromDbItem);
+  return records.map(createItem);
 }
 
 async function getCategories(section: Section): Promise<Category[]> {
@@ -70,10 +70,4 @@ function getItemsTable(section: Section): ItemsTable {
 
 function getCategoriesTable(section: Section): CategoriesTable {
   return section === "income" ? db.incomeCategories : db.expenseCategories;
-}
-
-function fromDbItem(dbItem: DbItem): Item {
-  const { id, name, amount, frequency, categoryId, notes } = dbItem;
-
-  return createItem({ id, name, amount, frequency, categoryId, notes });
 }
