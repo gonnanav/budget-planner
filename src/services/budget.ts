@@ -1,4 +1,4 @@
-import { createItem, createCategory, createBudget } from "@/domain/budget";
+import { createItem, createItemRecord, createCategory, createBudget } from "@/domain/budget";
 import type { Budget, Item, Category, ItemInput, CategoryInput, Section } from "@/domain/types";
 import { db, type DbItem, type DbCategory, type ItemsTable, type CategoriesTable } from "@/db";
 
@@ -17,17 +17,13 @@ export async function getBudget(): Promise<Budget> {
 }
 
 export async function addItem(section: Section, input: ItemInput): Promise<string> {
-  const item = createItem({ id: crypto.randomUUID(), ...input });
-  const dbItem = toDbItem(item);
+  const record = createItemRecord({ id: crypto.randomUUID(), ...input });
 
-  return getItemsTable(section).add(dbItem);
+  return getItemsTable(section).add(record);
 }
 
 export async function updateItem(id: string, section: Section, input: ItemInput): Promise<boolean> {
-  const item = createItem({ id, ...input });
-  const dbItem = toDbItem(item);
-
-  return getItemsTable(section).update(item.id, dbItem).then(Boolean);
+  return getItemsTable(section).update(id, input).then(Boolean);
 }
 
 export async function deleteItem(id: string, section: Section): Promise<void> {
@@ -82,12 +78,6 @@ function getItemsTable(section: Section): ItemsTable {
 
 function getCategoriesTable(section: Section): CategoriesTable {
   return section === "income" ? db.incomeCategories : db.expenseCategories;
-}
-
-function toDbItem(item: Item): DbItem {
-  const { id, name, amount, frequency, categoryId, notes } = item;
-
-  return { id, name, amount, frequency, categoryId, notes };
 }
 
 function fromDbItem(dbItem: DbItem): Item {

@@ -1,4 +1,4 @@
-import type { BalanceStatus, Budget, Category, CategoryGroup, CreateCategoryInput, CreateItemInput, Item, SectionState } from "@/domain/types";
+import type { BalanceStatus, Budget, Category, CategoryGroup, CreateCategoryInput, CreateItemInput, Item, ItemRecord, SectionState } from "@/domain/types";
 
 export const characterLimits = {
   itemName: 100,
@@ -22,8 +22,8 @@ export function createBudget(
   };
 }
 
-export function createItem(input: CreateItemInput): Item {
-  const item = {
+export function createItemRecord(input: CreateItemInput): ItemRecord {
+  return {
     id: input.id,
     name: input.name,
     amount: input.amount ?? null,
@@ -31,10 +31,14 @@ export function createItem(input: CreateItemInput): Item {
     categoryId: input.categoryId ?? null,
     notes: input.notes,
   };
+}
+
+export function createItem(input: CreateItemInput): Item {
+  const record = createItemRecord(input);
 
   return {
-    ...item,
-    normalizedAmount: normalizeAmount(item),
+    ...record,
+    normalizedAmount: normalizeAmount(record),
   };
 }
 

@@ -18,13 +18,16 @@ export type ItemInput = {
 
 export type CreateItemInput = ItemInput & { id: string };
 
-export type Item = {
+export type ItemRecord = {
   id: string;
   name: string;
   amount: number | null;
   frequency: Frequency;
   categoryId: string | null;
   notes?: string;
+};
+
+export type Item = ItemRecord & {
   normalizedAmount: number;
 };
 
@@ -87,9 +90,9 @@ export type BackupData = {
     exportedAt: string;
   };
   data: {
-    incomeItems: Omit<Item, "normalizedAmount">[];
+    incomeItems: ItemRecord[];
     incomeCategories: Category[];
-    expenseItems: Omit<Item, "normalizedAmount">[];
+    expenseItems: ItemRecord[];
     expenseCategories: Category[];
   };
 };
