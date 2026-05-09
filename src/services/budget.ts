@@ -16,36 +16,36 @@ export async function getBudget(): Promise<Budget> {
   );
 }
 
-export async function addItem(input: ItemInput): Promise<string> {
+export async function addItem(section: Section, input: ItemInput): Promise<string> {
   const item = createItem({ id: crypto.randomUUID(), ...input });
   const record = itemToRecord(item);
 
-  return getItemsTable(item.section).add(record);
+  return getItemsTable(section).add(record);
 }
 
-export async function updateItem(id: string, input: ItemInput): Promise<boolean> {
+export async function updateItem(id: string, section: Section, input: ItemInput): Promise<boolean> {
   const item = createItem({ id, ...input });
   const record = itemToRecord(item);
 
-  return getItemsTable(item.section).update(item.id, record).then(Boolean);
+  return getItemsTable(section).update(item.id, record).then(Boolean);
 }
 
 export async function deleteItem(id: string, section: Section): Promise<void> {
   return getItemsTable(section).delete(id);
 }
 
-export async function addCategory(input: CategoryInput): Promise<string> {
+export async function addCategory(section: Section, input: CategoryInput): Promise<string> {
   const category = createCategory({ id: crypto.randomUUID(), ...input });
   const record = categoryToRecord(category);
 
-  return getCategoriesTable(category.section).add(record);
+  return getCategoriesTable(section).add(record);
 }
 
-export async function updateCategory(id: string, input: CategoryInput): Promise<boolean> {
+export async function updateCategory(id: string, section: Section, input: CategoryInput): Promise<boolean> {
   const category = createCategory({ id, ...input });
   const record = categoryToRecord(category);
 
-  return getCategoriesTable(category.section).update(category.id, record).then(Boolean);
+  return getCategoriesTable(section).update(category.id, record).then(Boolean);
 }
 
 export async function deleteCategory(id: string, section: Section): Promise<void> {
@@ -67,13 +67,13 @@ export async function deleteCategory(id: string, section: Section): Promise<void
 async function getItems(section: Section): Promise<Item[]> {
   const records = await getItemsTable(section).toArray();
 
-  return records.map((record) => recordToItem(record, section));
+  return records.map(recordToItem);
 }
 
 async function getCategories(section: Section): Promise<Category[]> {
   const records = await getCategoriesTable(section).toArray();
 
-  return records.map((record) => recordToCategory(record, section));
+  return records.map(recordToCategory);
 }
 
 function getItemsTable(section: Section): ItemsTable {
@@ -90,10 +90,10 @@ function itemToRecord(item: Item): ItemRecord {
   return { id, name, amount, frequency, categoryId, notes };
 }
 
-function recordToItem(record: ItemRecord, section: Section): Item {
+function recordToItem(record: ItemRecord): Item {
   const { id, name, amount, frequency, categoryId, notes } = record;
 
-  return createItem({ id, name, amount, frequency, categoryId, notes, section });
+  return createItem({ id, name, amount, frequency, categoryId, notes });
 }
 
 function categoryToRecord(category: Category): CategoryRecord {
@@ -102,8 +102,8 @@ function categoryToRecord(category: Category): CategoryRecord {
   return { id, name };
 }
 
-function recordToCategory(record: CategoryRecord, section: Section): Category {
+function recordToCategory(record: CategoryRecord): Category {
   const { id, name } = record;
 
-  return { id, name, section };
+  return { id, name };
 }

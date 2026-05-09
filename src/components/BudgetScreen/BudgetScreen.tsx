@@ -6,7 +6,7 @@ import { SectionSummary } from "./SectionSummary";
 import { useState } from "react";
 import { useEntityEdit } from "./useEntityEdit";
 import { useBudget } from "./useBudget";
-import type { Section } from "@/domain/types";
+import type { Category, Item, Section } from "@/domain/types";
 import { addItem, updateItem, deleteItem, addCategory, updateCategory, deleteCategory } from "@/services/budget";
 import classes from "./BudgetScreen.module.css";
 
@@ -44,20 +44,30 @@ export function BudgetScreen() {
     startCreateCategory(selectedSection);
   };
 
+  const handleItemClick = (item: Item) => {
+    if (!selectedSection) return;
+    startUpdateItem(selectedSection, item);
+  };
+
+  const handleCategoryClick = (category: Category) => {
+    if (!selectedSection) return;
+    startUpdateCategory(selectedSection, category);
+  };
+
   const handleSave = () => {
     if (!edit.state) return;
 
     if (edit.state.mode === "create") {
       if (edit.state.entity === "item") {
-        addItem(edit.state.draft);
+        addItem(edit.state.section, edit.state.draft);
       } else {
-        addCategory(edit.state.draft);
+        addCategory(edit.state.section, edit.state.draft);
       }
     } else if (edit.state.mode === "update" && edit.state.draft.id) {
       if (edit.state.entity === "item") {
-        updateItem(edit.state.draft.id, edit.state.draft);
+        updateItem(edit.state.draft.id, edit.state.section, edit.state.draft);
       } else {
-        updateCategory(edit.state.draft.id, edit.state.draft);
+        updateCategory(edit.state.draft.id, edit.state.section, edit.state.draft);
       }
     }
 
@@ -68,9 +78,9 @@ export function BudgetScreen() {
     if (edit.state?.mode !== "update" || !edit.state.draft.id) return;
 
     if (edit.state.entity === "item") {
-      deleteItem(edit.state.draft.id, edit.state.draft.section);
+      deleteItem(edit.state.draft.id, edit.state.section);
     } else {
-      deleteCategory(edit.state.draft.id, edit.state.draft.section);
+      deleteCategory(edit.state.draft.id, edit.state.section);
     }
 
     stopEdit();
@@ -103,8 +113,8 @@ export function BudgetScreen() {
             <ItemsView
               items={items}
               groups={groups}
-              onItemClick={startUpdateItem}
-              onCategoryClick={startUpdateCategory}
+              onItemClick={handleItemClick}
+              onCategoryClick={handleCategoryClick}
             />
           </div>
           <div className={classes.addButtons}>

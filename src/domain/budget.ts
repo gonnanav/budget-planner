@@ -30,7 +30,6 @@ export function createItem(input: CreateItemInput): Item {
     frequency: input.frequency ?? "monthly",
     categoryId: input.categoryId ?? null,
     notes: input.notes,
-    section: input.section,
   };
 
   return {
@@ -43,7 +42,6 @@ export function createCategory(input: CreateCategoryInput): Category {
   return {
     id: input.id,
     name: input.name,
-    section: input.section,
   };
 }
 

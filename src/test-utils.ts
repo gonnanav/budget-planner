@@ -4,7 +4,7 @@ import type { Item, CreateItemInput } from "@/domain/types";
 export function createTestItem(input: Partial<CreateItemInput> = {}): Item {
   const id = input.id ?? "1";
   const name = input.name ?? `Test item ${id}`;
-  return createItem({ id, name, section: "expenses", ...input });
+  return createItem({ id, name, ...input });
 }
 
 export function createTestItems(inputs: Partial<CreateItemInput>[]): Item[] {

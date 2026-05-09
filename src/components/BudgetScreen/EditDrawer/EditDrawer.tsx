@@ -20,7 +20,7 @@ const getHeadingText = (editState: EditState | null) => {
   if (!editState) return "Edit";
 
   const modeText = editState.mode === "create" ? "Add" : "Edit";
-  const sectionText = editState.draft.section === "income" ? "Income" : "Expenses";
+  const sectionText = editState.section === "income" ? "Income" : "Expenses";
   const entityText = editState.entity === "item" ? "Item" : "Category";
 
   return `${modeText} ${sectionText} ${entityText}`;

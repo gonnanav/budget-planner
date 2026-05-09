@@ -9,7 +9,6 @@ export type Loadable<T> =
   | { status: "error"; error: Error };
 
 export type ItemInput = {
-  section: Section;
   name: string;
   amount?: number | null;
   frequency?: Frequency;
@@ -21,7 +20,6 @@ export type CreateItemInput = ItemInput & { id: string };
 
 export type Item = {
   id: string;
-  section: Section;
   name: string;
   amount: number | null;
   frequency: Frequency;
@@ -32,7 +30,6 @@ export type Item = {
 
 export type ItemDraft = {
   id?: string;
-  section: Section;
   name: string;
   amount: number | null;
   frequency: Frequency;
@@ -41,13 +38,11 @@ export type ItemDraft = {
 };
 
 export type Category = {
-  section: Section;
   id: string;
   name: string;
 };
 
 export type CategoryInput = {
-  section: Section;
   name: string;
 };
 
@@ -55,15 +50,14 @@ export type CreateCategoryInput = CategoryInput & { id: string };
 
 export type CategoryDraft = {
   id?: string;
-  section: Section;
   name: string;
 };
 
 export type EditMode = "create" | "update";
 
 export type EditState =
-  | { mode: EditMode; entity: "item"; draft: ItemDraft }
-  | { mode: EditMode; entity: "category"; draft: CategoryDraft };
+  | { mode: EditMode; section: Section; entity: "item"; draft: ItemDraft }
+  | { mode: EditMode; section: Section; entity: "category"; draft: CategoryDraft };
 
 export type CategoryGroup =
   | { kind: "categorized"; category: Category; items: Item[]; total: number }
@@ -93,9 +87,9 @@ export type BackupData = {
     exportedAt: string;
   };
   data: {
-    incomeItems: Omit<Item, "normalizedAmount" | "section">[];
-    incomeCategories: Omit<Category, "section">[];
-    expenseItems: Omit<Item, "normalizedAmount" | "section">[];
-    expenseCategories: Omit<Category, "section">[];
+    incomeItems: Omit<Item, "normalizedAmount">[];
+    incomeCategories: Category[];
+    expenseItems: Omit<Item, "normalizedAmount">[];
+    expenseCategories: Category[];
   };
 };

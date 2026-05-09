@@ -4,8 +4,8 @@ import { createTestItem, createTestItems } from "@/test-utils";
 
 const emptySection = { items: [], categories: [] };
 
-const employment = createCategory({ id: "employment", name: "Employment", section: "income" });
-const passive = createCategory({ id: "passive", name: "Passive", section: "income" });
+const employment = createCategory({ id: "employment", name: "Employment" });
+const passive = createCategory({ id: "passive", name: "Passive" });
 
 const employmentItem1 = createTestItem({ id: "e1", categoryId: employment.id });
 const employmentItem2 = createTestItem({ id: "e2", categoryId: employment.id });

@@ -8,7 +8,6 @@ test("creates an item based on the given input", () => {
     amount: 100,
     frequency: "biMonthly",
     categoryId: "category-1",
-    section: "income",
   });
 
   expect(item).toMatchObject({
@@ -21,7 +20,7 @@ test("creates an item based on the given input", () => {
 });
 
 test("creates an item with defaults for optional input properties", () => {
-  const item = createItem({ id: "1", name: "Some item", section: "income" });
+  const item = createItem({ id: "1", name: "Some item" });
 
   expect(item).toMatchObject({ amount: null, frequency: "monthly" });
 });
