@@ -21,7 +21,7 @@ test("includes the provided items and categories as-is", () => {
 
   const { income } = createBudget({ items, categories }, emptySection);
 
-  expect(income.items).toBe(items);
+  expect(income.items).toEqual(items);
   expect(income.categories).toBe(categories);
 });
 

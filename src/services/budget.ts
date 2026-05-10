@@ -1,5 +1,5 @@
-import { createItem, createItemRecord, createBudget } from "@/domain/budget";
-import type { Budget, Item, Category, ItemInput, CategoryInput, Section } from "@/domain/types";
+import { createItemRecord, createBudget } from "@/domain/budget";
+import type { Budget, Category, ItemInput, CategoryInput, Section, ItemRecord } from "@/domain/types";
 import { db, type ItemsTable, type CategoriesTable } from "@/db";
 
 export async function getBudget(): Promise<Budget> {
@@ -54,10 +54,8 @@ export async function deleteCategory(id: string, section: Section): Promise<void
   });
 }
 
-async function getItems(section: Section): Promise<Item[]> {
-  const records = await getItemsTable(section).toArray();
-
-  return records.map(createItem);
+async function getItems(section: Section): Promise<ItemRecord[]> {
+  return getItemsTable(section).toArray();
 }
 
 async function getCategories(section: Section): Promise<Category[]> {

@@ -7,8 +7,8 @@ export const characterLimits = {
 } as const;
 
 export function createBudget(
-  income: { items: Item[]; categories: Category[] },
-  expenses: { items: Item[]; categories: Category[] },
+  income: { items: ItemRecord[]; categories: Category[] },
+  expenses: { items: ItemRecord[]; categories: Category[] },
 ): Budget {
   const incomeState = createSectionState(income.items, income.categories);
   const expensesState = createSectionState(expenses.items, expenses.categories);
@@ -42,9 +42,11 @@ export function createItem(record: ItemRecord): Item {
 
 
 function createSectionState(
-  items: Item[],
+  itemRecords: ItemRecord[],
   categories: Category[],
 ): SectionState {
+  const items = itemRecords.map(createItem);
+
   return {
     items,
     categories,
