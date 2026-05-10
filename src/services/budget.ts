@@ -1,5 +1,5 @@
 import { createItemRecord, createBudget } from "@/domain/budget";
-import type { Budget, Category, ItemInput, CategoryInput, Section, ItemRecord } from "@/domain/types";
+import type { Budget, CategoryRecord, ItemInput, CategoryInput, Section, ItemRecord } from "@/domain/types";
 import { db, type ItemsTable, type CategoriesTable } from "@/db";
 
 export async function getBudget(): Promise<Budget> {
@@ -58,7 +58,7 @@ async function getItems(section: Section): Promise<ItemRecord[]> {
   return getItemsTable(section).toArray();
 }
 
-async function getCategories(section: Section): Promise<Category[]> {
+async function getCategories(section: Section): Promise<CategoryRecord[]> {
   return getCategoriesTable(section).toArray();
 }
 

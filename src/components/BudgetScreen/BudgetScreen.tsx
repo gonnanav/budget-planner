@@ -30,9 +30,6 @@ export function BudgetScreen() {
         ? budget.expenses
         : budget.income
       : null;
-  const items = selectedState?.items ?? [];
-  const categories = selectedState?.categories ?? [];
-  const groups = selectedState?.groups ?? [];
 
   const handleStartCreateItem = () => {
     if (!selectedSection) return;
@@ -53,6 +50,8 @@ export function BudgetScreen() {
     if (!selectedSection) return;
     startUpdateCategory(selectedSection, category);
   };
+
+  const categories = selectedState?.categories ?? [];
 
   const handleSave = () => {
     if (!edit.state) return;
@@ -107,12 +106,11 @@ export function BudgetScreen() {
           balance={budget?.balance ?? { status: "balanced", delta: 0 }}
         />
       </div>
-      {selectedSection && (
+      {selectedSection && selectedState && (
         <div className={classes.section}>
           <div className={classes.items}>
             <ItemsView
-              items={items}
-              groups={groups}
+              sectionState={selectedState}
               onItemClick={handleItemClick}
               onCategoryClick={handleCategoryClick}
             />

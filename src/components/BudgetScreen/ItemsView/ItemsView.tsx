@@ -1,37 +1,50 @@
 import { ItemList } from "./ItemList";
 import { CategoryRow } from "./CategoryRow";
-import type { Item, Category, CategoryGroup } from "@/domain/types";
+import type { Item, Category, SectionState } from "@/domain/types";
 import classes from "./ItemsView.module.css";
 
 type ItemsViewProps = {
-  items: Item[];
-  groups: CategoryGroup[];
+  sectionState: SectionState;
   onItemClick: (item: Item) => void;
   onCategoryClick: (category: Category) => void;
 };
 
-export function ItemsView({ items, groups, onItemClick, onCategoryClick }: ItemsViewProps) {
+export function ItemsView({ sectionState, onItemClick, onCategoryClick }: ItemsViewProps) {
+  const { items, categories, uncategorized } = sectionState;
+
   if (items.length === 0) {
     return <p className={classes.empty}>No items yet.</p>;
   }
 
-  if (groups.length === 0) {
+  if (categories.length === 0) {
     return <ItemList items={items} onItemClick={onItemClick} />;
   }
 
   return (
     <div>
-      {groups.map((group) => (
-        <div
-          key={group.kind === "categorized" ? group.category.id : group.kind}
-          className={classes.group}
-        >
-          <CategoryRow group={group} onCategoryClick={onCategoryClick} />
-          {group.items.length > 0 && (
-            <ItemList items={group.items} onItemClick={onItemClick} />
+      {categories.map((category) => (
+        <div key={category.id} className={classes.group}>
+          <CategoryRow
+            name={category.name}
+            itemCount={category.items.length}
+            total={category.total}
+            onCategoryClick={() => onCategoryClick(category)}
+          />
+          {category.items.length > 0 && (
+            <ItemList items={category.items} onItemClick={onItemClick} />
           )}
         </div>
       ))}
+      {uncategorized.items.length > 0 && (
+        <div className={classes.group}>
+          <CategoryRow
+            name="Uncategorized"
+            itemCount={uncategorized.items.length}
+            total={uncategorized.total}
+          />
+          <ItemList items={uncategorized.items} onItemClick={onItemClick} />
+        </div>
+      )}
     </div>
   );
 }

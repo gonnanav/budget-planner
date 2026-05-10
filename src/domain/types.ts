@@ -40,15 +40,21 @@ export type ItemDraft = {
   notes?: string;
 };
 
-export type Category = {
+export type ItemGroup = {
+  items: Item[];
+  total: number;
+};
+
+export type CategoryRecord = {
   id: string;
   name: string;
 };
 
+export type Category = CategoryRecord & ItemGroup;
+
 export type CategoryInput = {
   name: string;
 };
-
 
 export type CategoryDraft = {
   id?: string;
@@ -61,15 +67,9 @@ export type EditState =
   | { mode: EditMode; section: Section; entity: "item"; draft: ItemDraft }
   | { mode: EditMode; section: Section; entity: "category"; draft: CategoryDraft };
 
-export type CategoryGroup =
-  | { kind: "categorized"; category: Category; items: Item[]; total: number }
-  | { kind: "uncategorized"; items: Item[]; total: number };
-
-export type SectionState = {
-  items: Item[];
+export type SectionState = ItemGroup & {
   categories: Category[];
-  groups: CategoryGroup[];
-  total: number;
+  uncategorized: ItemGroup;
 };
 
 export type Balance = {
@@ -90,8 +90,8 @@ export type BackupData = {
   };
   data: {
     incomeItems: ItemRecord[];
-    incomeCategories: Category[];
+    incomeCategories: CategoryRecord[];
     expenseItems: ItemRecord[];
-    expenseCategories: Category[];
+    expenseCategories: CategoryRecord[];
   };
 };

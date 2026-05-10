@@ -1,10 +1,10 @@
-import type { BackupData, Category, Item } from "@/domain/types";
+import type { BackupData, CategoryRecord, ItemRecord } from "@/domain/types";
 
 type BackupDataInput = {
-  incomeItems: Omit<Item, "normalizedAmount" | "section">[];
-  expenseItems: Omit<Item, "normalizedAmount" | "section">[];
-  incomeCategories: Omit<Category, "section">[];
-  expenseCategories: Omit<Category, "section">[];
+  incomeItems: ItemRecord[];
+  expenseItems: ItemRecord[];
+  incomeCategories: CategoryRecord[];
+  expenseCategories: CategoryRecord[];
 };
 
 export function createBackupData({

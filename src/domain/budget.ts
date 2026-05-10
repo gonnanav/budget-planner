@@ -1,4 +1,4 @@
-import type { BalanceStatus, Budget, Category, CategoryGroup, CreateItemInput, Item, ItemRecord, SectionState } from "@/domain/types";
+import type { BalanceStatus, Budget, Category, CategoryRecord, CreateItemInput, Item, ItemGroup, ItemRecord, SectionState } from "@/domain/types";
 
 export const characterLimits = {
   itemName: 100,
@@ -7,8 +7,8 @@ export const characterLimits = {
 } as const;
 
 export function createBudget(
-  income: { items: ItemRecord[]; categories: Category[] },
-  expenses: { items: ItemRecord[]; categories: Category[] },
+  income: { items: ItemRecord[]; categories: CategoryRecord[] },
+  expenses: { items: ItemRecord[]; categories: CategoryRecord[] },
 ): Budget {
   const incomeState = createSectionState(income.items, income.categories);
   const expensesState = createSectionState(expenses.items, expenses.categories);
@@ -41,45 +41,26 @@ export function createItem(record: ItemRecord): Item {
 }
 
 
-function createSectionState(
-  itemRecords: ItemRecord[],
-  categories: Category[],
-): SectionState {
-  const items = itemRecords.map(createItem);
-
-  return {
-    items,
-    categories,
-    groups: createCategoryGroups(items, categories),
-    total: sumItems(items),
-  };
+function createItemGroup(items: Item[]): ItemGroup {
+  return { items, total: sumItems(items) };
 }
 
-function createCategoryGroups(items: Item[], categories: Category[]): CategoryGroup[] {
-  if (categories.length === 0) return [];
+function createCategory(record: CategoryRecord, itemsByCategory: Map<string | null, Item[]>): Category {
+  const items = itemsByCategory.get(record.id) ?? [];
 
+  return { ...record, ...createItemGroup(items) };
+}
+
+function createSectionState(
+  itemRecords: ItemRecord[],
+  categoryRecords: CategoryRecord[],
+): SectionState {
+  const items = itemRecords.map(createItem);
   const itemsByCategory = mapItemsByCategory(items);
+  const categories = categoryRecords.map((record) => createCategory(record, itemsByCategory));
+  const uncategorized = createItemGroup(itemsByCategory.get(null) ?? []);
 
-  const groups: CategoryGroup[] = categories.map((category) => {
-    const categoryItems = itemsByCategory.get(category.id) ?? [];
-    return {
-      kind: "categorized",
-      category,
-      items: categoryItems,
-      total: sumItems(categoryItems),
-    };
-  });
-
-  const uncategorized = itemsByCategory.get(null);
-  if (uncategorized) {
-    groups.push({
-      kind: "uncategorized",
-      items: uncategorized,
-      total: sumItems(uncategorized),
-    });
-  }
-
-  return groups;
+  return { ...createItemGroup(items), categories, uncategorized };
 }
 
 function mapItemsByCategory(items: Item[]): Map<string | null, Item[]> {

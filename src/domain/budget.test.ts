@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 import { createBudget } from "@/domain/budget";
 import { createTestItem, createTestItems } from "@/test-utils";
 
-const emptySection = { items: [], categories: [] };
+const dummySection = { items: [], categories: [] };
 
 const employment = { id: "employment", name: "Employment" };
 const passive = { id: "passive", name: "Passive" };
@@ -15,24 +15,18 @@ const passiveItem = createTestItem({ id: "p1", categoryId: passive.id });
 const uncategorizedItem1 = createTestItem({ id: "u1", categoryId: null });
 const uncategorizedItem2 = createTestItem({ id: "u2", categoryId: null });
 
-test("includes the provided items and categories as-is", () => {
-  const items = [employmentItem1, employmentItem2, passiveItem];
-  const categories = [employment, passive];
+test("income and expense items appear in their own sections", () => {
+  const incomeItems = [employmentItem1, employmentItem2];
+  const expenseItems = [passiveItem];
 
-  const { income } = createBudget({ items, categories }, emptySection);
+  const { income, expenses } = createBudget(
+    { items: incomeItems, categories: [] },
+    { items: expenseItems, categories: [] },
+  );
 
-  expect(income.items).toEqual(items);
-  expect(income.categories).toBe(categories);
+  expect(income.items).toEqual(incomeItems);
+  expect(expenses.items).toEqual(expenseItems);
 });
-
-test.each([[], [employmentItem1], [employmentItem1, employmentItem2]])(
-  "there are no category groups when there are no categories",
-  (...items) => {
-    const { income: { groups } } = createBudget({ items, categories: [] }, emptySection);
-
-    expect(groups).toEqual([]);
-  },
-);
 
 test.each([
   [employmentItem1, employmentItem2],
@@ -40,11 +34,9 @@ test.each([
 ])(
   "items are grouped by category regardless of the items order",
   (...items) => {
-    const { income: { groups } } = createBudget({ items, categories: [employment] }, emptySection);
-    const employmentGroup = groups[0];
+    const { income: { categories } } = createBudget({ items, categories: [employment] }, dummySection);
 
-    expect(employmentGroup).toMatchObject({
-      kind: "categorized",
+    expect(categories[0]).toMatchObject({
       items: [employmentItem1, employmentItem2],
     });
   },
@@ -58,11 +50,9 @@ test.each([
   (...categories) => {
     const index = categories.indexOf(employment);
 
-    const { income: { groups } } = createBudget({ items: [employmentItem1, passiveItem], categories }, emptySection);
-    const employmentGroup = groups[index];
+    const { income } = createBudget({ items: [employmentItem1, passiveItem], categories }, dummySection);
 
-    expect(employmentGroup).toMatchObject({
-      kind: "categorized",
+    expect(income.categories[index]).toMatchObject({
       items: [employmentItem1],
     });
   },
@@ -72,48 +62,42 @@ test.each([
   [uncategorizedItem1, uncategorizedItem2],
   [uncategorizedItem1, employmentItem1, uncategorizedItem2],
 ])(
-  "items without a category are grouped as uncategorized at the end",
+  "items without a category are listed as uncategorized",
   (...items) => {
-    const { income: { groups } } = createBudget({ items, categories: [employment] }, emptySection);
-    const uncategorizedGroup = groups[1];
+    const { income } = createBudget({ items, categories: [employment] }, dummySection);
 
-    expect(uncategorizedGroup).toMatchObject({
-      kind: "uncategorized",
+    expect(income.uncategorized).toMatchObject({
       items: [uncategorizedItem1, uncategorizedItem2],
     });
   },
 );
 
-test("a category with no items has an empty group", () => {
-  const { income: { groups } } = createBudget({ items: [employmentItem1], categories: [employment, passive] }, emptySection);
-  const passiveGroup = groups[1];
+test("a category with no matching items has no items", () => {
+  const { income: { categories } } = createBudget({ items: [employmentItem1], categories: [employment, passive] }, dummySection);
 
-  expect(passiveGroup).toMatchObject({
-    kind: "categorized",
+  expect(categories[1]).toMatchObject({
     items: [],
   });
 });
 
-test("a categorized group total is the sum of its items", () => {
+test("a category total is the sum of its normalized item amounts", () => {
   const items = createTestItems([
     { amount: 200, frequency: "monthly", categoryId: employment.id },
     { amount: 400, frequency: "biMonthly", categoryId: employment.id },
   ]);
 
-  const { income: { groups } } = createBudget({ items, categories: [employment] }, emptySection);
-  const employmentGroup = groups[0];
+  const { income: { categories } } = createBudget({ items, categories: [employment] }, dummySection);
 
-  expect(employmentGroup.total).toBe(400); // 200 + 400/2
+  expect(categories[0].total).toBe(400); // 200 + 400/2
 });
 
-test("an uncategorized group total is the sum of its items", () => {
+test("the uncategorized total is the sum of its normalized item amounts", () => {
   const items = createTestItems([
     { amount: 200, frequency: "monthly", categoryId: null },
     { amount: 400, frequency: "biMonthly", categoryId: null },
   ]);
 
-  const { income: { groups } } = createBudget({ items, categories: [employment] }, emptySection);
-  const uncategorizedGroup = groups[1];
+  const { income } = createBudget({ items, categories: [employment] }, dummySection);
 
-  expect(uncategorizedGroup.total).toBe(400); // 200 + 400/2
+  expect(income.uncategorized.total).toBe(400); // 200 + 400/2
 });
