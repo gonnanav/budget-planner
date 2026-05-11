@@ -1,4 +1,4 @@
-import type { BalanceStatus, Budget, Category, CategoryRecord, CreateItemInput, Item, ItemGroup, ItemRecord, SectionState } from "@/domain/types";
+import type { BalanceStatus, Budget, Category, CategoryRecord, CreateItemInput, Item, ItemGroup, ItemRecord, SectionState } from "./types";
 
 export const characterLimits = {
   itemName: 100,

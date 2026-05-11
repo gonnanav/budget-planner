@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import { createBudget } from "@/domain/budget";
-import { createTestItem, createTestItems } from "@/test-utils";
+import { createBudget } from "./budget";
+import { createTestItem, createTestItems } from "./test-utils";
 
 const dummySection = { items: [], categories: [] };
 

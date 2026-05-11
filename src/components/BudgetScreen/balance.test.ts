@@ -1,6 +1,6 @@
 import { test, expect } from "vitest";
-import { createBudget } from "@/domain/budget";
-import { createTestItems } from "@/test-utils";
+import { createBudget } from "./budget";
+import { createTestItems } from "./test-utils";
 
 test("balanced when incomes and expenses are equal", () => {
   const { balance } = createBudget(

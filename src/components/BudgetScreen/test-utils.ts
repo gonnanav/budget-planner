@@ -1,5 +1,5 @@
-import { createItem, createItemRecord } from "@/domain/budget";
-import type { Item, CreateItemInput } from "@/domain/types";
+import { createItem, createItemRecord } from "./budget";
+import type { Item, CreateItemInput } from "./types";
 
 export function createTestItem(input: Partial<CreateItemInput> = {}): Item {
   const id = input.id ?? "1";

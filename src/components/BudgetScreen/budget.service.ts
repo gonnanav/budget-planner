@@ -1,6 +1,6 @@
 import { useLiveQuery } from "dexie-react-hooks";
-import { createItemRecord, createBudget } from "@/domain/budget";
-import type { Budget, CategoryRecord, ItemInput, CategoryInput, Section, ItemRecord, Loadable } from "@/domain/types";
+import { createItemRecord, createBudget } from "./budget";
+import type { Budget, CategoryRecord, ItemInput, CategoryInput, Section, ItemRecord, Loadable } from "./types";
 import { db, type DbItem, type ItemsTable, type CategoriesTable } from "@/db";
 
 export function useBudget(): Loadable<Budget> {

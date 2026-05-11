@@ -1,5 +1,5 @@
 import { Textarea } from "@mantine/core";
-import { characterLimits } from "@/domain/budget";
+import { characterLimits } from "../budget";
 
 type NotesInputProps = {
   notes: string;

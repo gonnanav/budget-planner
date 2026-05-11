@@ -1,5 +1,5 @@
 import { Select } from "@mantine/core";
-import type { Frequency } from "@/domain/types";
+import type { Frequency } from "../types";
 
 type FrequencyInputProps = {
   frequency: Frequency;

@@ -1,9 +1,9 @@
 import { Paper } from "@mantine/core";
 import { Check, TrendingUp, TrendingDown } from "lucide-react";
 import { clsx } from "clsx";
-import { formatAmount } from "@/lib/format";
+import { formatAmount } from "./format";
 import classes from "./BalanceBanner.module.css";
-import type { Balance } from "@/domain/types";
+import type { Balance } from "./types";
 
 type BalanceBannerProps = {
   balance: Balance;

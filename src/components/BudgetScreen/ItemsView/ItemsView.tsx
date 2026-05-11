@@ -1,6 +1,6 @@
 import { ItemList } from "./ItemList";
 import { GroupHeader } from "./GroupHeader";
-import type { Item, Category, SectionState } from "@/domain/types";
+import type { Item, Category, SectionState } from "../types";
 import classes from "./ItemsView.module.css";
 
 type ItemsViewProps = {

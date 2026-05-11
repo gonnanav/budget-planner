@@ -1,5 +1,5 @@
 import { TextInput } from "@mantine/core";
-import { characterLimits } from "@/domain/budget";
+import { characterLimits } from "../budget";
 
 type NameInputProps = {
   name: string;

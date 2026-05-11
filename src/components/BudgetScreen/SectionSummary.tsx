@@ -1,8 +1,8 @@
 
 
 import { clsx } from "clsx";
-import { formatAmount } from "@/lib/format";
-import type { Section } from "@/domain/types";
+import { formatAmount } from "./format";
+import type { Section } from "./types";
 import classes from "./SectionSummary.module.css";
 
 type SectionSummaryProps = {

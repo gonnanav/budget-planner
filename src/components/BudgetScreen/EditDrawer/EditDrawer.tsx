@@ -3,7 +3,7 @@ import { Trash2 } from "lucide-react";
 import classes from "./EditDrawer.module.css";
 import { ItemEdit } from "./ItemEdit";
 import { CategoryEdit } from "./CategoryEdit";
-import type { EditState, ItemDraft, CategoryDraft } from "@/domain/types";
+import type { EditState, ItemDraft, CategoryDraft } from "../types";
 
 export type EditDrawerProps = {
   editState: EditState | null;

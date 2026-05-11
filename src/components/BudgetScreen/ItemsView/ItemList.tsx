@@ -1,5 +1,5 @@
 import { ItemRow } from "./ItemRow";
-import type { Item } from "@/domain/types";
+import type { Item } from "../types";
 import classes from "./ItemList.module.css";
 
 type ItemListProps = {
