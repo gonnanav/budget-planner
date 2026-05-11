@@ -1,18 +1,16 @@
+import { useLiveQuery } from "dexie-react-hooks";
 import { createItemRecord, createBudget } from "@/domain/budget";
-import type { Budget, CategoryRecord, ItemInput, CategoryInput, Section, ItemRecord } from "@/domain/types";
+import type { Budget, CategoryRecord, ItemInput, CategoryInput, Section, ItemRecord, Loadable } from "@/domain/types";
 import { db, type DbItem, type ItemsTable, type CategoriesTable } from "@/db";
 
-export async function getBudget(): Promise<Budget> {
-  const [incomeItems, incomeCategories, expenseItems, expenseCategories] = await Promise.all([
-    getItems("income"),
-    getCategories("income"),
-    getItems("expenses"),
-    getCategories("expenses"),
-  ]);
-
-  return createBudget(
-    { items: incomeItems, categories: incomeCategories },
-    { items: expenseItems, categories: expenseCategories },
+export function useBudget(): Loadable<Budget> {
+  return useLiveQuery(
+    async () => {
+      const data = await getBudget();
+      return { status: "ready" as const, data };
+    },
+    [],
+    { status: "loading" as const },
   );
 }
 
@@ -52,6 +50,20 @@ export async function deleteCategory(id: string, section: Section): Promise<void
 
     await categoriesTable.delete(id);
   });
+}
+
+async function getBudget(): Promise<Budget> {
+  const [incomeItems, incomeCategories, expenseItems, expenseCategories] = await Promise.all([
+    getItems("income"),
+    getCategories("income"),
+    getItems("expenses"),
+    getCategories("expenses"),
+  ]);
+
+  return createBudget(
+    { items: incomeItems, categories: incomeCategories },
+    { items: expenseItems, categories: expenseCategories },
+  );
 }
 
 async function getItems(section: Section): Promise<ItemRecord[]> {

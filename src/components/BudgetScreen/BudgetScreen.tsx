@@ -5,7 +5,7 @@ import { ItemsView } from "./ItemsView/ItemsView";
 import { SectionSummary } from "./SectionSummary";
 import { useState } from "react";
 import { useEntityEdit } from "./useEntityEdit";
-import { useBudget } from "./useBudget";
+import { useBudget } from "@/services/budget";
 import type { Category, Item, Section } from "@/domain/types";
 import { addItem, updateItem, deleteItem, addCategory, updateCategory, deleteCategory } from "@/services/budget";
 import classes from "./BudgetScreen.module.css";
