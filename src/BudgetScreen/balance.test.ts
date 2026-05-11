@@ -1,11 +1,11 @@
 import { test, expect } from "vitest";
 import { createBudget } from "./budget";
-import { createTestItems } from "./test-utils";
+import { createTestItemRecords } from "./test-utils";
 
 test("balanced when incomes and expenses are equal", () => {
   const { balance } = createBudget(
-    { items: createTestItems([{ amount: 1000 }]), categories: [] },
-    { items: createTestItems([{ amount: 1000 }]), categories: [] },
+    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
+    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
   );
 
   expect(balance.delta).toBe(0);
@@ -14,8 +14,8 @@ test("balanced when incomes and expenses are equal", () => {
 
 test("in surplus when incomes are greater than expenses", () => {
   const { balance } = createBudget(
-    { items: createTestItems([{ amount: 1000 }]), categories: [] },
-    { items: createTestItems([{ amount: 500 }]), categories: [] },
+    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
+    { items: createTestItemRecords([{ amount: 500 }]), categories: [] },
   );
 
   expect(balance.delta).toBe(500);
@@ -24,8 +24,8 @@ test("in surplus when incomes are greater than expenses", () => {
 
 test("in deficit when expenses are greater than incomes", () => {
   const { balance } = createBudget(
-    { items: createTestItems([{ amount: 500 }]), categories: [] },
-    { items: createTestItems([{ amount: 1000 }]), categories: [] },
+    { items: createTestItemRecords([{ amount: 500 }]), categories: [] },
+    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
   );
 
   expect(balance.delta).toBe(-500);
@@ -35,7 +35,7 @@ test("in deficit when expenses are greater than incomes", () => {
 test("no income is counted as zero", () => {
   const { balance } = createBudget(
     { items: [], categories: [] },
-    { items: createTestItems([{ amount: 1000 }]), categories: [] },
+    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
   );
 
   expect(balance.delta).toBe(-1000);
@@ -43,8 +43,8 @@ test("no income is counted as zero", () => {
 
 test("multiple incomes are summed up", () => {
   const { balance } = createBudget(
-    { items: createTestItems([{ amount: 400 }, { amount: 600 }]), categories: [] },
-    { items: createTestItems([{ amount: 500 }]), categories: [] },
+    { items: createTestItemRecords([{ amount: 400 }, { amount: 600 }]), categories: [] },
+    { items: createTestItemRecords([{ amount: 500 }]), categories: [] },
   );
 
   expect(balance.delta).toBe(500);
@@ -52,7 +52,7 @@ test("multiple incomes are summed up", () => {
 
 test("no expense is counted as zero", () => {
   const { balance } = createBudget(
-    { items: createTestItems([{ amount: 1000 }]), categories: [] },
+    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
     { items: [], categories: [] },
   );
 
@@ -61,8 +61,8 @@ test("no expense is counted as zero", () => {
 
 test("multiple expenses are summed up", () => {
   const { balance } = createBudget(
-    { items: createTestItems([{ amount: 1000 }]), categories: [] },
-    { items: createTestItems([{ amount: 300 }, { amount: 200 }]), categories: [] },
+    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
+    { items: createTestItemRecords([{ amount: 300 }, { amount: 200 }]), categories: [] },
   );
 
   expect(balance.delta).toBe(500);

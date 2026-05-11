@@ -1,19 +1,19 @@
 import { expect, test } from "vitest";
 import { createBudget } from "./budget";
-import { createTestItem, createTestItems } from "./test-utils";
+import { createTestItemRecord, createTestItemRecords } from "./test-utils";
 
 const dummySection = { items: [], categories: [] };
 
 const employment = { id: "employment", name: "Employment" };
 const passive = { id: "passive", name: "Passive" };
 
-const employmentItem1 = createTestItem({ id: "e1", categoryId: employment.id });
-const employmentItem2 = createTestItem({ id: "e2", categoryId: employment.id });
+const employmentItem1 = createTestItemRecord({ id: "e1", categoryId: employment.id });
+const employmentItem2 = createTestItemRecord({ id: "e2", categoryId: employment.id });
 
-const passiveItem = createTestItem({ id: "p1", categoryId: passive.id });
+const passiveItem = createTestItemRecord({ id: "p1", categoryId: passive.id });
 
-const uncategorizedItem1 = createTestItem({ id: "u1", categoryId: null });
-const uncategorizedItem2 = createTestItem({ id: "u2", categoryId: null });
+const uncategorizedItem1 = createTestItemRecord({ id: "u1", categoryId: null });
+const uncategorizedItem2 = createTestItemRecord({ id: "u2", categoryId: null });
 
 test("income and expense items appear in their own sections", () => {
   const incomeItems = [employmentItem1, employmentItem2];
@@ -24,8 +24,8 @@ test("income and expense items appear in their own sections", () => {
     { items: expenseItems, categories: [] },
   );
 
-  expect(income.items).toEqual(incomeItems);
-  expect(expenses.items).toEqual(expenseItems);
+  expect(income.items).toMatchObject(incomeItems);
+  expect(expenses.items).toMatchObject(expenseItems);
 });
 
 test.each([
@@ -81,7 +81,7 @@ test("a category with no matching items has no items", () => {
 });
 
 test("a category total is the sum of its normalized item amounts", () => {
-  const items = createTestItems([
+  const items = createTestItemRecords([
     { amount: 200, frequency: "monthly", categoryId: employment.id },
     { amount: 400, frequency: "biMonthly", categoryId: employment.id },
   ]);
@@ -92,7 +92,7 @@ test("a category total is the sum of its normalized item amounts", () => {
 });
 
 test("the uncategorized total is the sum of its normalized item amounts", () => {
-  const items = createTestItems([
+  const items = createTestItemRecords([
     { amount: 200, frequency: "monthly", categoryId: null },
     { amount: 400, frequency: "biMonthly", categoryId: null },
   ]);

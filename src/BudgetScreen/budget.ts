@@ -33,7 +33,7 @@ export function createItemRecord(input: CreateItemInput): ItemRecord {
   };
 }
 
-export function createItem(record: ItemRecord): Item {
+function createItem(record: ItemRecord): Item {
   return {
     ...record,
     normalizedAmount: normalizeAmount(record),
