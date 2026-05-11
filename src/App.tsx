@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
-import { AppShell } from './components/AppShell/AppShell';
-import { BudgetScreen } from './components/BudgetScreen/BudgetScreen';
-import { BackupScreen } from './components/BackupScreen/BackupScreen';
+import { AppShell } from './AppShell/AppShell';
+import { BudgetScreen } from './BudgetScreen/BudgetScreen';
+import { BackupScreen } from './BackupScreen/BackupScreen';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
