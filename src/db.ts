@@ -45,4 +45,15 @@ db.version(5)
     ]);
   });
 
+db.version(6).upgrade((tx) => {
+  const normalize = (table: string) =>
+    tx.table(table).toCollection().modify((item) => {
+      if (item.categoryId === undefined) {
+        item.categoryId = null;
+      }
+    });
+
+  return Promise.all([normalize("incomeItems"), normalize("expenseItems")]);
+});
+
 export { db };
