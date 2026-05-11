@@ -1,5 +1,5 @@
 import { ItemList } from "./ItemList";
-import { CategoryRow } from "./CategoryRow";
+import { GroupHeader } from "./GroupHeader";
 import type { Item, Category, SectionState } from "@/domain/types";
 import classes from "./ItemsView.module.css";
 
@@ -24,12 +24,9 @@ export function ItemsView({ sectionState, onItemClick, onCategoryClick }: ItemsV
     <div>
       {categories.map((category) => (
         <div key={category.id} className={classes.group}>
-          <CategoryRow
-            name={category.name}
-            itemCount={category.items.length}
-            total={category.total}
-            onCategoryClick={() => onCategoryClick(category)}
-          />
+          <button className={classes.categoryButton} onClick={() => onCategoryClick(category)}>
+            <GroupHeader name={category.name} itemCount={category.items.length} total={category.total} className={classes.categoryHeader} />
+          </button>
           {category.items.length > 0 && (
             <ItemList items={category.items} onItemClick={onItemClick} />
           )}
@@ -37,11 +34,7 @@ export function ItemsView({ sectionState, onItemClick, onCategoryClick }: ItemsV
       ))}
       {uncategorized.items.length > 0 && (
         <div className={classes.group}>
-          <CategoryRow
-            name="Uncategorized"
-            itemCount={uncategorized.items.length}
-            total={uncategorized.total}
-          />
+          <GroupHeader name="Uncategorized" itemCount={uncategorized.items.length} total={uncategorized.total} />
           <ItemList items={uncategorized.items} onItemClick={onItemClick} />
         </div>
       )}

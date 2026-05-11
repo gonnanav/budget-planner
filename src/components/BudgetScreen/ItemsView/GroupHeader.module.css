@@ -31,19 +31,3 @@
   font-style: italic;
   color: #94a3b8;
 }
-
-button.root {
-  /* Box model */
-  width: 100%;
-  border: none;
-  border-left: 3px solid var(--color-primary);
-
-  /* Visual */
-  cursor: pointer;
-  text-align: left;
-}
-
-button.root:hover {
-  /* Visual */
-  background-color: #dce4ff;
-}
