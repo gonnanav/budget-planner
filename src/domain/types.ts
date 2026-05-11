@@ -24,7 +24,7 @@ export type ItemRecord = {
   amount: number | null;
   frequency: Frequency;
   categoryId: string | null;
-  notes?: string;
+  notes: string;
 };
 
 export type Item = ItemRecord & {
@@ -37,7 +37,7 @@ export type ItemDraft = {
   amount: number | null;
   frequency: Frequency;
   categoryId: string | null;
-  notes?: string;
+  notes: string;
 };
 
 export type ItemGroup = {

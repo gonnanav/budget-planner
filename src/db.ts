@@ -6,7 +6,7 @@ export type DbItem = {
   amount: number | null;
   frequency: "monthly" | "biMonthly";
   categoryId: string | null;
-  notes?: string;
+  notes: string;
 };
 
 export type DbCategory = {
@@ -50,6 +50,17 @@ db.version(6).upgrade((tx) => {
     tx.table(table).toCollection().modify((item) => {
       if (item.categoryId === undefined) {
         item.categoryId = null;
+      }
+    });
+
+  return Promise.all([normalize("incomeItems"), normalize("expenseItems")]);
+});
+
+db.version(7).upgrade((tx) => {
+  const normalize = (table: string) =>
+    tx.table(table).toCollection().modify((item) => {
+      if (item.notes === undefined) {
+        item.notes = "";
       }
     });
 

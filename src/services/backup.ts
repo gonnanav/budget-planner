@@ -1,6 +1,7 @@
 import { createBackupData } from "@/domain/backup";
 import type { BackupData } from "@/domain/types";
-import { db, type DbItem, type DbCategory } from "@/db";
+import { db, type DbCategory } from "@/db";
+import type { ItemRecord } from "@/domain/types";
 import type { Table } from "dexie";
 
 export type BackupItem = {
@@ -18,9 +19,9 @@ export type BackupCategory = {
 };
 
 type DbData = {
-  incomeItems: DbItem[];
+  incomeItems: ItemRecord[];
   incomeCategories: DbCategory[];
-  expenseItems: DbItem[];
+  expenseItems: ItemRecord[];
   expenseCategories: DbCategory[];
 };
 
@@ -64,7 +65,12 @@ export async function restoreData(backup: BackupData): Promise<void> {
     expenseCategories = backup.data?.expenseCategories ?? [];
   }
 
-  await restoreAllData({ incomeItems, expenseItems, incomeCategories, expenseCategories });
+  await restoreAllData({
+    incomeItems: incomeItems.map(toItemRecord),
+    expenseItems: expenseItems.map(toItemRecord),
+    incomeCategories,
+    expenseCategories,
+  });
 }
 
 async function getAllData(): Promise<DbData> {
@@ -75,7 +81,23 @@ async function getAllData(): Promise<DbData> {
     db.expenseCategories.toArray(),
   ]);
 
-  return { incomeItems, incomeCategories, expenseItems, expenseCategories };
+  return {
+    incomeItems: incomeItems.map(toItemRecord),
+    incomeCategories,
+    expenseItems: expenseItems.map(toItemRecord),
+    expenseCategories,
+  };
+}
+
+function toItemRecord(item: BackupItem): ItemRecord {
+  return {
+    id: item.id,
+    name: item.name,
+    amount: item.amount,
+    frequency: item.frequency,
+    categoryId: item.categoryId,
+    notes: item.notes ?? "",
+  };
 }
 
 async function restoreAllData({

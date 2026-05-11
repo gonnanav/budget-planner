@@ -2,11 +2,11 @@ import { Textarea } from "@mantine/core";
 import { characterLimits } from "@/domain/budget";
 
 type NotesInputProps = {
-  notes?: string;
+  notes: string;
   onNotesChange: (notes: string) => void;
 };
 
-export function NotesInput({ notes = "", onNotesChange }: NotesInputProps) {
+export function NotesInput({ notes, onNotesChange }: NotesInputProps) {
   return (
     <Textarea
       label="Notes"
