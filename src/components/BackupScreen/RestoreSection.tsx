@@ -5,12 +5,12 @@ import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Upload } from "lucide-react";
 import { restoreData } from "@/services/backup";
-import type { BackupData } from "@/domain/types";
+import type { BackupData } from "@/services/backup";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
 import classes from "./RestoreSection.module.css";
 
 type BackupSummary = {
-  version: string;
+  version: number;
   exportedAt: string;
   incomeItemsCount: number;
   expenseItemsCount: number;
@@ -45,10 +45,10 @@ export function RestoreSection() {
         }
 
         if (
-          !Array.isArray(data.data.incomeItems) ||
-          !Array.isArray(data.data.expenseItems) ||
-          !Array.isArray(data.data.incomeCategories) ||
-          !Array.isArray(data.data.expenseCategories)
+          !Array.isArray(data.data.income?.items) ||
+          !Array.isArray(data.data.expenses?.items) ||
+          !Array.isArray(data.data.income?.categories) ||
+          !Array.isArray(data.data.expenses?.categories)
         ) {
           throw new Error("Invalid backup data format");
         }
@@ -57,10 +57,10 @@ export function RestoreSection() {
         setSummary({
           version: data.metadata.version,
           exportedAt: data.metadata.exportedAt,
-          incomeItemsCount: data.data.incomeItems.length,
-          expenseItemsCount: data.data.expenseItems.length,
-          incomeCategoriesCount: data.data.incomeCategories.length,
-          expenseCategoriesCount: data.data.expenseCategories.length,
+          incomeItemsCount: data.data.income.items.length,
+          expenseItemsCount: data.data.expenses.items.length,
+          incomeCategoriesCount: data.data.income.categories.length,
+          expenseCategoriesCount: data.data.expenses.categories.length,
         });
       } catch (err) {
         setError(

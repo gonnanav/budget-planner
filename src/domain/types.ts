@@ -82,16 +82,3 @@ export type Budget = {
   expenses: SectionState;
   balance: Balance;
 };
-
-export type BackupData = {
-  metadata: {
-    version: string;
-    exportedAt: string;
-  };
-  data: {
-    incomeItems: ItemRecord[];
-    incomeCategories: CategoryRecord[];
-    expenseItems: ItemRecord[];
-    expenseCategories: CategoryRecord[];
-  };
-};

@@ -1,79 +1,77 @@
-import { createBackupData } from "@/domain/backup";
-import type { BackupData } from "@/domain/types";
-import { db, type DbCategory } from "@/db";
-import type { ItemRecord } from "@/domain/types";
+import { db, type DbItem, type DbCategory } from "@/db";
 import type { Table } from "dexie";
 
-export type BackupItem = {
+export type BackupData = {
+  metadata: {
+    version: number;
+    exportedAt: string;
+  };
+  data: BackupBudget;
+};
+
+type BackupItem = {
   id: string;
   name: string;
   amount: number | null;
   frequency: "monthly" | "biMonthly";
   categoryId: string | null;
-  notes?: string;
+  notes: string;
 };
 
-export type BackupCategory = {
+type BackupCategory = {
   id: string;
   name: string;
 };
 
-type DbData = {
-  incomeItems: ItemRecord[];
-  incomeCategories: DbCategory[];
-  expenseItems: ItemRecord[];
-  expenseCategories: DbCategory[];
+type BackupSection = {
+  items: BackupItem[];
+  categories: BackupCategory[];
 };
 
-type BackupDataV1 = {
-  metadata: {
-    version: string;
-    exportedAt: string;
-  };
-  data: {
-    incomes: BackupItem[];
-    expenses: BackupItem[];
-    incomeCategories: BackupCategory[];
-    expenseCategories: BackupCategory[];
-  };
+type BackupBudget = {
+  income: BackupSection;
+  expenses: BackupSection;
+};
+
+type DbSection = {
+  items: DbItem[];
+  categories: DbCategory[];
+};
+
+type DbData = {
+  income: DbSection;
+  expenses: DbSection;
 };
 
 export async function backupData(): Promise<void> {
-  const input = await getAllData();
-  const data = createBackupData(input);
-  downloadBackupData(data);
+  const dbData = await getDbData();
+  const backup = createBackupData(dbData);
+  downloadBackupData(backup);
 }
 
 export async function restoreData(backup: BackupData): Promise<void> {
-  const version = backup?.metadata?.version;
-  let incomeItems: BackupItem[] = [];
-  let expenseItems: BackupItem[] = [];
-  let incomeCategories: BackupCategory[] = [];
-  let expenseCategories: BackupCategory[] = [];
-
-  if (version === "0.1.0") {
-    const backupV1 = backup as unknown as BackupDataV1;
-    incomeItems = backupV1.data?.incomes ?? [];
-    expenseItems = backupV1.data?.expenses ?? [];
-    incomeCategories = backupV1.data?.incomeCategories ?? [];
-    expenseCategories = backupV1.data?.expenseCategories ?? [];
-    console.warn("Restored backup from version 0.1.0.");
-  } else {
-    incomeItems = backup.data?.incomeItems ?? [];
-    expenseItems = backup.data?.expenseItems ?? [];
-    incomeCategories = backup.data?.incomeCategories ?? [];
-    expenseCategories = backup.data?.expenseCategories ?? [];
-  }
-
-  await restoreAllData({
-    incomeItems: incomeItems.map(toItemRecord),
-    expenseItems: expenseItems.map(toItemRecord),
-    incomeCategories,
-    expenseCategories,
-  });
+  const { income, expenses } = backup.data;
+  await db.transaction("rw", db.tables, async () =>
+    Promise.all([
+      replaceAllInTable(db.incomeItems, income.items),
+      replaceAllInTable(db.incomeCategories, income.categories),
+      replaceAllInTable(db.expenseItems, expenses.items),
+      replaceAllInTable(db.expenseCategories, expenses.categories),
+    ]),
+  );
 }
 
-async function getAllData(): Promise<DbData> {
+function createBackupData(data: DbData): BackupData {
+  return {
+    metadata: {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+    },
+    data,
+  };
+}
+
+async function getDbData(): Promise<DbData> {
   const [incomeItems, incomeCategories, expenseItems, expenseCategories] = await Promise.all([
     db.incomeItems.toArray(),
     db.incomeCategories.toArray(),
@@ -82,43 +80,9 @@ async function getAllData(): Promise<DbData> {
   ]);
 
   return {
-    incomeItems: incomeItems.map(toItemRecord),
-    incomeCategories,
-    expenseItems: expenseItems.map(toItemRecord),
-    expenseCategories,
+    income: { items: incomeItems, categories: incomeCategories },
+    expenses: { items: expenseItems, categories: expenseCategories },
   };
-}
-
-function toItemRecord(item: BackupItem): ItemRecord {
-  return {
-    id: item.id,
-    name: item.name,
-    amount: item.amount,
-    frequency: item.frequency,
-    categoryId: item.categoryId,
-    notes: item.notes ?? "",
-  };
-}
-
-async function restoreAllData({
-  incomeItems,
-  incomeCategories,
-  expenseItems,
-  expenseCategories,
-}: DbData): Promise<void> {
-  await db.transaction("rw", db.tables, async () =>
-    Promise.all([
-      replaceAllInTable(db.incomeItems, incomeItems),
-      replaceAllInTable(db.incomeCategories, incomeCategories),
-      replaceAllInTable(db.expenseItems, expenseItems),
-      replaceAllInTable(db.expenseCategories, expenseCategories),
-    ]),
-  );
-}
-
-async function replaceAllInTable(table: Table, data: unknown[]): Promise<void> {
-  await table.clear();
-  await table.bulkAdd(data);
 }
 
 function downloadBackupData(data: BackupData): void {
@@ -130,6 +94,11 @@ function downloadBackupData(data: BackupData): void {
 
   const filename = `budget_v${data.metadata.version}_${timestamp}.json`;
   downloadJSON(data, filename);
+}
+
+async function replaceAllInTable(table: Table, data: unknown[]): Promise<void> {
+  await table.clear();
+  await table.bulkAdd(data);
 }
 
 function downloadJSON<T>(data: T, filename: string): void {
