@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Download } from "lucide-react";
-import { backupData } from "@/services/backup";
+import { backupData } from "./backup";
 import classes from "./BackupSection.module.css";
 
 export function BackupSection() {

@@ -4,8 +4,8 @@ import { useState, useRef } from "react";
 import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Upload } from "lucide-react";
-import { restoreData } from "@/services/backup";
-import type { BackupData } from "@/services/backup";
+import { restoreData } from "./restore";
+import type { BackupData } from "../types";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
 import classes from "./RestoreSection.module.css";
 

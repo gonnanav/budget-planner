@@ -1,37 +1,5 @@
 import { db, type DbItem, type DbCategory } from "@/db";
-import type { Table } from "dexie";
-
-export type BackupData = {
-  metadata: {
-    version: number;
-    exportedAt: string;
-  };
-  data: BackupBudget;
-};
-
-type BackupItem = {
-  id: string;
-  name: string;
-  amount: number | null;
-  frequency: "monthly" | "biMonthly";
-  categoryId: string | null;
-  notes: string;
-};
-
-type BackupCategory = {
-  id: string;
-  name: string;
-};
-
-type BackupSection = {
-  items: BackupItem[];
-  categories: BackupCategory[];
-};
-
-type BackupBudget = {
-  income: BackupSection;
-  expenses: BackupSection;
-};
+import type { BackupData } from "../types";
 
 type DbSection = {
   items: DbItem[];
@@ -47,18 +15,6 @@ export async function backupData(): Promise<void> {
   const dbData = await getDbData();
   const backup = createBackupData(dbData);
   downloadBackupData(backup);
-}
-
-export async function restoreData(backup: BackupData): Promise<void> {
-  const { income, expenses } = backup.data;
-  await db.transaction("rw", db.tables, async () =>
-    Promise.all([
-      replaceAllInTable(db.incomeItems, income.items),
-      replaceAllInTable(db.incomeCategories, income.categories),
-      replaceAllInTable(db.expenseItems, expenses.items),
-      replaceAllInTable(db.expenseCategories, expenses.categories),
-    ]),
-  );
 }
 
 function createBackupData(data: DbData): BackupData {
@@ -94,11 +50,6 @@ function downloadBackupData(data: BackupData): void {
 
   const filename = `budget_v${data.metadata.version}_${timestamp}.json`;
   downloadJSON(data, filename);
-}
-
-async function replaceAllInTable(table: Table, data: unknown[]): Promise<void> {
-  await table.clear();
-  await table.bulkAdd(data);
 }
 
 function downloadJSON<T>(data: T, filename: string): void {
