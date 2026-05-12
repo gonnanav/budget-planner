@@ -1,7 +1,15 @@
 import { test, expect, describe } from "vitest";
-import { createBudget } from "./budget";
+import { createBudget, createItemRecord } from "./budget";
 import type { ItemRecord } from "./types";
 import { createTestItemRecord } from "./test-utils";
+
+describe("item record", () => {
+  test("created with defaults for optional properties", () => {
+    const record = createItemRecord({ id: "1", name: "Some item" });
+
+    expect(record).toMatchObject({ amount: null, frequency: "monthly", categoryId: null, notes: "" });
+  });
+});
 
 describe("balance", () => {
   test("balanced when income and expenses are equal", () => {
