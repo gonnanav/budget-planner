@@ -1,103 +1,164 @@
-import { expect, test } from "vitest";
-import { createBudget } from "./budget";
-import { createTestItemRecord, createTestItemRecords } from "./test-utils";
+import { test, expect, describe } from "vitest";
+import { createBudget, createItemRecord } from "./budget";
+import type { ItemRecord, CreateItemInput } from "./types";
 
 const dummySection = { items: [], categories: [] };
 
-const employment = { id: "employment", name: "Employment" };
-const passive = { id: "passive", name: "Passive" };
+test("item record is created with defaults for optional properties", () => {
+  const record = createItemRecord({ id: "1", name: "Some item" });
 
-const employmentItem1 = createTestItemRecord({ id: "e1", categoryId: employment.id });
-const employmentItem2 = createTestItemRecord({ id: "e2", categoryId: employment.id });
-
-const passiveItem = createTestItemRecord({ id: "p1", categoryId: passive.id });
-
-const uncategorizedItem1 = createTestItemRecord({ id: "u1", categoryId: null });
-const uncategorizedItem2 = createTestItemRecord({ id: "u2", categoryId: null });
-
-test("income and expense items appear in their own sections", () => {
-  const incomeItems = [employmentItem1, employmentItem2];
-  const expenseItems = [passiveItem];
-
-  const { income, expenses } = createBudget(
-    { items: incomeItems, categories: [] },
-    { items: expenseItems, categories: [] },
-  );
-
-  expect(income.items).toMatchObject(incomeItems);
-  expect(expenses.items).toMatchObject(expenseItems);
+  expect(record).toMatchObject({ amount: null, frequency: "monthly", categoryId: null, notes: "" });
 });
 
-test.each([
-  [employmentItem1, employmentItem2],
-  [employmentItem1, passiveItem, uncategorizedItem1, employmentItem2],
-])(
-  "items are grouped by category regardless of the items order",
-  (...items) => {
-    const { income: { categories } } = createBudget({ items, categories: [employment] }, dummySection);
+describe("item", () => {
+  test("the normalized amount remains the same for monthly items", () => {
+    const items = [createTestItemRecord({ amount: 400, frequency: "monthly" })];
 
-    expect(categories[0]).toMatchObject({
+    const { income } = createBudget({ items, categories: [] }, dummySection);
+
+    expect(income.items[0].normalizedAmount).toBe(400);
+  });
+
+  test("normalized amount is halved for bi-monthly items", () => {
+    const items = [createTestItemRecord({ amount: 400, frequency: "biMonthly" })];
+
+    const { income } = createBudget({ items, categories: [] }, dummySection);
+
+    expect(income.items[0].normalizedAmount).toBe(200); // 400/2
+  });
+});
+
+describe("categories", () => {
+  const employment = { id: "employment", name: "Employment" };
+  const employmentItem1 = createTestItemRecord({ id: "e1", categoryId: employment.id });
+  const employmentItem2 = createTestItemRecord({ id: "e2", categoryId: employment.id });
+
+  test("items are grouped by category", () => {
+    const freelance = { id: "freelance", name: "Freelance" };
+    const freelanceItem = createTestItemRecord({ id: "f1", categoryId: freelance.id });
+    const items = [employmentItem1, freelanceItem, employmentItem2];
+    const categories = [employment, freelance];
+
+    const { income } = createBudget({ items, categories }, dummySection);
+
+    expect(income.categories[0]).toMatchObject({
+      id: employment.id,
       items: [employmentItem1, employmentItem2],
     });
-  },
-);
+  });
 
-test.each([
-  [employment, passive],
-  [passive, employment],
-])(
-  "items are grouped by category regardless of the categories order",
-  (...categories) => {
-    const index = categories.indexOf(employment);
+  test("a category without items is still included", () => {
+    const categories = [employment];
 
-    const { income } = createBudget({ items: [employmentItem1, passiveItem], categories }, dummySection);
+    const { income } = createBudget({ items: [], categories }, dummySection);
 
-    expect(income.categories[index]).toMatchObject({
-      items: [employmentItem1],
+    expect(income.categories[0]).toMatchObject({
+      id: employment.id,
+      items: [],
     });
-  },
-);
+  });
 
-test.each([
-  [uncategorizedItem1, uncategorizedItem2],
-  [uncategorizedItem1, employmentItem1, uncategorizedItem2],
-])(
-  "items without a category are listed as uncategorized",
-  (...items) => {
-    const { income } = createBudget({ items, categories: [employment] }, dummySection);
+  test("a category total is the normalized sum of all its items", () => {
+    const items = [
+      createTestItemRecord({ id: "1", amount: 200, frequency: "monthly", categoryId: employment.id }),
+      createTestItemRecord({ id: "2", amount: 400, frequency: "biMonthly", categoryId: employment.id }),
+    ];
+    const categories = [employment];
+
+    const { income } = createBudget({ items, categories }, dummySection);
+
+    expect(income.categories[0].total).toBe(400); // 200 + 400/2
+  });
+
+  test("items without a category are grouped as uncategorized", () => {
+    const uncategorizedItem1 = createTestItemRecord({ id: "u1", categoryId: null });
+    const uncategorizedItem2 = createTestItemRecord({ id: "u2", categoryId: null });
+    const items = [uncategorizedItem1, employmentItem1, uncategorizedItem2];
+    const categories = [employment];
+
+    const { income } = createBudget({ items, categories }, dummySection);
 
     expect(income.uncategorized).toMatchObject({
       items: [uncategorizedItem1, uncategorizedItem2],
     });
-  },
-);
+  });
 
-test("a category with no matching items has no items", () => {
-  const { income: { categories } } = createBudget({ items: [employmentItem1], categories: [employment, passive] }, dummySection);
+  test("the uncategorized total is the normalized sum of all its items", () => {
+    const items = [
+      createTestItemRecord({ id: "1", amount: 200, frequency: "monthly", categoryId: null }),
+      createTestItemRecord({ id: "2", amount: 400, frequency: "biMonthly", categoryId: null }),
+    ];
 
-  expect(categories[1]).toMatchObject({
-    items: [],
+    const { income } = createBudget({ items, categories: [] }, dummySection);
+
+    expect(income.uncategorized.total).toBe(400); // 200 + 400/2
   });
 });
 
-test("a category total is the sum of its normalized item amounts", () => {
-  const items = createTestItemRecords([
-    { amount: 200, frequency: "monthly", categoryId: employment.id },
-    { amount: 400, frequency: "biMonthly", categoryId: employment.id },
-  ]);
+describe("section total", () => {
+  test("total is zero when the section is empty", () => {
+    const items: ItemRecord[] = [];
 
-  const { income: { categories } } = createBudget({ items, categories: [employment] }, dummySection);
+    const { income } = createBudget({ items, categories: [] }, dummySection);
 
-  expect(categories[0].total).toBe(400); // 200 + 400/2
+    expect(income.total).toBe(0);
+  });
+
+  test("total is the normalized sum of all its items", () => {
+    const items = [
+      createTestItemRecord({ id: "1", amount: 400, frequency: "monthly" }),
+      createTestItemRecord({ id: "2", amount: 400, frequency: "biMonthly" }),
+    ];
+
+    const { income } = createBudget({ items, categories: [] }, dummySection);
+
+    expect(income.total).toBe(600); // 400 + 400/2
+  });
 });
 
-test("the uncategorized total is the sum of its normalized item amounts", () => {
-  const items = createTestItemRecords([
-    { amount: 200, frequency: "monthly", categoryId: null },
-    { amount: 400, frequency: "biMonthly", categoryId: null },
-  ]);
+describe("balance", () => {
+  test("balanced when income and expenses are equal", () => {
+    const incomeItems = [createTestItemRecord({ amount: 1000 })];
+    const expenseItems = [createTestItemRecord({ amount: 1000 })];
 
-  const { income } = createBudget({ items, categories: [employment] }, dummySection);
+    const { balance } = createBudget(
+      { items: incomeItems, categories: [] },
+      { items: expenseItems, categories: [] },
+    );
 
-  expect(income.uncategorized.total).toBe(400); // 200 + 400/2
+    expect(balance.delta).toBe(0);
+    expect(balance.status).toBe("balanced");
+  });
+
+  test("in surplus when income is greater than expenses", () => {
+    const incomeItems = [createTestItemRecord({ amount: 1000 })];
+    const expenseItems = [createTestItemRecord({ amount: 500 })];
+
+    const { balance } = createBudget(
+      { items: incomeItems, categories: [] },
+      { items: expenseItems, categories: [] },
+    );
+
+    expect(balance.delta).toBe(500);
+    expect(balance.status).toBe("surplus");
+  });
+
+  test("in deficit when expenses are greater than income", () => {
+    const incomeItems = [createTestItemRecord({ amount: 500 })];
+    const expenseItems = [createTestItemRecord({ amount: 1000 })];
+
+    const { balance } = createBudget(
+      { items: incomeItems, categories: [] },
+      { items: expenseItems, categories: [] },
+    );
+
+    expect(balance.delta).toBe(-500);
+    expect(balance.status).toBe("deficit");
+  });
 });
+
+function createTestItemRecord(input: Partial<CreateItemInput> = {}): ItemRecord {
+  const id = input.id ?? "1";
+
+  return createItemRecord({ id, name: id, ...input });
+}
