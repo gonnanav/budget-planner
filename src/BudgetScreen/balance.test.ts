@@ -1,69 +1,74 @@
-import { test, expect } from "vitest";
+import { test, expect, describe } from "vitest";
 import { createBudget } from "./budget";
-import { createTestItemRecords } from "./test-utils";
+import type { ItemRecord } from "./types";
+import { createTestItemRecord } from "./test-utils";
 
-test("balanced when incomes and expenses are equal", () => {
-  const { balance } = createBudget(
-    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
-    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
-  );
+describe("balance", () => {
+  test("balanced when income and expenses are equal", () => {
+    const incomeItems = [createTestItemRecord({ amount: 1000 })];
+    const expenseItems = [createTestItemRecord({ amount: 1000 })];
 
-  expect(balance.delta).toBe(0);
-  expect(balance.status).toBe("balanced");
+    const { balance } = createBudget(
+      { items: incomeItems, categories: [] },
+      { items: expenseItems, categories: [] },
+    );
+
+    expect(balance.delta).toBe(0);
+    expect(balance.status).toBe("balanced");
+  });
+
+  test("in surplus when income is greater than expenses", () => {
+    const incomeItems = [createTestItemRecord({ amount: 1000 })];
+    const expenseItems = [createTestItemRecord({ amount: 500 })];
+
+    const { balance } = createBudget(
+      { items: incomeItems, categories: [] },
+      { items: expenseItems, categories: [] },
+    );
+
+    expect(balance.delta).toBe(500);
+    expect(balance.status).toBe("surplus");
+  });
+
+  test("in deficit when expenses are greater than income", () => {
+    const incomeItems = [createTestItemRecord({ amount: 500 })];
+    const expenseItems = [createTestItemRecord({ amount: 1000 })];
+
+    const { balance } = createBudget(
+      { items: incomeItems, categories: [] },
+      { items: expenseItems, categories: [] },
+    );
+
+    expect(balance.delta).toBe(-500);
+    expect(balance.status).toBe("deficit");
+  });
 });
 
-test("in surplus when incomes are greater than expenses", () => {
-  const { balance } = createBudget(
-    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
-    { items: createTestItemRecords([{ amount: 500 }]), categories: [] },
-  );
+describe("section total", () => {
+  const dummySection = { items: [], categories: [] };
 
-  expect(balance.delta).toBe(500);
-  expect(balance.status).toBe("surplus");
-});
+  test("total is zero when section is empty", () => {
+    const incomeItems: ItemRecord[] = [];
 
-test("in deficit when expenses are greater than incomes", () => {
-  const { balance } = createBudget(
-    { items: createTestItemRecords([{ amount: 500 }]), categories: [] },
-    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
-  );
+    const { income } = createBudget(
+      { items: incomeItems, categories: [] },
+      dummySection,
+    );
 
-  expect(balance.delta).toBe(-500);
-  expect(balance.status).toBe("deficit");
-});
+    expect(income.total).toBe(0);
+  });
 
-test("no income is counted as zero", () => {
-  const { balance } = createBudget(
-    { items: [], categories: [] },
-    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
-  );
+  test("total is the normalized sum of all items", () => {
+    const incomeItems = [
+      createTestItemRecord({ id: "1", amount: 400, frequency: "monthly" }),
+      createTestItemRecord({ id: "2", amount: 400, frequency: "biMonthly" }),
+    ];
 
-  expect(balance.delta).toBe(-1000);
-});
+    const { income } = createBudget(
+      { items: incomeItems, categories: [] },
+      dummySection,
+    );
 
-test("multiple incomes are summed up", () => {
-  const { balance } = createBudget(
-    { items: createTestItemRecords([{ amount: 400 }, { amount: 600 }]), categories: [] },
-    { items: createTestItemRecords([{ amount: 500 }]), categories: [] },
-  );
-
-  expect(balance.delta).toBe(500);
-});
-
-test("no expense is counted as zero", () => {
-  const { balance } = createBudget(
-    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
-    { items: [], categories: [] },
-  );
-
-  expect(balance.delta).toBe(1000);
-});
-
-test("multiple expenses are summed up", () => {
-  const { balance } = createBudget(
-    { items: createTestItemRecords([{ amount: 1000 }]), categories: [] },
-    { items: createTestItemRecords([{ amount: 300 }, { amount: 200 }]), categories: [] },
-  );
-
-  expect(balance.delta).toBe(500);
+    expect(income.total).toBe(600); // 400 + 400/2
+  });
 });
