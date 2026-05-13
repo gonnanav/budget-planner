@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Upload } from "lucide-react";
@@ -9,14 +10,15 @@ import { RestoreConfirmModal } from "./RestoreConfirmModal";
 import classes from "./RestoreSection.module.css";
 
 export function RestoreSection() {
-  const { fileState, fileInputRef, loadFile, resetFile } = useBackupFile();
-
+  const navigate = useNavigate();
+  const { fileState, fileInputRef, loadFile } = useBackupFile();
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isRestoring, setIsRestoring] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
     loadFile(file);
   };
 
@@ -28,13 +30,13 @@ export function RestoreSection() {
     setIsRestoring(true);
     try {
       await restoreData(fileState.backupData);
+      setIsConfirmModalOpen(false);
       notifications.show({
         title: "Data restored",
         message: "Your budget data has been restored from the backup.",
         color: "green",
       });
-      setIsConfirmModalOpen(false);
-      resetFile();
+      navigate("/");
     } catch {
       notifications.show({
         title: "Restore failed",
@@ -50,7 +52,7 @@ export function RestoreSection() {
     <section className={classes.root}>
       <h2 className={classes.title}>Restore</h2>
       <p className={classes.description}>
-        Replace all existing data with data from a backup file.
+        Restore your budget data from a previously exported backup file.
       </p>
 
       <div>

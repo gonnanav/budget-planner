@@ -44,9 +44,8 @@ export function RestoreConfirmModal({
               This will completely replace your current data
             </p>
             <p className={classes.bannerText}>
-              All your existing incomes, expenses, and categories will be
-              permanently deleted and replaced with the backup data. This
-              cannot be undone.
+              All your existing data will be permanently deleted and replaced
+              with the backup data. This cannot be undone.
             </p>
           </div>
         </div>
