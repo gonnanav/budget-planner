@@ -1,69 +1,72 @@
 .root {
+  /* Layout */
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  /* Box model */
   border-radius: 12px;
   border: 1px solid #e2e8f0;
-  background-color: #f8fafc;
   padding: 20px;
 
-& .title {
-    font-size: 1rem;
-    font-weight: 600;
-  }
-
-  & .description {
-    font-size: 0.875rem;
-    color: #64748b;
-  }
-
-  & .label {
-    margin-bottom: 8px;
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  & .fileInput {
-    width: 100%;
-    border-radius: 8px;
-    border: 1px solid #cbd5e1;
-    padding: 8px 12px;
-    font-size: 0.875rem;
-  }
-
-  & .error {
-    border-radius: 8px;
-    border: 1px solid #fca5a5;
-    background-color: #fef2f2;
-    padding: 12px;
-    font-size: 0.875rem;
-    color: #b91c1c;
-  }
-
-  & .errorTitle {
-    font-weight: 600;
-  }
-
-  & .summary {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    background-color: #f8fafc;
-    padding: 12px;
-    font-size: 0.875rem;
-  }
-
-  & .summaryTitle {
-    font-weight: 600;
-  }
-
-  & .summaryGrid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-    color: #64748b;
-  }
+  /* Visual */
+  background-color: #f8fafc;
 }
+
+.title {
+  /* Visual */
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.description {
+  /* Visual */
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.label {
+  /* Layout */
+  display: block;
+
+  /* Box model */
+  margin-bottom: 8px;
+
+  /* Visual */
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.fileInput {
+  /* Box model */
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  padding: 8px 12px;
+
+  /* Visual */
+  font-size: 0.875rem;
+}
+
+.error {
+  /* Box model */
+  border-radius: 8px;
+  border: 1px solid #fca5a5;
+  padding: 12px;
+
+  /* Visual */
+  background-color: #fef2f2;
+  font-size: 0.875rem;
+  color: #b91c1c;
+}
+
+.errorTitle {
+  /* Visual */
+  font-weight: 600;
+}
+
+.restoreButton {
+  /* Layout */
+  align-self: flex-start;
+}
+

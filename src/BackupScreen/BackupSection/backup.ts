@@ -1,5 +1,5 @@
 import { db, type DbItem, type DbCategory } from "@/db";
-import type { BackupData } from "../types";
+import type { BackupData } from "../schemas";
 
 type DbSection = {
   items: DbItem[];

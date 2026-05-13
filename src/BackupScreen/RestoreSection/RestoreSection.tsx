@@ -1,112 +1,48 @@
-
-
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Upload } from "lucide-react";
+import { useBackupFile } from "./useBackupFile";
 import { restoreData } from "./restore";
-import type { BackupData } from "../types";
+import { BackupSummarySection } from "./BackupSummarySection";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
 import classes from "./RestoreSection.module.css";
 
-type BackupSummary = {
-  version: number;
-  exportedAt: string;
-  incomeItemsCount: number;
-  expenseItemsCount: number;
-  incomeCategoriesCount: number;
-  expenseCategoriesCount: number;
-};
-
 export function RestoreSection() {
-  const [backup, setBackup] = useState<BackupData | null>(null);
-  const [summary, setSummary] = useState<BackupSummary | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const { fileState, fileInputRef, loadFile, resetFile } = useBackupFile();
+
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isRestoring, setIsRestoring] = useState(false);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    setError(null);
-    setBackup(null);
-    setSummary(null);
-
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const content = e.target?.result as string;
-        const data = JSON.parse(content) as BackupData;
-
-        if (!data.metadata || !data.data) {
-          throw new Error("Invalid backup file structure");
-        }
-
-        if (
-          !Array.isArray(data.data.income?.items) ||
-          !Array.isArray(data.data.expenses?.items) ||
-          !Array.isArray(data.data.income?.categories) ||
-          !Array.isArray(data.data.expenses?.categories)
-        ) {
-          throw new Error("Invalid backup data format");
-        }
-
-        setBackup(data);
-        setSummary({
-          version: data.metadata.version,
-          exportedAt: data.metadata.exportedAt,
-          incomeItemsCount: data.data.income.items.length,
-          expenseItemsCount: data.data.expenses.items.length,
-          incomeCategoriesCount: data.data.income.categories.length,
-          expenseCategoriesCount: data.data.expenses.categories.length,
-        });
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Failed to parse backup file",
-        );
-      }
-    };
-
-    reader.onerror = () => {
-      setError("Failed to read file");
-    };
-
-    reader.readAsText(file);
+    loadFile(file);
   };
 
-  const handleRestore = async () => {
-    if (!backup) return;
+  const openConfirmModal = () => setIsConfirmModalOpen(true);
 
-    setIsLoading(true);
+  const handleRestore = async () => {
+    if (fileState.status !== "loaded") return;
+
+    setIsRestoring(true);
     try {
-      await restoreData(backup);
+      await restoreData(fileState.backupData);
       notifications.show({
         title: "Data restored",
         message: "Your budget data has been restored from the backup.",
         color: "green",
       });
       setIsConfirmModalOpen(false);
-      resetState();
-    } catch (err) {
+      resetFile();
+    } catch {
       notifications.show({
         title: "Restore failed",
         message: "Failed to restore backup",
         color: "red",
       });
-      console.error(err);
     } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const resetState = () => {
-    setBackup(null);
-    setSummary(null);
-    setError(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+      setIsRestoring(false);
     }
   };
 
@@ -131,44 +67,32 @@ export function RestoreSection() {
         />
       </div>
 
-      {error && (
+      {fileState.status === "error" && (
         <div className={classes.error}>
           <p className={classes.errorTitle}>Error</p>
-          <p>{error}</p>
+          <p>{fileState.error}</p>
         </div>
       )}
 
-      {summary && (
-        <div className={classes.summary}>
-          <p className={classes.summaryTitle}>Backup information</p>
-          <div className={classes.summaryGrid}>
-            <p>Version: {summary.version}</p>
-            <p>Date: {new Date(summary.exportedAt).toLocaleDateString()}</p>
-            <p>Incomes: {summary.incomeItemsCount}</p>
-            <p>Expenses: {summary.expenseItemsCount}</p>
-            <p>Income categories: {summary.incomeCategoriesCount}</p>
-            <p>Expense categories: {summary.expenseCategoriesCount}</p>
-          </div>
-        </div>
-      )}
-
-      {backup && (
-        <div>
+      {fileState.status === "loaded" && (
+        <>
+          <BackupSummarySection data={fileState.backupData} />
           <Button
+            className={classes.restoreButton}
             color="red"
             leftSection={<Upload size={16} />}
-            onClick={() => setIsConfirmModalOpen(true)}
+            onClick={openConfirmModal}
           >
             Restore from backup
           </Button>
-        </div>
+        </>
       )}
 
       <RestoreConfirmModal
         isOpen={isConfirmModalOpen}
         onOpenChange={setIsConfirmModalOpen}
         onConfirm={handleRestore}
-        isLoading={isLoading}
+        isLoading={isRestoring}
       />
     </section>
   );
