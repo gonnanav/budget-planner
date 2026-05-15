@@ -14,15 +14,10 @@ export function BudgetScreen() {
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
   const edit = useEntityEdit();
 
+  const selectedState = budget && selectedSection ? budget[selectedSection] : null;
+
   const { startCreateItem, startUpdateItem, updateItemDraft } = edit.actions;
   const { startCreateCategory, startUpdateCategory, updateCategoryDraft, stopEdit } = edit.actions;
-
-  const selectedState =
-    budget && selectedSection
-      ? selectedSection === "expenses"
-        ? budget.expenses
-        : budget.income
-      : null;
 
   const handleStartCreateItem = () => {
     if (!selectedSection) return;
@@ -104,7 +99,7 @@ export function BudgetScreen() {
           balance={budget?.balance ?? { status: "balanced", delta: 0 }}
         />
       </div>
-      {selectedSection && selectedState && (
+      {selectedState && (
         <div className={classes.section}>
           <div className={classes.items}>
             <ItemsView
