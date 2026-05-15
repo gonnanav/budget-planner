@@ -1,17 +1,10 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { createItemRecord, createBudget } from "./budget";
-import type { Budget, CategoryRecord, ItemInput, CategoryInput, Section, ItemRecord, Loadable } from "./types";
+import type { Budget, CategoryRecord, ItemInput, CategoryInput, Section, ItemRecord } from "./types";
 import { db, type DbItem, type ItemsTable, type CategoriesTable } from "@/db";
 
-export function useBudget(): Loadable<Budget> {
-  return useLiveQuery(
-    async () => {
-      const data = await getBudget();
-      return { status: "ready" as const, data };
-    },
-    [],
-    { status: "loading" as const },
-  );
+export function useBudget(): Budget | undefined {
+  return useLiveQuery(() => getBudget());
 }
 
 export async function addItem(section: Section, input: ItemInput): Promise<string> {

@@ -10,19 +10,13 @@ import type { Category, Item, Section } from "./types";
 import classes from "./BudgetScreen.module.css";
 
 export function BudgetScreen() {
-  const budgetLoadable = useBudget();
+  const budget = useBudget();
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
-  const toggleIncome = () =>
-    setSelectedSection((prev) => (prev === "income" ? null : "income"));
-  const toggleExpenses = () =>
-    setSelectedSection((prev) => (prev === "expenses" ? null : "expenses"));
-
   const edit = useEntityEdit();
 
   const { startCreateItem, startUpdateItem, updateItemDraft } = edit.actions;
   const { startCreateCategory, startUpdateCategory, updateCategoryDraft, stopEdit } = edit.actions;
 
-  const budget = budgetLoadable.status === "ready" ? budgetLoadable.data : null;
   const selectedState =
     budget && selectedSection
       ? selectedSection === "expenses"
@@ -51,6 +45,11 @@ export function BudgetScreen() {
   };
 
   const categories = selectedState?.categories ?? [];
+
+  const toggleIncome = () =>
+    setSelectedSection((prev) => (prev === "income" ? null : "income"));
+  const toggleExpenses = () =>
+    setSelectedSection((prev) => (prev === "expenses" ? null : "expenses"));
 
   const handleSave = () => {
     if (!edit.state) return;

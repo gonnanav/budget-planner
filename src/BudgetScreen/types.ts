@@ -3,11 +3,6 @@ export type Entity = "item" | "category";
 export type Frequency = "monthly" | "biMonthly";
 export type BalanceStatus = "balanced" | "surplus" | "deficit";
 
-export type Loadable<T> =
-  | { status: "loading" }
-  | { status: "ready"; data: T }
-  | { status: "error"; error: Error };
-
 export type ItemInput = {
   name: string;
   amount?: number | null;
