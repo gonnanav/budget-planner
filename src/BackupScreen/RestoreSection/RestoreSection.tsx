@@ -7,6 +7,7 @@ import { useBackupFile } from "./useBackupFile";
 import { restoreData } from "./restore";
 import { BackupSummarySection } from "./BackupSummarySection";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
+import { BackupCard } from "../BackupCard/BackupCard";
 import classes from "./RestoreSection.module.css";
 
 export function RestoreSection() {
@@ -49,11 +50,10 @@ export function RestoreSection() {
   };
 
   return (
-    <section className={classes.root}>
-      <h2 className={classes.title}>Restore</h2>
-      <p className={classes.description}>
-        Restore your budget data from a previously exported backup file.
-      </p>
+    <BackupCard
+      title="Restore"
+      description="Restore your budget data from a previously exported backup file."
+    >
 
       <div>
         <label htmlFor="backup-file" className={classes.label}>
@@ -81,7 +81,6 @@ export function RestoreSection() {
           <BackupSummarySection data={fileState.backupData} />
           <Button
             className={classes.restoreButton}
-            color="red"
             leftSection={<Upload size={16} />}
             onClick={openConfirmModal}
           >
@@ -96,6 +95,6 @@ export function RestoreSection() {
         onConfirm={handleRestore}
         isLoading={isRestoring}
       />
-    </section>
+    </BackupCard>
   );
 }
