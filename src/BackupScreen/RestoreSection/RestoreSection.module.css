@@ -20,26 +20,3 @@
   /* Visual */
   font-size: 0.875rem;
 }
-
-.error {
-  /* Box model */
-  border-radius: 8px;
-  border: 1px solid #fca5a5;
-  padding: 12px;
-
-  /* Visual */
-  background-color: #fef2f2;
-  font-size: 0.875rem;
-  color: #b91c1c;
-}
-
-.errorTitle {
-  /* Visual */
-  font-weight: 600;
-}
-
-.restoreButton {
-  /* Layout */
-  align-self: flex-start;
-}
-

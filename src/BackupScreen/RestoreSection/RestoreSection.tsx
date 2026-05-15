@@ -1,20 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import { Upload } from "lucide-react";
 import { useBackupFile } from "./useBackupFile";
 import { restoreData } from "./restore";
-import { BackupSummarySection } from "./BackupSummarySection";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
 import { BackupCard } from "../BackupCard/BackupCard";
 import classes from "./RestoreSection.module.css";
 
 export function RestoreSection() {
   const navigate = useNavigate();
-  const { fileState, fileInputRef, loadFile } = useBackupFile();
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const { fileState, fileInputRef, loadFile, reset } = useBackupFile();
   const [isRestoring, setIsRestoring] = useState(false);
+
+  useEffect(() => {
+    if (fileState.status === "error") {
+      notifications.show({
+        title: "Invalid backup file",
+        message: fileState.error,
+        color: "red",
+      });
+    }
+  }, [fileState]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -23,15 +29,12 @@ export function RestoreSection() {
     loadFile(file);
   };
 
-  const openConfirmModal = () => setIsConfirmModalOpen(true);
-
   const handleRestore = async () => {
     if (fileState.status !== "loaded") return;
 
     setIsRestoring(true);
     try {
       await restoreData(fileState.backupData);
-      setIsConfirmModalOpen(false);
       notifications.show({
         title: "Data restored",
         message: "Your budget data has been restored from the backup.",
@@ -54,7 +57,6 @@ export function RestoreSection() {
       title="Restore"
       description="Restore your budget data from a previously exported backup file."
     >
-
       <div>
         <label htmlFor="backup-file" className={classes.label}>
           Select backup file
@@ -69,31 +71,12 @@ export function RestoreSection() {
         />
       </div>
 
-      {fileState.status === "error" && (
-        <div className={classes.error}>
-          <p className={classes.errorTitle}>Error</p>
-          <p>{fileState.error}</p>
-        </div>
-      )}
-
-      {fileState.status === "loaded" && (
-        <>
-          <BackupSummarySection data={fileState.backupData} />
-          <Button
-            className={classes.restoreButton}
-            leftSection={<Upload size={16} />}
-            onClick={openConfirmModal}
-          >
-            Restore from backup
-          </Button>
-        </>
-      )}
-
       <RestoreConfirmModal
-        isOpen={isConfirmModalOpen}
-        onOpenChange={setIsConfirmModalOpen}
+        isOpen={fileState.status === "loaded"}
+        onClose={reset}
         onConfirm={handleRestore}
         isLoading={isRestoring}
+        backupData={fileState.status === "loaded" ? fileState.backupData : null}
       />
     </BackupCard>
   );

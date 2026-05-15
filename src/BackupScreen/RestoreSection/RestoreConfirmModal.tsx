@@ -3,27 +3,31 @@
 import { useState } from "react";
 import { Modal, Button, Checkbox } from "@mantine/core";
 import { AlertTriangle } from "lucide-react";
+import { BackupSummarySection } from "./BackupSummarySection";
+import { type BackupData } from "../schemas";
 import classes from "./RestoreConfirmModal.module.css";
 
 type RestoreConfirmModalProps = {
   isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
+  onClose: () => void;
   onConfirm: () => void;
   isLoading: boolean;
+  backupData: BackupData | null;
 };
 
 export function RestoreConfirmModal({
   isOpen,
-  onOpenChange,
+  onClose,
   onConfirm,
   isLoading,
+  backupData,
 }: RestoreConfirmModalProps) {
   const [acknowledged, setAcknowledged] = useState(false);
 
   const handleClose = () => {
     if (!isLoading) {
       setAcknowledged(false);
-      onOpenChange(false);
+      onClose();
     }
   };
 
@@ -37,6 +41,7 @@ export function RestoreConfirmModal({
       title="Confirm restore"
     >
       <div className={classes.root}>
+        {backupData && <BackupSummarySection data={backupData} />}
         <div className={classes.banner}>
           <AlertTriangle className={classes.icon} />
           <div className={classes.bannerContent}>

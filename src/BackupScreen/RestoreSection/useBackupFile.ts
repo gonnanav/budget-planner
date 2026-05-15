@@ -10,10 +10,11 @@ type UseBackupFileResult = {
   fileState: FileState;
   fileInputRef: React.RefObject<HTMLInputElement | null>;
   loadFile: (file: File) => void;
+  reset: () => void;
 };
 
 export function useBackupFile(): UseBackupFileResult {
-  const [state, setState] = useState<FileState>({ status: "idle" });
+  const [fileState, setState] = useState<FileState>({ status: "idle" });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const loadFile = (file: File) => {
@@ -36,5 +37,10 @@ export function useBackupFile(): UseBackupFileResult {
     reader.readAsText(file);
   };
 
-  return { fileState: state, fileInputRef, loadFile };
+  const reset = () => {
+    setState({ status: "idle" });
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  return { fileState, fileInputRef, loadFile, reset };
 }
