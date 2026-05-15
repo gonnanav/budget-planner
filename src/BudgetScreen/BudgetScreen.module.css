@@ -1,32 +1,41 @@
 .root {
+  /* Layout */
   display: flex;
   flex-direction: column;
-  height: 100%;
   gap: 24px;
+
+  /* Box model */
+  height: 100%;
 }
 
 .overview {
+  /* Layout */
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 .summaries {
+  /* Layout */
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
 .section {
+  /* Layout */
   display: flex;
   flex-direction: column;
   flex-shrink: 1;
   gap: 16px;
+
+  /* Box model */
   min-height: 0;
   height: 100%;
 }
 
 .items {
+  /* Visual */
   overflow-y: auto;
 }
 

@@ -10,7 +10,7 @@ type AddButtonProps = {
 
 export function AddButton({ variant = "primary", onClick, children }: AddButtonProps) {
   return (
-    <button className={clsx(classes.addButton, classes[variant])} onClick={onClick}>
+    <button className={clsx(classes.root, classes[variant])} onClick={onClick}>
       <Plus size={16} />
       {children}
     </button>

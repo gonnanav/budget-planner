@@ -1,19 +1,26 @@
 .root {
+  /* Layout */
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  /* Box model */
   border-radius: 12px;
   border: 1px solid #e2e8f0;
-  background-color: #f8fafc;
   padding: 20px;
 
-& .title {
-    font-size: 1rem;
-    font-weight: 600;
-  }
+  /* Visual */
+  background-color: #f8fafc;
+}
 
-  & .description {
-    font-size: 0.875rem;
-    color: #64748b;
-  }
+.title {
+  /* Visual */
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.description {
+  /* Visual */
+  font-size: 0.875rem;
+  color: #64748b;
 }

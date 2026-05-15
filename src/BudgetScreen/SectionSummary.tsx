@@ -32,8 +32,8 @@ export function SectionSummary({
       })}
     >
       <div className={classes.content}>
-        <h3>{title}</h3>
-        <p>{formattedAmount}</p>
+        <h3 className={classes.heading}>{title}</h3>
+        <p className={classes.value}>{formattedAmount}</p>
       </div>
     </button>
   );

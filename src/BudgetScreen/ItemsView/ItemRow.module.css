@@ -1,10 +1,17 @@
 .root {
+  /* Layout */
   display: flex;
   flex-direction: column;
+
+  /* Box model */
   border-radius: 6px;
   padding: 8px 12px;
-  cursor: pointer;
+
+  /* Visual */
   background-color: #f8fafc;
+
+  /* Interaction */
+  cursor: pointer;
   transition:
     background-color 0.2s ease,
     opacity 0.2s ease;
@@ -16,44 +23,54 @@
   &:active {
     background-color: #f1f5f9;
   }
+}
 
-  .primaryLine {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    width: 100%;
-    gap: 12px;
+.primaryLine {
+  /* Layout */
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
 
-    .nameText {
-      font-size: 0.875rem;
-      color: #64748b;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+  /* Box model */
+  width: 100%;
+}
 
-    .amountText {
-      font-size: 0.875rem;
-      color: #111827;
-    }
-  }
+.name {
+  /* Visual */
+  font-size: 0.875rem;
+  color: #64748b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-  .secondaryLine {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    gap: 12px;
-    margin-top: 4px;
+.amount {
+  /* Visual */
+  font-size: 0.875rem;
+  color: #111827;
+}
 
-    .frequencyText {
-      font-size: 0.75rem;
-      color: #6b7280;
-    }
+.secondaryLine {
+  /* Layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 
-    .normalizedAmountText {
-      font-size: 0.75rem;
-      color: #6b7280;
-    }
-  }
+  /* Box model */
+  width: 100%;
+  margin-top: 4px;
+}
+
+.frequency {
+  /* Visual */
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.normalized {
+  /* Visual */
+  font-size: 0.75rem;
+  color: #6b7280;
 }

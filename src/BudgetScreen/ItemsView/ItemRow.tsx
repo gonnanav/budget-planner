@@ -23,15 +23,15 @@ export function ItemRow({
   return (
     <li className={classes.root} onClick={onClick}>
       <div className={classes.primaryLine}>
-        <span className={classes.nameText}>{name}</span>
+        <span className={classes.name}>{name}</span>
         {formattedAmount && (
-          <span className={classes.amountText}>{formattedAmount}</span>
+          <span className={classes.amount}>{formattedAmount}</span>
         )}
       </div>
       <div className={classes.secondaryLine}>
-        <span className={classes.frequencyText}>{frequencyText}</span>
+        <span className={classes.frequency}>{frequencyText}</span>
         {showNormalizedAmount && (
-          <span className={classes.normalizedAmountText}>
+          <span className={classes.normalized}>
             {formattedNormalizedAmount}
           </span>
         )}

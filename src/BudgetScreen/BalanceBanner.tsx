@@ -1,4 +1,3 @@
-import { Paper } from "@mantine/core";
 import { Check, TrendingUp, TrendingDown } from "lucide-react";
 import { clsx } from "clsx";
 import { formatAmount } from "./format";
@@ -30,7 +29,7 @@ export function BalanceBanner({
   const Icon = config.icon;
 
   return (
-    <Paper role="status" aria-label="Balance" shadow="none" className={clsx(classes.root, classes[status])}>
+    <div role="status" aria-label="Balance" className={clsx(classes.root, classes[status])}>
       <div className={classes.body}>
         <div className={classes.row}>
           <div className={classes.left}>
@@ -40,6 +39,6 @@ export function BalanceBanner({
           <span className={classes.amount}>{formattedAmount}</span>
         </div>
       </div>
-    </Paper>
+    </div>
   );
 }
