@@ -24,3 +24,8 @@
   font-size: 0.875rem;
   color: #64748b;
 }
+
+.backupButton {
+  /* Layout */
+  align-self: flex-start;
+}

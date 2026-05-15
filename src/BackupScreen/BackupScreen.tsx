@@ -13,7 +13,7 @@ export function BackupScreen() {
         </Link>
         <h1>Backup & Restore</h1>
       </div>
-      <div className={classes.grid}>
+      <div className={classes.sections}>
         <BackupSection />
         <RestoreSection />
       </div>

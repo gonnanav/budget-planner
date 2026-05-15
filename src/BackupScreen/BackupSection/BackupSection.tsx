@@ -14,16 +14,10 @@ export function BackupSection() {
     setIsLoading(true);
     try {
       await backupData();
-      notifications.show({
-        title: "Backup downloaded",
-        message: "Your budget data has been saved to a file.",
-        color: "green",
-      });
-    } catch (error) {
+    } catch {
       notifications.show({
         title: "Backup failed",
-        message:
-          error instanceof Error ? error.message : "Failed to create backup",
+        message: "Failed to create backup",
         color: "red",
       });
     } finally {
@@ -35,18 +29,16 @@ export function BackupSection() {
     <section className={classes.root}>
       <h2 className={classes.title}>Backup</h2>
       <p className={classes.description}>
-        Download a JSON file containing all your incomes, expenses, and
-        categories.
+        Download a backup file containing all of your budget data.
       </p>
-      <div>
-        <Button
-          leftSection={<Download size={16} />}
-          onClick={handleBackup}
-          loading={isLoading}
-        >
-          Download backup
-        </Button>
-      </div>
+      <Button
+        className={classes.backupButton}
+        leftSection={<Download size={16} />}
+        onClick={handleBackup}
+        loading={isLoading}
+      >
+        Download backup
+      </Button>
     </section>
   );
 }
