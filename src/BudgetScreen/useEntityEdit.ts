@@ -1,23 +1,23 @@
 import { useState } from "react";
-import type { ItemDraft, CategoryDraft, EditState, Section } from "./types";
+import type { Item, ItemInput, Category, CategoryInput, EditState, Section } from "./types";
 
-const DEFAULT_ITEM_DRAFT: Partial<ItemDraft> = {
+const DEFAULT_ITEM_DRAFT: ItemInput = {
   name: "",
   amount: null,
   frequency: "monthly",
   notes: "",
 };
 
-const DEFAULT_CATEGORY_DRAFT: Partial<CategoryDraft> = { name: "" };
+const DEFAULT_CATEGORY_DRAFT: CategoryInput = { name: "" };
 
 export type UseEntityEditResult = {
   state: EditState | null;
   startCreateItem: (section: Section) => void;
-  startUpdateItem: (section: Section, draft: ItemDraft) => void;
-  updateItemDraft: (update: Partial<ItemDraft>) => void;
+  startUpdateItem: (section: Section, item: Item) => void;
+  updateItemDraft: (update: Partial<ItemInput>) => void;
   startCreateCategory: (section: Section) => void;
-  startUpdateCategory: (section: Section, draft: CategoryDraft) => void;
-  updateCategoryDraft: (update: Partial<CategoryDraft>) => void;
+  startUpdateCategory: (section: Section, category: Category) => void;
+  updateCategoryDraft: (update: Partial<CategoryInput>) => void;
   stopEdit: () => void;
 };
 
@@ -25,24 +25,14 @@ export function useEntityEdit(): UseEntityEditResult {
   const [state, setState] = useState<EditState | null>(null);
 
   const startCreateItem = (section: Section) => {
-    setState({
-      mode: "create",
-      section,
-      entity: "item",
-      draft: DEFAULT_ITEM_DRAFT as ItemDraft,
-    });
+    setState({ entity: "item", mode: "create", section, draft: DEFAULT_ITEM_DRAFT });
   };
 
-  const startUpdateItem = (section: Section, draft: ItemDraft) => {
-    setState({
-      mode: "update",
-      section,
-      entity: "item",
-      draft,
-    });
+  const startUpdateItem = (section: Section, item: Item) => {
+    setState({ entity: "item", mode: "update", section, id: item.id, draft: item });
   };
 
-  const updateItemDraft = (update: Partial<ItemDraft>) => {
+  const updateItemDraft = (update: Partial<ItemInput>) => {
     setState((prevState) => {
       if (prevState?.entity !== "item") return prevState;
 
@@ -54,24 +44,14 @@ export function useEntityEdit(): UseEntityEditResult {
   };
 
   const startCreateCategory = (section: Section) => {
-    setState({
-      mode: "create",
-      section,
-      entity: "category",
-      draft: DEFAULT_CATEGORY_DRAFT as CategoryDraft,
-    });
+    setState({ entity: "category", mode: "create", section, draft: DEFAULT_CATEGORY_DRAFT });
   };
 
-  const startUpdateCategory = (section: Section, draft: CategoryDraft) => {
-    setState({
-      mode: "update",
-      section,
-      entity: "category",
-      draft,
-    });
+  const startUpdateCategory = (section: Section, category: Category) => {
+    setState({ entity: "category", mode: "update", section, id: category.id, draft: category });
   };
 
-  const updateCategoryDraft = (update: Partial<CategoryDraft>) => {
+  const updateCategoryDraft = (update: Partial<CategoryInput>) => {
     setState((prevState) => {
       if (prevState?.entity !== "category") return prevState;
 
@@ -90,9 +70,9 @@ export function useEntityEdit(): UseEntityEditResult {
     state,
     startCreateItem,
     startUpdateItem,
+    updateItemDraft,
     startCreateCategory,
     startUpdateCategory,
-    updateItemDraft,
     updateCategoryDraft,
     stopEdit,
   };

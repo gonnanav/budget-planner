@@ -3,7 +3,7 @@ import { Trash2 } from "lucide-react";
 import classes from "./EditDrawer.module.css";
 import { ItemEdit } from "./ItemEdit";
 import { CategoryEdit } from "./CategoryEdit";
-import type { EditState, ItemDraft, CategoryDraft } from "../types";
+import type { EditState, ItemInput, CategoryInput } from "../types";
 
 export type EditDrawerProps = {
   editState: EditState | null;
@@ -12,8 +12,8 @@ export type EditDrawerProps = {
   onCancel: () => void;
   onSave: () => void;
   onDelete: () => void;
-  onItemDraftChange: (update: Partial<ItemDraft>) => void;
-  onCategoryDraftChange: (update: Partial<CategoryDraft>) => void;
+  onItemDraftChange: (update: Partial<ItemInput>) => void;
+  onCategoryDraftChange: (update: Partial<CategoryInput>) => void;
 };
 
 const getHeadingText = (editState: EditState | null) => {

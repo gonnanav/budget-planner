@@ -52,11 +52,11 @@ export function BudgetScreen() {
       } else {
         addCategory(edit.state.section, edit.state.draft);
       }
-    } else if (edit.state.mode === "update" && edit.state.draft.id) {
+    } else if (edit.state.mode === "update") {
       if (edit.state.entity === "item") {
-        updateItem(edit.state.draft.id, edit.state.section, edit.state.draft);
+        updateItem(edit.state.id, edit.state.section, edit.state.draft);
       } else {
-        updateCategory(edit.state.draft.id, edit.state.section, edit.state.draft);
+        updateCategory(edit.state.id, edit.state.section, edit.state.draft);
       }
     }
 
@@ -64,12 +64,12 @@ export function BudgetScreen() {
   };
 
   const deleteEntity = () => {
-    if (edit.state?.mode !== "update" || !edit.state.draft.id) return;
+    if (edit.state?.mode !== "update") return;
 
     if (edit.state.entity === "item") {
-      deleteItem(edit.state.draft.id, edit.state.section);
+      deleteItem(edit.state.id, edit.state.section);
     } else {
-      deleteCategory(edit.state.draft.id, edit.state.section);
+      deleteCategory(edit.state.id, edit.state.section);
     }
 
     edit.stopEdit();

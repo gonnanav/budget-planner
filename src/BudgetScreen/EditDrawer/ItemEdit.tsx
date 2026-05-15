@@ -1,5 +1,4 @@
-import type { Frequency } from "../types";
-import type { ItemDraft } from "../types";
+import type { Frequency, ItemInput } from "../types";
 import { AmountInput } from "./AmountInput";
 import { NameInput } from "./NameInput";
 import { FrequencyInput } from "./FrequencyInput";
@@ -8,9 +7,9 @@ import { NotesInput } from "./NotesInput";
 import classes from "./ItemEdit.module.css";
 
 export type ItemEditProps = {
-  draft: ItemDraft;
+  draft: ItemInput;
   categoryOptions: { id: string; name: string }[];
-  onDraftChange: (changes: Partial<ItemDraft>) => void;
+  onDraftChange: (changes: Partial<ItemInput>) => void;
 };
 
 export const ItemEdit = ({
@@ -39,11 +38,11 @@ export const ItemEdit = ({
         onFrequencyChange={handleFrequencyChange}
       />
       <CategoryInput
-        selectedCategoryId={draft.categoryId}
+        selectedCategoryId={draft.categoryId ?? null}
         categoryOptions={categoryOptions}
         onCategoryChange={handleCategoryIdChange}
       />
-      <NotesInput notes={draft.notes} onNotesChange={handleNotesChange} />
+      <NotesInput notes={draft.notes ?? ""} onNotesChange={handleNotesChange} />
     </div>
   );
 };

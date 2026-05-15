@@ -1,10 +1,10 @@
-import type { CategoryDraft } from "../types";
+import type { CategoryInput } from "../types";
 import { CategoryNameInput } from "./CategoryNameInput";
 import classes from "./CategoryEdit.module.css";
 
 export type CategoryEditProps = {
-  draft: CategoryDraft;
-  onDraftChange: (changes: Partial<CategoryDraft>) => void;
+  draft: CategoryInput;
+  onDraftChange: (changes: Partial<CategoryInput>) => void;
 };
 
 export const CategoryEdit = ({ draft, onDraftChange }: CategoryEditProps) => {

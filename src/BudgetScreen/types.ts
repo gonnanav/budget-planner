@@ -26,15 +26,6 @@ export type Item = ItemRecord & {
   normalizedAmount: number;
 };
 
-export type ItemDraft = {
-  id?: string;
-  name: string;
-  amount: number | null;
-  frequency: Frequency;
-  categoryId: string | null;
-  notes: string;
-};
-
 export type ItemGroup = {
   items: Item[];
   total: number;
@@ -51,16 +42,11 @@ export type CategoryInput = {
   name: string;
 };
 
-export type CategoryDraft = {
-  id?: string;
-  name: string;
-};
-
-export type EditMode = "create" | "update";
-
 export type EditState =
-  | { mode: EditMode; section: Section; entity: "item"; draft: ItemDraft }
-  | { mode: EditMode; section: Section; entity: "category"; draft: CategoryDraft };
+  | { entity: "item"; mode: "create"; section: Section; draft: ItemInput }
+  | { entity: "item"; mode: "update"; section: Section; id: string; draft: ItemInput }
+  | { entity: "category"; mode: "create"; section: Section; draft: CategoryInput }
+  | { entity: "category"; mode: "update"; section: Section; id: string; draft: CategoryInput };
 
 export type SectionState = ItemGroup & {
   categories: Category[];
