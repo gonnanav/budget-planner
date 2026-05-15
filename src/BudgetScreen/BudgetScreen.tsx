@@ -4,14 +4,14 @@ import { EditDrawer } from "./EditDrawer/EditDrawer";
 import { ItemsView } from "./ItemsView/ItemsView";
 import { SectionSummary } from "./SectionSummary";
 import { useState } from "react";
-import { useEntityEdit } from "./useEntityEdit";
+import { useEdit } from "./useEdit";
 import { useBudget, addItem, updateItem, deleteItem, addCategory, updateCategory, deleteCategory } from "./budget.service";
 import type { Category, Item, Section } from "./types";
 import classes from "./BudgetScreen.module.css";
 
 export function BudgetScreen() {
   const budget = useBudget();
-  const edit = useEntityEdit();
+  const edit = useEdit();
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
 
   const selectedState = budget && selectedSection ? budget[selectedSection] : null;

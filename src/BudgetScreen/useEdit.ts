@@ -10,7 +10,7 @@ const DEFAULT_ITEM_DRAFT: ItemInput = {
 
 const DEFAULT_CATEGORY_DRAFT: CategoryInput = { name: "" };
 
-export type UseEntityEditResult = {
+export type UseEditResult = {
   state: EditState | null;
   startCreateItem: (section: Section) => void;
   startUpdateItem: (section: Section, item: Item) => void;
@@ -21,7 +21,7 @@ export type UseEntityEditResult = {
   stopEdit: () => void;
 };
 
-export function useEntityEdit(): UseEntityEditResult {
+export function useEdit(): UseEditResult {
   const [state, setState] = useState<EditState | null>(null);
 
   const startCreateItem = (section: Section) => {
