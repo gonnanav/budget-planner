@@ -11,42 +11,39 @@ import classes from "./BudgetScreen.module.css";
 
 export function BudgetScreen() {
   const budget = useBudget();
-  const [selectedSection, setSelectedSection] = useState<Section | null>(null);
   const edit = useEntityEdit();
+  const [selectedSection, setSelectedSection] = useState<Section | null>(null);
 
   const selectedState = budget && selectedSection ? budget[selectedSection] : null;
-
-  const { startCreateItem, startUpdateItem, updateItemDraft } = edit.actions;
-  const { startCreateCategory, startUpdateCategory, updateCategoryDraft, stopEdit } = edit.actions;
-
-  const handleStartCreateItem = () => {
-    if (!selectedSection) return;
-    startCreateItem(selectedSection);
-  };
-
-  const handleStartCreateCategory = () => {
-    if (!selectedSection) return;
-    startCreateCategory(selectedSection);
-  };
-
-  const handleItemClick = (item: Item) => {
-    if (!selectedSection) return;
-    startUpdateItem(selectedSection, item);
-  };
-
-  const handleCategoryClick = (category: Category) => {
-    if (!selectedSection) return;
-    startUpdateCategory(selectedSection, category);
-  };
-
   const categories = selectedState?.categories ?? [];
 
-  const toggleIncome = () =>
-    setSelectedSection((prev) => (prev === "income" ? null : "income"));
-  const toggleExpenses = () =>
-    setSelectedSection((prev) => (prev === "expenses" ? null : "expenses"));
+  const toggleSection = (section: Section) =>
+    setSelectedSection((prev) => (prev === section ? null : section));
 
-  const handleSave = () => {
+  const toggleIncome = () => toggleSection("income");
+  const toggleExpenses = () => toggleSection("expenses");
+
+  const startCreateItem = () => {
+    if (!selectedSection) return;
+    edit.startCreateItem(selectedSection);
+  };
+
+  const startCreateCategory = () => {
+    if (!selectedSection) return;
+    edit.startCreateCategory(selectedSection);
+  };
+
+  const startUpdateItem = (item: Item) => {
+    if (!selectedSection) return;
+    edit.startUpdateItem(selectedSection, item);
+  };
+
+  const startUpdateCategory = (category: Category) => {
+    if (!selectedSection) return;
+    edit.startUpdateCategory(selectedSection, category);
+  };
+
+  const saveEntity = () => {
     if (!edit.state) return;
 
     if (edit.state.mode === "create") {
@@ -63,10 +60,10 @@ export function BudgetScreen() {
       }
     }
 
-    stopEdit();
+    edit.stopEdit();
   };
 
-  const handleDelete = () => {
+  const deleteEntity = () => {
     if (edit.state?.mode !== "update" || !edit.state.draft.id) return;
 
     if (edit.state.entity === "item") {
@@ -75,7 +72,7 @@ export function BudgetScreen() {
       deleteCategory(edit.state.draft.id, edit.state.section);
     }
 
-    stopEdit();
+    edit.stopEdit();
   };
 
   return (
@@ -104,25 +101,25 @@ export function BudgetScreen() {
           <div className={classes.items}>
             <ItemsView
               sectionState={selectedState}
-              onItemClick={handleItemClick}
-              onCategoryClick={handleCategoryClick}
+              onItemClick={startUpdateItem}
+              onCategoryClick={startUpdateCategory}
             />
           </div>
           <div className={classes.addButtons}>
-            <AddButton onClick={handleStartCreateItem}>Add item</AddButton>
-            <AddButton variant="secondary" onClick={handleStartCreateCategory}>Add category</AddButton>
+            <AddButton onClick={startCreateItem}>Add item</AddButton>
+            <AddButton variant="secondary" onClick={startCreateCategory}>Add category</AddButton>
           </div>
         </div>
       )}
       <EditDrawer
         editState={edit.state}
         categoryOptions={categories}
-        onClose={stopEdit}
-        onCancel={stopEdit}
-        onSave={handleSave}
-        onDelete={handleDelete}
-        onItemDraftChange={updateItemDraft}
-        onCategoryDraftChange={updateCategoryDraft}
+        onClose={edit.stopEdit}
+        onCancel={edit.stopEdit}
+        onSave={saveEntity}
+        onDelete={deleteEntity}
+        onItemDraftChange={edit.updateItemDraft}
+        onCategoryDraftChange={edit.updateCategoryDraft}
       />
     </div>
   );

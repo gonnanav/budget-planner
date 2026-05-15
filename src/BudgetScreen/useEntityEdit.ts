@@ -12,15 +12,13 @@ const DEFAULT_CATEGORY_DRAFT: Partial<CategoryDraft> = { name: "" };
 
 export type UseEntityEditResult = {
   state: EditState | null;
-  actions: {
-    startCreateItem: (section: Section) => void;
-    startUpdateItem: (section: Section, draft: ItemDraft) => void;
-    updateItemDraft: (update: Partial<ItemDraft>) => void;
-    startCreateCategory: (section: Section) => void;
-    startUpdateCategory: (section: Section, draft: CategoryDraft) => void;
-    updateCategoryDraft: (update: Partial<CategoryDraft>) => void;
-    stopEdit: () => void;
-  };
+  startCreateItem: (section: Section) => void;
+  startUpdateItem: (section: Section, draft: ItemDraft) => void;
+  updateItemDraft: (update: Partial<ItemDraft>) => void;
+  startCreateCategory: (section: Section) => void;
+  startUpdateCategory: (section: Section, draft: CategoryDraft) => void;
+  updateCategoryDraft: (update: Partial<CategoryDraft>) => void;
+  stopEdit: () => void;
 };
 
 export function useEntityEdit(): UseEntityEditResult {
@@ -90,14 +88,12 @@ export function useEntityEdit(): UseEntityEditResult {
 
   return {
     state,
-    actions: {
-      startCreateItem,
-      startUpdateItem,
-      startCreateCategory,
-      startUpdateCategory,
-      updateItemDraft,
-      updateCategoryDraft,
-      stopEdit,
-    },
+    startCreateItem,
+    startUpdateItem,
+    startCreateCategory,
+    startUpdateCategory,
+    updateItemDraft,
+    updateCategoryDraft,
+    stopEdit,
   };
 }
