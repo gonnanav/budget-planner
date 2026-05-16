@@ -2,7 +2,7 @@
   /* Layout */
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg);
+  gap: 24px;
 }
 
 .actions {
@@ -13,7 +13,7 @@
 
   /* Box model */
   width: 100%;
-  padding-top: var(--spacing-lg);
+  padding-top: 24px;
   border-top: 1px solid #e9ecef;
 }
 
@@ -83,12 +83,12 @@
 
   /* Visual */
   background: transparent;
-  color: var(--color-danger);
+  color: #fa5252;
 
   /* Interaction */
   cursor: pointer;
 
   &:hover {
-    background: var(--color-danger-light);
+    background: #fff5f5;
   }
 }

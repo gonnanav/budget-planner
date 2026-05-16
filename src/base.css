@@ -50,12 +50,12 @@ h6 {
 
 /* Heading sizes */
 h1 {
-  font-size: var(--font-size-h1);
+  font-size: 1.25rem;
   font-weight: 600;
 }
 
 h2 {
-  font-size: var(--font-size-h2);
+  font-size: 1.125rem;
   font-weight: 600;
 }
 
