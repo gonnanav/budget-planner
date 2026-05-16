@@ -8,12 +8,7 @@ type AppShellProps = {
 export function AppShell({ children }: AppShellProps) {
   return (
     <div className={classes.root}>
-      <div className={classes.header}>
-        <div className={classes.headerInner}>
-          <Header />
-        </div>
-      </div>
-
+      <Header />
       <main className={classes.main}>{children}</main>
     </div>
   );

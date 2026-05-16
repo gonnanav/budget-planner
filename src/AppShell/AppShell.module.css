@@ -8,18 +8,6 @@
   min-height: 0;
 }
 
-.header {
-  /* Box model */
-  height: 64px;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.6);
-}
-
-.headerInner {
-  /* Box model */
-  width: 100%;
-  padding: 16px;
-}
-
 .main {
   /* Layout */
   flex: 1 1 auto;
