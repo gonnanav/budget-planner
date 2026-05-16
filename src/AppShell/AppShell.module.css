@@ -8,6 +8,27 @@
   min-height: 0;
 }
 
+.header {
+  /* Layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /* Box model */
+  height: 64px;
+  padding: 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.6);
+}
+
+.title {
+  /* Visual */
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: inherit;
+  text-decoration: none;
+}
+
 .main {
   /* Layout */
   flex: 1 1 auto;
