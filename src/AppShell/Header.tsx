@@ -6,20 +6,18 @@ import classes from "./Header.module.css";
 export function Header() {
   return (
     <header className={classes.root}>
-      <div className={classes.row}>
-        <Link to="/" className={classes.title}>
-          Even
-        </Link>
-        <ActionIcon
-          component={Link}
-          to="/backup"
-          aria-label="Backup"
-          size="lg"
-          variant="default"
-        >
-          <Database size={18} />
-        </ActionIcon>
-      </div>
+      <Link to="/" className={classes.title}>
+        Even
+      </Link>
+      <ActionIcon
+        component={Link}
+        to="/backup"
+        aria-label="Backup"
+        size="lg"
+        variant="default"
+      >
+        <Database size={18} />
+      </ActionIcon>
     </header>
   );
 }

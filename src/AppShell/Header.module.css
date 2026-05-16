@@ -1,13 +1,6 @@
 .root {
   /* Layout */
   display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.row {
-  /* Layout */
-  display: flex;
   align-items: center;
   justify-content: space-between;
 }
