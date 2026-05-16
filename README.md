@@ -1,4 +1,4 @@
-# Even App
+# Even
 
 A personal monthly budget planning application that stores data locally in the browser.
 
@@ -9,8 +9,8 @@ A personal monthly budget planning application that stores data locally in the b
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/gonnanav/budget-planner.git
-   cd budget-planner
+   git clone https://github.com/gonnanav/even.git
+   cd even
    ```
 
 2. **Install dependencies**
@@ -29,16 +29,13 @@ A personal monthly budget planning application that stores data locally in the b
 
    Navigate to [http://localhost:5173](http://localhost:5173)
 
-## CI/CD Pipeline
+## Development
 
-This project uses GitHub Actions for automated validation and Vercel for deployment.
+```bash
+npm run typecheck   # Type check
+npm run lint        # Lint
+npm test            # Unit tests
+npm run test:e2e    # End-to-end tests
+npm run build       # Production build
+```
 
-### Automated Checks
-
-Every push to the `main` branch triggers:
-
-- Prettier formatting validation
-- ESLint code quality checks
-- TypeScript type checking
-- Unit test execution
-- Vite build validation
