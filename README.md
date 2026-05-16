@@ -1,8 +1,8 @@
-# Budget Planner
+# Even App
 
 A personal monthly budget planning application that stores data locally in the browser.
 
-**Live App:** [https://budget-planner-gamma-flax.vercel.app/](https://budget-planner-gamma-flax.vercel.app/)
+**Live App:** [even.gonnanav.com](https://even.gonnanav.com/)
 
 ## Getting Started
 
