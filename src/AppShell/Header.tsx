@@ -8,7 +8,7 @@ export function Header() {
     <header className={classes.root}>
       <div className={classes.row}>
         <Link to="/" className={classes.title}>
-          Budget Planner
+          Even
         </Link>
         <ActionIcon
           component={Link}
