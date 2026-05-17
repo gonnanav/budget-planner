@@ -35,7 +35,11 @@
 }
 
 .items {
-  /* Visual */
+  /* Layout */
+  flex: 1;
+
+  /* Box model */
+  min-height: 0;
   overflow-y: auto;
 }
 
