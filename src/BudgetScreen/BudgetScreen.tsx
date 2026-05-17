@@ -12,36 +12,18 @@ import classes from "./BudgetScreen.module.css";
 export function BudgetScreen() {
   const budget = useBudget();
   const edit = useEdit();
-  const [selectedSection, setSelectedSection] = useState<Section | null>(null);
+  const [selectedSection, setSelectedSection] = useState<Section>("expenses");
 
-  const selectedState = budget && selectedSection ? budget[selectedSection] : null;
+  const selectedState = budget?.[selectedSection];
   const categories = selectedState?.categories ?? [];
 
-  const toggleSection = (section: Section) =>
-    setSelectedSection((prev) => (prev === section ? null : section));
+  const selectIncome = () => setSelectedSection("income");
+  const selectExpenses = () => setSelectedSection("expenses");
 
-  const toggleIncome = () => toggleSection("income");
-  const toggleExpenses = () => toggleSection("expenses");
-
-  const startCreateItem = () => {
-    if (!selectedSection) return;
-    edit.startCreateItem(selectedSection);
-  };
-
-  const startCreateCategory = () => {
-    if (!selectedSection) return;
-    edit.startCreateCategory(selectedSection);
-  };
-
-  const startUpdateItem = (item: Item) => {
-    if (!selectedSection) return;
-    edit.startUpdateItem(selectedSection, item);
-  };
-
-  const startUpdateCategory = (category: Category) => {
-    if (!selectedSection) return;
-    edit.startUpdateCategory(selectedSection, category);
-  };
+  const startCreateItem = () => edit.startCreateItem(selectedSection);
+  const startCreateCategory = () => edit.startCreateCategory(selectedSection);
+  const startUpdateItem = (item: Item) => edit.startUpdateItem(selectedSection, item);
+  const startUpdateCategory = (category: Category) => edit.startUpdateCategory(selectedSection, category);
 
   const saveEntity = () => {
     if (!edit.state) return;
@@ -83,13 +65,13 @@ export function BudgetScreen() {
             section="income"
             amount={budget?.income.total ?? 0}
             selected={selectedSection === "income"}
-            onSelect={toggleIncome}
+            onSelect={selectIncome}
           />
           <SectionSummary
             section="expenses"
             amount={budget?.expenses.total ?? 0}
             selected={selectedSection === "expenses"}
-            onSelect={toggleExpenses}
+            onSelect={selectExpenses}
           />
         </div>
         <BalanceBanner
