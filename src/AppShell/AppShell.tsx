@@ -11,8 +11,8 @@ export function AppShell({ children }: AppShellProps) {
   return (
     <div className={classes.root}>
       <header className={classes.header}>
-        <Link to="/" className={classes.title}>
-          Even
+        <Link to="/" className={classes.logoLink}>
+          <img src="/even-logo.png" alt="Even" className={classes.logo} />
         </Link>
         <ActionIcon
           component={Link}
