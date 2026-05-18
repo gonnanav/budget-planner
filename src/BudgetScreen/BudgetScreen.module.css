@@ -2,7 +2,7 @@
   /* Layout */
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
 
   /* Box model */
   height: 100%;
@@ -12,14 +12,14 @@
   /* Layout */
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
 }
 
 .summaries {
   /* Layout */
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 8px;
 }
 
 .section {

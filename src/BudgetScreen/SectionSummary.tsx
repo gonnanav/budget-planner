@@ -24,17 +24,15 @@ export function SectionSummary({
   return (
     <button
       type="button"
-      onClick={onSelect}
       className={clsx(classes.root, {
         [classes.income]: section === "income",
         [classes.expense]: section === "expenses",
         [classes.active]: selected,
       })}
+      onClick={onSelect}
     >
-      <div className={classes.content}>
-        <h3 className={classes.heading}>{title}</h3>
-        <p className={classes.value}>{formattedAmount}</p>
-      </div>
+      <h3 className={classes.heading}>{title}</h3>
+      <p className={classes.value}>{formattedAmount}</p>
     </button>
   );
 }
