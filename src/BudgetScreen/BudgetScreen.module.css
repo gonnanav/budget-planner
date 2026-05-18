@@ -22,23 +22,55 @@
   gap: 8px;
 }
 
-.section {
+.content {
   /* Layout */
   display: flex;
   flex-direction: column;
-  flex-shrink: 1;
+  flex: 1;
   gap: 16px;
 
   /* Box model */
   min-height: 0;
-  height: 100%;
 }
 
-.items {
+.viewport {
   /* Layout */
   flex: 1;
 
   /* Box model */
+  min-height: 0;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.lists {
+  --gap: 16px;
+
+  /* Layout */
+  display: flex;
+  gap: var(--gap);
+  width: fit-content;
+  height: 100%;
+
+  /* Animation */
+  transition: transform 500ms ease;
+}
+
+.lists[data-section="income"] {
+  transform: translateX(0%);
+}
+
+.lists[data-section="expenses"] {
+  transform: translateX(calc(-100cqw - var(--gap)));
+}
+
+.list {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+
+  /* Box model */
+  width: 100cqw;
   min-height: 0;
   overflow-y: auto;
 }

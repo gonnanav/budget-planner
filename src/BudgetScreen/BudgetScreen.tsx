@@ -14,16 +14,17 @@ export function BudgetScreen() {
   const edit = useEdit();
   const [selectedSection, setSelectedSection] = useState<Section>("expenses");
 
-  const selectedState = budget?.[selectedSection];
-  const categories = selectedState?.categories ?? [];
+  const categories = budget?.[selectedSection]?.categories ?? [];
 
   const selectIncome = () => setSelectedSection("income");
   const selectExpenses = () => setSelectedSection("expenses");
 
   const startCreateItem = () => edit.startCreateItem(selectedSection);
   const startCreateCategory = () => edit.startCreateCategory(selectedSection);
-  const startUpdateItem = (item: Item) => edit.startUpdateItem(selectedSection, item);
-  const startUpdateCategory = (category: Category) => edit.startUpdateCategory(selectedSection, category);
+  const startUpdateIncomeItem = (item: Item) => edit.startUpdateItem("income", item);
+  const startUpdateIncomeCategory = (category: Category) => edit.startUpdateCategory("income", category);
+  const startUpdateExpensesItem = (item: Item) => edit.startUpdateItem("expenses", item);
+  const startUpdateExpensesCategory = (category: Category) => edit.startUpdateCategory("expenses", category);
 
   const saveEntity = () => {
     if (!edit.state) return;
@@ -78,14 +79,25 @@ export function BudgetScreen() {
           balance={budget?.balance ?? { status: "balanced", delta: 0 }}
         />
       </div>
-      {selectedState && (
-        <div className={classes.section}>
-          <div className={classes.items}>
-            <ItemsView
-              sectionState={selectedState}
-              onItemClick={startUpdateItem}
-              onCategoryClick={startUpdateCategory}
-            />
+      {budget && (
+        <div className={classes.content}>
+          <div className={classes.viewport}>
+            <div className={classes.lists} data-section={selectedSection}>
+              <div className={classes.list}>
+                <ItemsView
+                  sectionState={budget.income}
+                  onItemClick={startUpdateIncomeItem}
+                  onCategoryClick={startUpdateIncomeCategory}
+                />
+              </div>
+              <div className={classes.list}>
+                <ItemsView
+                  sectionState={budget.expenses}
+                  onItemClick={startUpdateExpensesItem}
+                  onCategoryClick={startUpdateExpensesCategory}
+                />
+              </div>
+            </div>
           </div>
           <div className={classes.addButtons}>
             <AddButton onClick={startCreateItem}>Add item</AddButton>
