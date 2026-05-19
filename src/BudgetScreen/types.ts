@@ -7,7 +7,7 @@ export type ItemInput = {
   name: string;
   amount?: number | null;
   frequency?: Frequency;
-  category?: string | null;
+  category?: string;
   notes?: string;
 };
 
@@ -18,7 +18,7 @@ export type ItemRecord = {
   name: string;
   amount: number | null;
   frequency: Frequency;
-  categoryId: string | null;
+  category: string;
   notes: string;
 };
 

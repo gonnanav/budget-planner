@@ -22,7 +22,7 @@ export const ItemEdit = ({
     onDraftChange({ amount });
   const handleFrequencyChange = (frequency: Frequency) =>
     onDraftChange({ frequency });
-  const handleCategoryChange = (category: string | null) =>
+  const handleCategoryChange = (category: string) =>
     onDraftChange({ category });
   const handleNotesChange = (notes: string) => onDraftChange({ notes });
 
@@ -38,7 +38,7 @@ export const ItemEdit = ({
         onFrequencyChange={handleFrequencyChange}
       />
       <CategoryInput
-        selectedCategoryId={draft.category ?? null}
+        selectedCategory={draft.category ?? ""}
         categoryOptions={categoryOptions}
         onCategoryChange={handleCategoryChange}
       />

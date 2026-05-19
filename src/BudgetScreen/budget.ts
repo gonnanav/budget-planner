@@ -28,7 +28,7 @@ export function createItemRecord(input: CreateItemInput): ItemRecord {
     name: input.name,
     amount: input.amount ?? null,
     frequency: input.frequency ?? "monthly",
-    categoryId: input.category ?? null,
+    category: input.category ?? "",
     notes: input.notes ?? "",
   };
 }
@@ -45,7 +45,7 @@ function createItemGroup(items: Item[]): ItemGroup {
   return { items, total: sumItems(items) };
 }
 
-function createCategory(record: CategoryRecord, itemsByCategory: Map<string | null, Item[]>): Category {
+function createCategory(record: CategoryRecord, itemsByCategory: Map<string, Item[]>): Category {
   const items = itemsByCategory.get(record.id) ?? [];
 
   return { ...record, ...createItemGroup(items) };
@@ -58,16 +58,16 @@ function createSectionState(
   const items = itemRecords.map(createItem);
   const itemsByCategory = mapItemsByCategory(items);
   const categories = categoryRecords.map((record) => createCategory(record, itemsByCategory));
-  const uncategorized = createItemGroup(itemsByCategory.get(null) ?? []);
+  const uncategorized = createItemGroup(itemsByCategory.get("") ?? []);
 
   return { ...createItemGroup(items), categories, uncategorized };
 }
 
-function mapItemsByCategory(items: Item[]): Map<string | null, Item[]> {
-  const map = new Map<string | null, Item[]>();
+function mapItemsByCategory(items: Item[]): Map<string, Item[]> {
+  const map = new Map<string, Item[]>();
 
   for (const item of items) {
-    const key = item.categoryId;
+    const key = item.category;
     const bucket = map.get(key);
 
     if (bucket) {

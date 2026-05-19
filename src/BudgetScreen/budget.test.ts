@@ -7,7 +7,7 @@ const dummySection = { items: [], categories: [] };
 test("item record is created with defaults for optional properties", () => {
   const record = createItemRecord({ id: "1", name: "Some item" });
 
-  expect(record).toMatchObject({ amount: null, frequency: "monthly", categoryId: null, notes: "" });
+  expect(record).toMatchObject({ amount: null, frequency: "monthly", category: "", notes: "" });
 });
 
 describe("item", () => {
@@ -71,8 +71,8 @@ describe("categories", () => {
   });
 
   test("items without a category are grouped as uncategorized", () => {
-    const uncategorizedItem1 = createTestItemRecord({ id: "u1", category: null });
-    const uncategorizedItem2 = createTestItemRecord({ id: "u2", category: null });
+    const uncategorizedItem1 = createTestItemRecord({ id: "u1", category: "" });
+    const uncategorizedItem2 = createTestItemRecord({ id: "u2", category: "" });
     const items = [uncategorizedItem1, employmentItem1, uncategorizedItem2];
     const categories = [employment];
 
@@ -85,8 +85,8 @@ describe("categories", () => {
 
   test("the uncategorized total is the normalized sum of all its items", () => {
     const items = [
-      createTestItemRecord({ id: "1", amount: 200, frequency: "monthly", category: null }),
-      createTestItemRecord({ id: "2", amount: 400, frequency: "biMonthly", category: null }),
+      createTestItemRecord({ id: "1", amount: 200, frequency: "monthly", category: "" }),
+      createTestItemRecord({ id: "2", amount: 400, frequency: "biMonthly", category: "" }),
     ];
 
     const { income } = createBudget({ items, categories: [] }, dummySection);

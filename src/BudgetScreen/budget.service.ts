@@ -70,7 +70,7 @@ function toDbItemChanges(input: ItemInput): Partial<DbItem> {
     name: input.name,
     amount: input.amount,
     frequency: input.frequency,
-    categoryId: input.category,
+    categoryId: input.category || null,
     notes: input.notes,
   };
 }
@@ -81,7 +81,7 @@ function toDbItem(record: ItemRecord): DbItem {
     name: record.name,
     amount: record.amount,
     frequency: record.frequency,
-    categoryId: record.categoryId,
+    categoryId: record.category || null,
     notes: record.notes,
   };
 }
@@ -92,7 +92,7 @@ function fromDbItem(item: DbItem): ItemRecord {
     name: item.name,
     amount: item.amount,
     frequency: item.frequency,
-    categoryId: item.categoryId,
+    category: item.categoryId ?? "",
     notes: item.notes,
   };
 }
