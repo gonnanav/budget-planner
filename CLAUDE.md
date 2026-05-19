@@ -23,7 +23,19 @@ Always use `type` instead of `interface`.
 
 - Import as `classes`, not `styles`
 - Short, action/purpose-based names without type suffixes — `.delete` not `.deleteButton`
-- Flat structure by default — only nest pseudo-classes/elements targeting the same element (`&:hover`, `&:active`)
+- Flat structure by default — only nest selectors that target the same element: pseudo-classes (`&:hover`, `&:active`), pseudo-elements (`&::before`), and attribute selectors (`&[data-x="y"]`)
+- Mobile-first: base styles target mobile, use `@media screen and (min-width: 768px)` to override for larger viewports
+
+### Property Groups
+
+Properties within a rule are grouped by category with a comment header. The four categories, in order:
+
+1. **Layout** — how the element participates in and establishes layout: `display`, flex/grid properties, `align-*`, `justify-*`, `gap`, `container-type`, etc.
+2. **Box model** — the element's own box: `width`, `height`, `min-*`, `max-*`, `padding`, `margin`, `border`, `border-radius`, `overflow`, etc.
+3. **Visual** — appearance: `background`, `color`, `font-*`, `opacity`, `text-*`, etc.
+4. **Interaction** — behavior in response to user input or time: `cursor`, `transition`, `animation`, etc.
+
+Omit a group entirely if the rule has no properties for it.
 
 ## Code Style
 

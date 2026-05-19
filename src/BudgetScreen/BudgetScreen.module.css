@@ -36,32 +36,38 @@
 .viewport {
   /* Layout */
   flex: 1;
+  container-type: inline-size;
 
   /* Box model */
   min-height: 0;
   overflow: hidden;
-  container-type: inline-size;
 }
 
 .lists {
-  --gap: 16px;
+  --lists-gap: 16px;
 
   /* Layout */
   display: flex;
-  gap: var(--gap);
+  gap: var(--lists-gap);
   width: fit-content;
   height: 100%;
 
-  /* Animation */
-  transition: transform 500ms ease;
-}
+  --duration: 500ms;
 
-.lists[data-section="income"] {
-  transform: translateX(0%);
-}
+  /* Interaction */
+  transition: transform var(--duration) ease-in-out;
 
-.lists[data-section="expenses"] {
-  transform: translateX(calc(-100cqw - var(--gap)));
+  @media screen and (min-width: 768px) {
+    --duration: 600ms;
+  }
+
+  &[data-section="income"] {
+    transform: translateX(0);
+  }
+
+  &[data-section="expenses"] {
+    transform: translateX(calc(-100cqw - var(--lists-gap)));
+  }
 }
 
 .list {
