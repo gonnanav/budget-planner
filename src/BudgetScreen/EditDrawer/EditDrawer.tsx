@@ -7,7 +7,7 @@ import type { EditState, ItemInput, CategoryInput } from "../types";
 
 export type EditDrawerProps = {
   editState: EditState | null;
-  categoryOptions: { id: string; name: string }[];
+  categoryOptions: string[];
   onClose: () => void;
   onCancel: () => void;
   onSave: () => void;

@@ -15,6 +15,7 @@ export function BudgetScreen() {
   const [selectedSection, setSelectedSection] = useState<Section>("expenses");
 
   const categories = budget?.[selectedSection]?.categories ?? [];
+  const categoryNames = categories.map((c) => c.name);
 
   const selectIncome = () => setSelectedSection("income");
   const selectExpenses = () => setSelectedSection("expenses");
@@ -107,7 +108,7 @@ export function BudgetScreen() {
       )}
       <EditDrawer
         editState={edit.state}
-        categoryOptions={categories}
+        categoryOptions={categoryNames}
         onClose={edit.stopEdit}
         onCancel={edit.stopEdit}
         onSave={saveEntity}

@@ -46,7 +46,7 @@ function createItemGroup(items: Item[]): ItemGroup {
 }
 
 function createCategory(record: CategoryRecord, itemsByCategory: Map<string, Item[]>): Category {
-  const items = itemsByCategory.get(record.id) ?? [];
+  const items = itemsByCategory.get(record.name) ?? [];
 
   return { ...record, ...createItemGroup(items) };
 }

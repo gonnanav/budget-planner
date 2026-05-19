@@ -30,8 +30,8 @@ describe("item", () => {
 
 describe("categories", () => {
   const employment = { id: "employment", name: "Employment" };
-  const employmentItem1 = createTestItemRecord({ id: "e1", category: employment.id });
-  const employmentItem2 = createTestItemRecord({ id: "e2", category: employment.id });
+  const employmentItem1 = createTestItemRecord({ id: "e1", category: employment.name });
+  const employmentItem2 = createTestItemRecord({ id: "e2", category: employment.name });
 
   test("items are grouped by category", () => {
     const freelance = { id: "freelance", name: "Freelance" };
@@ -60,8 +60,8 @@ describe("categories", () => {
 
   test("a category total is the normalized sum of all its items", () => {
     const items = [
-      createTestItemRecord({ id: "1", amount: 200, frequency: "monthly", category: employment.id }),
-      createTestItemRecord({ id: "2", amount: 400, frequency: "biMonthly", category: employment.id }),
+      createTestItemRecord({ id: "1", amount: 200, frequency: "monthly", category: employment.name }),
+      createTestItemRecord({ id: "2", amount: 400, frequency: "biMonthly", category: employment.name }),
     ];
     const categories = [employment];
 

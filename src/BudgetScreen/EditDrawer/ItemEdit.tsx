@@ -8,7 +8,7 @@ import classes from "./ItemEdit.module.css";
 
 export type ItemEditProps = {
   draft: ItemInput;
-  categoryOptions: { id: string; name: string }[];
+  categoryOptions: string[];
   onDraftChange: (changes: Partial<ItemInput>) => void;
 };
 
