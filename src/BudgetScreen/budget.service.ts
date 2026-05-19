@@ -8,20 +8,41 @@ export function useBudget(): Budget | undefined {
 }
 
 export async function addItem(section: Section, input: ItemInput): Promise<string> {
-  const categories = await getDbCategories(section);
   const record = createItemRecord({ id: crypto.randomUUID(), ...input });
-  const categoryId = toCategoryId(record.category, categories);
-  const dbItem = toDbItem(record, categoryId);
 
-  return getItemsTable(section).add(dbItem);
+  return db.transaction("rw", getItemsTable(section), getCategoriesTable(section), async () => {
+    const categories = await getDbCategories(section);
+    const categoryId = await findOrCreateCategoryId(record.category, section, categories);
+
+    return getItemsTable(section).add(toDbItem(record, categoryId));
+  });
 }
 
 export async function updateItem(id: string, section: Section, input: ItemInput): Promise<boolean> {
-  const categories = await getDbCategories(section);
-  const categoryId = input.category !== undefined ? toCategoryId(input.category, categories) : undefined;
-  const dbItemChanges = toDbItemChanges(input, categoryId);
+  return db.transaction("rw", getItemsTable(section), getCategoriesTable(section), async () => {
+    const categories = await getDbCategories(section);
+    let categoryId: string | null | undefined;
 
-  return getItemsTable(section).update(id, dbItemChanges).then(Boolean);
+    if (input.category !== undefined) {
+      categoryId = await findOrCreateCategoryId(input.category, section, categories);
+    }
+
+    return getItemsTable(section).update(id, toDbItemChanges(input, categoryId)).then(Boolean);
+  });
+}
+
+async function findOrCreateCategoryId(name: string, section: Section, categories: DbCategory[]): Promise<string | null> {
+  if (name === "") return null;
+
+  const category = getCategoryByName(name, categories);
+
+  if (category) return category.id;
+
+  const id = crypto.randomUUID();
+
+  await getCategoriesTable(section).add({ id, name });
+
+  return id;
 }
 
 export async function deleteItem(id: string, section: Section): Promise<void> {
@@ -124,14 +145,8 @@ function fromCategoryId(id: string | null, categories: DbCategory[]): string {
   return category.name;
 }
 
-function toCategoryId(name: string, categories: DbCategory[]): string | null {
-  if (name === "") return null;
-
-  const category = categories.find((c) => c.name.toLowerCase() === name.toLowerCase());
-
-  if (!category) throw new Error(`No category found with name: "${name}"`);
-
-  return category.id;
+function getCategoryByName(name: string, categories: DbCategory[]): DbCategory | null {
+  return categories.find((c) => c.name.toLowerCase() === name.toLowerCase()) ?? null;
 }
 
 function getItemsTable(section: Section): ItemsTable {
