@@ -28,7 +28,7 @@ export function createItemRecord(input: CreateItemInput): ItemRecord {
     name: input.name,
     amount: input.amount ?? null,
     frequency: input.frequency ?? "monthly",
-    categoryId: input.categoryId ?? null,
+    categoryId: input.category ?? null,
     notes: input.notes ?? "",
   };
 }

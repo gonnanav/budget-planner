@@ -30,12 +30,12 @@ describe("item", () => {
 
 describe("categories", () => {
   const employment = { id: "employment", name: "Employment" };
-  const employmentItem1 = createTestItemRecord({ id: "e1", categoryId: employment.id });
-  const employmentItem2 = createTestItemRecord({ id: "e2", categoryId: employment.id });
+  const employmentItem1 = createTestItemRecord({ id: "e1", category: employment.id });
+  const employmentItem2 = createTestItemRecord({ id: "e2", category: employment.id });
 
   test("items are grouped by category", () => {
     const freelance = { id: "freelance", name: "Freelance" };
-    const freelanceItem = createTestItemRecord({ id: "f1", categoryId: freelance.id });
+    const freelanceItem = createTestItemRecord({ id: "f1", category: freelance.id });
     const items = [employmentItem1, freelanceItem, employmentItem2];
     const categories = [employment, freelance];
 
@@ -60,8 +60,8 @@ describe("categories", () => {
 
   test("a category total is the normalized sum of all its items", () => {
     const items = [
-      createTestItemRecord({ id: "1", amount: 200, frequency: "monthly", categoryId: employment.id }),
-      createTestItemRecord({ id: "2", amount: 400, frequency: "biMonthly", categoryId: employment.id }),
+      createTestItemRecord({ id: "1", amount: 200, frequency: "monthly", category: employment.id }),
+      createTestItemRecord({ id: "2", amount: 400, frequency: "biMonthly", category: employment.id }),
     ];
     const categories = [employment];
 
@@ -71,8 +71,8 @@ describe("categories", () => {
   });
 
   test("items without a category are grouped as uncategorized", () => {
-    const uncategorizedItem1 = createTestItemRecord({ id: "u1", categoryId: null });
-    const uncategorizedItem2 = createTestItemRecord({ id: "u2", categoryId: null });
+    const uncategorizedItem1 = createTestItemRecord({ id: "u1", category: null });
+    const uncategorizedItem2 = createTestItemRecord({ id: "u2", category: null });
     const items = [uncategorizedItem1, employmentItem1, uncategorizedItem2];
     const categories = [employment];
 
@@ -85,8 +85,8 @@ describe("categories", () => {
 
   test("the uncategorized total is the normalized sum of all its items", () => {
     const items = [
-      createTestItemRecord({ id: "1", amount: 200, frequency: "monthly", categoryId: null }),
-      createTestItemRecord({ id: "2", amount: 400, frequency: "biMonthly", categoryId: null }),
+      createTestItemRecord({ id: "1", amount: 200, frequency: "monthly", category: null }),
+      createTestItemRecord({ id: "2", amount: 400, frequency: "biMonthly", category: null }),
     ];
 
     const { income } = createBudget({ items, categories: [] }, dummySection);

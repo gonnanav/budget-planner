@@ -70,7 +70,7 @@ function toDbItemChanges(input: ItemInput): Partial<DbItem> {
     name: input.name,
     amount: input.amount,
     frequency: input.frequency,
-    categoryId: input.categoryId,
+    categoryId: input.category,
     notes: input.notes,
   };
 }

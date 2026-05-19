@@ -7,7 +7,7 @@ export type ItemInput = {
   name: string;
   amount?: number | null;
   frequency?: Frequency;
-  categoryId?: string | null;
+  category?: string | null;
   notes?: string;
 };
 
