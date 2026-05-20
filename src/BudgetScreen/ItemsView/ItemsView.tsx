@@ -25,7 +25,7 @@ export function ItemsView({ sectionState, onItemClick, onCategoryClick }: ItemsV
       {categories.map((category) => (
         <div key={category.name} className={classes.group}>
           <button className={classes.categoryButton} onClick={() => onCategoryClick(category)}>
-            <GroupHeader name={category.name} itemCount={category.items.length} total={category.total} className={classes.categoryHeader} />
+            <GroupHeader name={category.name} total={category.total} className={classes.categoryHeader} />
           </button>
           {category.items.length > 0 && (
             <ItemList items={category.items} onItemClick={onItemClick} />
@@ -34,7 +34,7 @@ export function ItemsView({ sectionState, onItemClick, onCategoryClick }: ItemsV
       ))}
       {uncategorized.items.length > 0 && (
         <div className={classes.group}>
-          <GroupHeader name="Uncategorized" itemCount={uncategorized.items.length} total={uncategorized.total} />
+          <GroupHeader name="Uncategorized" total={uncategorized.total} />
           <ItemList items={uncategorized.items} onItemClick={onItemClick} />
         </div>
       )}
