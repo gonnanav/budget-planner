@@ -1,11 +1,11 @@
 import { BalanceBanner } from "./BalanceBanner";
-import { AddButton } from "./AddButton";
 import { EditDrawer } from "./EditDrawer/EditDrawer";
 import { ItemsView } from "./ItemsView/ItemsView";
 import { SectionSummary } from "./SectionSummary";
 import { useState } from "react";
 import { useEdit } from "./useEdit";
-import { useBudget, addItem, updateItem, deleteItem, addCategory, updateCategory, deleteCategory } from "./budget.service";
+import { useBudget, addItem, updateItem, deleteItem, updateCategory, deleteCategory } from "./budget.service";
+import { Plus } from "lucide-react";
 import type { Category, Item, Section } from "./types";
 import classes from "./BudgetScreen.module.css";
 
@@ -21,7 +21,6 @@ export function BudgetScreen() {
   const selectExpenses = () => setSelectedSection("expenses");
 
   const startCreateItem = () => edit.startCreateItem(selectedSection);
-  const startCreateCategory = () => edit.startCreateCategory(selectedSection);
   const startUpdateIncomeItem = (item: Item) => edit.startUpdateItem("income", item);
   const startUpdateIncomeCategory = (category: Category) => edit.startUpdateCategory("income", category);
   const startUpdateExpensesItem = (item: Item) => edit.startUpdateItem("expenses", item);
@@ -31,12 +30,8 @@ export function BudgetScreen() {
     if (!edit.state) return;
 
     if (edit.state.mode === "create") {
-      if (edit.state.entity === "item") {
-        addItem(edit.state.section, edit.state.draft);
-      } else {
-        addCategory(edit.state.section, edit.state.draft);
-      }
-    } else if (edit.state.mode === "update") {
+      addItem(edit.state.section, edit.state.draft);
+    } else {
       if (edit.state.entity === "item") {
         updateItem(edit.state.id, edit.state.section, edit.state.draft);
       } else {
@@ -100,10 +95,10 @@ export function BudgetScreen() {
               </div>
             </div>
           </div>
-          <div className={classes.addButtons}>
-            <AddButton onClick={startCreateItem}>Add item</AddButton>
-            <AddButton variant="secondary" onClick={startCreateCategory}>Add category</AddButton>
-          </div>
+          <button className={classes.addItem} onClick={startCreateItem}>
+            <Plus size={16} />
+            Add
+          </button>
         </div>
       )}
       <EditDrawer

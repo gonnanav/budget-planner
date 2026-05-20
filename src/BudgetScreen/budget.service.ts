@@ -49,10 +49,6 @@ export async function deleteItem(id: string, section: Section): Promise<void> {
   return getItemsTable(section).delete(id);
 }
 
-export async function addCategory(section: Section, input: CategoryInput): Promise<string> {
-  return getCategoriesTable(section).add({ id: crypto.randomUUID(), ...input });
-}
-
 export async function updateCategory(id: string, section: Section, input: CategoryInput): Promise<boolean> {
   return getCategoriesTable(section).update(id, input).then(Boolean);
 }

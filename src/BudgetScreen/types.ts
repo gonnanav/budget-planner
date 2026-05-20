@@ -45,7 +45,6 @@ export type CategoryInput = {
 export type EditState =
   | { entity: "item"; mode: "create"; section: Section; draft: ItemInput }
   | { entity: "item"; mode: "update"; section: Section; id: string; draft: ItemInput }
-  | { entity: "category"; mode: "create"; section: Section; draft: CategoryInput }
   | { entity: "category"; mode: "update"; section: Section; id: string; draft: CategoryInput };
 
 export type SectionState = ItemGroup & {

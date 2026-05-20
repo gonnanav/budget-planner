@@ -14,7 +14,7 @@ export const test = base.extend<{ app: AppFixture }>({
     const balance = page.getByRole('status', { name: 'Balance' });
 
     const addItem = async (name: string, amount: string) => {
-      await page.getByRole('button', { name: 'Add item' }).click();
+      await page.getByRole('button', { name: 'Add' }).click();
       await page.getByLabel('Name').fill(name);
       await page.getByLabel('Amount').fill(amount);
       await page.getByRole('button', { name: 'Save' }).click();

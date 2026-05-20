@@ -8,14 +8,11 @@ const DEFAULT_ITEM_DRAFT: ItemInput = {
   notes: "",
 };
 
-const DEFAULT_CATEGORY_DRAFT: CategoryInput = { name: "" };
-
 export type UseEditResult = {
   state: EditState | null;
   startCreateItem: (section: Section) => void;
   startUpdateItem: (section: Section, item: Item) => void;
   updateItemDraft: (update: Partial<ItemInput>) => void;
-  startCreateCategory: (section: Section) => void;
   startUpdateCategory: (section: Section, category: Category) => void;
   updateCategoryDraft: (update: Partial<CategoryInput>) => void;
   stopEdit: () => void;
@@ -43,10 +40,6 @@ export function useEdit(): UseEditResult {
     });
   };
 
-  const startCreateCategory = (section: Section) => {
-    setState({ entity: "category", mode: "create", section, draft: DEFAULT_CATEGORY_DRAFT });
-  };
-
   const startUpdateCategory = (section: Section, category: Category) => {
     setState({ entity: "category", mode: "update", section, id: category.id, draft: category });
   };
@@ -71,7 +64,6 @@ export function useEdit(): UseEditResult {
     startCreateItem,
     startUpdateItem,
     updateItemDraft,
-    startCreateCategory,
     startUpdateCategory,
     updateCategoryDraft,
     stopEdit,
