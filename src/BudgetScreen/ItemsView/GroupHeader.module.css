@@ -8,19 +8,19 @@
   padding: 8px 12px;
 
   /* Visual */
-  border-left: 3px solid var(--color-primary);
-  background-color: #edf2ff;
+  background-color: #f1f5f9;
 }
 
 .name {
   /* Visual */
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: #334155;
 }
 
 .total {
   /* Visual */
-  font-size: 0.8125rem;
-  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111827;
 }
