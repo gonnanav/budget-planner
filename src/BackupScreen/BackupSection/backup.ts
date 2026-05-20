@@ -1,14 +1,9 @@
-import { db, type DbItem, type DbCategory } from "@/db";
+import { db, type DbItem } from "@/db";
 import type { BackupData } from "../schemas";
 
-type DbSection = {
-  items: DbItem[];
-  categories: DbCategory[];
-};
-
 type DbData = {
-  income: DbSection;
-  expenses: DbSection;
+  income: DbItem[];
+  expenses: DbItem[];
 };
 
 export async function backupData(): Promise<void> {
@@ -28,16 +23,14 @@ function createBackupData(data: DbData): BackupData {
 }
 
 async function getDbData(): Promise<DbData> {
-  const [incomeItems, incomeCategories, expenseItems, expenseCategories] = await Promise.all([
-    db.incomeItems.toArray(),
-    db.incomeCategories.toArray(),
-    db.expenseItems.toArray(),
-    db.expenseCategories.toArray(),
+  const [incomeItems, expenseItems] = await Promise.all([
+    db.income.toArray(),
+    db.expenses.toArray(),
   ]);
 
   return {
-    income: { items: incomeItems, categories: incomeCategories },
-    expenses: { items: expenseItems, categories: expenseCategories },
+    income: incomeItems,
+    expenses: expenseItems,
   };
 }
 

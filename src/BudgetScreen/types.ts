@@ -31,12 +31,7 @@ export type ItemGroup = {
   total: number;
 };
 
-export type CategoryRecord = {
-  id: string;
-  name: string;
-};
-
-export type Category = CategoryRecord & ItemGroup;
+export type Category = { name: string } & ItemGroup;
 
 export type CategoryInput = {
   name: string;
@@ -45,7 +40,7 @@ export type CategoryInput = {
 export type EditState =
   | { entity: "item"; mode: "create"; section: Section; draft: ItemInput }
   | { entity: "item"; mode: "update"; section: Section; id: string; draft: ItemInput }
-  | { entity: "category"; mode: "update"; section: Section; id: string; draft: CategoryInput };
+  | { entity: "category"; mode: "update"; section: Section; name: string; draft: CategoryInput };
 
 export type SectionState = ItemGroup & {
   categories: Category[];

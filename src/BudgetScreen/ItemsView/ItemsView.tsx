@@ -23,7 +23,7 @@ export function ItemsView({ sectionState, onItemClick, onCategoryClick }: ItemsV
   return (
     <div>
       {categories.map((category) => (
-        <div key={category.id} className={classes.group}>
+        <div key={category.name} className={classes.group}>
           <button className={classes.categoryButton} onClick={() => onCategoryClick(category)}>
             <GroupHeader name={category.name} itemCount={category.items.length} total={category.total} className={classes.categoryHeader} />
           </button>

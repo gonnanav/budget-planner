@@ -1,4 +1,4 @@
-import type { BalanceStatus, Budget, Category, CategoryRecord, CreateItemInput, Item, ItemGroup, ItemRecord, SectionState } from "./types";
+import type { BalanceStatus, Budget, Category, CreateItemInput, Item, ItemGroup, ItemRecord, SectionState } from "./types";
 
 export const characterLimits = {
   itemName: 100,
@@ -7,11 +7,11 @@ export const characterLimits = {
 } as const;
 
 export function createBudget(
-  income: { items: ItemRecord[]; categories: CategoryRecord[] },
-  expenses: { items: ItemRecord[]; categories: CategoryRecord[] },
+  income: ItemRecord[],
+  expenses: ItemRecord[],
 ): Budget {
-  const incomeState = createSectionState(income.items, income.categories);
-  const expensesState = createSectionState(expenses.items, expenses.categories);
+  const incomeState = createSectionState(income);
+  const expensesState = createSectionState(expenses);
   const delta = incomeState.total - expensesState.total;
   const status = getStatus(delta);
 
@@ -40,25 +40,25 @@ function createItem(record: ItemRecord): Item {
   };
 }
 
-
 function createItemGroup(items: Item[]): ItemGroup {
   return { items, total: sumItems(items) };
 }
 
-function createCategory(record: CategoryRecord, itemsByCategory: Map<string, Item[]>): Category {
-  const items = itemsByCategory.get(record.name) ?? [];
-
-  return { ...record, ...createItemGroup(items) };
+function createCategory(name: string, items: Item[]): Category {
+  return { name, ...createItemGroup(items) };
 }
 
-function createSectionState(
-  itemRecords: ItemRecord[],
-  categoryRecords: CategoryRecord[],
-): SectionState {
+function createSectionState(itemRecords: ItemRecord[]): SectionState {
   const items = itemRecords.map(createItem);
   const itemsByCategory = mapItemsByCategory(items);
-  const categories = categoryRecords.map((record) => createCategory(record, itemsByCategory));
   const uncategorized = createItemGroup(itemsByCategory.get("") ?? []);
+  const categories: Category[] = [];
+  
+  for (const [name, items] of itemsByCategory) {
+    if (name === "") continue;
+
+    categories.push(createCategory(name, items));
+  }
 
   return { ...createItemGroup(items), categories, uncategorized };
 }

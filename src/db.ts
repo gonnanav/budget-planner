@@ -5,23 +5,15 @@ export type DbItem = {
   name: string;
   amount: number | null;
   frequency: "monthly" | "biMonthly";
-  categoryId: string | null;
+  category: string;
   notes: string;
 };
 
-export type DbCategory = {
-  id: string;
-  name: string;
-};
-
 export type ItemsTable = EntityTable<DbItem, "id">;
-export type CategoriesTable = EntityTable<DbCategory, "id">;
 
 const db = new Dexie("BudgetDatabase") as Dexie & {
-  incomeItems: ItemsTable;
-  expenseItems: ItemsTable;
-  incomeCategories: CategoriesTable;
-  expenseCategories: CategoriesTable;
+  income: ItemsTable;
+  expenses: ItemsTable;
 };
 
 db.version(5)
@@ -66,5 +58,48 @@ db.version(7).upgrade((tx) => {
 
   return Promise.all([normalize("incomeItems"), normalize("expenseItems")]);
 });
+
+db.version(8)
+  .stores({
+    income: "id, category",
+    expenses: "id, category",
+    incomeItems: null,
+    expenseItems: null,
+    incomeCategories: null,
+    expenseCategories: null,
+  })
+  .upgrade(async (tx) => {
+    type OldCategory = { id: string; name: string };
+    type OldItem = { id: string; name: string; amount: number | null; frequency: string; categoryId: string | null; notes: string };
+
+    const migrate = async (oldItemsTable: string, oldCategoriesTable: string, newTable: string) => {
+      const categories: OldCategory[] = await tx.table(oldCategoriesTable).toArray();
+      const categoryById = new Map(categories.map((c) => [c.id, c.name]));
+      const items: OldItem[] = await tx.table(oldItemsTable).toArray();
+
+      await tx.table(newTable).bulkAdd(
+        items.map((item) => {
+          let category = "";
+          if (item.categoryId !== null) {
+            category = categoryById.get(item.categoryId) ?? "";
+          }
+
+          return {
+            id: item.id,
+            name: item.name,
+            amount: item.amount,
+            frequency: item.frequency,
+            category,
+            notes: item.notes,
+          };
+        }),
+      );
+    };
+
+    await Promise.all([
+      migrate("incomeItems", "incomeCategories", "income"),
+      migrate("expenseItems", "expenseCategories", "expenses"),
+    ]);
+  });
 
 export { db };

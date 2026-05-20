@@ -35,7 +35,7 @@ export function BudgetScreen() {
       if (edit.state.entity === "item") {
         updateItem(edit.state.id, edit.state.section, edit.state.draft);
       } else {
-        updateCategory(edit.state.id, edit.state.section, edit.state.draft);
+        updateCategory(edit.state.name, edit.state.section, edit.state.draft);
       }
     }
 
@@ -48,7 +48,7 @@ export function BudgetScreen() {
     if (edit.state.entity === "item") {
       deleteItem(edit.state.id, edit.state.section);
     } else {
-      deleteCategory(edit.state.id, edit.state.section);
+      deleteCategory(edit.state.name, edit.state.section);
     }
 
     edit.stopEdit();

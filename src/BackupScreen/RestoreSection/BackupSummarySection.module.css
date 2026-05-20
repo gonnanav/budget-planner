@@ -28,33 +28,3 @@
   /* Visual */
   color: #64748b;
 }
-
-.details {
-  /* Layout */
-  display: flex;
-  gap: 16px;
-
-  /* Visual */
-  color: #64748b;
-}
-
-.group {
-  /* Layout */
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 4px;
-}
-
-.groupTitle {
-  /* Visual */
-  font-weight: 600;
-}
-
-.divider {
-  /* Box model */
-  width: 1px;
-
-  /* Visual */
-  background-color: #e2e8f0;
-}

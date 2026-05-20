@@ -41,7 +41,7 @@ export function useEdit(): UseEditResult {
   };
 
   const startUpdateCategory = (section: Section, category: Category) => {
-    setState({ entity: "category", mode: "update", section, id: category.id, draft: category });
+    setState({ entity: "category", mode: "update", section, name: category.name, draft: category });
   };
 
   const updateCategoryDraft = (update: Partial<CategoryInput>) => {

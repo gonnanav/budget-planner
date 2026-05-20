@@ -5,23 +5,13 @@ const BackupItemSchema = z.object({
   name: z.string(),
   amount: z.number().nullable(),
   frequency: z.enum(["monthly", "biMonthly"]),
-  categoryId: z.string().nullable(),
+  category: z.string(),
   notes: z.string(),
 });
 
-const BackupCategorySchema = z.object({
-  id: z.string(),
-  name: z.string(),
-});
-
-const BackupSectionSchema = z.object({
-  items: z.array(BackupItemSchema),
-  categories: z.array(BackupCategorySchema),
-});
-
 const BackupBudgetSchema = z.object({
-  income: BackupSectionSchema,
-  expenses: BackupSectionSchema,
+  income: z.array(BackupItemSchema),
+  expenses: z.array(BackupItemSchema),
 });
 
 export const BackupDataSchema = z.object({
@@ -33,7 +23,5 @@ export const BackupDataSchema = z.object({
 });
 
 export type BackupItem = z.infer<typeof BackupItemSchema>;
-export type BackupCategory = z.infer<typeof BackupCategorySchema>;
-export type BackupSection = z.infer<typeof BackupSectionSchema>;
 export type BackupBudget = z.infer<typeof BackupBudgetSchema>;
 export type BackupData = z.infer<typeof BackupDataSchema>;
