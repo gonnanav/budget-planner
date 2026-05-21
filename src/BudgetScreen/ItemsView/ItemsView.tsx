@@ -1,5 +1,4 @@
 import { ItemList } from "./ItemList";
-import { GroupHeader } from "./GroupHeader";
 import type { Item, Category, SectionState } from "../types";
 import classes from "./ItemsView.module.css";
 
@@ -24,8 +23,9 @@ export function ItemsView({ sectionState, onItemClick, onCategoryClick }: ItemsV
     <div>
       {categories.map((category) => (
         <div key={category.name} className={classes.group}>
-          <button className={classes.categoryButton} onClick={() => onCategoryClick(category)}>
-            <GroupHeader name={category.name} total={category.total} className={classes.categoryHeader} />
+          <button className={classes.header} onClick={() => onCategoryClick(category)}>
+            <span className={classes.name}>{category.name}</span>
+            <span className={classes.total}>₪{category.total.toLocaleString()}/month</span>
           </button>
           {category.items.length > 0 && (
             <ItemList items={category.items} onItemClick={onItemClick} />
@@ -34,7 +34,10 @@ export function ItemsView({ sectionState, onItemClick, onCategoryClick }: ItemsV
       ))}
       {uncategorized.items.length > 0 && (
         <div className={classes.group}>
-          <GroupHeader name="Uncategorized" total={uncategorized.total} />
+          <div className={classes.header}>
+            <span className={classes.name}>Uncategorized</span>
+            <span className={classes.total}>₪{uncategorized.total.toLocaleString()}/month</span>
+          </div>
           <ItemList items={uncategorized.items} onItemClick={onItemClick} />
         </div>
       )}
