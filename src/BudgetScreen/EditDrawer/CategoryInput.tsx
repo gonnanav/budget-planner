@@ -14,6 +14,7 @@ export const CategoryInput = ({
   return (
     <Autocomplete
       label="Category"
+      description="Select a category or type a new one"
       data={categoryOptions}
       value={selectedCategory}
       onChange={onCategoryChange}

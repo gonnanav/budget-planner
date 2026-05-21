@@ -1,4 +1,4 @@
-import { Drawer } from "@mantine/core";
+import { ActionIcon, Button, Drawer } from "@mantine/core";
 import { Trash2 } from "lucide-react";
 import classes from "./EditDrawer.module.css";
 import { ItemEdit } from "./ItemEdit";
@@ -20,10 +20,10 @@ const getHeadingText = (editState: EditState | null) => {
   if (!editState) return "Edit";
 
   const modeText = editState.mode === "create" ? "Add" : "Edit";
-  const sectionText = editState.section === "income" ? "Income" : "Expenses";
-  const entityText = editState.entity === "item" ? "Item" : "Category";
+  const sectionText = editState.section === "income" ? "Income" : "Expense";
+  const entityText = editState.entity === "category" ? " Category" : "";
 
-  return `${modeText} ${sectionText} ${entityText}`;
+  return `${modeText} ${sectionText}${entityText}`;
 };
 
 export const EditDrawer = ({
@@ -41,7 +41,7 @@ export const EditDrawer = ({
   const hasDelete = editState?.mode === "update";
 
   return (
-    <Drawer opened={opened} onClose={onClose} title={headingText} position="right">
+    <Drawer opened={opened} title={headingText} position="right" size="xs" onClose={onClose}>
       <div className={classes.body}>
         {editState?.entity === "item" && (
           <ItemEdit
@@ -58,22 +58,14 @@ export const EditDrawer = ({
         )}
         <div className={classes.actions}>
           <div className={classes.primaryActions}>
-            <button className={classes.cancel} onClick={onCancel}>
-              Cancel
-            </button>
-            <button className={classes.save} type="submit" onClick={onSave}>
-              Save
-            </button>
+            <Button variant="default" onClick={onCancel}>Cancel</Button>
+            <Button onClick={onSave}>Save</Button>
           </div>
 
           {hasDelete && (
-            <button
-              className={classes.delete}
-              onClick={onDelete}
-              aria-label="Delete"
-            >
+            <ActionIcon variant="subtle" color="red" size="lg" onClick={onDelete} aria-label="Delete">
               <Trash2 size={20} />
-            </button>
+            </ActionIcon>
           )}
         </div>
       </div>
