@@ -25,7 +25,10 @@
 
 .logoLink {
   /* Layout */
-  align-self: stretch;
+  align-self: center;
+
+  /* Box model */
+  height: 28px;
 }
 
 .logo {
