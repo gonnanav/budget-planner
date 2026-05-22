@@ -6,35 +6,44 @@ import type { Balance } from "./types";
 
 type BalanceBannerProps = {
   balance: Balance;
+  empty: boolean;
 };
 
-export function BalanceBanner({
-  balance: { status, delta },
-}: BalanceBannerProps) {
-  const formattedAmount = formatAmount(Math.abs(delta));
-  const config = {
-    balanced: {
-      label: "Balanced",
-      icon: Check,
-    },
-    surplus: {
-      label: "Surplus",
-      icon: TrendingUp,
-    },
-    deficit: {
-      label: "Deficit",
-      icon: TrendingDown,
-    },
-  }[status];
-  const Icon = config.icon;
+const statusConfig = {
+  balanced: {
+    label: "Balanced",
+    icon: Check,
+  },
+  surplus: {
+    label: "Surplus",
+    icon: TrendingUp,
+  },
+  deficit: {
+    label: "Deficit",
+    icon: TrendingDown,
+  },
+};
+
+export function BalanceBanner({ balance, empty }: BalanceBannerProps) {
+  const { status, delta } = balance;
+  const { label, icon: Icon } = statusConfig[status];
+  const stateClass = empty ? classes.empty : classes[status];
 
   return (
-    <div role="status" aria-label="Balance" className={clsx(classes.root, classes[status])}>
-      <div className={classes.left}>
-        <Icon className={classes.icon} />
-        <span className={classes.label}>{config.label}</span>
-      </div>
-      <span className={classes.amount}>{formattedAmount}</span>
+    <div role="status" aria-label="Balance" className={clsx(classes.root, stateClass)}>
+      {empty ? (
+        <span className={classes.label}>Add items to see your balance</span>
+      ) : (
+        <>
+          <div className={classes.left}>
+            <Icon className={classes.icon} />
+            <span className={classes.label}>{label}</span>
+          </div>
+          {status !== "balanced" && (
+            <span className={classes.amount}>{formatAmount(Math.abs(delta))}</span>
+          )}
+        </>
+      )}
     </div>
   );
 }

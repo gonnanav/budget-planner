@@ -16,6 +16,7 @@ export function BudgetScreen() {
 
   const categories = budget?.[selectedSection]?.categories ?? [];
   const categoryNames = categories.map((c) => c.name);
+  const isBudgetEmpty = !budget || (budget.income.items.length === 0 && budget.expenses.items.length === 0);
 
   const selectIncome = () => setSelectedSection("income");
   const selectExpenses = () => setSelectedSection("expenses");
@@ -59,6 +60,7 @@ export function BudgetScreen() {
       <div className={classes.overview}>
         <BalanceBanner
           balance={budget?.balance ?? { status: "balanced", delta: 0 }}
+          empty={isBudgetEmpty}
         />
         <div className={classes.summaries}>
           <SectionSummary
