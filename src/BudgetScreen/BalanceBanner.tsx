@@ -30,15 +30,11 @@ export function BalanceBanner({
 
   return (
     <div role="status" aria-label="Balance" className={clsx(classes.root, classes[status])}>
-      <div className={classes.body}>
-        <div className={classes.row}>
-          <div className={classes.left}>
-            <Icon className={classes.icon} />
-            <span className={classes.label}>{config.label}</span>
-          </div>
-          <span className={classes.amount}>{formattedAmount}</span>
-        </div>
+      <div className={classes.left}>
+        <Icon className={classes.icon} />
+        <span className={classes.label}>{config.label}</span>
       </div>
+      <span className={classes.amount}>{formattedAmount}</span>
     </div>
   );
 }
