@@ -1,8 +1,11 @@
 .empty {
+  /* Box model */
+  padding: 24px 16px;
+
   /* Visual */
   font-size: 0.875rem;
   text-align: center;
-  color: #94a3b8;
+  color: #64748b;
 }
 
 .group {

@@ -1,18 +1,24 @@
 import { ItemList } from "./ItemList";
-import type { Item, Category, SectionState } from "../types";
+import type { Item, Category, Section, SectionState } from "../types";
 import classes from "./ItemsView.module.css";
 
 type ItemsViewProps = {
+  section: Section;
   sectionState: SectionState;
   onItemClick: (item: Item) => void;
   onCategoryClick: (category: Category) => void;
 };
 
-export function ItemsView({ sectionState, onItemClick, onCategoryClick }: ItemsViewProps) {
+const emptyMessages: Record<Section, string> = {
+  income: "No income yet — add your first one below.",
+  expenses: "No expenses yet — add your first one below.",
+};
+
+export function ItemsView({ section, sectionState, onItemClick, onCategoryClick }: ItemsViewProps) {
   const { items, categories, uncategorized } = sectionState;
 
   if (items.length === 0) {
-    return <p className={classes.empty}>No items yet.</p>;
+    return <p className={classes.empty}>{emptyMessages[section]}</p>;
   }
 
   if (categories.length === 0) {

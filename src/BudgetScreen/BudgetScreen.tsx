@@ -81,6 +81,7 @@ export function BudgetScreen() {
             <div className={classes.lists} data-section={selectedSection}>
               <div className={classes.list}>
                 <ItemsView
+                  section="income"
                   sectionState={budget.income}
                   onItemClick={startUpdateIncomeItem}
                   onCategoryClick={startUpdateIncomeCategory}
@@ -88,6 +89,7 @@ export function BudgetScreen() {
               </div>
               <div className={classes.list}>
                 <ItemsView
+                  section="expenses"
                   sectionState={budget.expenses}
                   onItemClick={startUpdateExpensesItem}
                   onCategoryClick={startUpdateExpensesCategory}
