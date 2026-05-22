@@ -1,30 +1,32 @@
 .root {
   /* Box model */
-  border-radius: 8px;
-  border: 2px solid transparent;
+  border-left: 4px solid;
 }
 
 .balanced {
+    /* Box model */
+  border-color: #60a5fa;
+
   /* Visual */
   background-color: #eff6ff;
-  border-color: #bfdbfe;
-  --text-color: #1e3a8a;
   --icon-color: #2563eb;
 }
 
 .surplus {
+  /* Box model */
+  border-color: #34d399;
+
   /* Visual */
   background-color: #ecfdf5;
-  border-color: #a7f3d0;
-  --text-color: #065f46;
   --icon-color: #059669;
 }
 
 .deficit {
+    /* Box model */
+  border-color: #fb7185;
+
   /* Visual */
   background-color: #fff1f2;
-  border-color: #fecdd3;
-  --text-color: #9f1239;
   --icon-color: #e11d48;
 }
 
@@ -49,8 +51,8 @@
 
 .icon {
   /* Box model */
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
 
   /* Visual */
   color: var(--icon-color);
@@ -58,13 +60,20 @@
 
 .label {
   /* Visual */
+  font-size: 1.25rem;
+  line-height: 1.75rem;
   font-weight: 500;
-  color: var(--text-color);
+  color: #0f172a;
 }
 
 .amount {
   /* Visual */
-  font-size: 1.125rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
   font-weight: 600;
-  color: var(--text-color);
+  color: #0f172a;
+
+  @media screen and (min-width: 768px) {
+    font-size: 1.5rem;
+  }
 }

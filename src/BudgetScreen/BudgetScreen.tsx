@@ -57,6 +57,9 @@ export function BudgetScreen() {
   return (
     <div className={classes.root}>
       <div className={classes.overview}>
+        <BalanceBanner
+          balance={budget?.balance ?? { status: "balanced", delta: 0 }}
+        />
         <div className={classes.summaries}>
           <SectionSummary
             section="income"
@@ -71,9 +74,6 @@ export function BudgetScreen() {
             onSelect={selectExpenses}
           />
         </div>
-        <BalanceBanner
-          balance={budget?.balance ?? { status: "balanced", delta: 0 }}
-        />
       </div>
       {budget && (
         <div className={classes.content}>
