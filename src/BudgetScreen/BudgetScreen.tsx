@@ -58,57 +58,53 @@ export function BudgetScreen() {
 
   return (
     <div className={classes.root}>
-      <div className={classes.overview}>
-        <BalanceBanner
-          balance={budget?.balance ?? { status: "balanced", delta: 0 }}
-          empty={isBudgetEmpty}
+      <BalanceBanner
+        balance={budget?.balance ?? { status: "balanced", delta: 0 }}
+        empty={isBudgetEmpty}
+      />
+      <div className={classes.summaries}>
+        <SectionSummary
+          section="income"
+          amount={budget?.income.total ?? 0}
+          selected={selectedSection === "income"}
+          onSelect={selectIncome}
         />
-        <div className={classes.summaries}>
-          <SectionSummary
-            section="income"
-            amount={budget?.income.total ?? 0}
-            selected={selectedSection === "income"}
-            onSelect={selectIncome}
-          />
-          <SectionSummary
-            section="expenses"
-            amount={budget?.expenses.total ?? 0}
-            selected={selectedSection === "expenses"}
-            onSelect={selectExpenses}
-          />
-        </div>
+        <SectionSummary
+          section="expenses"
+          amount={budget?.expenses.total ?? 0}
+          selected={selectedSection === "expenses"}
+          onSelect={selectExpenses}
+        />
       </div>
       {budget && (
-        <div className={classes.content}>
-          <div className={classes.viewport}>
-            <div className={classes.lists} data-section={selectedSection}>
-              <div className={classes.list}>
-                <ItemsView
-                  section="income"
-                  sectionState={budget.income}
-                  onItemClick={startUpdateIncomeItem}
-                  onCategoryClick={startUpdateIncomeCategory}
-                />
-              </div>
-              <div className={classes.list}>
-                <ItemsView
-                  section="expenses"
-                  sectionState={budget.expenses}
-                  onItemClick={startUpdateExpensesItem}
-                  onCategoryClick={startUpdateExpensesCategory}
-                />
-              </div>
+        <div className={classes.viewport}>
+          <div className={classes.lists} data-section={selectedSection}>
+            <div className={classes.list}>
+              <ItemsView
+                section="income"
+                sectionState={budget.income}
+                onItemClick={startUpdateIncomeItem}
+                onCategoryClick={startUpdateIncomeCategory}
+              />
+            </div>
+            <div className={classes.list}>
+              <ItemsView
+                section="expenses"
+                sectionState={budget.expenses}
+                onItemClick={startUpdateExpensesItem}
+                onCategoryClick={startUpdateExpensesCategory}
+              />
             </div>
           </div>
-          <Button
-            className={classes.addItem}
-            leftSection={<Plus size={16} />}
-            onClick={startCreateItem}
-          >
-            Add
-          </Button>
         </div>
       )}
+      <Button
+        className={classes.addItem}
+        leftSection={<Plus size={16} />}
+        onClick={startCreateItem}
+      >
+        Add
+      </Button>
       <EditDrawer
         editState={edit.state}
         categoryOptions={categoryNames}
