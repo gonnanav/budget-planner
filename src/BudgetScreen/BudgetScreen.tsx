@@ -5,6 +5,7 @@ import { SectionSummary } from "./SectionSummary";
 import { useState } from "react";
 import { useEdit } from "./useEdit";
 import { useBudget, addItem, updateItem, deleteItem, updateCategory, deleteCategory } from "./budget.service";
+import { Button } from "@mantine/core";
 import { Plus } from "lucide-react";
 import type { Category, Item, Section } from "./types";
 import classes from "./BudgetScreen.module.css";
@@ -99,10 +100,13 @@ export function BudgetScreen() {
               </div>
             </div>
           </div>
-          <button className={classes.addItem} onClick={startCreateItem}>
-            <Plus size={16} />
+          <Button
+            className={classes.addItem}
+            leftSection={<Plus size={16} />}
+            onClick={startCreateItem}
+          >
             Add
-          </button>
+          </Button>
         </div>
       )}
       <EditDrawer
