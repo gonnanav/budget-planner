@@ -15,7 +15,7 @@ export default defineConfig({
       manifest: {
         name: 'Even',
         short_name: 'Even',
-        theme_color: '#ffffff',
+        theme_color: '#3d7eaa',
         background_color: '#ffffff',
         display: 'standalone',
         icons: [

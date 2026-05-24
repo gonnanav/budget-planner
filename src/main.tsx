@@ -1,5 +1,4 @@
 import './base.css'
-import './theme.css'
 import '@mantine/core/styles.css'
 import '@mantine/notifications/styles.css'
 import { StrictMode } from 'react'
@@ -8,11 +7,12 @@ import { BrowserRouter } from 'react-router-dom'
 import { MantineProvider } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 import App from './App.tsx'
+import { theme } from './theme.ts'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <MantineProvider>
+      <MantineProvider theme={theme}>
         <Notifications />
         <App />
       </MantineProvider>
