@@ -7,52 +7,58 @@ import { useEdit } from "./useEdit";
 import { useBudget, addItem, updateItem, deleteItem, updateCategory, deleteCategory } from "./budget.service";
 import { Button } from "@mantine/core";
 import { Plus } from "lucide-react";
-import type { Category, Item, Section } from "./types";
+import type { Category, Item, Section, ItemInput, CategoryInput } from "./types";
 import classes from "./BudgetScreen.module.css";
 
 export function BudgetScreen() {
+  const [selectedSection, setSelectedSection] = useState<Section>("expenses");
   const budget = useBudget();
   const edit = useEdit();
-  const [selectedSection, setSelectedSection] = useState<Section>("expenses");
 
   const categories = budget?.[selectedSection]?.categories ?? [];
   const categoryNames = categories.map((c) => c.name);
   const isBudgetEmpty = !budget || (budget.income.items.length === 0 && budget.expenses.items.length === 0);
 
-  const selectIncome = () => setSelectedSection("income");
-  const selectExpenses = () => setSelectedSection("expenses");
+  const handleSelectIncome = () => setSelectedSection("income");
+  const handleSelectExpenses = () => setSelectedSection("expenses");
 
-  const startCreateItem = () => edit.startCreateItem(selectedSection);
-  const startUpdateIncomeItem = (item: Item) => edit.startUpdateItem("income", item);
-  const startUpdateIncomeCategory = (category: Category) => edit.startUpdateCategory("income", category);
-  const startUpdateExpensesItem = (item: Item) => edit.startUpdateItem("expenses", item);
-  const startUpdateExpensesCategory = (category: Category) => edit.startUpdateCategory("expenses", category);
+  const handleCreateItem = () => edit.startCreateItem(selectedSection);
+  const handleUpdateIncomeItem = (item: Item) => edit.startUpdateItem("income", item);
+  const handleUpdateExpenseItem = (item: Item) => edit.startUpdateItem("expenses", item);
 
-  const saveEntity = () => {
+  const handleSaveItem = (input: ItemInput) => {
     if (!edit.state) return;
 
     if (edit.state.mode === "create") {
-      addItem(edit.state.section, edit.state.draft);
-    } else {
-      if (edit.state.entity === "item") {
-        updateItem(edit.state.id, edit.state.section, edit.state.draft);
-      } else {
-        updateCategory(edit.state.name, edit.state.section, edit.state.draft);
-      }
+      addItem(edit.state.section, input);
+    } else if (edit.state.entity === "item") {
+      updateItem(edit.state.item.id, edit.state.section, input);
     }
 
     edit.stopEdit();
   };
 
-  const deleteEntity = () => {
-    if (edit.state?.mode !== "update") return;
+  const handleDeleteItem = () => {
+    if (edit.state?.mode !== "update" || edit.state.entity !== "item") return;
 
-    if (edit.state.entity === "item") {
-      deleteItem(edit.state.id, edit.state.section);
-    } else {
-      deleteCategory(edit.state.name, edit.state.section);
-    }
+    deleteItem(edit.state.item.id, edit.state.section);
+    edit.stopEdit();
+  };
 
+  const handleUpdateIncomeCategory = (category: Category) => edit.startUpdateCategory("income", category);
+  const handleUpdateExpenseCategory = (category: Category) => edit.startUpdateCategory("expenses", category);
+
+  const handleSaveCategory = (input: CategoryInput) => {
+    if (edit.state?.mode !== "update" || edit.state.entity !== "category") return;
+
+    updateCategory(edit.state.name, edit.state.section, input);
+    edit.stopEdit();
+  };
+
+  const handleDeleteCategory = () => {
+    if (edit.state?.mode !== "update" || edit.state.entity !== "category") return;
+
+    deleteCategory(edit.state.name, edit.state.section);
     edit.stopEdit();
   };
 
@@ -67,13 +73,13 @@ export function BudgetScreen() {
           section="income"
           amount={budget?.income.total ?? 0}
           selected={selectedSection === "income"}
-          onSelect={selectIncome}
+          onSelect={handleSelectIncome}
         />
         <SectionSummary
           section="expenses"
           amount={budget?.expenses.total ?? 0}
           selected={selectedSection === "expenses"}
-          onSelect={selectExpenses}
+          onSelect={handleSelectExpenses}
         />
       </div>
       {budget && (
@@ -83,16 +89,16 @@ export function BudgetScreen() {
               <ItemsView
                 section="income"
                 sectionState={budget.income}
-                onItemClick={startUpdateIncomeItem}
-                onCategoryClick={startUpdateIncomeCategory}
+                onItemClick={handleUpdateIncomeItem}
+                onCategoryClick={handleUpdateIncomeCategory}
               />
             </div>
             <div className={classes.list}>
               <ItemsView
                 section="expenses"
                 sectionState={budget.expenses}
-                onItemClick={startUpdateExpensesItem}
-                onCategoryClick={startUpdateExpensesCategory}
+                onItemClick={handleUpdateExpenseItem}
+                onCategoryClick={handleUpdateExpenseCategory}
               />
             </div>
           </div>
@@ -101,7 +107,7 @@ export function BudgetScreen() {
       <Button
         className={classes.addItem}
         leftSection={<Plus size={16} />}
-        onClick={startCreateItem}
+        onClick={handleCreateItem}
       >
         Add
       </Button>
@@ -109,11 +115,10 @@ export function BudgetScreen() {
         editState={edit.state}
         categoryOptions={categoryNames}
         onClose={edit.stopEdit}
-        onCancel={edit.stopEdit}
-        onSave={saveEntity}
-        onDelete={deleteEntity}
-        onItemDraftChange={edit.updateItemDraft}
-        onCategoryDraftChange={edit.updateCategoryDraft}
+        onSaveItem={handleSaveItem}
+        onDeleteItem={handleDeleteItem}
+        onSaveCategory={handleSaveCategory}
+        onDeleteCategory={handleDeleteCategory}
       />
     </div>
   );

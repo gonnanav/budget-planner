@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@mantine/core": "^8.3.14",
+    "@mantine/form": "^9.2.1",
     "@mantine/hooks": "^8.3.14",
     "@mantine/notifications": "^8.3.14",
     "clsx": "^2.1.1",

@@ -1,19 +1,16 @@
-import { ActionIcon, Button, Drawer } from "@mantine/core";
-import { Trash2 } from "lucide-react";
-import classes from "./EditDrawer.module.css";
-import { ItemEdit } from "./ItemEdit";
-import { CategoryEdit } from "./CategoryEdit";
+import { Drawer } from "@mantine/core";
 import type { EditState, ItemInput, CategoryInput } from "../types";
+import { ItemForm } from "./ItemForm";
+import { CategoryForm } from "./CategoryForm";
 
 export type EditDrawerProps = {
   editState: EditState | null;
   categoryOptions: string[];
   onClose: () => void;
-  onCancel: () => void;
-  onSave: () => void;
-  onDelete: () => void;
-  onItemDraftChange: (update: Partial<ItemInput>) => void;
-  onCategoryDraftChange: (update: Partial<CategoryInput>) => void;
+  onSaveItem: (values: ItemInput) => void;
+  onDeleteItem: () => void;
+  onSaveCategory: (values: CategoryInput) => void;
+  onDeleteCategory: () => void;
 };
 
 const getHeadingText = (editState: EditState | null) => {
@@ -30,45 +27,35 @@ export const EditDrawer = ({
   editState,
   categoryOptions,
   onClose,
-  onCancel,
-  onSave,
-  onDelete,
-  onItemDraftChange,
-  onCategoryDraftChange,
+  onSaveItem,
+  onDeleteItem,
+  onSaveCategory,
+  onDeleteCategory,
 }: EditDrawerProps) => {
   const opened = editState !== null;
   const headingText = getHeadingText(editState);
-  const hasDelete = editState?.mode === "update";
 
   return (
     <Drawer opened={opened} title={headingText} position="right" size="xs" onClose={onClose}>
-      <div className={classes.body}>
-        {editState?.entity === "item" && (
-          <ItemEdit
-            draft={editState.draft}
-            categoryOptions={categoryOptions}
-            onDraftChange={onItemDraftChange}
-          />
-        )}
-        {editState?.entity === "category" && (
-          <CategoryEdit
-            draft={editState.draft}
-            onDraftChange={onCategoryDraftChange}
-          />
-        )}
-        <div className={classes.actions}>
-          <div className={classes.primaryActions}>
-            <Button variant="default" onClick={onCancel}>Cancel</Button>
-            <Button onClick={onSave}>Save</Button>
-          </div>
-
-          {hasDelete && (
-            <ActionIcon variant="subtle" color="red" size="lg" onClick={onDelete} aria-label="Delete">
-              <Trash2 size={20} />
-            </ActionIcon>
-          )}
-        </div>
-      </div>
+      {editState?.entity === "item" && (
+        <ItemForm
+          key={editState.mode === "update" ? editState.item.id : "create"}
+          editState={editState}
+          categoryOptions={categoryOptions}
+          onSave={onSaveItem}
+          onCancel={onClose}
+          onDelete={onDeleteItem}
+        />
+      )}
+      {editState?.entity === "category" && (
+        <CategoryForm
+          key={editState.name}
+          editState={editState}
+          onSave={onSaveCategory}
+          onCancel={onClose}
+          onDelete={onDeleteCategory}
+        />
+      )}
     </Drawer>
   );
 };

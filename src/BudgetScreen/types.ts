@@ -38,9 +38,9 @@ export type CategoryInput = {
 };
 
 export type EditState =
-  | { entity: "item"; mode: "create"; section: Section; draft: ItemInput }
-  | { entity: "item"; mode: "update"; section: Section; id: string; draft: ItemInput }
-  | { entity: "category"; mode: "update"; section: Section; name: string; draft: CategoryInput };
+  | { entity: "item"; mode: "create"; section: Section }
+  | { entity: "item"; mode: "update"; section: Section; item: ItemRecord }
+  | { entity: "category"; mode: "update"; section: Section; name: string; category: CategoryInput };
 
 export type SectionState = ItemGroup & {
   categories: Category[];
