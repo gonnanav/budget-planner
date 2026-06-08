@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ActionIcon } from "@mantine/core";
-import { Database } from "lucide-react";
+import { Settings } from "lucide-react";
 import classes from "./AppShell.module.css";
 
 type AppShellProps = {
@@ -16,12 +16,12 @@ export function AppShell({ children }: AppShellProps) {
         </Link>
         <ActionIcon
           component={Link}
-          to="/backup"
-          aria-label="Backup"
+          to="/settings"
+          aria-label="Settings"
           size="lg"
           variant="default"
         >
-          <Database size={18} />
+          <Settings size={20} />
         </ActionIcon>
       </header>
       <main className={classes.main}>{children}</main>

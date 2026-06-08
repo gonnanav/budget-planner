@@ -1,13 +1,13 @@
 import { type ReactNode } from "react";
-import classes from "./BackupCard.module.css";
+import classes from "./SettingsCard.module.css";
 
-type BackupCardProps = {
+type SettingsCardProps = {
   title: string;
   description: string;
   children: ReactNode;
 };
 
-export function BackupCard({ title, description, children }: BackupCardProps) {
+export function SettingsCard({ title, description, children }: SettingsCardProps) {
   return (
     <section className={classes.root}>
       <h2 className={classes.title}>{title}</h2>

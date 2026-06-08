@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 import { AppShell } from './AppShell/AppShell';
 import { BudgetScreen } from './BudgetScreen/BudgetScreen';
-import { BackupScreen } from './BackupScreen/BackupScreen';
+import { SettingsScreen } from './SettingsScreen/SettingsScreen';
 
 function App() {
   return (
     <AppShell>
       <Routes>
         <Route index element={<BudgetScreen />} />
-        <Route path="/backup" element={<BackupScreen />} />
+        <Route path="/settings" element={<SettingsScreen />} />
       </Routes>
     </AppShell>
   );

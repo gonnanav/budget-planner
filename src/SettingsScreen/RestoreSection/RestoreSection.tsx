@@ -4,7 +4,7 @@ import { notifications } from "@mantine/notifications";
 import { useBackupFile } from "./useBackupFile";
 import { restoreData } from "./restore";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
-import { BackupCard } from "../BackupCard/BackupCard";
+import { SettingsCard } from "../SettingsCard/SettingsCard";
 import classes from "./RestoreSection.module.css";
 
 export function RestoreSection() {
@@ -53,9 +53,9 @@ export function RestoreSection() {
   };
 
   return (
-    <BackupCard
+    <SettingsCard
       title="Restore"
-      description="Restore your budget data from a previously exported backup file."
+      description="Restore your budget data from a previously downloaded backup file. This will replace your current data."
     >
       <div>
         <label htmlFor="backup-file" className={classes.label}>
@@ -78,6 +78,6 @@ export function RestoreSection() {
         isLoading={isRestoring}
         backupData={fileState.status === "loaded" ? fileState.backupData : null}
       />
-    </BackupCard>
+    </SettingsCard>
   );
 }

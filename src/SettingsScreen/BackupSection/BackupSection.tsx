@@ -5,7 +5,7 @@ import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Download } from "lucide-react";
 import { backupData } from "./backup";
-import { BackupCard } from "../BackupCard/BackupCard";
+import { SettingsCard } from "../SettingsCard/SettingsCard";
 import classes from "./BackupSection.module.css";
 
 export function BackupSection() {
@@ -27,9 +27,9 @@ export function BackupSection() {
   };
 
   return (
-    <BackupCard
+    <SettingsCard
       title="Backup"
-      description="Download a backup file containing all of your budget data."
+      description="Download a backup file of your budget data. Your data is stored only on this device, so a backup is the only way to move it to another device or keep it safe."
     >
       <Button
         className={classes.backupButton}
@@ -39,6 +39,6 @@ export function BackupSection() {
       >
         Download backup
       </Button>
-    </BackupCard>
+    </SettingsCard>
   );
 }
