@@ -24,7 +24,7 @@ Always use `type` instead of `interface`.
 - Import as `classes`, not `styles`
 - Short, action/purpose-based names without type suffixes — `.delete` not `.deleteButton`
 - Flat structure by default — only nest selectors that target the same element: pseudo-classes (`&:hover`, `&:active`), pseudo-elements (`&::before`), and attribute selectors (`&[data-x="y"]`)
-- Mobile-first: base styles target mobile, use `@media screen and (min-width: 768px)` to override for larger viewports
+- Mobile-first: base styles target mobile, use `@media (min-width: 768px)` to override for larger viewports
 
 ### Property Groups
 
