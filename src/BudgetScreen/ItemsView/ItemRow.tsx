@@ -1,3 +1,4 @@
+import { useCurrency } from "@/currency";
 import classes from "./ItemRow.module.css";
 
 type ItemRowProps = {
@@ -15,9 +16,10 @@ export function ItemRow({
   normalizedAmount,
   onClick,
 }: ItemRowProps) {
-  const formattedAmount = amount ? `₪${amount.toLocaleString()}` : null;
+  const { format } = useCurrency();
+  const formattedAmount = amount ? format(amount) : null;
   const frequencyText = frequency === "monthly" ? "Monthly" : "Bi-monthly";
-  const formattedNormalizedAmount = `₪${normalizedAmount.toLocaleString()}/month`;
+  const formattedNormalizedAmount = `${format(normalizedAmount)}/month`;
   const showNormalizedAmount = frequency === "biMonthly";
 
   return (

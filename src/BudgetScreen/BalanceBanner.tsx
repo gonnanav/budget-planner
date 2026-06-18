@@ -1,6 +1,6 @@
 import { Check, TrendingUp, TrendingDown } from "lucide-react";
 import { clsx } from "clsx";
-import { formatAmount } from "./format";
+import { useCurrency } from "@/currency";
 import classes from "./BalanceBanner.module.css";
 import type { Balance } from "./types";
 
@@ -25,9 +25,11 @@ const statusConfig = {
 };
 
 export function BalanceBanner({ balance, empty }: BalanceBannerProps) {
+  const { format } = useCurrency();
   const { status, delta } = balance;
   const { label, icon: Icon } = statusConfig[status];
   const stateClass = empty ? classes.empty : classes[status];
+  const formattedDelta = format(Math.abs(delta));
 
   return (
     <div role="status" aria-label="Balance" className={clsx(classes.root, stateClass)}>
@@ -40,7 +42,7 @@ export function BalanceBanner({ balance, empty }: BalanceBannerProps) {
             <span className={classes.label}>{label}</span>
           </div>
           {status !== "balanced" && (
-            <span className={classes.amount}>{formatAmount(Math.abs(delta))}</span>
+            <span className={classes.amount}>{formattedDelta}</span>
           )}
         </>
       )}

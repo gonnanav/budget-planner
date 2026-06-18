@@ -9,11 +9,18 @@ export type DbItem = {
   notes: string;
 };
 
+export type DbSetting = {
+  key: "currency";
+  value: string;
+};
+
 export type ItemsTable = EntityTable<DbItem, "id">;
+export type SettingsTable = EntityTable<DbSetting, "key">;
 
 const db = new Dexie("BudgetDatabase") as Dexie & {
   income: ItemsTable;
   expenses: ItemsTable;
+  settings: SettingsTable;
 };
 
 db.version(5)
@@ -101,5 +108,9 @@ db.version(8)
       migrate("expenseItems", "expenseCategories", "expenses"),
     ]);
   });
+
+db.version(9).stores({
+  settings: "key",
+});
 
 export { db };

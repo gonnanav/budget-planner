@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { MantineProvider } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 import App from './App.tsx'
+import { CurrencyProvider } from './currency'
 import { theme } from './theme.ts'
 
 createRoot(document.getElementById('root')!).render(
@@ -14,7 +15,9 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <MantineProvider theme={theme}>
         <Notifications />
-        <App />
+        <CurrencyProvider>
+          <App />
+        </CurrencyProvider>
       </MantineProvider>
     </BrowserRouter>
   </StrictMode>,

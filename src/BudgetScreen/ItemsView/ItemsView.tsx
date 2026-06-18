@@ -1,4 +1,5 @@
 import { ItemList } from "./ItemList";
+import { useCurrency } from "@/currency";
 import type { Item, Category, Section, SectionState } from "../types";
 import classes from "./ItemsView.module.css";
 
@@ -15,7 +16,10 @@ const emptyMessages: Record<Section, string> = {
 };
 
 export function ItemsView({ section, sectionState, onItemClick, onCategoryClick }: ItemsViewProps) {
+  const { format } = useCurrency();
   const { items, categories, uncategorized } = sectionState;
+
+  const formatMonthlyTotal = (total: number) => `${format(total)}/month`;
 
   if (items.length === 0) {
     return <p className={classes.empty}>{emptyMessages[section]}</p>;
@@ -31,7 +35,7 @@ export function ItemsView({ section, sectionState, onItemClick, onCategoryClick 
         <div key={category.name} className={classes.group}>
           <button className={classes.header} onClick={() => onCategoryClick(category)}>
             <span className={classes.name}>{category.name}</span>
-            <span className={classes.total}>₪{category.total.toLocaleString()}/month</span>
+            <span className={classes.total}>{formatMonthlyTotal(category.total)}</span>
           </button>
           {category.items.length > 0 && (
             <ItemList items={category.items} onItemClick={onItemClick} />
@@ -42,7 +46,7 @@ export function ItemsView({ section, sectionState, onItemClick, onCategoryClick 
         <div className={classes.group}>
           <div className={classes.header}>
             <span className={classes.name}>Uncategorized</span>
-            <span className={classes.total}>₪{uncategorized.total.toLocaleString()}/month</span>
+            <span className={classes.total}>{formatMonthlyTotal(uncategorized.total)}</span>
           </div>
           <ItemList items={uncategorized.items} onItemClick={onItemClick} />
         </div>

@@ -4,7 +4,11 @@ type AppFixture = {
   incomeSummary: Locator;
   expensesSummary: Locator;
   balance: Locator;
+  currencySelectInput: Locator;
   addItem: (name: string, amount: string) => Promise<void>;
+  goToSettings: () => Promise<void>;
+  goToBudget: () => Promise<void>;
+  selectCurrency: (currency: string) => Promise<void>;
 };
 
 export const test = base.extend<{ app: AppFixture }>({
@@ -12,6 +16,7 @@ export const test = base.extend<{ app: AppFixture }>({
     const incomeSummary = page.getByRole('button', { name: /Income/ });
     const expensesSummary = page.getByRole('button', { name: /Expenses/ });
     const balance = page.getByRole('status', { name: 'Balance' });
+    const currencySelectInput = page.getByRole('textbox', { name: 'Currency' });
 
     const addItem = async (name: string, amount: string) => {
       await page.getByRole('button', { name: 'Add' }).click();
@@ -20,7 +25,30 @@ export const test = base.extend<{ app: AppFixture }>({
       await page.getByRole('button', { name: 'Save' }).click();
     };
 
-    await use({ incomeSummary, expensesSummary, balance, addItem });
+    const goToSettings = async () => {
+      await page.getByRole('link', { name: 'Settings' }).click();
+    };
+
+    const goToBudget = async () => {
+      await page.getByRole('link', { name: 'Back to budget' }).click();
+    };
+
+    const selectCurrency = async (currency: string) => {
+      await currencySelectInput.click();
+      await currencySelectInput.fill(currency);
+      await page.getByRole('option', { name: currency }).click();
+    };
+
+    await use({
+      incomeSummary,
+      expensesSummary,
+      balance,
+      currencySelectInput,
+      addItem,
+      goToSettings,
+      goToBudget,
+      selectCurrency,
+    });
   },
 });
 

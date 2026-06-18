@@ -9,9 +9,14 @@ const BackupItemSchema = z.object({
   notes: z.string(),
 });
 
+const BackupSettingsSchema = z.object({
+  currency: z.string(),
+});
+
 const BackupBudgetSchema = z.object({
   income: z.array(BackupItemSchema),
   expenses: z.array(BackupItemSchema),
+  settings: BackupSettingsSchema,
 });
 
 export const BackupDataSchema = z.object({
@@ -23,5 +28,6 @@ export const BackupDataSchema = z.object({
 });
 
 export type BackupItem = z.infer<typeof BackupItemSchema>;
+export type BackupSettings = z.infer<typeof BackupSettingsSchema>;
 export type BackupBudget = z.infer<typeof BackupBudgetSchema>;
 export type BackupData = z.infer<typeof BackupDataSchema>;

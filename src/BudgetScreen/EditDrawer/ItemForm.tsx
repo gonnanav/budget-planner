@@ -1,5 +1,6 @@
 import { Autocomplete, NumberInput, Select, Textarea, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useCurrency } from "@/currency";
 import classes from "./EditDrawer.module.css";
 import type { EditState, Frequency, ItemInput } from "../types";
 import { characterLimits } from "../budget";
@@ -10,6 +11,20 @@ const FREQUENCY_OPTIONS = [
   { value: "biMonthly", label: "Bi-Monthly" },
 ];
 
+// NumberInput emits strings for in-progress values like "10.", so the form
+// holds them as-is and the amount is parsed only on save
+type ItemFormValues = Omit<ItemInput, "amount"> & {
+  amount: number | string;
+};
+
+function normalizeAmount(amount: number | string): number | null {
+  if (typeof amount === "number") return amount;
+
+  const parsed = Number(amount);
+
+  return amount.trim() !== "" && !Number.isNaN(parsed) ? parsed : null;
+}
+
 export type ItemFormProps = {
   editState: Extract<EditState, { entity: "item" }>;
   categoryOptions: string[];
@@ -19,10 +34,11 @@ export type ItemFormProps = {
 };
 
 export function ItemForm({ editState, categoryOptions, onSave, onCancel, onDelete }: ItemFormProps) {
-  const form = useForm<ItemInput>({
+  const { affixes: { prefix, suffix } } = useCurrency();
+  const form = useForm<ItemFormValues>({
     initialValues: editState.mode === "update"
-      ? editState.item
-      : { name: "", amount: null, frequency: "monthly", category: "", notes: "" },
+      ? { ...editState.item, amount: editState.item.amount ?? "" }
+      : { name: "", amount: "", frequency: "monthly", category: "", notes: "" },
     validate: {
       name: (value) => (value.trim() ? null : "Name is required"),
     },
@@ -33,7 +49,11 @@ export function ItemForm({ editState, categoryOptions, onSave, onCancel, onDelet
   };
 
   const handleAmountChange = (value: number | string) => {
-    form.setFieldValue("amount", typeof value === "string" ? null : value);
+    form.setFieldValue("amount", value);
+  };
+
+  const handleSave = (values: ItemFormValues) => {
+    onSave({ ...values, amount: normalizeAmount(values.amount) });
   };
 
   const handleFrequencyChange = (value: string | null) => {
@@ -49,7 +69,7 @@ export function ItemForm({ editState, categoryOptions, onSave, onCancel, onDelet
   };
 
   return (
-    <form onSubmit={form.onSubmit(onSave)} className={classes.body}>
+    <form onSubmit={form.onSubmit(handleSave)} className={classes.body}>
       <div className={classes.fields}>
         <TextInput
           label="Name"
@@ -61,10 +81,11 @@ export function ItemForm({ editState, categoryOptions, onSave, onCancel, onDelet
         />
         <NumberInput
           label="Amount"
-          prefix="₪ "
+          prefix={prefix}
+          suffix={suffix}
           thousandSeparator=","
           min={0}
-          value={form.values.amount ?? ""}
+          value={form.values.amount}
           onChange={handleAmountChange}
         />
         <Select

@@ -37,10 +37,25 @@ Properties within a rule are grouped by category with a comment header. The four
 
 Omit a group entirely if the rule has no properties for it.
 
+## React
+
+- Use the React 19 context syntax: render `<MyContext value={...}>` directly, not `<MyContext.Provider value={...}>`
+
 ## Code Style
 
 - Always add a blank line before `return` when preceded by other statements
 - Never write inline logic inside JSX attributes — always extract to a named handler
+
+## Module Organization
+
+Order a module's members in two levels:
+
+1. **Exported members first, private members after.** Everything `export`ed goes at the top; everything else goes below.
+2. **Within each level, group by kind in this order:** types, then variables, then functions.
+
+Keep the existing source order within a group — don't reorder beyond these two rules.
+
+This relies on hoisting, so prefer `function` declarations over `const` arrow functions for module-level functions.
 
 ## Testing
 

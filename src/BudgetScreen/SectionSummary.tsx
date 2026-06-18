@@ -1,7 +1,7 @@
 
 
 import { clsx } from "clsx";
-import { formatAmount } from "./format";
+import { useCurrency } from "@/currency";
 import type { Section } from "./types";
 import classes from "./SectionSummary.module.css";
 
@@ -18,8 +18,9 @@ export function SectionSummary({
   selected,
   onSelect,
 }: SectionSummaryProps) {
+  const { format } = useCurrency();
   const title = section === "income" ? "Income" : "Expenses";
-  const formattedAmount = formatAmount(amount);
+  const formattedAmount = format(amount);
 
   return (
     <button

@@ -1,9 +1,11 @@
-import { db, type DbItem } from "@/db";
-import type { BackupData } from "../schemas";
+import { DEFAULT_CURRENCY } from "@/currency";
+import { db, type DbItem, type DbSetting } from "@/db";
+import type { BackupBudget, BackupData, BackupSettings } from "../schemas";
 
 type DbData = {
   income: DbItem[];
   expenses: DbItem[];
+  settings: DbSetting[];
 };
 
 export async function backupData(): Promise<void> {
@@ -12,26 +14,24 @@ export async function backupData(): Promise<void> {
   downloadBackupData(backup);
 }
 
-function createBackupData(data: DbData): BackupData {
+function createBackupData(dbData: DbData): BackupData {
   return {
     metadata: {
       version: 1,
       exportedAt: new Date().toISOString(),
     },
-    data,
+    data: toBackupBudget(dbData),
   };
 }
 
 async function getDbData(): Promise<DbData> {
-  const [incomeItems, expenseItems] = await Promise.all([
+  const [income, expenses, settings] = await Promise.all([
     db.income.toArray(),
     db.expenses.toArray(),
+    db.settings.toArray(),
   ]);
 
-  return {
-    income: incomeItems,
-    expenses: expenseItems,
-  };
+  return { income, expenses, settings };
 }
 
 function downloadBackupData(data: BackupData): void {
@@ -59,4 +59,20 @@ function downloadFile(blob: Blob, filename: string): void {
   link.download = filename;
   link.click();
   URL.revokeObjectURL(url);
+}
+
+function toBackupBudget({ income, expenses, settings }: DbData): BackupBudget {
+  return {
+    income,
+    expenses,
+    settings: toBackupSettings(settings),
+  };
+}
+
+function toBackupSettings(settings: DbSetting[]): BackupSettings {
+  if (settings.length === 0) {
+    return { currency: DEFAULT_CURRENCY };
+  }
+
+  return { currency: settings[0].value };
 }

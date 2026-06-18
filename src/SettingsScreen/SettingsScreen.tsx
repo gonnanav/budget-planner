@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { CurrencySection } from "./CurrencySection";
 import { BackupSection } from "./BackupSection/BackupSection";
 import { RestoreSection } from "./RestoreSection/RestoreSection";
 import classes from "./SettingsScreen.module.css";
@@ -14,6 +15,7 @@ export function SettingsScreen() {
         <h1>Settings</h1>
       </div>
       <div className={classes.sections}>
+        <CurrencySection className={classes.currency} />
         <BackupSection />
         <RestoreSection />
       </div>
