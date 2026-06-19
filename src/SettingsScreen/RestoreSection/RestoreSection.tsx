@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
 import { useBackupFile } from "./useBackupFile";
-import { restoreData } from "./restore";
+import { restoreData } from "../backup";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
 import { SettingsCard } from "../SettingsCard/SettingsCard";
 import classes from "./RestoreSection.module.css";

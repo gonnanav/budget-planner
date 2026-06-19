@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
-import { BackupDataSchema, type BackupData } from "../schemas";
+import { BackupDataSchema } from "../schemas";
+import type { BackupData } from "../types";
 
 type FileState =
   | { status: "idle" }

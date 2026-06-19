@@ -1,30 +1,42 @@
 import { DEFAULT_CURRENCY } from "@/currency";
-import { db, type DbItem, type DbSetting } from "@/db";
-import type { BackupBudget, BackupData, BackupSettings } from "../schemas";
-
-type DbData = {
-  income: DbItem[];
-  expenses: DbItem[];
-  settings: DbSetting[];
-};
+import { db, type DbSetting } from "@/db";
+import type { Table } from "dexie";
+import type {
+  BackupBudget,
+  BackupData,
+  BackupSettings,
+  DbBudget,
+} from "./types";
 
 export async function backupData(): Promise<void> {
-  const dbData = await getDbData();
+  const dbData = await getDbBudget();
   const backup = createBackupData(dbData);
   downloadBackupData(backup);
 }
 
-function createBackupData(dbData: DbData): BackupData {
+export async function restoreData(backup: BackupData): Promise<void> {
+  const { income, expenses, settings } = backup.data;
+
+  await db.transaction("rw", db.tables, async () =>
+    Promise.all([
+      replaceAllInTable(db.income, income),
+      replaceAllInTable(db.expenses, expenses),
+      replaceAllInTable(db.settings, toDbSettings(settings)),
+    ]),
+  );
+}
+
+function createBackupData(dbData: DbBudget): BackupData {
   return {
     metadata: {
       version: 1,
       exportedAt: new Date().toISOString(),
     },
-    data: toBackupBudget(dbData),
+    data: fromDbBudget(dbData),
   };
 }
 
-async function getDbData(): Promise<DbData> {
+async function getDbBudget(): Promise<DbBudget> {
   const [income, expenses, settings] = await Promise.all([
     db.income.toArray(),
     db.expenses.toArray(),
@@ -61,18 +73,27 @@ function downloadFile(blob: Blob, filename: string): void {
   URL.revokeObjectURL(url);
 }
 
-function toBackupBudget({ income, expenses, settings }: DbData): BackupBudget {
+async function replaceAllInTable(table: Table, data: unknown[]): Promise<void> {
+  await table.clear();
+  await table.bulkAdd(data);
+}
+
+function fromDbBudget({ income, expenses, settings }: DbBudget): BackupBudget {
   return {
     income,
     expenses,
-    settings: toBackupSettings(settings),
+    settings: fromDbSettings(settings),
   };
 }
 
-function toBackupSettings(settings: DbSetting[]): BackupSettings {
+function fromDbSettings(settings: DbSetting[]): BackupSettings {
   if (settings.length === 0) {
     return { currency: DEFAULT_CURRENCY };
   }
 
   return { currency: settings[0].value };
+}
+
+function toDbSettings(settings: BackupSettings): DbSetting[] {
+  return [{ key: "currency", value: settings.currency }];
 }

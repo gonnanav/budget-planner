@@ -1,4 +1,4 @@
-import type { BackupData } from "../schemas";
+import type { BackupData } from "../types";
 import classes from "./BackupSummarySection.module.css";
 
 type Props = {

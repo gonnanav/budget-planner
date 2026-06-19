@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Download } from "lucide-react";
-import { backupData } from "./backup";
+import { backupData } from "../backup";
 import { SettingsCard } from "../SettingsCard/SettingsCard";
 import classes from "./BackupSection.module.css";
 

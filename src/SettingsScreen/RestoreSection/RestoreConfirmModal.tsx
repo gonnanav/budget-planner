@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Modal, Button, Checkbox } from "@mantine/core";
 import { AlertTriangle } from "lucide-react";
 import { BackupSummarySection } from "./BackupSummarySection";
-import { type BackupData } from "../schemas";
+import { type BackupData } from "../types";
 import classes from "./RestoreConfirmModal.module.css";
 
 type RestoreConfirmModalProps = {
