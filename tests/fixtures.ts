@@ -1,4 +1,10 @@
 import { test as base, expect, type Locator } from '@playwright/test';
+import type { BackupData } from '../src/SettingsScreen/types';
+
+type DownloadedBackup = {
+  filename: string;
+  data: BackupData;
+};
 
 type AppFixture = {
   incomeSummary: Locator;
@@ -9,6 +15,7 @@ type AppFixture = {
   goToSettings: () => Promise<void>;
   goToBudget: () => Promise<void>;
   selectCurrency: (currency: string) => Promise<void>;
+  downloadBackup: () => Promise<DownloadedBackup>;
 };
 
 export const test = base.extend<{ app: AppFixture }>({
@@ -18,25 +25,53 @@ export const test = base.extend<{ app: AppFixture }>({
     const balance = page.getByRole('status', { name: 'Balance' });
     const currencySelectInput = page.getByRole('combobox', { name: 'Currency' });
 
+    const addButton = page.getByRole('button', { name: 'Add' });
+    const nameInput = page.getByLabel('Name');
+    const amountInput = page.getByLabel('Amount');
+    const saveButton = page.getByRole('button', { name: 'Save' });
+    const settingsLink = page.getByRole('link', { name: 'Settings' });
+    const backToBudgetLink = page.getByRole('link', { name: 'Back to budget' });
+    const downloadBackupButton = page.getByRole('button', { name: 'Download backup' });
+
     const addItem = async (name: string, amount: string) => {
-      await page.getByRole('button', { name: 'Add' }).click();
-      await page.getByLabel('Name').fill(name);
-      await page.getByLabel('Amount').fill(amount);
-      await page.getByRole('button', { name: 'Save' }).click();
+      await addButton.click();
+      await nameInput.fill(name);
+      await amountInput.fill(amount);
+      await saveButton.click();
     };
 
     const goToSettings = async () => {
-      await page.getByRole('link', { name: 'Settings' }).click();
+      await settingsLink.click();
     };
 
     const goToBudget = async () => {
-      await page.getByRole('link', { name: 'Back to budget' }).click();
+      await backToBudgetLink.click();
     };
 
     const selectCurrency = async (currency: string) => {
+      const currencyOption = page.getByRole('option', { name: currency });
+
       await currencySelectInput.click();
       await currencySelectInput.fill(currency);
-      await page.getByRole('option', { name: currency }).click();
+      await currencyOption.click();
+    };
+
+    const downloadBackup = async (): Promise<DownloadedBackup> => {
+      const downloadPromise = page.waitForEvent('download');
+      await downloadBackupButton.click();
+      const download = await downloadPromise;
+
+      const stream = await download.createReadStream();
+      stream.setEncoding('utf-8');
+      let contents = '';
+      for await (const chunk of stream) {
+        contents += chunk;
+      }
+
+      return {
+        filename: download.suggestedFilename(),
+        data: JSON.parse(contents) as BackupData,
+      };
     };
 
     await use({
@@ -48,6 +83,7 @@ export const test = base.extend<{ app: AppFixture }>({
       goToSettings,
       goToBudget,
       selectCurrency,
+      downloadBackup,
     });
   },
 });

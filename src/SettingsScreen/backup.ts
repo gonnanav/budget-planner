@@ -11,7 +11,7 @@ import type {
 
 export async function backupData(): Promise<void> {
   const dbData = await getDbBudget();
-  const backup = createBackupData(dbData);
+  const backup = createBackupData(dbData, new Date().toISOString());
   downloadBackupData(backup);
 }
 
@@ -27,11 +27,11 @@ export async function restoreData(backup: BackupData): Promise<void> {
   );
 }
 
-function createBackupData(dbData: DbBudget): BackupData {
+export function createBackupData(dbData: DbBudget, exportedAt: string): BackupData {
   return {
     metadata: {
       version: 1,
-      exportedAt: new Date().toISOString(),
+      exportedAt,
     },
     data: fromDbBudget(dbData),
   };
