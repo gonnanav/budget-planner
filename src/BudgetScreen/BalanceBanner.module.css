@@ -7,6 +7,11 @@
   /* Box model */
   padding: 12px 16px;
   border-left: 4px solid;
+
+  @media (min-width: 768px) {
+    /* Box model */
+    padding: 16px 20px;
+  }
 }
 
 .empty {
@@ -75,6 +80,11 @@
   line-height: 1.75rem;
   font-weight: 500;
   color: #0f172a;
+
+  @media (min-width: 768px) {
+    /* Visual */
+    font-size: 1.25rem;
+  }
 }
 
 .amount {

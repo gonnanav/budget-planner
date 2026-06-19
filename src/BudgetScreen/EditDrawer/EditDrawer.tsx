@@ -2,6 +2,7 @@ import { Drawer } from "@mantine/core";
 import type { EditState, ItemInput, CategoryInput } from "../types";
 import { ItemForm } from "./ItemForm";
 import { CategoryForm } from "./CategoryForm";
+import { useMediaQuery } from "@mantine/hooks";
 
 export type EditDrawerProps = {
   editState: EditState | null;
@@ -34,9 +35,16 @@ export const EditDrawer = ({
 }: EditDrawerProps) => {
   const opened = editState !== null;
   const headingText = getHeadingText(editState);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return (
-    <Drawer opened={opened} title={headingText} position="right" size="xs" onClose={onClose}>
+    <Drawer
+      opened={opened}
+      title={headingText}
+      position="right"
+      size={isDesktop ? "md" : "xs"}
+      onClose={onClose}
+    >
       {editState?.entity === "item" && (
         <ItemForm
           key={editState.mode === "update" ? editState.item.id : "create"}

@@ -52,6 +52,11 @@
   font-weight: 500;
   line-height: 1.25rem;
   color: #475569;
+
+  @media (min-width: 768px) {
+    /* Visual */
+    font-size: 1rem;
+  }
 }
 
 .value {
