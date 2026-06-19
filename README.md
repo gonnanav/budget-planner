@@ -4,6 +4,10 @@ A personal budget planner for allocating your monthly income.
 
 No expense tracking, no account, no signup; your data stays in your browser.
 
+<p align="center">
+  <img src="docs/hero-mobile.png" alt="Even showing a categorized monthly budget with income, expenses, and balance" width="320" />
+</p>
+
 **Live App:** [even.gonnanav.com](https://even.gonnanav.com/)
 
 ## Features
