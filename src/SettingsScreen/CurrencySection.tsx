@@ -27,7 +27,7 @@ export function CurrencySection({ className }: CurrencySectionProps) {
     <SettingsCard
       className={className}
       title="Currency"
-      description="The currency symbol used throughout the app. Changing it relabels existing amounts — it does not convert them."
+      description="The currency symbol used across the app. Changing it relabels existing amounts — it doesn't convert them."
     >
       <Select
         aria-label="Currency"

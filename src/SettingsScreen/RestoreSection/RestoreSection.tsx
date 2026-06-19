@@ -55,7 +55,7 @@ export function RestoreSection() {
   return (
     <SettingsCard
       title="Restore"
-      description="Restore your budget data from a previously downloaded backup file. This will replace your current data."
+      description="Restore your budget data from a backup file. This replaces your current data."
     >
       <div>
         <label htmlFor="backup-file" className={classes.label}>

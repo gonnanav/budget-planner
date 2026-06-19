@@ -29,7 +29,7 @@ export function BackupSection() {
   return (
     <SettingsCard
       title="Backup"
-      description="Download a backup file of your budget data. Your data is stored only on this device, so a backup is the only way to move it to another device or keep it safe."
+      description="Download a backup file of your budget data. Your data is stored only on this device, so back up to keep it safe or move it elsewhere."
     >
       <Button
         className={classes.backupButton}
