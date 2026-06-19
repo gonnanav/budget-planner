@@ -1,21 +1,18 @@
 import { test as base, expect, type Locator } from '@playwright/test';
-import type { BackupData } from '../src/SettingsScreen/types';
-
-type DownloadedBackup = {
-  filename: string;
-  data: BackupData;
-};
 
 type AppFixture = {
   incomeSummary: Locator;
   expensesSummary: Locator;
   balance: Locator;
   currencySelectInput: Locator;
+  getItem: (name: string) => Locator;
   addItem: (name: string, amount: string) => Promise<void>;
+  deleteItem: (name: string) => Promise<void>;
   goToSettings: () => Promise<void>;
   goToBudget: () => Promise<void>;
   selectCurrency: (currency: string) => Promise<void>;
-  downloadBackup: () => Promise<DownloadedBackup>;
+  downloadBackup: () => Promise<string>;
+  restoreBackup: (path: string) => Promise<void>;
 };
 
 export const test = base.extend<{ app: AppFixture }>({
@@ -31,13 +28,24 @@ export const test = base.extend<{ app: AppFixture }>({
     const saveButton = page.getByRole('button', { name: 'Save' });
     const settingsLink = page.getByRole('link', { name: 'Settings' });
     const backToBudgetLink = page.getByRole('link', { name: 'Back to budget' });
+    const deleteButton = page.getByRole('button', { name: 'Delete' });
     const downloadBackupButton = page.getByRole('button', { name: 'Download backup' });
+    const backupFileInput = page.getByLabel('Select backup file');
+    const acknowledgeCheckbox = page.getByRole('checkbox', { name: /permanently replace all my current data/ });
+    const replaceDataButton = page.getByRole('button', { name: 'Replace my data' });
+
+    const getItem = (name: string) => page.getByRole('button', { name });
 
     const addItem = async (name: string, amount: string) => {
       await addButton.click();
       await nameInput.fill(name);
       await amountInput.fill(amount);
       await saveButton.click();
+    };
+
+    const deleteItem = async (name: string) => {
+      await getItem(name).click();
+      await deleteButton.click();
     };
 
     const goToSettings = async () => {
@@ -56,22 +64,18 @@ export const test = base.extend<{ app: AppFixture }>({
       await currencyOption.click();
     };
 
-    const downloadBackup = async (): Promise<DownloadedBackup> => {
+    const downloadBackup = async (): Promise<string> => {
       const downloadPromise = page.waitForEvent('download');
       await downloadBackupButton.click();
       const download = await downloadPromise;
 
-      const stream = await download.createReadStream();
-      stream.setEncoding('utf-8');
-      let contents = '';
-      for await (const chunk of stream) {
-        contents += chunk;
-      }
+      return download.path();
+    };
 
-      return {
-        filename: download.suggestedFilename(),
-        data: JSON.parse(contents) as BackupData,
-      };
+    const restoreBackup = async (path: string) => {
+      await backupFileInput.setInputFiles(path);
+      await acknowledgeCheckbox.check();
+      await replaceDataButton.click();
     };
 
     await use({
@@ -79,11 +83,14 @@ export const test = base.extend<{ app: AppFixture }>({
       expensesSummary,
       balance,
       currencySelectInput,
+      getItem,
       addItem,
+      deleteItem,
       goToSettings,
       goToBudget,
       selectCurrency,
       downloadBackup,
+      restoreBackup,
     });
   },
 });

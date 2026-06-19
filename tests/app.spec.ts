@@ -34,19 +34,23 @@ test('the budget updates as items are added', async ({ page, app }) => {
   await expect(balance).toContainText('$2,000');
 });
 
-test('downloads a backup of the current budget', async ({ page, app }) => {
-  const { addItem, goToSettings, downloadBackup } = app;
+test('backs up the budget and restores it from the downloaded file', async ({ page, app }) => {
+  const { getItem, addItem, deleteItem, goToSettings, goToBudget, downloadBackup, restoreBackup, expensesSummary } = app;
 
   await page.goto('/');
   await addItem('Rent', '1000');
   await goToSettings();
+  const path = await downloadBackup();
 
-  const { filename, data: backup } = await downloadBackup();
+  await goToBudget();
+  await deleteItem('Rent');
+  await expect(getItem('Rent')).toHaveCount(0);
 
-  expect(filename).toMatch(/^budget_v1_.*\.json$/);
-  expect(backup.data.expenses).toContainEqual(
-    expect.objectContaining({ name: 'Rent', amount: 1000 }),
-  );
+  await goToSettings();
+  await restoreBackup(path);
+
+  await expect(expensesSummary).toContainText('$1,000');
+  await expect(getItem('Rent')).toBeVisible();
 });
 
 test('changing the currency relabels amounts without converting them', async ({ page, app }) => {
