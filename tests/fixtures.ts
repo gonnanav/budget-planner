@@ -16,7 +16,7 @@ export const test = base.extend<{ app: AppFixture }>({
     const incomeSummary = page.getByRole('button', { name: /Income/ });
     const expensesSummary = page.getByRole('button', { name: /Expenses/ });
     const balance = page.getByRole('status', { name: 'Balance' });
-    const currencySelectInput = page.getByRole('textbox', { name: 'Currency' });
+    const currencySelectInput = page.getByRole('combobox', { name: 'Currency' });
 
     const addItem = async (name: string, amount: string) => {
       await page.getByRole('button', { name: 'Add' }).click();
