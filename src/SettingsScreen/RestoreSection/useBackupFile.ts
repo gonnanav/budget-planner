@@ -9,14 +9,14 @@ type FileState =
 
 type UseBackupFileResult = {
   fileState: FileState;
-  fileInputRef: React.RefObject<HTMLInputElement | null>;
+  resetRef: React.RefObject<(() => void) | null>;
   loadFile: (file: File) => void;
   reset: () => void;
 };
 
 export function useBackupFile(): UseBackupFileResult {
   const [fileState, setState] = useState<FileState>({ status: "idle" });
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const resetRef = useRef<() => void>(null);
 
   const loadFile = (file: File) => {
     const reader = new FileReader();
@@ -40,8 +40,8 @@ export function useBackupFile(): UseBackupFileResult {
 
   const reset = () => {
     setState({ status: "idle" });
-    if (fileInputRef.current) fileInputRef.current.value = "";
+    resetRef.current?.();
   };
 
-  return { fileState, fileInputRef, loadFile, reset };
+  return { fileState, resetRef, loadFile, reset };
 }

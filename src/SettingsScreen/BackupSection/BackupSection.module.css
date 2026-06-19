@@ -1,4 +1,9 @@
 .backupButton {
   /* Layout */
   align-self: flex-start;
+
+  @media (min-width: 768px) {
+    /* Box model */
+    margin-top: auto;
+  }
 }

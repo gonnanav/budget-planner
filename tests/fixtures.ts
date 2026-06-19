@@ -30,7 +30,7 @@ export const test = base.extend<{ app: AppFixture }>({
     const backToBudgetLink = page.getByRole('link', { name: 'Back to budget' });
     const deleteButton = page.getByRole('button', { name: 'Delete' });
     const downloadBackupButton = page.getByRole('button', { name: 'Download backup' });
-    const backupFileInput = page.getByLabel('Select backup file');
+    const selectBackupFileButton = page.getByRole('button', { name: 'Select backup file' });
     const acknowledgeCheckbox = page.getByRole('checkbox', { name: /permanently replace all my current data/ });
     const replaceDataButton = page.getByRole('button', { name: 'Replace my data' });
 
@@ -73,7 +73,10 @@ export const test = base.extend<{ app: AppFixture }>({
     };
 
     const restoreBackup = async (path: string) => {
-      await backupFileInput.setInputFiles(path);
+      const fileChooserPromise = page.waitForEvent('filechooser');
+      await selectBackupFileButton.click();
+      const fileChooser = await fileChooserPromise;
+      await fileChooser.setFiles(path);
       await acknowledgeCheckbox.check();
       await replaceDataButton.click();
     };

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button, FileButton } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
+import { Upload } from "lucide-react";
 import { useBackupFile } from "./useBackupFile";
 import { restoreData } from "../backup";
 import { RestoreConfirmModal } from "./RestoreConfirmModal";
@@ -9,7 +11,7 @@ import classes from "./RestoreSection.module.css";
 
 export function RestoreSection() {
   const navigate = useNavigate();
-  const { fileState, fileInputRef, loadFile, reset } = useBackupFile();
+  const { fileState, resetRef, loadFile, reset } = useBackupFile();
   const [isRestoring, setIsRestoring] = useState(false);
 
   useEffect(() => {
@@ -22,8 +24,7 @@ export function RestoreSection() {
     }
   }, [fileState]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleSelectFile = (file: File | null) => {
     if (!file) return;
 
     loadFile(file);
@@ -57,19 +58,17 @@ export function RestoreSection() {
       title="Restore"
       description="Restore your budget data from a backup file. This replaces your current data."
     >
-      <div>
-        <label htmlFor="backup-file" className={classes.label}>
-          Select backup file
-        </label>
-        <input
-          ref={fileInputRef}
-          id="backup-file"
-          type="file"
-          accept=".json,application/json"
-          onChange={handleFileChange}
-          className={classes.fileInput}
-        />
-      </div>
+      <FileButton resetRef={resetRef} accept=".json,application/json" onChange={handleSelectFile}>
+        {(props) => (
+          <Button
+            {...props}
+            className={classes.selectButton}
+            leftSection={<Upload size={16} />}
+          >
+            Select backup file
+          </Button>
+        )}
+      </FileButton>
 
       <RestoreConfirmModal
         isOpen={fileState.status === "loaded"}
