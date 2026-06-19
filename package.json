@@ -17,10 +17,10 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
-    "@mantine/core": "^8.3.14",
-    "@mantine/form": "^9.2.1",
-    "@mantine/hooks": "^8.3.14",
-    "@mantine/notifications": "^8.3.14",
+    "@mantine/core": "^9.3.2",
+    "@mantine/form": "^9.3.2",
+    "@mantine/hooks": "^9.3.2",
+    "@mantine/notifications": "^9.3.2",
     "clsx": "^2.1.1",
     "dexie": "^4.3.0",
     "dexie-react-hooks": "^4.2.0",
