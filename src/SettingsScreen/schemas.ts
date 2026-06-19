@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 export const BackupItemSchema = z.object({
-  id: z.string(),
   name: z.string(),
   amount: z.number().nullable(),
   frequency: z.enum(["monthly", "biMonthly"]),

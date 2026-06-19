@@ -1,9 +1,10 @@
 import { DEFAULT_CURRENCY } from "@/currency";
-import { db, type DbSetting } from "@/db";
+import { db, type DbItem, type DbSetting } from "@/db";
 import type { Table } from "dexie";
 import type {
   BackupBudget,
   BackupData,
+  BackupItem,
   BackupSettings,
   DbBudget,
 } from "./types";
@@ -19,8 +20,8 @@ export async function restoreData(backup: BackupData): Promise<void> {
 
   await db.transaction("rw", db.tables, async () =>
     Promise.all([
-      replaceAllInTable(db.income, income),
-      replaceAllInTable(db.expenses, expenses),
+      replaceAllInTable(db.income, income.map(toDbItem)),
+      replaceAllInTable(db.expenses, expenses.map(toDbItem)),
       replaceAllInTable(db.settings, toDbSettings(settings)),
     ]),
   );
@@ -80,10 +81,14 @@ async function replaceAllInTable(table: Table, data: unknown[]): Promise<void> {
 
 function fromDbBudget({ income, expenses, settings }: DbBudget): BackupBudget {
   return {
-    income,
-    expenses,
+    income: income.map(fromDbItem),
+    expenses: expenses.map(fromDbItem),
     settings: fromDbSettings(settings),
   };
+}
+
+function fromDbItem({ name, amount, frequency, category, notes }: DbItem): BackupItem {
+  return { name, amount, frequency, category, notes };
 }
 
 function fromDbSettings(settings: DbSetting[]): BackupSettings {
@@ -92,6 +97,10 @@ function fromDbSettings(settings: DbSetting[]): BackupSettings {
   }
 
   return { currency: settings[0].value };
+}
+
+function toDbItem(item: BackupItem): DbItem {
+  return { id: crypto.randomUUID(), ...item };
 }
 
 function toDbSettings(settings: BackupSettings): DbSetting[] {
