@@ -85,7 +85,7 @@ export function BudgetScreen() {
       {budget && (
         <div className={classes.viewport}>
           <div className={classes.lists} data-section={selectedSection}>
-            <div className={classes.list}>
+            <div className={classes.list} inert={selectedSection !== "income"}>
               <ItemsView
                 section="income"
                 sectionState={budget.income}
@@ -93,7 +93,7 @@ export function BudgetScreen() {
                 onCategoryClick={handleUpdateIncomeCategory}
               />
             </div>
-            <div className={classes.list}>
+            <div className={classes.list} inert={selectedSection !== "expenses"}>
               <ItemsView
                 section="expenses"
                 sectionState={budget.expenses}

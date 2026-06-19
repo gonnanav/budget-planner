@@ -25,6 +25,7 @@ export function SectionSummary({
   return (
     <button
       type="button"
+      aria-pressed={selected}
       className={clsx(classes.root, {
         [classes.income]: section === "income",
         [classes.expense]: section === "expenses",

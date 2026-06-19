@@ -1,14 +1,20 @@
-.root {
+.button {
   /* Layout */
   display: flex;
   flex-direction: column;
 
   /* Box model */
+  width: 100%;
+  border: none;
   border-radius: 6px;
   padding: 8px 12px;
 
   /* Visual */
+  appearance: none;
   background-color: #f8fafc;
+  font: inherit;
+  color: inherit;
+  text-align: left;
 
   /* Interaction */
   cursor: pointer;

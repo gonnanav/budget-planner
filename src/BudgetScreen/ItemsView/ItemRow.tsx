@@ -23,21 +23,23 @@ export function ItemRow({
   const showNormalizedAmount = frequency === "biMonthly";
 
   return (
-    <li className={classes.root} onClick={onClick}>
-      <div className={classes.primaryLine}>
-        <span className={classes.name}>{name}</span>
-        {formattedAmount && (
-          <span className={classes.amount}>{formattedAmount}</span>
-        )}
-      </div>
-      <div className={classes.secondaryLine}>
-        <span className={classes.frequency}>{frequencyText}</span>
-        {showNormalizedAmount && (
-          <span className={classes.normalized}>
-            {formattedNormalizedAmount}
-          </span>
-        )}
-      </div>
+    <li>
+      <button type="button" className={classes.button} onClick={onClick}>
+        <div className={classes.primaryLine}>
+          <span className={classes.name}>{name}</span>
+          {formattedAmount && (
+            <span className={classes.amount}>{formattedAmount}</span>
+          )}
+        </div>
+        <div className={classes.secondaryLine}>
+          <span className={classes.frequency}>{frequencyText}</span>
+          {showNormalizedAmount && (
+            <span className={classes.normalized}>
+              {formattedNormalizedAmount}
+            </span>
+          )}
+        </div>
+      </button>
     </li>
   );
 }
