@@ -4,6 +4,7 @@ import { ItemsView } from "./ItemsView/ItemsView";
 import { SectionSummary } from "./SectionSummary";
 import { useState } from "react";
 import { useEdit } from "./useEdit";
+import { useScrollToItem } from "./useScrollToItem";
 import { useBudget, addItem, updateItem, deleteItem, updateCategory, deleteCategory } from "./budget.service";
 import { Button } from "@mantine/core";
 import { Plus } from "lucide-react";
@@ -14,6 +15,7 @@ export function BudgetScreen() {
   const [selectedSection, setSelectedSection] = useState<Section>("expenses");
   const budget = useBudget();
   const edit = useEdit();
+  const { viewportRef, updateScrollTarget } = useScrollToItem(budget);
 
   const categories = budget?.[selectedSection]?.categories ?? [];
   const categoryNames = categories.map((c) => c.name);
@@ -30,7 +32,7 @@ export function BudgetScreen() {
     if (!edit.state) return;
 
     if (edit.state.mode === "create") {
-      addItem(edit.state.section, input);
+      addItem(edit.state.section, input).then(updateScrollTarget);
     } else if (edit.state.entity === "item") {
       updateItem(edit.state.item.id, edit.state.section, input);
     }
@@ -83,7 +85,7 @@ export function BudgetScreen() {
         />
       </div>
       {budget && (
-        <div className={classes.viewport}>
+        <div className={classes.viewport} ref={viewportRef}>
           <div className={classes.lists} data-section={selectedSection}>
             <div className={classes.list} inert={selectedSection !== "income"}>
               <ItemsView

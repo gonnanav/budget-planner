@@ -2,6 +2,7 @@ import { useCurrency } from "@/currency";
 import classes from "./ItemRow.module.css";
 
 type ItemRowProps = {
+  id: string;
   name: string;
   amount: number | null;
   frequency: string;
@@ -10,6 +11,7 @@ type ItemRowProps = {
 };
 
 export function ItemRow({
+  id,
   name,
   amount,
   frequency,
@@ -23,7 +25,7 @@ export function ItemRow({
   const showNormalizedAmount = frequency === "biMonthly";
 
   return (
-    <li>
+    <li data-item-id={id}>
       <button type="button" className={classes.button} onClick={onClick}>
         <div className={classes.primaryLine}>
           <span className={classes.name}>{name}</span>

@@ -13,6 +13,7 @@ export function ItemList({ items, onItemClick }: ItemListProps) {
       {items.map((item) => (
         <ItemRow
           key={item.id}
+          id={item.id}
           name={item.name}
           amount={item.amount}
           frequency={item.frequency}
