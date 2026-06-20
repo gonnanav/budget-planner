@@ -14,11 +14,11 @@ No expense tracking, no account, no signup; your data stays in your browser.
 
 - **Income & expenses** — add items and see running totals; optionally group related ones with category labels
 - **Frequency normalization** — enter items as monthly or bi-monthly; amounts are normalized to a comparable monthly figure
-- **Balance at a glance** — see whether you're in surplus, deficit, or even
-- **Any currency** — pick from any locale currency; amounts are relabeled, not converted
+- **Balance** — see whether you're in surplus, deficit, or even
+- **Currency** — pick from any locale currency; amounts are relabeled, not converted
 - **Backup & restore** — export your budget to a JSON file and import it back
-- **Private by design** — stored locally in your browser (IndexedDB)
-- **Installable & offline** — works as a PWA you can install and use without a connection
+- **Local storage** — your data is stored in your browser (IndexedDB)
+- **PWA** — installable and usable offline
 
 ## Tech Stack
 

@@ -7,6 +7,7 @@ import { useEdit } from "./useEdit";
 import { useScrollToItem } from "./useScrollToItem";
 import { useBudget, addItem, updateItem, deleteItem, updateCategory, deleteCategory } from "./budget.service";
 import { Button } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { Plus } from "lucide-react";
 import type { Category, Item, Section, ItemInput, CategoryInput } from "./types";
 import classes from "./BudgetScreen.module.css";
@@ -44,8 +45,10 @@ export function BudgetScreen() {
   const handleDeleteItem = () => {
     if (edit.state?.mode !== "update" || edit.state.entity !== "item") return;
 
+    const { name } = edit.state.item;
     deleteItem(edit.state.item.id, edit.state.section);
     edit.stopEdit();
+    notifications.show({ message: `Deleted "${name}"` });
   };
 
   const handleUpdateIncomeCategory = (category: Category) => edit.startUpdateCategory("income", category);
@@ -61,8 +64,10 @@ export function BudgetScreen() {
   const handleDeleteCategory = () => {
     if (edit.state?.mode !== "update" || edit.state.entity !== "category") return;
 
-    deleteCategory(edit.state.name, edit.state.section);
+    const { name } = edit.state;
+    deleteCategory(name, edit.state.section);
     edit.stopEdit();
+    notifications.show({ message: `Removed category "${name}"` });
   };
 
   return (
