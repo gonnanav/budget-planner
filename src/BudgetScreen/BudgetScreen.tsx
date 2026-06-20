@@ -13,9 +13,10 @@ import classes from "./BudgetScreen.module.css";
 
 export function BudgetScreen() {
   const [selectedSection, setSelectedSection] = useState<Section>("expenses");
+  const [lastCreatedId, setLastCreatedId] = useState<string | null>(null);
   const budget = useBudget();
   const edit = useEdit();
-  const { viewportRef, updateScrollTarget } = useScrollToItem(budget);
+  const viewportRef = useScrollToItem(budget, lastCreatedId);
 
   const categories = budget?.[selectedSection]?.categories ?? [];
   const categoryNames = categories.map((c) => c.name);
@@ -32,7 +33,7 @@ export function BudgetScreen() {
     if (!edit.state) return;
 
     if (edit.state.mode === "create") {
-      addItem(edit.state.section, input).then(updateScrollTarget);
+      addItem(edit.state.section, input).then(setLastCreatedId);
     } else if (edit.state.entity === "item") {
       updateItem(edit.state.item.id, edit.state.section, input);
     }
@@ -91,6 +92,7 @@ export function BudgetScreen() {
               <ItemsView
                 section="income"
                 sectionState={budget.income}
+                highlightedId={lastCreatedId}
                 onItemClick={handleUpdateIncomeItem}
                 onCategoryClick={handleUpdateIncomeCategory}
               />
@@ -99,6 +101,7 @@ export function BudgetScreen() {
               <ItemsView
                 section="expenses"
                 sectionState={budget.expenses}
+                highlightedId={lastCreatedId}
                 onItemClick={handleUpdateExpenseItem}
                 onCategoryClick={handleUpdateExpenseCategory}
               />

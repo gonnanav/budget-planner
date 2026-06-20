@@ -6,6 +6,7 @@ import classes from "./ItemsView.module.css";
 type ItemsViewProps = {
   section: Section;
   sectionState: SectionState;
+  highlightedId: string | null;
   onItemClick: (item: Item) => void;
   onCategoryClick: (category: Category) => void;
 };
@@ -15,7 +16,7 @@ const emptyMessages: Record<Section, string> = {
   expenses: "No expenses yet — add your first one below.",
 };
 
-export function ItemsView({ section, sectionState, onItemClick, onCategoryClick }: ItemsViewProps) {
+export function ItemsView({ section, sectionState, highlightedId, onItemClick, onCategoryClick }: ItemsViewProps) {
   const { format } = useCurrency();
   const { items, categories, uncategorized } = sectionState;
 
@@ -26,7 +27,7 @@ export function ItemsView({ section, sectionState, onItemClick, onCategoryClick 
   }
 
   if (categories.length === 0) {
-    return <ItemList items={items} onItemClick={onItemClick} />;
+    return <ItemList items={items} highlightedId={highlightedId} onItemClick={onItemClick} />;
   }
 
   return (
@@ -38,7 +39,7 @@ export function ItemsView({ section, sectionState, onItemClick, onCategoryClick 
             <span className={classes.total}>{formatMonthlyTotal(category.total)}</span>
           </button>
           {category.items.length > 0 && (
-            <ItemList items={category.items} onItemClick={onItemClick} />
+            <ItemList items={category.items} highlightedId={highlightedId} onItemClick={onItemClick} />
           )}
         </div>
       ))}
@@ -48,7 +49,7 @@ export function ItemsView({ section, sectionState, onItemClick, onCategoryClick 
             <span className={classes.name}>Uncategorized</span>
             <span className={classes.total}>{formatMonthlyTotal(uncategorized.total)}</span>
           </div>
-          <ItemList items={uncategorized.items} onItemClick={onItemClick} />
+          <ItemList items={uncategorized.items} highlightedId={highlightedId} onItemClick={onItemClick} />
         </div>
       )}
     </div>

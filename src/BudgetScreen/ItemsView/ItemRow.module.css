@@ -5,9 +5,9 @@
 
   /* Box model */
   width: 100%;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 6px;
-  padding: 8px 12px;
+  padding: 7px 11px;
 
   /* Visual */
   appearance: none;
@@ -24,7 +24,7 @@
 
   @media (min-width: 768px) {
     /* Box model */
-    padding: 12px 16px;
+    padding: 11px 15px;
   }
 
   &:hover {
@@ -33,6 +33,22 @@
 
   &:active {
     background-color: #f1f5f9;
+  }
+}
+
+.flash {
+  /* Interaction */
+  animation: flash 2s ease-out;
+}
+
+@keyframes flash {
+  0%,
+  30% {
+    border-color: var(--mantine-primary-color-filled);
+  }
+
+  100% {
+    border-color: transparent;
   }
 }
 

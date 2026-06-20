@@ -4,10 +4,11 @@ import classes from "./ItemList.module.css";
 
 type ItemListProps = {
   items: Item[];
+  highlightedId: string | null;
   onItemClick: (item: Item) => void;
 };
 
-export function ItemList({ items, onItemClick }: ItemListProps) {
+export function ItemList({ items, highlightedId, onItemClick }: ItemListProps) {
   return (
     <ul className={classes.root}>
       {items.map((item) => (
@@ -18,6 +19,7 @@ export function ItemList({ items, onItemClick }: ItemListProps) {
           amount={item.amount}
           frequency={item.frequency}
           normalizedAmount={item.normalizedAmount}
+          highlighted={item.id === highlightedId}
           onClick={() => onItemClick(item)}
         />
       ))}

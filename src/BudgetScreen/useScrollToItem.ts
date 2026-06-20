@@ -1,29 +1,22 @@
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 import type { Budget } from "./types";
 
-export type UseScrollToItem = {
-  viewportRef: RefObject<HTMLDivElement | null>;
-  updateScrollTarget: (id: string) => void;
-};
-
-export function useScrollToItem(budget: Budget | undefined): UseScrollToItem {
-  const [pendingScrollId, setPendingScrollId] = useState<string | null>(null);
+export function useScrollToItem(
+  budget: Budget | undefined,
+  itemId: string | null,
+): RefObject<HTMLDivElement | null> {
   const scrolledIdRef = useRef<string | null>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!budget || !pendingScrollId || scrolledIdRef.current === pendingScrollId || !hasItem(budget, pendingScrollId)) return;
+    if (!budget || !itemId || scrolledIdRef.current === itemId || !hasItem(budget, itemId)) return;
 
-    scrolledIdRef.current = pendingScrollId;
-    const row = viewportRef.current?.querySelector(`[data-item-id="${pendingScrollId}"]`);
+    scrolledIdRef.current = itemId;
+    const row = viewportRef.current?.querySelector(`[data-item-id="${itemId}"]`);
     row?.scrollIntoView({ block: "nearest", behavior: "smooth" });
-  }, [budget, pendingScrollId]);
+  }, [budget, itemId]);
 
-  const updateScrollTarget = (id: string) => {
-    setPendingScrollId(id);
-  };
-
-  return { viewportRef, updateScrollTarget };
+  return viewportRef;
 }
 
 function hasItem(budget: Budget, id: string): boolean {

@@ -1,3 +1,4 @@
+import { clsx } from "clsx";
 import { useCurrency } from "@/currency";
 import classes from "./ItemRow.module.css";
 
@@ -7,6 +8,7 @@ type ItemRowProps = {
   amount: number | null;
   frequency: string;
   normalizedAmount: number;
+  highlighted: boolean;
   onClick: () => void;
 };
 
@@ -16,6 +18,7 @@ export function ItemRow({
   amount,
   frequency,
   normalizedAmount,
+  highlighted,
   onClick,
 }: ItemRowProps) {
   const { format } = useCurrency();
@@ -26,7 +29,11 @@ export function ItemRow({
 
   return (
     <li data-item-id={id}>
-      <button type="button" className={classes.button} onClick={onClick}>
+      <button
+        type="button"
+        className={clsx(classes.button, { [classes.flash]: highlighted })}
+        onClick={onClick}
+      >
         <div className={classes.primaryLine}>
           <span className={classes.name}>{name}</span>
           {formattedAmount && (
